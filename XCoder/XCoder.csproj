@@ -268,24 +268,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NewLife.Core\NewLife.Core.csproj">
-      <Project>{5813C22E-EEB3-4DEE-A45C-BB218041193A}</Project>
-      <Name>NewLife.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NewLife.Net\NewLife.Net.csproj">
-      <Project>{5a8ef50c-3394-4c1e-99f0-33efe8691cb0}</Project>
-      <Name>NewLife.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XCode\XCode.csproj">
-      <Project>{B49ABA5A-C5DA-45F4-87F1-B435EC51D710}</Project>
-      <Name>XCode</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XTemplate\XTemplate.csproj">
-      <Project>{55BA37EE-01A2-438F-A0FB-6B57440BF2F0}</Project>
-      <Name>XTemplate</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Template\页面ExtAspNet\类名.aspx" />
   </ItemGroup>
   <ItemGroup>
