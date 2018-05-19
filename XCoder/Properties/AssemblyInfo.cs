@@ -4,10 +4,13 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过下列属性集
 // 控制。更改这些属性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("新生命超级码神工具")]
+[assembly: AssemblyTitle("新生命码神工具")]
 [assembly: AssemblyDescription("基于编译型模版引擎的代码生成器，以及众多开发者工具")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("XCoder")]
+[assembly: AssemblyCompany("新生命开发团队")]
+[assembly: AssemblyCopyright("©2002-2018 新生命开发团队 http://www.NewLifeX.com")]
+[assembly: AssemblyTrademark("四叶草")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 使此程序集中的类型
@@ -25,11 +28,13 @@ using System.Runtime.InteropServices;
 //      内部版本号
 //      修订号
 //
-[assembly: AssemblyVersion("6.8.*")]
-[assembly: AssemblyFileVersion("6.8.2016.0504")]
+[assembly: AssemblyVersion("6.9.*")]
+[assembly: AssemblyFileVersion("6.9.2017.0526")]
 
 /*
- * v6.8.2016.0504   增加操作语音提示和语音识别辅助操作
+ * v6.9.2017.0101   增加消息调试工具，支持调试网络库的消息收发功能
+ * 
+ * v6.9.2016.0504   增加操作语音提示和语音识别辅助操作
  * 
  * v6.7.2016.0418   异步加载子工具，支持外部FrmMain窗体
  * 

@@ -32,13 +32,13 @@ namespace XCoder
         {
             if (tables == null || tables.Count < 1) throw new ArgumentNullException("tables");
 
-            FrmModel frm = new FrmModel();
+            var frm = new FrmModel();
             frm.Tables = tables;
 
             return frm;
         }
 
-        private void FrmModel_Load(object sender, EventArgs e)
+        private void FrmModel_Load(Object sender, EventArgs e)
         {
             SetTables(Tables, 0);
             SetDbTypes();
@@ -48,15 +48,15 @@ namespace XCoder
         #region 选择数据表
         IDataTable GetSelectedTable()
         {
-            ComboBox cb = cbTables;
+            var cb = cbTables;
             if (cb == null || cb.SelectedItem == null) return null;
 
             return cb.SelectedItem as IDataTable;
         }
 
-        private void cbTables_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbTables_SelectedIndexChanged(Object sender, EventArgs e)
         {
-            IDataTable table = GetSelectedTable();
+            var table = GetSelectedTable();
             if (table == null) return;
 
             pgTable.SelectedObject = table;
@@ -64,17 +64,17 @@ namespace XCoder
 
             gv.DataSource = table.Columns;
             dgvIndex.DataSource = table.Indexes;
-            dgvRelation.DataSource = table.Relations;
+            //dgvRelation.DataSource = table.Relations;
         }
 
-        private void gv_RowEnter(object sender, DataGridViewCellEventArgs e)
+        private void gv_RowEnter(Object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            DataGridView dgv = sender as DataGridView;
+            var dgv = sender as DataGridView;
             if (dgv == null) return;
 
-            DataGridViewRow row = dgv.Rows[e.RowIndex];
+            var row = dgv.Rows[e.RowIndex];
             if (row == null) return;
 
             pgColumn.SelectedObject = row.DataBoundItem;
@@ -85,7 +85,7 @@ namespace XCoder
             cbTables.Items.Clear();
             if (Tables != null && tables.Count > 0)
             {
-                foreach (IDataTable item in tables)
+                foreach (var item in tables)
                 {
                     cbTables.Items.Add(item);
                 }
@@ -98,46 +98,46 @@ namespace XCoder
         #endregion
 
         #region 添加
-        private void btnAddTable_Click(object sender, EventArgs e)
+        private void btnAddTable_Click(Object sender, EventArgs e)
         {
             if (Tables == null || Tables.Count < 1) return;
 
-            Type type = Tables[0].GetType();
+            var type = Tables[0].GetType();
             if (type == null) return;
 
-            IDataTable table = type.CreateInstance() as IDataTable;
+            var table = type.CreateInstance() as IDataTable;
             if (table == null) return;
 
             Tables.Add(table);
-            table.ID = Tables.Count;
-            table.TableName = "NewTable" + table.ID;
-            table.Description = "新建表" + table.ID;
+            var id = Tables.Count;
+            table.TableName = "NewTable" + id;
+            table.Description = "新建表" + id;
 
             SetTables(Tables, Tables.Count - 1);
         }
 
-        private void btnAddColumn_Click(object sender, EventArgs e)
+        private void btnAddColumn_Click(Object sender, EventArgs e)
         {
-            IDataTable table = GetSelectedTable();
+            var table = GetSelectedTable();
             if (table == null) return;
 
-            IDataColumn dc = table.CreateColumn();
+            var dc = table.CreateColumn();
             table.Columns.Add(dc);
-            dc.ID = table.Columns.Count;
-            dc.ColumnName = "Column" + dc.ID;
-            dc.Description = "字段" + dc.ID;
+            var id = table.Columns.Count;
+            dc.ColumnName = "Column" + id;
+            dc.Description = "字段" + id;
 
             gv.DataSource = null;
             gv.DataSource = table.Columns;
             pgColumn.SelectedObject = dc;
         }
 
-        private void btnAddIndex_Click(object sender, EventArgs e)
+        private void btnAddIndex_Click(Object sender, EventArgs e)
         {
-            IDataTable table = GetSelectedTable();
+            var table = GetSelectedTable();
             if (table == null) return;
 
-            IDataIndex di = table.CreateIndex();
+            var di = table.CreateIndex();
             table.Indexes.Add(di);
 
             dgvIndex.DataSource = null;
@@ -145,18 +145,18 @@ namespace XCoder
             pgColumn.SelectedObject = di;
         }
 
-        private void btnAddRelation_Click(object sender, EventArgs e)
-        {
-            IDataTable table = GetSelectedTable();
-            if (table == null) return;
+        //private void btnAddRelation_Click(Object sender, EventArgs e)
+        //{
+        //    IDataTable table = GetSelectedTable();
+        //    if (table == null) return;
 
-            IDataRelation dr = table.CreateRelation();
-            table.Relations.Add(dr);
+        //    IDataRelation dr = table.CreateRelation();
+        //    table.Relations.Add(dr);
 
-            dgvRelation.DataSource = null;
-            dgvRelation.DataSource = table.Relations;
-            pgColumn.SelectedObject = dr;
-        }
+        //    dgvRelation.DataSource = null;
+        //    dgvRelation.DataSource = table.Relations;
+        //    pgColumn.SelectedObject = dr;
+        //}
         #endregion
 
         #region 建表语句
@@ -166,11 +166,11 @@ namespace XCoder
             cbConn.Update();
         }
 
-        private void btnCreateTableSQL_Click(object sender, EventArgs e)
+        private void btnCreateTableSQL_Click(Object sender, EventArgs e)
         {
             if (cbConn.SelectedItem == null) return;
 
-            IDataTable table = GetSelectedTable();
+            var table = GetSelectedTable();
             if (table == null) return;
 
             var dal = DAL.Create("" + cbConn.SelectedItem);
@@ -178,7 +178,7 @@ namespace XCoder
 
             try
             {
-                IMetaData md = dal.Db.CreateMetaData();
+                var md = dal.Db.CreateMetaData();
                 var sql = CreateTable(md, table);
 
                 FrmText.Create(table.TableName + "表建表语句", sql).Show();
@@ -191,7 +191,7 @@ namespace XCoder
 
         static String CreateTable(IMetaData md, IDataTable table)
         {
-            String sql = md.GetSchemaSQL(DDLSchema.CreateTable, table);
+            var sql = md.GetSchemaSQL(DDLSchema.CreateTable, table);
 
             var sb = new StringBuilder();
             if (!String.IsNullOrEmpty(sql)) sb.AppendLine(sql + "; ");
@@ -204,7 +204,7 @@ namespace XCoder
             }
 
             // 加上字段注释
-            foreach (IDataColumn item in table.Columns)
+            foreach (var item in table.Columns)
             {
                 if (!String.IsNullOrEmpty(item.Description))
                 {
@@ -216,7 +216,7 @@ namespace XCoder
             // 加上索引
             if (table.Indexes != null)
             {
-                foreach (IDataIndex item in table.Indexes)
+                foreach (var item in table.Indexes)
                 {
                     if (!item.PrimaryKey)
                     {
@@ -229,7 +229,7 @@ namespace XCoder
             return sb.ToString();
         }
 
-        private void btnCreateDbSQL_Click(object sender, EventArgs e)
+        private void btnCreateDbSQL_Click(Object sender, EventArgs e)
         {
             if (cbConn.SelectedItem == null) return;
 
@@ -238,7 +238,7 @@ namespace XCoder
 
             try
             {
-                IMetaData md = dal.Db.CreateMetaData();
+                var md = dal.Db.CreateMetaData();
                 var sb = new StringBuilder();
                 foreach (var table in Tables)
                 {
@@ -254,7 +254,7 @@ namespace XCoder
             }
         }
 
-        private void btnCreateDb_Click(object sender, EventArgs e)
+        private void btnCreateDb_Click(Object sender, EventArgs e)
         {
             if (cbConn.SelectedItem == null) return;
 
@@ -264,10 +264,7 @@ namespace XCoder
             try
             {
                 var md = dal.Db.CreateMetaData();
-                var set = new NegativeSetting();
-                set.CheckOnly = false;
-                set.NoDelete = false;
-                md.SetTables(set, Tables.ToArray());
+                md.SetTables(Migration.Full, Tables.ToArray());
 
                 MessageBox.Show("成功建立" + Tables.Count + "张数据表！", Text);
             }

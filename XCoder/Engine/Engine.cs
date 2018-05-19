@@ -30,7 +30,7 @@ namespace XCoder
             {
                 if (_FileTemplates == null)
                 {
-                    var list = new List<string>();
+                    var list = new List<String>();
 
                     var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, TemplatePath);
                     if (Directory.Exists(dir))
@@ -114,7 +114,13 @@ namespace XCoder
 
         public String[] Render(IDataTable table)
         {
-            var data = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+            // 检查表格完整性
+            foreach (var dc in table.Columns)
+            {
+                if (dc.DataType == null) throw new ArgumentException("{0}.DataType数据类型错误".F(dc.Name), dc.Name);
+            }
+
+            var data = new Dictionary<String, Object>(StringComparer.OrdinalIgnoreCase);
             //data["Config"] = Config;
             data["Tables"] = Tables;
             data["Table"] = table;
@@ -155,7 +161,7 @@ namespace XCoder
             // 声明模版引擎
             //Template tt = new Template();
             Template.Debug = Config.Debug;
-            var templates = new Dictionary<string, string>();
+            var templates = new Dictionary<String, String>();
             // 每一个模版的编码，用于作为输出文件的编码
             var encs = new List<Encoding>();
 
@@ -221,7 +227,7 @@ namespace XCoder
             if (tempName.StartsWith("*")) tempName = tempName.Substring(1);
             tt.AssemblyName = tempName;
             #endregion
-            
+
             #region 输出目录预处理
             var outpath = Config.OutputPath;
             // 使用正则替换处理 命名空间处已经定义

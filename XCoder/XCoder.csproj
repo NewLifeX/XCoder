@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -11,27 +11,37 @@
     <RootNamespace>XCoder</RootNamespace>
     <AssemblyName>XCoder</AssemblyName>
     <ApplicationIcon>leaf.ico</ApplicationIcon>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\..\XCoder\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET4</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <OutputPath>..\..\XCoder\</OutputPath>
-    <DefineConstants>TRACE;NET4</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningLevel>3</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NewLife.Core, Version=7.0.6712.2419, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Core.7.0.6712.2419\lib\net45\NewLife.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NewLife.Net, Version=3.2.6700.37161, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Net.3.2.6700.37161\lib\net45\NewLife.Net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -42,11 +52,15 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="XCode, Version=9.7.6712.2420, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.XCode.9.7.6712.2420\lib\net45\XCode.dll</HintPath>
+    </Reference>
+    <Reference Include="XTemplate, Version=2.0.6700.37161, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.XTemplate.2.0.6700.37161\lib\net45\XTemplate.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\NewLife.Core\Properties\AssemblyInfo_.cs">
-      <Link>Properties\AssemblyInfo_.cs</Link>
-    </Compile>
     <Compile Include="Engine\IcoHelper.cs" />
     <Compile Include="Engine\ModelConfig.cs" />
     <Compile Include="FileEncoding\FrmMain.cs">
@@ -61,11 +75,41 @@
     <Compile Include="FolderInfo\FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FolderInfo\FrmSplitFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FolderInfo\FrmSplitFile.Designer.cs">
+      <DependentUpon>FrmSplitFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMDI.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmMDI.Designer.cs">
       <DependentUpon>FrmMDI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IXForm.cs" />
+    <Compile Include="Tools\FrmSecurity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FrmSecurity.Designer.cs">
+      <DependentUpon>FrmSecurity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XApi\ApiConfig.cs" />
+    <Compile Include="XApi\MyApiController.cs" />
+    <Compile Include="XApi\FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XApi\FrmMain.designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XNet\IPPacket.cs" />
+    <Compile Include="XNet\RawSocket.cs" />
+    <Compile Include="XNet\TcpPacket.cs" />
+    <Compile Include="Yun\FrmMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Yun\FrmMap.Designer.cs">
+      <DependentUpon>FrmMap.cs</DependentUpon>
     </Compile>
     <Compile Include="NewModelForm\AddField.cs">
       <SubType>UserControl</SubType>
@@ -89,6 +133,24 @@
       <DependentUpon>NewModel.cs</DependentUpon>
     </Compile>
     <Compile Include="NewModelForm\WinFormHelper.cs" />
+    <Compile Include="Tools\FrmGPS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FrmGPS.Designer.cs">
+      <DependentUpon>FrmGPS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\FrmInclude.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FrmInclude.Designer.cs">
+      <DependentUpon>FrmInclude.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="XCom\FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +180,7 @@
     <Compile Include="XNet\FrmMain.designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Yun\MapSetting.cs" />
     <EmbeddedResource Include="FileEncoding\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -126,6 +189,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMDI.resx">
       <DependentUpon>FrmMDI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FrmSecurity.resx">
+      <DependentUpon>FrmSecurity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XApi\FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Yun\FrmMap.resx">
+      <DependentUpon>FrmMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewModelForm\AddField.resx">
       <DependentUpon>AddField.cs</DependentUpon>
@@ -205,6 +277,15 @@
     <EmbeddedResource Include="NewModelForm\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FrmGPS.resx">
+      <DependentUpon>FrmGPS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FrmInclude.resx">
+      <DependentUpon>FrmInclude.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\FrmItems.resx">
       <DependentUpon>FrmItems.cs</DependentUpon>
     </EmbeddedResource>
@@ -254,7 +335,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="app.manifest" />
+    <None Include="Properties\app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -262,7 +343,6 @@
     </None>
     <EmbeddedResource Include="Template\实体业务\对象操作.xt" />
     <EmbeddedResource Include="Template\实体业务\扩展查询.xt" />
-    <EmbeddedResource Include="Template\实体业务\扩展属性.xt" />
     <EmbeddedResource Include="XCoder.tt">
       <LastGenOutput>XCoder.log</LastGenOutput>
     </EmbeddedResource>

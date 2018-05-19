@@ -2,11 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife.Log;
-using NewLife.Threading;
 using XCode.DataAccessLayer;
 
 namespace XCoder
@@ -33,15 +31,15 @@ namespace XCoder
 
         public static FrmSchema Create(IDatabase db)
         {
-            if (db == null) throw new ArgumentNullException("db");
-
-            FrmSchema frm = new FrmSchema();
-            frm.Db = db;
+            var frm = new FrmSchema
+            {
+                Db = db ?? throw new ArgumentNullException("db")
+            };
 
             return frm;
         }
 
-        private void FrmSchema_Load(object sender, EventArgs e)
+        private void FrmSchema_Load(Object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -66,7 +64,7 @@ namespace XCoder
                 if (!(data is IList))
                 {
                     var list = new List<Object>();
-                    foreach (Object item in data)
+                    foreach (var item in data)
                     {
                         list.Add(item);
                     }
@@ -83,37 +81,39 @@ namespace XCoder
         }
         #endregion
 
-        private void cbTables_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbTables_SelectedIndexChanged(Object sender, EventArgs e)
         {
-            ComboBox cb = sender as ComboBox;
+            var cb = sender as ComboBox;
             if (cb == null) return;
 
-            Object obj = cb.SelectedItem;
+            var obj = cb.SelectedItem;
             if (obj == null) return;
 
             try
             {
+                var ss = Db.CreateSession();
                 if (obj is IDataTable)
                 {
-                    //obj = (obj as IDataTable).Columns;
-                    DbCommand cmd = Db.CreateSession().CreateCommand();
-                    cmd.CommandText = "select * from " + (obj as IDataTable).TableName;
+                    var sql = "select * from " + (obj as IDataTable).TableName;
                     DataTable dt = null;
                     try
                     {
-                        using (DbDataReader reader = cmd.ExecuteReader(CommandBehavior.KeyInfo | CommandBehavior.SchemaOnly))
+                        using (var cmd = ss.CreateCommand(sql))
+                        using (var reader = cmd.ExecuteReader(CommandBehavior.KeyInfo | CommandBehavior.SchemaOnly))
                         {
                             dt = reader.GetSchemaTable();
                         }
                     }
                     finally
                     {
-                        Db.CreateSession().AutoClose();
+                        ss.AutoClose();
                     }
                     obj = dt;
                 }
                 else if (obj is String)
-                    obj = Db.CreateSession().GetSchema((String)obj, null);
+                {
+                    obj = ss.GetSchema((String)obj, null);
+                }
                 gv.DataSource = obj;
                 gv.Update();
             }

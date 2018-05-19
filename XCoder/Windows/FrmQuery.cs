@@ -29,32 +29,31 @@ namespace XCoder
         {
             if (db == null) throw new ArgumentNullException("db");
 
-            FrmQuery frm = new FrmQuery();
+            var frm = new FrmQuery();
             frm.Dal = db;
 
             return frm;
         }
 
-        private void FrmQuery_Load(object sender, EventArgs e)
+        private void FrmQuery_Load(Object sender, EventArgs e)
         {
         }
         #endregion
 
-        private void btnQuery_Click(object sender, EventArgs e)
+        private void btnQuery_Click(Object sender, EventArgs e)
         {
             var sql = txtSQL.Text;
             if (sql.IsNullOrWhiteSpace()) return;
 
             Task.Factory.StartNew(() =>
             {
-                var sw = new Stopwatch();
-                sw.Start();
+                var sw = Stopwatch.StartNew();
 
                 String msg = null;
                 DataTable dt = null;
                 try
                 {
-                    DataSet ds = Dal.Session.Query(sql);
+                    var ds = Dal.Session.Query(sql);
                     if (ds != null && ds.Tables != null && ds.Tables.Count > 0) dt = ds.Tables[0];
 
                     msg = "查询完成！";
@@ -75,20 +74,19 @@ namespace XCoder
             }).LogException();
         }
 
-        private void btnExecute_Click(object sender, EventArgs e)
+        private void btnExecute_Click(Object sender, EventArgs e)
         {
             var sql = txtSQL.Text;
             if (sql.IsNullOrWhiteSpace()) return;
 
             Task.Factory.StartNew(() =>
             {
-                var sw = new Stopwatch();
-                sw.Start();
+                var sw = Stopwatch.StartNew();
 
                 String msg = null;
                 try
                 {
-                    Int32 n = Dal.Session.Execute(sql);
+                    var n = Dal.Session.Execute(sql);
 
                     msg = String.Format("执行完成！共影响{0}行！", n);
                 }
@@ -100,7 +98,7 @@ namespace XCoder
                 {
                     sw.Stop();
 
-                    msg += String.Format(" 耗时{0:HH:mm:ss.zzz}", sw.Elapsed);
+                    msg += String.Format(" 耗时{0}", sw.Elapsed);
                 }
 
                 this.Invoke(() => lbStatus.Text = msg);

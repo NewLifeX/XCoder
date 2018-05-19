@@ -8,42 +8,39 @@ using NewLife.IO;
 namespace XCoder.FileEncoding
 {
     [DisplayName("文件编码工具")]
-    public partial class FrmMain : Form
+    public partial class FrmMain : Form, IXForm
     {
-        string[] EncodeType = new string[] { "UTF-8", "ASNI", "Unicode", "Default" };
-        private string ChiocePath { get; set; }
-
-        private Int32 Count { get; set; }
         public FrmMain()
         {
             InitializeComponent();
+
+            // 动态调节宽度高度，兼容高DPI
+            this.FixDpi();
         }
 
-        private void FrmEncodeReplace_Load(object sender, EventArgs e)
+        private void FrmEncodeReplace_Load(Object sender, EventArgs e)
         {
-            txt_file_suffix_name.Text = ".cs,.aspx";
-            cmb_file_encode_name.DataSource = EncodeType;
-            cmb_file_encode_name.Text = "UTF-8";
+            txtSuffix.Text = "*.cs;*.aspx";
+            var encs = new String[] { "UTF-8", "UTF-8 NoBOM", "ASNI", "Unicode", "Default" };
+            //var encs = new Encoding[] { Encoding.UTF8, new UTF8Encoding(false), Encoding.ASCII, Encoding.UTF8 };
+            ddlEncodes.DataSource = encs;
+            ddlEncodes.Text = "UTF-8";
             //cmb_tag.Text = "UTF-8";
-            btn_replace.Enabled = false;
+            btnReplace.Enabled = false;
         }
 
 
-        private void btn_choice_file_Click(object sender, EventArgs e)
+        private void btn_choice_file_Click(Object sender, EventArgs e)
         {
+            if (!txtPath.Text.IsNullOrEmpty()) fbd_choice_folder.SelectedPath = txtPath.Text;
             if (fbd_choice_folder.ShowDialog() != DialogResult.OK) return;
 
-            gv_data.Rows.Clear();
-            txt_file_path.Text = fbd_choice_folder.SelectedPath;
-            ChiocePath = txt_file_path.Text;
-            Count = 1;
-            FileFilter(new DirectoryInfo(ChiocePath));
-            btn_replace.Enabled = true;
+            txtPath.Text = fbd_choice_folder.SelectedPath;
         }
 
-        private void btn_replace_Click(object sender, EventArgs e)
+        private void btn_replace_Click(Object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txt_file_path.Text))
+            if (String.IsNullOrEmpty(txtPath.Text))
             {
                 MessageBox.Show("请选择文件夹");
                 return;
@@ -59,25 +56,38 @@ namespace XCoder.FileEncoding
                 return;
 
 
-            var targetCharset = cmb_file_encode_name.Text.Trim();
-            var targetEncoding = GetEncode();
+            var enc = Encoding.UTF8;
+            switch (ddlEncodes.Text)
+            {
+                case "UTF-8": enc = Encoding.UTF8; break;
+                case "UTF-8 NoBOM": enc = new UTF8Encoding(false); break;
+                case "ASNI": enc = Encoding.ASCII; break;
+                case "Unicode": enc = Encoding.Unicode; break;
+            }
+
+            var count = 0;
             foreach (DataGridViewRow item in gv_data.Rows)
             {
-                if (item.Cells["序号"].Value == null) { continue; }
+                if (item.Cells["序号"].Value == null) continue;
                 var fileCharset = item.Cells["编码"].Value.ToString();
-                if (string.Equals(fileCharset, targetCharset, StringComparison.OrdinalIgnoreCase)) { continue; }
+                if (fileCharset.EqualIgnoreCase(ddlEncodes.Text)) continue;
 
                 try
                 {
-                    ReplaceEncoding(txt_file_path.Text + item.Cells["名称"].Value.ToString(), fileCharset, targetEncoding);
+                    //ReplaceEncoding(txtPath.Text + item.Cells["名称"].Value.ToString(), fileCharset, enc);
+                    var file = txtPath.Text + item.Cells["名称"].Value;
+                    var txt = File.ReadAllText(file);
+                    File.WriteAllText(file, txt, enc);
+
+                    count++;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("文件[" + txt_file_path.Text + item.Cells["名称"].Value.ToString() + "]" + "转换时出错,请手动转换" + ex.Message);
+                    MessageBox.Show("文件[" + txtPath.Text + item.Cells["名称"].Value.ToString() + "]" + "转换时出错,请手动转换" + ex.Message);
                 }
             }
 
-            MessageBox.Show("转换完成");
+            MessageBox.Show("转换{0}个文件完成".F(count));
             gv_data.Rows.Clear();
         }
 
@@ -85,15 +95,15 @@ namespace XCoder.FileEncoding
         /// 替换文件编码
         /// </summary>
         /// <param name="file"></param>
-        private void ReplaceEncoding(string file, string charset, Encoding targetEncoding)
+        private void ReplaceEncoding(String file, String charset, Encoding targetEncoding)
         {
-            string fileInfo = "";
-            using (StreamReader sr = new StreamReader(file, Encoding.GetEncoding(charset), false))
+            var fileInfo = "";
+            using (var sr = new StreamReader(file, Encoding.GetEncoding(charset), false))
             {
                 fileInfo = sr.ReadToEnd();
             }
 
-            using (StreamWriter sw = new StreamWriter(file, false, targetEncoding))
+            using (var sw = new StreamWriter(file, false, targetEncoding))
             {
                 sw.Write(fileInfo);
             }
@@ -102,9 +112,9 @@ namespace XCoder.FileEncoding
         Encoding GetEncode()
         {
             // "UTF-8", "ASNI", "Unicode", "Default" 
-            var e = cmb_file_encode_name.Text;
+            var e = ddlEncodes.Text;
 
-            var result = Encoding.Default;
+            var result = Encoding.UTF8;
             switch (e)
             {
                 case "UTF-8": result = Encoding.UTF8; break;
@@ -114,68 +124,32 @@ namespace XCoder.FileEncoding
             return result;
         }
 
-
         /// <summary>
         /// 文件过滤
         /// </summary>
         /// <param name="info"></param>
-        public void FileFilter(FileSystemInfo info)
+        public void FileFilter(String path)
         {
-            //var info = new DirectoryInfo(ChiocePath);
-            if (!info.Exists) return;
+            var di = path.AsDirectory();
+            if (!di.Exists) return;
 
-            var dir = info as DirectoryInfo;
-            //不是目录
-            if (dir == null) return;
-
-            var files = dir.GetFileSystemInfos();
-
-            for (int i = 0; i < files.Length; i++)
+            var Count = 1;
+            foreach (var file in di.GetAllFiles(txtSuffix.Text, true))
             {
-                FileInfo file = files[i] as FileInfo;
-                //是文件
-                if (file != null)
+                var enc = EncodePelaceHelper.GetEncoding(file.FullName);
+                if (enc != null && !enc.WebName.EqualIgnoreCase(ddlEncodes.Text))
                 {
-                    if (!file.Name.Contains(".")) continue;
-                    var b = IsContainsType(file.Name);
-                    if (b)
-                    {
-                        string fileEncoding = EncodePelaceHelper.GetEncoding(file.FullName);
-                        if (fileEncoding.ToUpper().IndexOf("UTF".ToUpper()) < 0)
-                        {
-                            gv_data.Rows.Add(Count, fileEncoding, file.FullName.ToString().Substring(ChiocePath.Length));
-                            Count++;
-                        }
-                    }
-                }
-                //对于子目录，进行递归调用
-                else
-                {
-                    FileFilter(files[i]);
+                    gv_data.Rows.Add(Count++, enc.WebName, file.FullName.Substring(path.Length));
                 }
             }
         }
 
-        /// <summary>
-        /// 判断是否包含对应类型文件
-        /// </summary>
-        bool IsContainsType(string filename)
+        private void btnFind_Click(Object sender, EventArgs e)
         {
-            var t = txt_file_suffix_name.Text;
-            if (string.IsNullOrEmpty(t)) return true;
-
-            var s = t.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
-            string fileLastName = filename.Substring(filename.LastIndexOf(".")).ToUpper();
-
-            foreach (var item in s)
-            {
-                if (fileLastName.IndexOf(item.ToUpper()) >= 0) return true;
-            }
-
-            return false;
+            gv_data.Rows.Clear();
+            FileFilter(txtPath.Text);
+            btnReplace.Enabled = true;
         }
-
-
     }
 
     /// <summary>
@@ -184,13 +158,13 @@ namespace XCoder.FileEncoding
     public class EncodePelaceHelper
     {
         /// <summary>
-        /// 取得一个文本文件的编码方式。如果无法在文件头部找到有效的前导符，Encoding.Default将被返回。
+        /// 取得一个文本文件的编码方式。如果无法在文件头部找到有效的前导符，Encoding.UTF8将被返回。
         /// </summary>
         /// <param name="fileName">文件名</param>
         /// 
-        public static string GetEncoding(string fileName)
+        public static Encoding GetEncoding(String fileName)
         {
-            return GetEncoding(fileName, Encoding.Default);
+            return GetEncoding(fileName, Encoding.UTF8);
         }
 
         /// <summary>取得一个文本文件的编码方式。</summary>
@@ -198,28 +172,12 @@ namespace XCoder.FileEncoding
         /// <param name="defaultEncoding">默认编码方式。当该方法无法从文件的头部取得有效的前导符时，将返回该编码方式。</param>
         /// <returns></returns>
         /// 
-        public static string GetEncoding(string fileName, Encoding defaultEncoding)
+        public static Encoding GetEncoding(String fileName, Encoding defaultEncoding)
         {
             using (var fs = File.OpenRead(fileName))
             {
-                //var cdet = new Ude.CharsetDetector();
-                //cdet.Feed(fs);
-                //cdet.DataEnd();
-                //if (cdet.Charset != null)
-                //{
-                //    return cdet.Charset;
-                //}
-                //else
-                //{
-                //    return defaultEncoding.WebName;
-                //}
-                var enc = fs.Detect() ?? defaultEncoding;
-                return enc != null ? enc.WebName : null;
+                return fs.Detect() ?? defaultEncoding;
             }
-            //FileStream fs = new FileStream(fileName, FileMode.Open);
-            //Encoding targetEncoding = GetEncoding(fs, defaultEncoding);
-            //fs.Close();
-            //return targetEncoding;
         }
 
         ///// <summary>
@@ -230,7 +188,7 @@ namespace XCoder.FileEncoding
         ///// 
         //public static Encoding GetEncoding(FileStream stream)
         //{
-        //    return GetEncoding(stream, Encoding.Default);
+        //    return GetEncoding(stream, Encoding.UTF8);
         //}
 
         ///// <summary>
@@ -259,19 +217,19 @@ namespace XCoder.FileEncoding
         /// 
         public static Encoding GetEncoding(FileStream stream, Encoding defaultEncoding)
         {
-            Encoding targetEncoding = defaultEncoding;
+            var targetEncoding = defaultEncoding;
             if (stream != null && stream.Length >= 2)
             {
                 //保存文件流的前4个字节
-                byte byte1 = 0;
-                byte byte2 = 0;
-                byte byte3 = 0;
-                byte byte4 = 0;
+                Byte byte1 = 0;
+                Byte byte2 = 0;
+                Byte byte3 = 0;
+                Byte byte4 = 0;
 
                 //保存当前Seek位置
-                long origPos = stream.Seek(0, SeekOrigin.Begin);
+                var origPos = stream.Seek(0, SeekOrigin.Begin);
                 stream.Seek(0, SeekOrigin.Begin);
-                int nByte = stream.ReadByte();
+                var nByte = stream.ReadByte();
                 byte1 = Convert.ToByte(nByte);
                 byte2 = Convert.ToByte(stream.ReadByte());
 

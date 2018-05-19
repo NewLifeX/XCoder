@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
@@ -14,14 +13,16 @@ using System.Windows.Forms;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Reflection;
-using NewLife.Threading;
 using XCode.DataAccessLayer;
 using XTemplate.Templating;
+#if !NET4
+using TaskEx = System.Threading.Tasks.Task;
+#endif
 
 namespace XCoder
 {
     [DisplayName("数据建模工具")]
-    public partial class FrmMain : Form
+    public partial class FrmMain : Form, IXForm
     {
         #region 属性
         /// <summary>配置</summary>
@@ -41,18 +42,21 @@ namespace XCoder
         {
             InitializeComponent();
 
+            // 动态调节宽度高度，兼容高DPI
+            this.FixDpi();
+
             Icon = IcoHelper.GetIcon("模型");
 
             AutoLoadTables(Config.ConnName);
         }
 
-        private void FrmMain_Shown(object sender, EventArgs e)
+        private void FrmMain_Shown(Object sender, EventArgs e)
         {
             //var asm = AssemblyX.Create(Assembly.GetExecutingAssembly());
             //Text = String.Format("新生命数据模型工具 v{0} {1:HH:mm:ss}编译", asm.CompileVersion, asm.Compile);
         }
 
-        private void FrmMain_Load(object sender, EventArgs e)
+        private void FrmMain_Load(Object sender, EventArgs e)
         {
             LoadConfig();
 
@@ -72,7 +76,7 @@ namespace XCoder
             Task.Factory.StartNew(AutoDetectDatabase).LogException();
         }
 
-        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void FrmMain_FormClosing(Object sender, FormClosingEventArgs e)
         {
             try
             {
@@ -83,7 +87,7 @@ namespace XCoder
         #endregion
 
         #region 连接、自动检测数据库、加载表
-        private void bt_Connection_Click(object sender, EventArgs e)
+        private void bt_Connection_Click(Object sender, EventArgs e)
         {
             SaveConfig();
 
@@ -116,15 +120,11 @@ namespace XCoder
                 Engine = null;
 
                 // 断开的时候再取一次，确保下次能及时得到新的
-                try
-                {
-                    var list = DAL.Create(Config.ConnName).Tables;
-                }
-                catch { }
+                TaskEx.Run(() => DAL.Create(Config.ConnName).Tables);
             }
         }
 
-        private void cbConn_SelectionChangeCommitted(object sender, EventArgs e)
+        private void cbConn_SelectionChangeCommitted(Object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(cbConn.Text)) toolTip1.SetToolTip(cbConn, DAL.Create(cbConn.Text).ConnStr);
 
@@ -138,8 +138,8 @@ namespace XCoder
         void AutoDetectDatabase()
         {
             // 加上本机MSSQL
-            String localName = "local_MSSQL";
-            String localstr = "Data Source=.;Initial Catalog=master;Integrated Security=True;";
+            var localName = "local_MSSQL";
+            var localstr = "Data Source=.;Initial Catalog=master;Integrated Security=True;";
             if (!ContainConnStr(localstr)) DAL.AddConnStr(localName, localstr, null, "mssql");
 
             // 检测本地Access和SQLite
@@ -154,12 +154,11 @@ namespace XCoder
 
         void DetectFile()
         {
-            var sw = new Stopwatch();
-            sw.Start();
+            var sw = Stopwatch.StartNew();
 
             var n = 0;
             var ss = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.*", SearchOption.TopDirectoryOnly);
-            foreach (String item in ss)
+            foreach (var item in ss)
             {
                 var ext = Path.GetExtension(item);
                 //if (ext.EqualIC(".exe")) continue;
@@ -183,7 +182,7 @@ namespace XCoder
             var list = new List<String>();
             foreach (var item in DAL.ConnStrs)
             {
-                if (!String.IsNullOrEmpty(item.Value.ConnectionString)) list.Add(item.Key);
+                if (!String.IsNullOrEmpty(item.Value)) list.Add(item.Key);
             }
 
             // 远程数据库耗时太长，这里先列出来
@@ -192,8 +191,8 @@ namespace XCoder
 
         Boolean DetectFileDb(String item)
         {
-            String access = "Standard Jet DB";
-            String sqlite = "SQLite";
+            var access = "Standard Jet DB";
+            var sqlite = "SQLite";
 
             using (var fs = new FileStream(item, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
@@ -250,8 +249,7 @@ namespace XCoder
                 var dal = DAL.Create(item);
                 if (dal.DbType != DatabaseType.SqlServer) return;
 
-                var sw = new Stopwatch();
-                sw.Start();
+                var sw = Stopwatch.StartNew();
 
                 DataTable dt = null;
 
@@ -279,10 +277,10 @@ namespace XCoder
                 var sysdbnames = new String[] { "master", "tempdb", "model", "msdb" };
                 foreach (DataRow dr in dt.Rows)
                 {
-                    String dbname = dr[0].ToString();
+                    var dbname = dr[0].ToString();
                     if (Array.IndexOf(sysdbnames, dbname) >= 0) continue;
 
-                    String connName = String.Format("{0}_{1}", item, dbname);
+                    var connName = String.Format("{0}_{1}", item, dbname);
 
                     builder["Database"] = dbname;
                     DAL.AddConnStr(connName, builder.ToString(), null, dbprovider);
@@ -290,7 +288,7 @@ namespace XCoder
 
                     try
                     {
-                        String ver = dal.Db.ServerVersion;
+                        var ver = dal.Db.ServerVersion;
                         names.Add(connName);
                     }
                     catch
@@ -308,7 +306,7 @@ namespace XCoder
                     var list = new List<String>();
                     foreach (var elm in DAL.ConnStrs)
                     {
-                        if (!String.IsNullOrEmpty(elm.Value.ConnectionString)) list.Add(elm.Key);
+                        if (!String.IsNullOrEmpty(elm.Value)) list.Add(elm.Key);
                     }
                     list.AddRange(names);
 
@@ -326,7 +324,7 @@ namespace XCoder
             var list = new List<String>();
             foreach (var item in DAL.ConnStrs)
             {
-                if (!String.IsNullOrEmpty(item.Value.ConnectionString)) list.Add(item.Key);
+                if (!String.IsNullOrEmpty(item.Value)) list.Add(item.Key);
             }
 
             var localName = "local_MSSQL";
@@ -343,14 +341,14 @@ namespace XCoder
         {
             foreach (var item in DAL.ConnStrs)
             {
-                if (connstr.EqualIgnoreCase(item.Value.ConnectionString)) return true;
+                if (connstr.EqualIgnoreCase(item.Value)) return true;
             }
             return false;
         }
 
         void SetDatabaseList(List<String> list)
         {
-            String str = cbConn.Text;
+            var str = cbConn.Text;
 
             cbConn.DataSource = list;
             //cbConn.DisplayMember = "value";
@@ -367,21 +365,27 @@ namespace XCoder
 
         void LoadTables()
         {
-            try
+            TaskEx.Run(() =>
             {
-                var list = DAL.Create(Config.ConnName).Tables;
-                if (!cbIncludeView.Checked) list = list.Where(t => !t.IsView).ToList();
-                //if (Config.NeedFix) list = Engine.FixTable(list);
-                Engine.Tables = list;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), Text);
-                return;
-            }
+                try
+                {
+                    var list = DAL.Create(Config.ConnName).Tables;
+                    if (!cbIncludeView.Checked) list = list.Where(t => !t.IsView).ToList();
+                    //if (Config.NeedFix) list = Engine.FixTable(list);
+                    Engine.Tables = list;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), Text);
+                    return;
+                }
 
-            SetTables(null);
-            SetTables(Engine.Tables);
+                this.Invoke(() =>
+                {
+                    SetTables(null);
+                    SetTables(Engine.Tables);
+                });
+            });
         }
 
         void SetTables(Object source)
@@ -425,15 +429,13 @@ namespace XCoder
         void AutoLoadTables(String name)
         {
             if (String.IsNullOrEmpty(name)) return;
-            //if (!DAL.ConnStrs.ContainsKey(name) || String.IsNullOrEmpty(DAL.ConnStrs[name].ConnectionString)) return;
-            ConnectionStringSettings setting;
-            if (!DAL.ConnStrs.TryGetValue(name, out setting) || setting.ConnectionString.IsNullOrWhiteSpace()) return;
+            if (!DAL.ConnStrs.TryGetValue(name, out var connstr) || connstr.IsNullOrWhiteSpace()) return;
 
             // 异步加载
             Task.Factory.StartNew(() => { var tables = DAL.Create(name).Tables; }).LogException();
         }
 
-        private void btnRefreshTable_Click(object sender, EventArgs e)
+        private void btnRefreshTable_Click(Object sender, EventArgs e)
         {
             LoadTables();
         }
@@ -441,7 +443,7 @@ namespace XCoder
 
         #region 生成
         Stopwatch sw = new Stopwatch();
-        private void bt_GenTable_Click(object sender, EventArgs e)
+        private void bt_GenTable_Click(Object sender, EventArgs e)
         {
             SaveConfig();
 
@@ -472,7 +474,7 @@ namespace XCoder
             lb_Status.Text = "生成 " + cbTableList.Text + " 完成！耗时：" + sw.Elapsed;
         }
 
-        private void bt_GenAll_Click(object sender, EventArgs e)
+        private void bt_GenAll_Click(Object sender, EventArgs e)
         {
             SaveConfig();
 
@@ -533,12 +535,12 @@ namespace XCoder
         #endregion
 
         #region 附加信息
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabel1_LinkClicked(Object sender, LinkLabelLinkClickedEventArgs e)
         {
             var control = sender as Control;
             if (control == null) return;
 
-            String url = String.Empty;
+            var url = String.Empty;
             if (control.Tag != null) url = control.Tag.ToString();
             if (String.IsNullOrEmpty(url)) url = control.Text;
             if (String.IsNullOrEmpty(url)) return;
@@ -546,7 +548,7 @@ namespace XCoder
             Process.Start(url);
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        private void label3_Click(Object sender, EventArgs e)
         {
             Clipboard.SetData("1600800", null);
             MessageBox.Show("QQ群号已复制到剪切板！", "提示");
@@ -554,7 +556,7 @@ namespace XCoder
         #endregion
 
         #region 打开输出目录
-        private void btnOpenOutputDir_Click(object sender, EventArgs e)
+        private void btnOpenOutputDir_Click(Object sender, EventArgs e)
         {
             var dir = txt_OutPath.Text.GetFullPath();
             if (!Directory.Exists(dir)) dir = AppDomain.CurrentDomain.BaseDirectory;
@@ -564,7 +566,7 @@ namespace XCoder
             //Process.Start("explorer.exe", "/select," + dir);
         }
 
-        private void frmItems_Click(object sender, EventArgs e)
+        private void frmItems_Click(Object sender, EventArgs e)
         {
             //FrmItems.Create(XConfig.Current.Items).Show();
 
@@ -580,12 +582,12 @@ namespace XCoder
             {
                 list.Add("[文件]" + item);
             }
-            foreach (String item in Engine.Templates.Keys)
+            foreach (var item in Engine.Templates.Keys)
             {
-                String[] ks = item.Split('.');
+                var ks = item.Split('.');
                 if (ks == null || ks.Length < 1) continue;
 
-                String name = "[内置]" + ks[0];
+                var name = "[内置]" + ks[0];
                 if (!list.Contains(name)) list.Add(name);
             }
             cb.Items.Clear();
@@ -594,7 +596,7 @@ namespace XCoder
             cb.Update();
         }
 
-        private void btnRelease_Click(object sender, EventArgs e)
+        private void btnRelease_Click(Object sender, EventArgs e)
         {
             try
             {
@@ -606,7 +608,7 @@ namespace XCoder
             }
         }
 
-        private void lbEditHeader_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lbEditHeader_LinkClicked(Object sender, LinkLabelLinkClickedEventArgs e)
         {
             var frm = FrmText.Create("C#文件头模版", Config.HeadTemplate);
             frm.ShowDialog();
@@ -616,76 +618,45 @@ namespace XCoder
         #endregion
 
         #region 菜单
-        private void 退出XToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 退出XToolStripMenuItem_Click(Object sender, EventArgs e)
         {
             //Application.Exit();
             Close();
         }
 
-        private void 组件手册ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 组件手册ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
             var file = "X组件手册.chm";
             if (!File.Exists(file)) file = Path.Combine(@"C:\X\DLL", file);
             if (File.Exists(file)) Process.Start(file);
         }
 
-        private void 表名字段名命名规范ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 表名字段名命名规范ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
             FrmText.Create("表名字段名命名规范", Source.GetText("数据库命名规范")).Show();
         }
 
-        private void 在线帮助文档ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 在线帮助文档ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
             Process.Start("http://www.NewLifeX.com/showtopic-260.aspx?r=XCoder_v" + AssemblyX.Create(Assembly.GetExecutingAssembly()).Version);
         }
 
-        private void 检查更新ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var cfg = XConfig.Current;
-            cfg.LastUpdate = DateTime.Now;
-            cfg.Save();
-
-            try
-            {
-                var root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var up = new Upgrade();
-                up.Log = XTrace.Log;
-                up.Name = "XCoder";
-                up.Server = cfg.UpdateServer;
-                up.UpdatePath = root.CombinePath(up.UpdatePath);
-                if (up.Check())
-                {
-                    up.Download();
-                    up.Update();
-                }
-                else if (up.Links != null && up.Links.Length > 0)
-                    MessageBox.Show("没有可用更新！最新{0}".F(up.Links[0].Time), "自动更新");
-                else
-                    MessageBox.Show("没有可用更新！", "自动更新");
-            }
-            catch (Exception ex)
-            {
-                XTrace.WriteException(ex);
-                MessageBox.Show("更新失败！" + ex.Message, "自动更新");
-            }
-        }
-
-        private void 关于ToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void 关于ToolStripMenuItem1_Click(Object sender, EventArgs e)
         {
             FrmText.Create("升级历史", Source.GetText("UpdateInfo")).Show();
         }
 
-        private void 博客ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 博客ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
             Process.Start("http://nnhy.cnblogs.com");
         }
 
-        private void qQ群1600800ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void qQ群1600800ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
             Process.Start("http://www.NewLifeX.com/?r=XCoder_v" + AssemblyX.Create(Assembly.GetExecutingAssembly()).Version);
         }
 
-        private void oracle客户端运行时检查ToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void oracle客户端运行时检查ToolStripMenuItem1_Click(Object sender, EventArgs e)
         {
             Task.Factory.StartNew(CheckOracle);
         }
@@ -705,14 +676,14 @@ namespace XCoder
             }
         }
 
-        private void 自动格式化设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 自动格式化设置ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
             //FrmFix.Create(Config).ShowDialog();
         }
         #endregion
 
         #region 模型管理
-        private void 模型管理MToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 模型管理MToolStripMenuItem_Click(Object sender, EventArgs e)
         {
             var tables = Engine.Tables;
             if (tables == null || tables.Count < 1) return;
@@ -720,7 +691,7 @@ namespace XCoder
             FrmModel.Create(tables).Show();
         }
 
-        private void 导出模型EToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 导出模型EToolStripMenuItem_Click(Object sender, EventArgs e)
         {
             var tables = Engine.Tables;
             if (tables == null || tables.Count < 1)
@@ -743,7 +714,7 @@ namespace XCoder
             if (saveFileDialog1.ShowDialog() != DialogResult.OK || String.IsNullOrEmpty(saveFileDialog1.FileName)) return;
             try
             {
-                String xml = DAL.Export(tables);
+                var xml = DAL.Export(tables);
                 File.WriteAllText(saveFileDialog1.FileName, xml);
 
                 MessageBox.Show("导出架构成功！", "导出架构", MessageBoxButtons.OK);
@@ -755,23 +726,23 @@ namespace XCoder
             }
         }
 
-        private void 架构管理SToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 架构管理SToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            String connName = "" + cbConn.SelectedValue;
+            var connName = "" + cbConn.SelectedValue;
             if (String.IsNullOrEmpty(connName)) return;
 
             FrmSchema.Create(DAL.Create(connName).Db).Show();
         }
 
-        private void sQL查询器QToolStripMenuItem_Click(object sender, EventArgs e)
+        private void sQL查询器QToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            String connName = "" + cbConn.SelectedValue;
+            var connName = "" + cbConn.SelectedValue;
             if (String.IsNullOrEmpty(connName)) return;
 
             FrmQuery.Create(DAL.Create(connName)).Show();
         }
 
-        private void btnImport_Click(object sender, EventArgs e)
+        private void btnImport_Click(Object sender, EventArgs e)
         {
             var btn = sender as Button;
             if (btn != null && btn.Text == "导出模型")
@@ -807,13 +778,13 @@ namespace XCoder
         #endregion
 
         #region 网页
-        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        private void webBrowser1_DocumentCompleted(Object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             // 网页加载完成后，自动向下滚动一段距离，越过头部
             webBrowser1.Document.Window.ScrollTo(0, 90);
         }
 
-        private void webBrowser1_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+        private void webBrowser1_Navigating(Object sender, WebBrowserNavigatingEventArgs e)
         {
             if (e.Url != null)
             {
@@ -833,7 +804,7 @@ namespace XCoder
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timer1_Tick(Object sender, EventArgs e)
         {
             timer1.Enabled = false;
 
@@ -845,7 +816,7 @@ namespace XCoder
         #endregion
 
         #region 添加模型-@宁波-小董 2013
-        private void 添加模型ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 添加模型ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
             NewModel.CreateForm().Show();
         }
