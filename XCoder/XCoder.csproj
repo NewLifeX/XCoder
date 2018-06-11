@@ -16,7 +16,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\XCoder\</OutputPath>
+    <OutputPath>..\发布\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>

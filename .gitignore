@@ -21,3 +21,6 @@ bld/
 *.htm
 *.nuspec
 *.nupkg
+/发布
+/Config
+/Plugins
