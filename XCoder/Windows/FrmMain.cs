@@ -397,7 +397,7 @@ namespace XCoder
                 return;
             }
             var list = source as List<IDataTable>;
-            if (list[0].DbType == DatabaseType.SqlServer) // 增加对SqlServer 2000的特殊处理  ahuang
+            if (list != null && list.Count > 0 && list[0].DbType == DatabaseType.SqlServer) // 增加对SqlServer 2000的特殊处理  ahuang
             {
                 //list.Remove(list.Find(delegate(IDataTable p) { return p.Name == "dtproperties"; }));
                 //list.Remove(list.Find(delegate(IDataTable p) { return p.Name == "sysconstraints"; }));
