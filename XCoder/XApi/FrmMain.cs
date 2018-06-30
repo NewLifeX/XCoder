@@ -172,13 +172,13 @@ namespace XApi
                         EncoderLog = cfg.ShowEncoderLog ? log : Logger.Null
                     };
 
-                    if (cfg.ShowSend || cfg.ShowReceive)
-                    {
-                        var ct = client.Client;
-                        ct.Log = log;
-                        ct.LogSend = cfg.ShowSend;
-                        ct.LogReceive = cfg.ShowReceive;
-                    }
+                    //if (cfg.ShowSend || cfg.ShowReceive)
+                    //{
+                    //    var ct = client.Client;
+                    //    ct.Log = log;
+                    //    ct.LogSend = cfg.ShowSend;
+                    //    ct.LogReceive = cfg.ShowReceive;
+                    //}
 
                     _Client = client;
                     client.Open();
@@ -370,17 +370,17 @@ namespace XApi
             _Cost = 0;
             _TotalCost = 0;
 
-            var ct = _Client.Client;
+            //var ct = _Client.Client;
             var list = new List<ApiClient> { _Client };
             for (var i = 0; i < ths - 1; i++)
             {
                 var client = new ApiClient(uri + "");
-                var ct2 = client.Client;
-                ct2.Log = ct.Log;
-                ct2.LogSend = ct.LogSend;
-                ct2.LogReceive = ct.LogReceive;
-                ct2.StatSend = ct.StatSend;
-                ct2.StatReceive = ct.StatReceive;
+                //var ct2 = client.Client;
+                //ct2.Log = ct.Log;
+                //ct2.LogSend = ct.LogSend;
+                //ct2.LogReceive = ct.LogReceive;
+                //ct2.StatSend = ct.StatSend;
+                //ct2.StatReceive = ct.StatReceive;
 
                 client.StatSend = _Client.StatSend;
                 client.StatReceive = _Client.StatReceive;

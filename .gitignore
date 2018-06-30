@@ -21,3 +21,7 @@ bld/
 *.htm
 *.nuspec
 *.nupkg
+/DLL
+/XCoder/Build.cs
+/XCoder/Model.xml
+/XCoder/Build.tt
