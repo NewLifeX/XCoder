@@ -46,7 +46,7 @@ namespace XCoder.XNet
             // 可选项
             if (Length > 20) Option = pk.ReadBytes(20, Length - 20);
 
-            Data = pk.Sub(Length, DataLength);
+            Data = pk.Slice(Length, DataLength);
         }
 
         public override String ToString() => $"{SrcAddr} => {DestAddr} [{DataLength}]";

@@ -48,7 +48,7 @@ namespace XCoder.XNet
             // 可选项
             if (HeadLength > 20) Option = pk.ReadBytes(20, HeadLength - 20);
 
-            Data = pk.Sub(HeadLength);
+            Data = pk.Slice(HeadLength);
         }
 
         public override String ToString() => $"{IPPacket?.SrcAddr}:{SrcPort} => {IPPacket.DestAddr}:{DestPort} [{IPPacket.DataLength - HeadLength}]";
