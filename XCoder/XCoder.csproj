@@ -39,7 +39,7 @@
     <Reference Include="NewLife.Core, Version=7.3.6755.22250, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NewLife.Core.7.3.6755.22250\lib\net45\NewLife.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NewLife.Net, Version=3.2.6700.37168, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NewLife.Net, Version=3.2.6700.37161, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NewLife.Net.3.2.6700.37161\lib\net45\NewLife.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
