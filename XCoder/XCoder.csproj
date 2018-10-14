@@ -94,6 +94,12 @@
     <Compile Include="Tools\FrmSecurity.Designer.cs">
       <DependentUpon>FrmSecurity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\FrmSpeak.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FrmSpeak.Designer.cs">
+      <DependentUpon>FrmSpeak.cs</DependentUpon>
+    </Compile>
     <Compile Include="XApi\ApiConfig.cs" />
     <Compile Include="XApi\MyApiController.cs" />
     <Compile Include="XApi\FrmMain.cs">
@@ -192,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FrmSecurity.resx">
       <DependentUpon>FrmSecurity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FrmSpeak.resx">
+      <DependentUpon>FrmSpeak.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="XApi\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
