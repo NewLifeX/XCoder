@@ -36,11 +36,11 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NewLife.Core, Version=7.3.6790.27910, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Core.7.3.6790.27910\lib\net45\NewLife.Core.dll</HintPath>
+    <Reference Include="NewLife.Core, Version=7.3.6870.42457, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Core.7.3.6870.42457\lib\net45\NewLife.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NewLife.Net, Version=3.2.6700.37161, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Net.3.2.6700.37161\lib\net45\NewLife.Net.dll</HintPath>
+    <Reference Include="NewLife.Net, Version=3.3.6871.979, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Net.3.3.6871.979\lib\net45\NewLife.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -53,8 +53,8 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="XCode, Version=9.8.6790.27913, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.XCode.9.8.6790.27913\lib\net45\XCode.dll</HintPath>
+    <Reference Include="XCode, Version=9.9.6870.42458, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.XCode.9.9.6870.42458\lib\net45\XCode.dll</HintPath>
     </Reference>
     <Reference Include="XTemplate, Version=2.0.6700.37161, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NewLife.XTemplate.2.0.6700.37161\lib\net45\XTemplate.dll</HintPath>

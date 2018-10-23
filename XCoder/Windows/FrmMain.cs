@@ -260,7 +260,7 @@ namespace XCoder
                 //{
                 if (dal.Db.CreateMetaData().MetaDataCollections.Contains("Databases"))
                 {
-                    dt = dal.Db.CreateSession().GetSchema("Databases", null);
+                    dt = dal.Db.CreateSession().GetSchema(null, "Databases", null);
                 }
                 //}
                 //finally { DAL.ShowSQL = old; }
@@ -268,8 +268,10 @@ namespace XCoder
                 if (dt == null) return;
 
                 var dbprovider = dal.DbType.ToString();
-                var builder = new DbConnectionStringBuilder();
-                builder.ConnectionString = dal.ConnStr;
+                var builder = new DbConnectionStringBuilder
+                {
+                    ConnectionString = dal.ConnStr
+                };
 
                 // 统计库名
                 var n = 0;

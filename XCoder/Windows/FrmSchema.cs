@@ -96,23 +96,16 @@ namespace XCoder
                 {
                     var sql = "select * from " + (obj as IDataTable).TableName;
                     DataTable dt = null;
-                    try
+                    using (var cmd = ss.CreateCommand(sql))
+                    using (var reader = cmd.ExecuteReader(CommandBehavior.KeyInfo | CommandBehavior.SchemaOnly))
                     {
-                        using (var cmd = ss.CreateCommand(sql))
-                        using (var reader = cmd.ExecuteReader(CommandBehavior.KeyInfo | CommandBehavior.SchemaOnly))
-                        {
-                            dt = reader.GetSchemaTable();
-                        }
-                    }
-                    finally
-                    {
-                        ss.AutoClose();
+                        dt = reader.GetSchemaTable();
                     }
                     obj = dt;
                 }
                 else if (obj is String)
                 {
-                    obj = ss.GetSchema((String)obj, null);
+                    obj = ss.GetSchema(null, (String)obj, null);
                 }
                 gv.DataSource = obj;
                 gv.Update();
