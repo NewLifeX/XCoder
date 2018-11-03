@@ -105,7 +105,11 @@ namespace XCoder
                 }
                 else if (obj is String)
                 {
+#if NET4
+                    obj = ss.GetSchema((String)obj, null);
+#else
                     obj = ss.GetSchema(null, (String)obj, null);
+#endif
                 }
                 gv.DataSource = obj;
                 gv.Update();

@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife.Log;
-using NewLife.Net;
 using NewLife.Reflection;
 using XCode.DataAccessLayer;
 using XTemplate.Templating;
@@ -260,7 +259,11 @@ namespace XCoder
                 //{
                 if (dal.Db.CreateMetaData().MetaDataCollections.Contains("Databases"))
                 {
+#if NET4
+                    dt = dal.Db.CreateSession().GetSchema("Databases", null);
+#else
                     dt = dal.Db.CreateSession().GetSchema(null, "Databases", null);
+#endif
                 }
                 //}
                 //finally { DAL.ShowSQL = old; }
