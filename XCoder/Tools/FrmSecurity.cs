@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Windows.Forms;
+using NewLife.Collections;
 using NewLife.Security;
 
 namespace XCoder.Tools
@@ -338,6 +339,57 @@ namespace XCoder.Tools
             var v = rtSource.Text;
             v = HttpUtility.HtmlDecode(v);
             rtResult.Text = v;
+        }
+
+        private void btnTime_Click(Object sender, EventArgs e)
+        {
+            var v = rtSource.Text;
+            if (v.IsNullOrEmpty()) return;
+
+            var sb = Pool.StringBuilder.Get();
+
+            var dt = v.ToDateTime();
+            if (dt.Year > 1 && dt.Year < 3000)
+            {
+                sb.AppendLine("Unix秒：" + dt.ToInt());
+                sb.AppendLine("Unix毫秒：" + dt.ToLong());
+            }
+
+            var now = DateTime.Now;
+            var n = v.ToLong();
+            if (n >= Int32.MaxValue)
+            {
+                dt = n.ToDateTime();
+                if (dt.Year > 1000 && dt.Year < 3000)
+                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", dt);
+
+                //sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(-n));
+                //sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(n));
+            }
+            else if (n > 0)
+            {
+                dt = v.ToInt().ToDateTime();
+                if (dt.Year > 1000 && dt.Year < 3000)
+                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss}\r\n", dt);
+
+                //sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(-n));
+                //sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(n));
+            }
+
+            // 有可能是过去时间或者未来时间戳
+            if (n > 0)
+            {
+                sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(-n));
+                sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(n));
+
+                if (n < Int32.MaxValue)
+                {
+                    sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(-n));
+                    sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(n));
+                }
+            }
+
+            rtResult.Text = sb.Put(true);
         }
     }
 }
