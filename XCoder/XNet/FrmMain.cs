@@ -245,7 +245,7 @@ namespace XNet
 
             cfg.Save();
 
-            _timer = new TimerX(ShowStat, null, 5000, 5000);
+            _timer = new TimerX(ShowStat, null, 5000, 5000) { Async = true };
         }
 
         void Disconnect()
@@ -385,14 +385,6 @@ namespace XNet
                 }
                 else
                 {
-                    // 多线程测试
-                    //Parallel.For(0, ths, n =>
-                    //{
-                    //    var client = _Client.Remote.CreateRemote();
-                    //    client.StatSend = _Client.StatSend;
-                    //    client.StatReceive = _Client.StatReceive;
-                    //    client.SendMulti(buf, count, sleep);
-                    //});
                     var any = _Client.Local.Address.IsAny();
                     var list = new List<ISocketClient>();
                     for (var i = 0; i < ths; i++)
@@ -405,16 +397,6 @@ namespace XNet
 
                         list.Add(client);
                     }
-                    //Parallel.For(0, ths, n =>
-                    //{
-                    //    var client = list[n];
-                    //    client.SendMulti(pk, count, sleep);
-                    //    //try
-                    //    //{
-                    //    //    client.Open();
-                    //    //}
-                    //    //catch { }
-                    //});
                     var ts = new List<Task>();
                     for (var i = 0; i < ths; i++)
                     {
