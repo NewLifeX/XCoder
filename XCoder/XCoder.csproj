@@ -61,11 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Build.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Build.tt</DependentUpon>
-    </Compile>
     <Compile Include="Engine\IcoHelper.cs" />
     <Compile Include="Engine\ModelConfig.cs" />
     <Compile Include="FileEncoding\FrmMain.cs">
@@ -397,13 +392,6 @@
     <EmbeddedResource Include="XRegex\Sample\SQL查询\普通查询.txt" />
     <EmbeddedResource Include="XRegex\Sample\平衡组\算术表达式.txt" />
     <EmbeddedResource Include="XRegex\Sample\网页\最外层嵌套.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Build.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Build.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
