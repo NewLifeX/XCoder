@@ -259,11 +259,7 @@ namespace XCoder
                 //{
                 if (dal.Db.CreateMetaData().MetaDataCollections.Contains("Databases"))
                 {
-#if NET4
-                    dt = dal.Db.CreateSession().GetSchema("Databases", null);
-#else
                     dt = dal.Db.CreateSession().GetSchema(null, "Databases", null);
-#endif
                 }
                 //}
                 //finally { DAL.ShowSQL = old; }

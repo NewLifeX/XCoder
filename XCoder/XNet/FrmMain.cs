@@ -14,7 +14,6 @@ using NewLife.Reflection;
 using NewLife.Threading;
 using NewLife.Windows;
 using XCoder;
-using XCoder.XNet;
 #if !NET4
 using TaskEx = System.Threading.Tasks.Task;
 #endif
