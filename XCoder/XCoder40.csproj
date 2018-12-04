@@ -33,9 +33,8 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="NewLife.Core, Version=7.4.6881.41311, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Core.7.4.6881.41311\lib\net40\NewLife.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NewLife.Core, Version=7.4.6911.41889, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Core.7.4.6911.41889\lib\net40\NewLife.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -48,20 +47,14 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="XCode, Version=9.9.6881.41313, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.XCode.9.9.6881.41312\lib\net40\XCode.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="XCode, Version=9.9.6911.41890, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.XCode.9.9.6911.41890\lib\net40\XCode.dll</HintPath>
     </Reference>
     <Reference Include="XTemplate, Version=2.0.6700.37168, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NewLife.XTemplate.2.0.6700.37161\lib\net40\XTemplate.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Build.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Build.tt</DependentUpon>
-    </Compile>
     <Compile Include="Engine\IcoHelper.cs" />
     <Compile Include="Engine\ModelConfig.cs" />
     <Compile Include="FileEncoding\FrmMain.cs">
@@ -163,6 +156,7 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="XApi\ApiConfig.cs" />
+    <Compile Include="XNet\BenchHelper.cs" />
     <Compile Include="XNet\NetConfig.cs" />
     <Compile Include="XNet\WorkModes.cs" />
     <Compile Include="XRegex\FileResource.cs" />
@@ -390,13 +384,6 @@
     <EmbeddedResource Include="XRegex\Sample\SQL查询\普通查询.txt" />
     <EmbeddedResource Include="XRegex\Sample\平衡组\算术表达式.txt" />
     <EmbeddedResource Include="XRegex\Sample\网页\最外层嵌套.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Build.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Build.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

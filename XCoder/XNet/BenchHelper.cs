@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using NewLife.Data;
 using NewLife.Net;
 using NewLife.Threading;
+#if !NET4
+using TaskEx = System.Threading.Tasks.Task;
+#endif
 
 namespace XCoder.XNet
 {
@@ -19,13 +22,13 @@ namespace XCoder.XNet
         /// <returns></returns>
         public static Task SendConcurrency(this ISocketRemote session, Packet pk, Int32 times, Int32 msInterval)
         {
-            var task = Task.Run(async () =>
+            var task = TaskEx.Run(async () =>
             {
                 for (var i = 0; i < times; i++)
                 {
                     session.Send(pk);
 
-                    await Task.Delay(msInterval);
+                    await TaskEx.Delay(msInterval);
                 }
             });
 
