@@ -110,6 +110,7 @@
     </Compile>
     <Compile Include="XNet\BenchHelper.cs" />
     <Compile Include="XNet\IPPacket.cs" />
+    <Compile Include="XNet\NetHelper2.cs" />
     <Compile Include="XNet\RawSocket.cs" />
     <Compile Include="XNet\TcpPacket.cs" />
     <Compile Include="Yun\FrmMap.cs">

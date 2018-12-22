@@ -482,12 +482,12 @@ namespace XNet
 
         private void 查看Tcp参数ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            NetHelper.ShowTcpParameters();
+            NetHelper2.ShowTcpParameters();
         }
 
         private void 设置最大TcpToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            NetHelper.SetTcpMax();
+            NetHelper2.SetTcpMax();
         }
 
         private void mi日志着色_Click(Object sender, EventArgs e)

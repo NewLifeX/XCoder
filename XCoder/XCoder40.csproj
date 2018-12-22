@@ -158,6 +158,7 @@
     <Compile Include="XApi\ApiConfig.cs" />
     <Compile Include="XNet\BenchHelper.cs" />
     <Compile Include="XNet\NetConfig.cs" />
+    <Compile Include="XNet\NetHelper2.cs" />
     <Compile Include="XNet\WorkModes.cs" />
     <Compile Include="XRegex\FileResource.cs" />
     <Compile Include="XRegex\FrmMain.cs">
