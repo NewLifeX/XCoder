@@ -108,6 +108,12 @@
     <Compile Include="XApi\FrmMain.designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="XCom\SerialPortList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XCom\SerialPortList.designer.cs">
+      <DependentUpon>SerialPortList.cs</DependentUpon>
+    </Compile>
     <Compile Include="XNet\BenchHelper.cs" />
     <Compile Include="XNet\IPPacket.cs" />
     <Compile Include="XNet\NetHelper2.cs" />
@@ -206,6 +212,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="XApi\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XCom\SerialPortList.resx">
+      <DependentUpon>SerialPortList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Yun\FrmMap.resx">
       <DependentUpon>FrmMap.cs</DependentUpon>

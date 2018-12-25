@@ -142,6 +142,12 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine\UIConfig.cs" />
+    <Compile Include="XCom\SerialPortList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XCom\SerialPortList.designer.cs">
+      <DependentUpon>SerialPortList.cs</DependentUpon>
+    </Compile>
     <Compile Include="XICO\FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -352,6 +358,9 @@
   <ItemGroup>
     <EmbeddedResource Include="XCom\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XCom\SerialPortList.resx">
+      <DependentUpon>SerialPortList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="XICO\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
