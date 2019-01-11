@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife.Log;
+using NewLife.Threading;
 
 namespace XCoder.FolderInfo
 {
@@ -94,7 +95,7 @@ namespace XCoder.FolderInfo
                 {
                     tn.Nodes.Add("no");
                     //使用后台线程统计大小信息
-                    Task.Factory.StartNew(() => TongJi(tn), TaskCreationOptions.LongRunning).LogException();
+                    ThreadPoolX.QueueUserWorkItem(() => TongJi(tn));
                 }
             }
         }

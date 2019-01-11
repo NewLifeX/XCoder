@@ -45,7 +45,7 @@ namespace XCoder
             var sql = txtSQL.Text;
             if (sql.IsNullOrWhiteSpace()) return;
 
-            Task.Factory.StartNew(() =>
+            ThreadPoolX.QueueUserWorkItem(() =>
             {
                 var sw = Stopwatch.StartNew();
 
@@ -71,7 +71,7 @@ namespace XCoder
 
                 this.Invoke(() => lbStatus.Text = msg);
                 if (dt != null) this.Invoke(() => gv.DataSource = dt);
-            }).LogException();
+            });
         }
 
         private void btnExecute_Click(Object sender, EventArgs e)
@@ -79,7 +79,7 @@ namespace XCoder
             var sql = txtSQL.Text;
             if (sql.IsNullOrWhiteSpace()) return;
 
-            Task.Factory.StartNew(() =>
+            ThreadPoolX.QueueUserWorkItem(() =>
             {
                 var sw = Stopwatch.StartNew();
 
@@ -102,7 +102,7 @@ namespace XCoder
                 }
 
                 this.Invoke(() => lbStatus.Text = msg);
-            }).LogException();
+            });
         }
     }
 }

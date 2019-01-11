@@ -69,7 +69,7 @@ namespace XApi
             LoadConfig();
 
             // 语音识别
-            Task.Factory.StartNew(() =>
+            ThreadPoolX.QueueUserWorkItem(() =>
             {
                 var sp = SpeechRecognition.Current;
                 if (!sp.Enable) return;

@@ -5,6 +5,7 @@ using System.Data;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife.Log;
+using NewLife.Threading;
 using XCode.DataAccessLayer;
 
 namespace XCoder
@@ -41,16 +42,16 @@ namespace XCoder
 
         private void FrmSchema_Load(Object sender, EventArgs e)
         {
-            Task.Factory.StartNew(() =>
+            ThreadPoolX.QueueUserWorkItem(() =>
             {
                 var tables = Db.CreateMetaData().GetTables();
                 this.Invoke(SetList, cbTables, tables);
-            }).LogException();
-            Task.Factory.StartNew(() =>
+            });
+            ThreadPoolX.QueueUserWorkItem(() =>
             {
                 var list = Db.CreateMetaData().MetaDataCollections;
                 this.Invoke(SetList, cbSchemas, list);
-            }).LogException();
+            });
         }
         #endregion
 
