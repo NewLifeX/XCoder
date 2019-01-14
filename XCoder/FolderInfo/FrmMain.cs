@@ -299,7 +299,7 @@ namespace XCoder.FolderInfo
                 }
                 catch (Exception ex)
                 {
-                    BizLog.Error(ex?.GetTrue().ToString());
+                    BizLog.Error(ex.Message);
                 }
             }
             // 递归子目录
@@ -314,7 +314,7 @@ namespace XCoder.FolderInfo
             }
             catch (Exception ex)
             {
-                BizLog.Error(ex?.GetTrue().ToString());
+                BizLog.Error(ex.Message);
             }
         }
         #endregion
