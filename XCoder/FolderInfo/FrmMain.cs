@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife.Log;
 using NewLife.Threading;
@@ -248,14 +247,15 @@ namespace XCoder.FolderInfo
 
             try
             {
+                var exp = Environment.SystemDirectory.CombinePath("../explorer.exe").GetFullPath();
                 if (File.Exists(path))
-                    Process.Start("explorer.exe /select," + path);
+                    Process.Start(exp, "/select," + path);
                 else
-                    Process.Start("explorer.exe " + path);
+                    Process.Start(exp, path);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "删除出错");
+                MessageBox.Show(ex.Message, "打开出错");
             }
         }
 
