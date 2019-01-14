@@ -39,8 +39,8 @@
     <Reference Include="NewLife.Core, Version=8.0.6940.24647, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NewLife.Core.8.0.6940.24647\lib\net45\NewLife.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NewLife.Net, Version=3.3.6871.979, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Net.3.3.6871.979\lib\net45\NewLife.Net.dll</HintPath>
+    <Reference Include="NewLife.Net, Version=3.3.6951.701, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Net.3.3.6951.701\lib\net45\NewLife.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -61,11 +61,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Build - Test.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Build - Test.tt</DependentUpon>
-    </Compile>
     <Compile Include="Engine\IcoHelper.cs" />
     <Compile Include="Engine\ModelConfig.cs" />
     <Compile Include="FileEncoding\FrmMain.cs">
@@ -408,12 +403,6 @@
     <EmbeddedResource Include="XRegex\Sample\SQL查询\普通查询.txt" />
     <EmbeddedResource Include="XRegex\Sample\平衡组\算术表达式.txt" />
     <EmbeddedResource Include="XRegex\Sample\网页\最外层嵌套.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Build - Test.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Build - Test.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -267,7 +267,7 @@ namespace XCoder.FolderInfo
             if (MessageBox.Show("准备删除" + path + Environment.NewLine + "删除将不可恢复，是否删除？", "确认删除", MessageBoxButtons.YesNo) == DialogResult.No) return;
 
 
-            if (path.Contains(" ")) path = "\"" + path + "\"";
+            //if (path.Contains(" ")) path = "\"" + path + "\"";
 
             try
             {
