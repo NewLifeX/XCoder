@@ -31,7 +31,7 @@ namespace XCoder.Tools
 
             try
             {
-                return str.ToHex();
+                if (str.Contains("-")) return str.ToHex();
             }
             catch { }
 
@@ -60,7 +60,7 @@ namespace XCoder.Tools
                 if (sb.Length > 0)
                 {
                     sb.AppendLine();
-                    sb.AppendLine();
+                    //sb.AppendLine();
                 }
                 sb.Append(item);
             }
@@ -69,12 +69,12 @@ namespace XCoder.Tools
 
         private void SetResult(Byte[] data)
         {
-            SetResult("/*HEX编码、Base64编码、Url改进Base64编码*/", data.ToHex(), data.ToBase64(), data.ToUrlBase64());
+            SetResult("/*HEX编码、Base64编码、Url改进Base64编码*/", data.ToHex("-"), data.ToBase64(), data.ToUrlBase64());
         }
 
         private void SetResult2(Byte[] data)
         {
-            SetResult("/*字符串、HEX编码、Base64编码*/", data.ToStr(), data.ToHex(), data.ToBase64());
+            SetResult("/*字符串、HEX编码、Base64编码*/", data.ToStr(), data.ToHex("-"), data.ToBase64());
         }
         #endregion
 
@@ -176,13 +176,19 @@ namespace XCoder.Tools
         private void btnCRC_Click(Object sender, EventArgs e)
         {
             var buf = GetBytes();
-            rtResult.Text = "{0:X8}\r\n{0}".F(buf.Crc());
+            //rtResult.Text = "{0:X8}\r\n{0}".F(buf.Crc());
+            var rs = buf.Crc();
+            buf = rs.GetBytes(false);
+            SetResult("/*数字、HEX编码、Base64编码*/", rs + "", buf.ToHex(), buf.ToBase64());
         }
 
         private void btnCRC2_Click(Object sender, EventArgs e)
         {
             var buf = GetBytes();
-            rtResult.Text = "{0:X4}\r\n{0}".F(buf.Crc16());
+            //rtResult.Text = "{0:X4}\r\n{0}".F(buf.Crc16());
+            var rs = buf.Crc16();
+            buf = rs.GetBytes(false);
+            SetResult("/*数字、HEX编码、Base64编码*/", rs + "", buf.ToHex(), buf.ToBase64());
         }
 
         private void btnDES_Click(Object sender, EventArgs e)
