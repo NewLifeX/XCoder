@@ -367,7 +367,7 @@ namespace XCoder.Tools
             {
                 dt = n.ToDateTime();
                 if (dt.Year > 1000 && dt.Year < 3000)
-                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", dt);
+                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff} (Unix秒)\r\n", dt);
 
                 //sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(-n));
                 //sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(n));
@@ -376,7 +376,7 @@ namespace XCoder.Tools
             {
                 dt = v.ToInt().ToDateTime();
                 if (dt.Year > 1000 && dt.Year < 3000)
-                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss}\r\n", dt);
+                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss} (Unix秒)\r\n", dt);
 
                 //sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(-n));
                 //sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(n));
@@ -385,13 +385,13 @@ namespace XCoder.Tools
             // 有可能是过去时间或者未来时间戳
             if (n > 0)
             {
-                sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(-n));
-                sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(n));
+                sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss.fff} (now.AddMilliseconds(-n))\r\n", now.AddMilliseconds(-n));
+                sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss.fff} (now.AddMilliseconds(n))\r\n", now.AddMilliseconds(n));
 
                 if (n < Int32.MaxValue)
                 {
-                    sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(-n));
-                    sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(n));
+                    sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss} (now.AddSeconds(-n))\r\n", now.AddSeconds(-n));
+                    sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss} (now.AddSeconds(n))\r\n", now.AddSeconds(n));
                 }
             }
 
