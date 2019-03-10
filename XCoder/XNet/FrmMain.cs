@@ -315,7 +315,7 @@ namespace XNet
 
             if (NetConfig.Current.ShowReceiveString)
             {
-                var line = e.ToStr();
+                var line = e.Packet.ToStr();
                 //XTrace.WriteLine(line);
 
                 BizLog.Info(line);

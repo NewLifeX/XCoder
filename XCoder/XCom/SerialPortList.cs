@@ -452,7 +452,7 @@ namespace NewLife.Windows
         StreamReader _reader;
         void OnReceived(Object sender, ReceivedEventArgs e)
         {
-            var data = e.Data;
+            var data = e.Packet.ReadBytes();
             if (data == null || data.Length < 1) return;
 
             BytesOfReceived += data.Length;
