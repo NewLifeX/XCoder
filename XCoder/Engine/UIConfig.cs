@@ -88,7 +88,7 @@ namespace XCoder
         {
             // 加载颜色
             var ui = UIConfig.Load();
-            if (ui.Font == null) ui = null;
+            if (ui?.Font == null) ui = null;
             if (ui != null)
             {
                 try

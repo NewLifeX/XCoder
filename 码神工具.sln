@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{32891F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XCoder", "XCoder\XCoder.csproj", "{3EB3A5F1-F785-4672-A21D-A3117FC12129}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XCoder40", "XCoder\XCoder40.csproj", "{A4A7E1BD-9E53-4D60-A0E0-122E5441DDBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XCoder40", "XCoder40\XCoder40.csproj", "{A4A7E1BD-9E53-4D60-A0E0-122E5441DDBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

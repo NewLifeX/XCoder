@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife.Log;
 using NewLife.Reflection;
+using NewLife.Threading;
 using XCode.DataAccessLayer;
 using XTemplate.Templating;
 #if !NET4
@@ -72,7 +73,7 @@ namespace XCoder
 
             LoadConfig();
 
-            Task.Factory.StartNew(AutoDetectDatabase).LogException();
+            ThreadPoolX.QueueUserWorkItem(AutoDetectDatabase);
         }
 
         private void FrmMain_FormClosing(Object sender, FormClosingEventArgs e)
@@ -142,13 +143,13 @@ namespace XCoder
             if (!ContainConnStr(localstr)) DAL.AddConnStr(localName, localstr, null, "mssql");
 
             // 检测本地Access和SQLite
-            Task.Factory.StartNew(DetectFile, TaskCreationOptions.LongRunning).LogException();
+            ThreadPoolX.QueueUserWorkItem(DetectFile);
 
             //!!! 必须另外实例化一个列表，否则作为数据源绑定时，会因为是同一个对象而被跳过
             //var list = new List<String>();
 
             // 探测连接中的其它库
-            Task.Factory.StartNew(DetectRemote, TaskCreationOptions.LongRunning).LogException();
+            ThreadPoolX.QueueUserWorkItem(DetectRemote);
         }
 
         void DetectFile()
@@ -433,7 +434,7 @@ namespace XCoder
             if (!DAL.ConnStrs.TryGetValue(name, out var connstr) || connstr.IsNullOrWhiteSpace()) return;
 
             // 异步加载
-            Task.Factory.StartNew(() => { var tables = DAL.Create(name).Tables; }).LogException();
+            ThreadPoolX.QueueUserWorkItem(() => { var tables = DAL.Create(name).Tables; });
         }
 
         private void btnRefreshTable_Click(Object sender, EventArgs e)
@@ -659,7 +660,7 @@ namespace XCoder
 
         private void oracle客户端运行时检查ToolStripMenuItem1_Click(Object sender, EventArgs e)
         {
-            Task.Factory.StartNew(CheckOracle);
+            ThreadPoolX.QueueUserWorkItem(CheckOracle);
         }
         void CheckOracle()
         {

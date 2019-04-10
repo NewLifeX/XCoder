@@ -31,7 +31,7 @@ namespace XCoder.Tools
 
             try
             {
-                return str.ToHex();
+                if (str.Contains("-")) return str.ToHex();
             }
             catch { }
 
@@ -60,7 +60,7 @@ namespace XCoder.Tools
                 if (sb.Length > 0)
                 {
                     sb.AppendLine();
-                    sb.AppendLine();
+                    //sb.AppendLine();
                 }
                 sb.Append(item);
             }
@@ -69,12 +69,12 @@ namespace XCoder.Tools
 
         private void SetResult(Byte[] data)
         {
-            SetResult("/*HEX编码、Base64编码、Url改进Base64编码*/", data.ToHex(), data.ToBase64(), data.ToUrlBase64());
+            SetResult("/*HEX编码、Base64编码、Url改进Base64编码*/", data.ToHex("-"), data.ToBase64(), data.ToUrlBase64());
         }
 
         private void SetResult2(Byte[] data)
         {
-            SetResult("/*字符串、HEX编码、Base64编码*/", data.ToStr(), data.ToHex(), data.ToBase64());
+            SetResult("/*字符串、HEX编码、Base64编码*/", data.ToStr(), data.ToHex("-"), data.ToBase64());
         }
         #endregion
 
@@ -176,13 +176,19 @@ namespace XCoder.Tools
         private void btnCRC_Click(Object sender, EventArgs e)
         {
             var buf = GetBytes();
-            rtResult.Text = "{0:X8}\r\n{0}".F(buf.Crc());
+            //rtResult.Text = "{0:X8}\r\n{0}".F(buf.Crc());
+            var rs = buf.Crc();
+            buf = rs.GetBytes(false);
+            SetResult("/*数字、HEX编码、Base64编码*/", rs + "", buf.ToHex(), buf.ToBase64());
         }
 
         private void btnCRC2_Click(Object sender, EventArgs e)
         {
             var buf = GetBytes();
-            rtResult.Text = "{0:X4}\r\n{0}".F(buf.Crc16());
+            //rtResult.Text = "{0:X4}\r\n{0}".F(buf.Crc16());
+            var rs = buf.Crc16();
+            buf = rs.GetBytes(false);
+            SetResult("/*数字、HEX编码、Base64编码*/", rs + "", buf.ToHex(), buf.ToBase64());
         }
 
         private void btnDES_Click(Object sender, EventArgs e)
@@ -361,7 +367,7 @@ namespace XCoder.Tools
             {
                 dt = n.ToDateTime();
                 if (dt.Year > 1000 && dt.Year < 3000)
-                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", dt);
+                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff} (Unix秒)\r\n", dt);
 
                 //sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(-n));
                 //sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(n));
@@ -370,7 +376,7 @@ namespace XCoder.Tools
             {
                 dt = v.ToInt().ToDateTime();
                 if (dt.Year > 1000 && dt.Year < 3000)
-                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss}\r\n", dt);
+                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss} (Unix秒)\r\n", dt);
 
                 //sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(-n));
                 //sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(n));
@@ -379,13 +385,13 @@ namespace XCoder.Tools
             // 有可能是过去时间或者未来时间戳
             if (n > 0)
             {
-                sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(-n));
-                sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(n));
+                sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss.fff} (now.AddMilliseconds(-n))\r\n", now.AddMilliseconds(-n));
+                sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss.fff} (now.AddMilliseconds(n))\r\n", now.AddMilliseconds(n));
 
                 if (n < Int32.MaxValue)
                 {
-                    sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(-n));
-                    sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(n));
+                    sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss} (now.AddSeconds(-n))\r\n", now.AddSeconds(-n));
+                    sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss} (now.AddSeconds(n))\r\n", now.AddSeconds(n));
                 }
             }
 

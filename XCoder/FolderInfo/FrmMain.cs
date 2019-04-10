@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife.Log;
+using NewLife.Threading;
 
 namespace XCoder.FolderInfo
 {
@@ -94,7 +94,7 @@ namespace XCoder.FolderInfo
                 {
                     tn.Nodes.Add("no");
                     //使用后台线程统计大小信息
-                    Task.Factory.StartNew(() => TongJi(tn), TaskCreationOptions.LongRunning).LogException();
+                    ThreadPoolX.QueueUserWorkItem(() => TongJi(tn));
                 }
             }
         }
@@ -247,14 +247,15 @@ namespace XCoder.FolderInfo
 
             try
             {
+                var exp = Environment.SystemDirectory.CombinePath("../explorer.exe").GetFullPath();
                 if (File.Exists(path))
-                    Process.Start("explorer.exe /select," + path);
+                    Process.Start(exp, "/select," + path);
                 else
-                    Process.Start("explorer.exe " + path);
+                    Process.Start(exp, path);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "删除出错");
+                MessageBox.Show(ex.Message, "打开出错");
             }
         }
 
@@ -266,7 +267,7 @@ namespace XCoder.FolderInfo
             if (MessageBox.Show("准备删除" + path + Environment.NewLine + "删除将不可恢复，是否删除？", "确认删除", MessageBoxButtons.YesNo) == DialogResult.No) return;
 
 
-            if (path.Contains(" ")) path = "\"" + path + "\"";
+            //if (path.Contains(" ")) path = "\"" + path + "\"";
 
             try
             {
@@ -298,7 +299,7 @@ namespace XCoder.FolderInfo
                 }
                 catch (Exception ex)
                 {
-                    BizLog.Error(ex?.GetTrue().ToString());
+                    BizLog.Error(ex.Message);
                 }
             }
             // 递归子目录
@@ -313,7 +314,7 @@ namespace XCoder.FolderInfo
             }
             catch (Exception ex)
             {
-                BizLog.Error(ex?.GetTrue().ToString());
+                BizLog.Error(ex.Message);
             }
         }
         #endregion

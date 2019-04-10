@@ -14,6 +14,7 @@ using NewLife.Reflection;
 using NewLife.Threading;
 using NewLife.Windows;
 using XCoder;
+using XCoder.XNet;
 #if !NET4
 using TaskEx = System.Threading.Tasks.Task;
 #endif
@@ -86,7 +87,7 @@ namespace XNet
             LoadConfig();
 
             // 语音识别
-            Task.Factory.StartNew(() =>
+            ThreadPoolX.QueueUserWorkItem(() =>
             {
                 var sp = SpeechRecognition.Current;
                 if (!sp.Enable) return;
@@ -314,7 +315,7 @@ namespace XNet
 
             if (NetConfig.Current.ShowReceiveString)
             {
-                var line = e.ToStr();
+                var line = e.Packet.ToStr();
                 //XTrace.WriteLine(line);
 
                 BizLog.Info(line);
@@ -403,7 +404,7 @@ namespace XNet
                         ts.Add(task);
                     }
 
-                    _Send = Task.WhenAll(ts);
+                    _Send = TaskEx.WhenAll(ts);
                 }
             }
             else if (_Server != null)
@@ -481,12 +482,12 @@ namespace XNet
 
         private void 查看Tcp参数ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            NetHelper.ShowTcpParameters();
+            NetHelper2.ShowTcpParameters();
         }
 
         private void 设置最大TcpToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            NetHelper.SetTcpMax();
+            NetHelper2.SetTcpMax();
         }
 
         private void mi日志着色_Click(Object sender, EventArgs e)

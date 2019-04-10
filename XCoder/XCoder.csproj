@@ -36,25 +36,29 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NewLife.Core, Version=7.4.6881.41311, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Core.7.4.6881.41311\lib\net45\NewLife.Core.dll</HintPath>
+    <Reference Include="NewLife.Core, Version=8.1.7008.34076, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Core.8.1.2019.310\lib\net45\NewLife.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NewLife.Net, Version=3.3.6871.979, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Net.3.3.6871.979\lib\net45\NewLife.Net.dll</HintPath>
+    <Reference Include="NewLife.Net, Version=3.5.7008.39419, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Net.3.5.2019.310\lib\net45\NewLife.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Management" />
     <Reference Include="System.Messaging" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="XCode, Version=9.9.6881.41312, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.XCode.9.9.6881.41312\lib\net45\XCode.dll</HintPath>
+    <Reference Include="XCode, Version=9.11.7008.35192, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.XCode.9.11.2019.311\lib\net45\XCode.dll</HintPath>
     </Reference>
     <Reference Include="XTemplate, Version=2.0.6700.37161, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NewLife.XTemplate.2.0.6700.37161\lib\net45\XTemplate.dll</HintPath>
@@ -108,8 +112,15 @@
     <Compile Include="XApi\FrmMain.designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="XCom\SerialPortList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XCom\SerialPortList.designer.cs">
+      <DependentUpon>SerialPortList.cs</DependentUpon>
+    </Compile>
     <Compile Include="XNet\BenchHelper.cs" />
     <Compile Include="XNet\IPPacket.cs" />
+    <Compile Include="XNet\NetHelper2.cs" />
     <Compile Include="XNet\RawSocket.cs" />
     <Compile Include="XNet\TcpPacket.cs" />
     <Compile Include="Yun\FrmMap.cs">
@@ -205,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="XApi\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XCom\SerialPortList.resx">
+      <DependentUpon>SerialPortList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Yun\FrmMap.resx">
       <DependentUpon>FrmMap.cs</DependentUpon>
