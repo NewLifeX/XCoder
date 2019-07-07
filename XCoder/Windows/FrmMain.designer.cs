@@ -283,6 +283,7 @@
             this.cbRenderGenEntity.TabIndex = 49;
             this.cbRenderGenEntity.Text = "生成泛型实体类";
             this.cbRenderGenEntity.UseVisualStyleBackColor = true;
+            this.cbRenderGenEntity.Visible = false;
             // 
             // txtBaseClass
             // 

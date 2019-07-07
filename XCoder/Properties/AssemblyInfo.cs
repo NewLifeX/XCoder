@@ -28,8 +28,8 @@ using System.Runtime.InteropServices;
 //      内部版本号
 //      修订号
 //
-[assembly: AssemblyVersion("6.9.*")]
-[assembly: AssemblyFileVersion("6.9.2018.0630")]
+[assembly: AssemblyVersion("7.0.*")]
+[assembly: AssemblyFileVersion("7.0.2019.0707")]
 
 /*
  * v6.9.2017.0101   增加消息调试工具，支持调试网络库的消息收发功能

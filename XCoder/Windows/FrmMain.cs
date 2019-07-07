@@ -64,7 +64,7 @@ namespace XCoder
 
             try
             {
-                SetDatabaseList(DAL.ConnStrs.Keys.ToList());
+                SetDatabaseList(DAL.ConnStrs.Keys);
             }
             catch (Exception ex)
             {
@@ -347,7 +347,7 @@ namespace XCoder
             return false;
         }
 
-        void SetDatabaseList(List<String> list)
+        void SetDatabaseList(ICollection<String> list)
         {
             var str = cbConn.Text;
 
@@ -373,7 +373,7 @@ namespace XCoder
                     var list = DAL.Create(Config.ConnName).Tables;
                     if (!cbIncludeView.Checked) list = list.Where(t => !t.IsView).ToList();
                     //if (Config.NeedFix) list = Engine.FixTable(list);
-                    //Engine.Tables = list;
+                    Tables = list;
                 }
                 catch (Exception ex)
                 {
@@ -463,7 +463,7 @@ namespace XCoder
                 //var builder = new EntityBuilder();
 
                 var cfg = Config;
-                var rs = EntityBuilder.BuildTables(new[] { table }, cfg.OutputPath, cfg.NameSpace, cfg.ConnName, cfg.BaseClass);
+                var rs = EntityBuilder.BuildTables(new[] { table }, cfg.OutputPath, cfg.NameSpace, cfg.EntityConnName, cfg.BaseClass);
 
                 MessageBox.Show("生成" + table + "成功！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -498,7 +498,7 @@ namespace XCoder
             //}
 
             var cfg = Config;
-            var rs = EntityBuilder.BuildTables(tables, cfg.OutputPath, cfg.NameSpace, cfg.ConnName, cfg.BaseClass);
+            var rs = EntityBuilder.BuildTables(tables, cfg.OutputPath, cfg.NameSpace, cfg.EntityConnName, cfg.BaseClass);
 
             sw.Stop();
             lb_Status.Text = "生成 " + tables.Count + " 个类完成！耗时：" + sw.Elapsed.ToString();
