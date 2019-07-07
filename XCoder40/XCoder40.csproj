@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>XCoder</RootNamespace>
     <AssemblyName>XCoder</AssemblyName>
-    <ApplicationIcon>leaf.ico</ApplicationIcon>
+    <ApplicationIcon>..\XCoder\leaf.ico</ApplicationIcon>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>obj4\</BaseIntermediateOutputPath>
   </PropertyGroup>
@@ -33,8 +33,11 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="NewLife.Core, Version=7.4.6940.24705, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Core.8.0.6940.24647\lib\net40\NewLife.Core.dll</HintPath>
+    <Reference Include="NewLife.Core, Version=8.2.7126.42291, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Core.8.2.2019.706\lib\net40\NewLife.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NewLife.Net, Version=3.6.7127.17019, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Net.3.6.2019.707\lib\net40\NewLife.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -43,316 +46,414 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Management" />
     <Reference Include="System.Messaging" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="XCode, Version=9.9.6940.24706, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.XCode.9.10.6940.24648\lib\net40\XCode.dll</HintPath>
+    <Reference Include="XCode, Version=9.12.7126.42294, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.XCode.9.13.2019.706\lib\net40\XCode.dll</HintPath>
     </Reference>
     <Reference Include="XTemplate, Version=2.0.6700.37168, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NewLife.XTemplate.2.0.6700.37161\lib\net40\XTemplate.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Build - Test.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Build - Test.tt</DependentUpon>
+    <Compile Include="..\XCoder\Engine\Engine.cs">
+      <Link>Engine\Engine.cs</Link>
     </Compile>
-    <Compile Include="Engine\IcoHelper.cs" />
-    <Compile Include="Engine\ModelConfig.cs" />
-    <Compile Include="FileEncoding\FrmMain.cs" />
-    <Compile Include="FileEncoding\FrmMain.Designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <Compile Include="..\XCoder\Engine\FileSource.cs">
+      <Link>Engine\FileSource.cs</Link>
     </Compile>
-    <Compile Include="FolderInfo\FrmMain.cs" />
-    <Compile Include="FolderInfo\FrmMain.Designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <Compile Include="..\XCoder\Engine\IcoHelper.cs">
+      <Link>Engine\IcoHelper.cs</Link>
     </Compile>
-    <Compile Include="FolderInfo\FrmSplitFile.cs" />
-    <Compile Include="FolderInfo\FrmSplitFile.Designer.cs">
-      <DependentUpon>FrmSplitFile.cs</DependentUpon>
+    <Compile Include="..\XCoder\Engine\ModelConfig.cs">
+      <Link>Engine\ModelConfig.cs</Link>
     </Compile>
-    <Compile Include="FrmMDI.cs" />
-    <Compile Include="FrmMDI.Designer.cs">
-      <DependentUpon>FrmMDI.cs</DependentUpon>
+    <Compile Include="..\XCoder\Engine\UIConfig.cs">
+      <Link>Engine\UIConfig.cs</Link>
     </Compile>
-    <Compile Include="IXForm.cs" />
-    <Compile Include="NewModelForm\AddField.cs" />
-    <Compile Include="NewModelForm\AddField.Designer.cs">
-      <DependentUpon>AddField.cs</DependentUpon>
+    <Compile Include="..\XCoder\Engine\XCoderBase.cs">
+      <Link>Engine\XCoderBase.cs</Link>
     </Compile>
-    <Compile Include="NewModelForm\AddTable.cs" />
-    <Compile Include="NewModelForm\AddTable.Designer.cs">
-      <DependentUpon>AddTable.cs</DependentUpon>
+    <Compile Include="..\XCoder\Engine\XConfig.cs">
+      <Link>Engine\XConfig.cs</Link>
     </Compile>
-    <Compile Include="Engine\FileSource.cs" />
-    <Compile Include="Engine\XConfig.cs" />
-    <Compile Include="Engine\XCoderBase.cs" />
-    <Compile Include="NewModelForm\NewModel.cs" />
-    <Compile Include="NewModelForm\NewModel.Designer.cs">
-      <DependentUpon>NewModel.cs</DependentUpon>
+    <Compile Include="..\XCoder\FileEncoding\FrmMain.cs">
+      <Link>FileEncoding\FrmMain.cs</Link>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewModelForm\WinFormHelper.cs" />
-    <Compile Include="Tools\FrmGPS.cs" />
-    <Compile Include="Tools\FrmGPS.Designer.cs">
-      <DependentUpon>FrmGPS.cs</DependentUpon>
+    <Compile Include="..\XCoder\FileEncoding\FrmMain.Designer.cs">
+      <Link>FileEncoding\FrmMain.Designer.cs</Link>
     </Compile>
-    <Compile Include="Tools\FrmInclude.cs" />
-    <Compile Include="Tools\FrmInclude.Designer.cs">
-      <DependentUpon>FrmInclude.cs</DependentUpon>
+    <Compile Include="..\XCoder\FolderInfo\FrmMain.cs">
+      <Link>FolderInfo\FrmMain.cs</Link>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tools\FrmMain.cs" />
-    <Compile Include="Tools\FrmMain.Designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <Compile Include="..\XCoder\FolderInfo\FrmMain.Designer.cs">
+      <Link>FolderInfo\FrmMain.Designer.cs</Link>
     </Compile>
-    <Compile Include="Tools\FrmSecurity.cs" />
-    <Compile Include="Tools\FrmSecurity.Designer.cs">
-      <DependentUpon>FrmSecurity.cs</DependentUpon>
+    <Compile Include="..\XCoder\FolderInfo\FrmSplitFile.cs">
+      <Link>FolderInfo\FrmSplitFile.cs</Link>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Tools\FrmSpeak.cs" />
-    <Compile Include="Tools\FrmSpeak.Designer.cs">
-      <DependentUpon>FrmSpeak.cs</DependentUpon>
+    <Compile Include="..\XCoder\FolderInfo\FrmSplitFile.Designer.cs">
+      <Link>FolderInfo\FrmSplitFile.Designer.cs</Link>
     </Compile>
-    <Compile Include="XApi\MyApiController.cs" />
-    <Compile Include="XCom\FrmMain.cs" />
-    <Compile Include="XCom\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <Compile Include="..\XCoder\FrmMDI.cs">
+      <Link>FrmMDI.cs</Link>
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Engine\UIConfig.cs" />
-    <Compile Include="XCom\SerialPortList.cs" />
-    <Compile Include="XCom\SerialPortList.designer.cs">
-      <DependentUpon>SerialPortList.cs</DependentUpon>
+    <Compile Include="..\XCoder\FrmMDI.Designer.cs">
+      <Link>FrmMDI.Designer.cs</Link>
     </Compile>
-    <Compile Include="XICO\FrmMain.cs" />
-    <Compile Include="XICO\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <Compile Include="..\XCoder\IXForm.cs">
+      <Link>IXForm.cs</Link>
     </Compile>
-    <Compile Include="XICO\IconFile.cs" />
-    <Compile Include="XApi\FrmMain.cs" />
-    <Compile Include="XApi\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <Compile Include="..\XCoder\NewModelForm\AddField.cs">
+      <Link>NewModelForm\AddField.cs</Link>
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="XApi\ApiConfig.cs" />
-    <Compile Include="XNet\BenchHelper.cs" />
-    <Compile Include="XNet\NetConfig.cs" />
-    <Compile Include="XNet\NetHelper2.cs" />
-    <Compile Include="XNet\WorkModes.cs" />
-    <Compile Include="XRegex\FileResource.cs" />
-    <Compile Include="XRegex\FrmMain.cs" />
-    <Compile Include="XRegex\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <Compile Include="..\XCoder\NewModelForm\AddField.Designer.cs">
+      <Link>NewModelForm\AddField.Designer.cs</Link>
     </Compile>
-    <Compile Include="XNet\FrmMain.cs" />
-    <Compile Include="XNet\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <Compile Include="..\XCoder\NewModelForm\AddTable.cs">
+      <Link>NewModelForm\AddTable.cs</Link>
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Yun\FrmMap.cs" />
-    <Compile Include="Yun\FrmMap.Designer.cs">
-      <DependentUpon>FrmMap.cs</DependentUpon>
+    <Compile Include="..\XCoder\NewModelForm\AddTable.Designer.cs">
+      <Link>NewModelForm\AddTable.Designer.cs</Link>
     </Compile>
-    <Compile Include="Yun\MapSetting.cs" />
-    <EmbeddedResource Include="FileEncoding\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <Compile Include="..\XCoder\NewModelForm\BaseForm.cs">
+      <Link>NewModelForm\BaseForm.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\NewModelForm\BaseForm.designer.cs">
+      <Link>NewModelForm\BaseForm.designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\NewModelForm\NewModel.cs">
+      <Link>NewModelForm\NewModel.cs</Link>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\NewModelForm\NewModel.Designer.cs">
+      <Link>NewModelForm\NewModel.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\NewModelForm\WinFormHelper.cs">
+      <Link>NewModelForm\WinFormHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Program.cs">
+      <Link>Program.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Properties\Settings.Designer.cs">
+      <Link>Properties\Settings.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Tools\FrmGPS.cs">
+      <Link>Tools\FrmGPS.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Tools\FrmGPS.Designer.cs">
+      <Link>Tools\FrmGPS.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Tools\FrmInclude.cs">
+      <Link>Tools\FrmInclude.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Tools\FrmInclude.Designer.cs">
+      <Link>Tools\FrmInclude.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Tools\FrmMain.cs">
+      <Link>Tools\FrmMain.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Tools\FrmMain.Designer.cs">
+      <Link>Tools\FrmMain.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Tools\FrmSecurity.cs">
+      <Link>Tools\FrmSecurity.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Tools\FrmSecurity.Designer.cs">
+      <Link>Tools\FrmSecurity.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Tools\FrmSpeak.cs">
+      <Link>Tools\FrmSpeak.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Tools\FrmSpeak.Designer.cs">
+      <Link>Tools\FrmSpeak.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmItems.cs">
+      <Link>Windows\FrmItems.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmItems.Designer.cs">
+      <Link>Windows\FrmItems.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmMain.cs">
+      <Link>Windows\FrmMain.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmMain.designer.cs">
+      <Link>Windows\FrmMain.designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmModel.cs">
+      <Link>Windows\FrmModel.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmModel.Designer.cs">
+      <Link>Windows\FrmModel.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmQuery.cs">
+      <Link>Windows\FrmQuery.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmQuery.Designer.cs">
+      <Link>Windows\FrmQuery.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmSchema.cs">
+      <Link>Windows\FrmSchema.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmSchema.Designer.cs">
+      <Link>Windows\FrmSchema.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmText.cs">
+      <Link>Windows\FrmText.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Windows\FrmText.Designer.cs">
+      <Link>Windows\FrmText.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XApi\ApiConfig.cs">
+      <Link>XApi\ApiConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XApi\FrmMain.cs">
+      <Link>XApi\FrmMain.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\XApi\FrmMain.designer.cs">
+      <Link>XApi\FrmMain.designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XApi\MyApiController.cs">
+      <Link>XApi\MyApiController.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XCom\FrmMain.cs">
+      <Link>XCom\FrmMain.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\XCom\FrmMain.designer.cs">
+      <Link>XCom\FrmMain.designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XCom\SerialPortList.cs">
+      <Link>XCom\SerialPortList.cs</Link>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\XCom\SerialPortList.designer.cs">
+      <Link>XCom\SerialPortList.designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XICO\FrmMain.cs">
+      <Link>XICO\FrmMain.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\XICO\FrmMain.designer.cs">
+      <Link>XICO\FrmMain.designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XICO\IconFile.cs">
+      <Link>XICO\IconFile.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XNet\BenchHelper.cs">
+      <Link>XNet\BenchHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XNet\FrmMain.cs">
+      <Link>XNet\FrmMain.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\XNet\FrmMain.designer.cs">
+      <Link>XNet\FrmMain.designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XNet\IPPacket.cs">
+      <Link>XNet\IPPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XNet\MySqlParser.cs">
+      <Link>XNet\MySqlParser.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XNet\NetConfig.cs">
+      <Link>XNet\NetConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XNet\NetHelper2.cs">
+      <Link>XNet\NetHelper2.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XNet\RawSocket.cs">
+      <Link>XNet\RawSocket.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XNet\TcpPacket.cs">
+      <Link>XNet\TcpPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XNet\WorkModes.cs">
+      <Link>XNet\WorkModes.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XRegex\FileResource.cs">
+      <Link>XRegex\FileResource.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XRegex\FrmMain.cs">
+      <Link>XRegex\FrmMain.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\XRegex\FrmMain.designer.cs">
+      <Link>XRegex\FrmMain.designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Yun\FrmMap.cs">
+      <Link>Yun\FrmMap.cs</Link>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="..\XCoder\Yun\FrmMap.Designer.cs">
+      <Link>Yun\FrmMap.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\Yun\MapSetting.cs">
+      <Link>Yun\MapSetting.cs</Link>
+    </Compile>
+    <EmbeddedResource Include="..\XCoder\FileEncoding\FrmMain.resx">
+      <Link>FileEncoding\FrmMain.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="FolderInfo\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\FolderInfo\FrmMain.resx">
+      <Link>FolderInfo\FrmMain.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmMDI.resx">
-      <DependentUpon>FrmMDI.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\FrmMDI.resx">
+      <Link>FrmMDI.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewModelForm\AddField.resx">
-      <DependentUpon>AddField.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\NewModelForm\AddField.resx">
+      <Link>NewModelForm\AddField.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewModelForm\AddTable.resx">
-      <DependentUpon>AddTable.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\NewModelForm\AddTable.resx">
+      <Link>NewModelForm\AddTable.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewModelForm\NewModel.resx">
-      <DependentUpon>NewModel.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\NewModelForm\BaseForm.resx">
+      <Link>NewModelForm\BaseForm.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面ExtAspNet\类名.aspx.cs">
-      <DependentUpon>类名.aspx</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\NewModelForm\NewModel.resx">
+      <Link>NewModelForm\NewModel.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面ExtAspNet\类名Form.aspx.cs">
-      <DependentUpon>类名Form.aspx</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\Tools\FrmGPS.resx">
+      <Link>Tools\FrmGPS.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类ExtAspNet\MyEntityForm.cs">
-      <SubType>ASPXCodeBehind</SubType>
+    <EmbeddedResource Include="..\XCoder\Tools\FrmInclude.resx">
+      <Link>Tools\FrmInclude.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类ExtAspNet\MyEntityList.cs">
-      <SubType>ASPXCodeBehind</SubType>
+    <EmbeddedResource Include="..\XCoder\Tools\FrmMain.resx">
+      <Link>Tools\FrmMain.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类ExtAspNet\MyEntityUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
+    <EmbeddedResource Include="..\XCoder\Tools\FrmSecurity.resx">
+      <Link>Tools\FrmSecurity.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Template\实体业务\中文名.Biz.cs" />
-    <Compile Include="NewModelForm\BaseForm.cs" />
-    <Compile Include="NewModelForm\BaseForm.designer.cs">
-      <DependentUpon>BaseForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\FrmItems.cs" />
-    <Compile Include="Windows\FrmItems.Designer.cs">
-      <DependentUpon>FrmItems.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\FrmMain.cs" />
-    <Compile Include="Windows\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Engine\Engine.cs" />
-    <Compile Include="Windows\FrmModel.cs" />
-    <Compile Include="Windows\FrmModel.Designer.cs">
-      <DependentUpon>FrmModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\FrmQuery.cs" />
-    <Compile Include="Windows\FrmQuery.Designer.cs">
-      <DependentUpon>FrmQuery.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\FrmSchema.cs" />
-    <Compile Include="Windows\FrmSchema.Designer.cs">
-      <DependentUpon>FrmSchema.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\FrmText.cs" />
-    <Compile Include="Windows\FrmText.Designer.cs">
-      <DependentUpon>FrmText.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="NewModelForm\BaseForm.resx">
-      <DependentUpon>BaseForm.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\Tools\FrmSpeak.resx">
+      <Link>Tools\FrmSpeak.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmGPS.resx">
-      <DependentUpon>FrmGPS.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\Windows\FrmItems.resx">
+      <Link>Windows\FrmItems.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmInclude.resx">
-      <DependentUpon>FrmInclude.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\Windows\FrmMain.resx">
+      <Link>Windows\FrmMain.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\Windows\FrmModel.resx">
+      <Link>Windows\FrmModel.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmSecurity.resx">
-      <DependentUpon>FrmSecurity.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\Windows\FrmQuery.resx">
+      <Link>Windows\FrmQuery.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmSpeak.resx">
-      <DependentUpon>FrmSpeak.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\Windows\FrmSchema.resx">
+      <Link>Windows\FrmSchema.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\FrmItems.resx">
-      <DependentUpon>FrmItems.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\Windows\FrmText.resx">
+      <Link>Windows\FrmText.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\FrmModel.resx">
-      <DependentUpon>FrmModel.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\XApi\FrmMain.resx">
+      <Link>XApi\FrmMain.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\FrmQuery.resx">
-      <DependentUpon>FrmQuery.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\XCom\FrmMain.resx">
+      <Link>XCom\FrmMain.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\FrmSchema.resx">
-      <DependentUpon>FrmSchema.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\XCom\SerialPortList.resx">
+      <Link>XCom\SerialPortList.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\FrmText.resx">
-      <DependentUpon>FrmText.cs</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\XICO\FrmMain.resx">
+      <Link>XICO\FrmMain.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面\类名.aspx.cs">
-      <DependentUpon>类名.aspx</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\XNet\FrmMain.resx">
+      <Link>XNet\FrmMain.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面\类名Form.aspx.cs">
-      <DependentUpon>类名Form.aspx</DependentUpon>
+    <EmbeddedResource Include="..\XCoder\XRegex\FrmMain.resx">
+      <Link>XRegex\FrmMain.resx</Link>
     </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类\MyEntityForm.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类\MyEntityList.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类\MyEntityUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\实体数据\中文名.cs" />
-    <EmbeddedResource Include="Template\纯属性\I中文名.cs" />
-    <EmbeddedResource Include="Template\纯属性\中文名.cs" />
-    <EmbeddedResource Include="Windows\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="..\XCoder\Yun\FrmMap.resx">
+      <Link>Yun\FrmMap.resx</Link>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="leaf.ico" />
-    <EmbeddedResource Include="Template\页面\类名.aspx" />
-    <EmbeddedResource Include="Template\页面\类名Form.aspx" />
-    <EmbeddedResource Include="UpdateInfo.txt" />
-    <EmbeddedResource Include="Template\数据字典\连接名数据字典.htm" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
+    <None Include="..\XCoder\App.config">
+      <Link>App.config</Link>
+    </None>
+    <None Include="..\XCoder\Properties\app.manifest">
+      <Link>Properties\app.manifest</Link>
+    </None>
+    <None Include="..\XCoder\Properties\Settings.settings">
+      <Link>Properties\Settings.settings</Link>
     </None>
     <None Include="packages.config" />
-    <None Include="Properties\app.manifest" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <EmbeddedResource Include="Template\实体业务\对象操作.xt" />
-    <EmbeddedResource Include="Template\实体业务\扩展查询.xt" />
-    <EmbeddedResource Include="XCoder.tt">
-      <LastGenOutput>XCoder.log</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Template\页面ExtAspNet\类名.aspx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Template\页面ExtAspNet\类名Form.aspx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="XCom\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XCom\SerialPortList.resx">
-      <DependentUpon>SerialPortList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XICO\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XApi\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XRegex\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XNet\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Yun\FrmMap.resx">
-      <DependentUpon>FrmMap.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="数据库命名规范.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="XICO\leaf.png" />
-    <EmbeddedResource Include="XRegex\Pattern\Html\无嵌套标记.txt" />
-    <EmbeddedResource Include="XRegex\Pattern\SQL查询\嵌套查询.txt" />
-    <EmbeddedResource Include="XRegex\Pattern\SQL查询\简单.txt" />
-    <EmbeddedResource Include="XRegex\Pattern\平衡组\完整示例.txt" />
-    <EmbeddedResource Include="XRegex\Pattern\平衡组\完整示例固化分组.txt" />
-    <EmbeddedResource Include="XRegex\Pattern\平衡组\标准.txt" />
-    <EmbeddedResource Include="XRegex\Pattern\平衡组\标准固化分组.txt" />
-    <EmbeddedResource Include="XRegex\Pattern\网页\最外层嵌套.txt" />
-    <EmbeddedResource Include="XRegex\Sample\SQL查询\MSSQL表结构.txt" />
-    <EmbeddedResource Include="XRegex\Sample\SQL查询\普通嵌套查询.txt" />
-    <EmbeddedResource Include="XRegex\Sample\SQL查询\普通查询.txt" />
-    <EmbeddedResource Include="XRegex\Sample\平衡组\算术表达式.txt" />
-    <EmbeddedResource Include="XRegex\Sample\网页\最外层嵌套.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Build - Test.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Build - Test.cs</LastGenOutput>
+    <Content Include="..\XCoder\leaf.ico">
+      <Link>leaf.ico</Link>
     </Content>
+    <Content Include="..\XCoder\UpdateInfo.txt">
+      <Link>UpdateInfo.txt</Link>
+    </Content>
+    <EmbeddedResource Include="..\XCoder\XICO\leaf.png">
+      <Link>XICO\leaf.png</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\Html\无嵌套标记.txt">
+      <Link>XRegex\Pattern\Html\无嵌套标记.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\SQL查询\嵌套查询.txt">
+      <Link>XRegex\Pattern\SQL查询\嵌套查询.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\SQL查询\简单.txt">
+      <Link>XRegex\Pattern\SQL查询\简单.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\平衡组\完整示例.txt">
+      <Link>XRegex\Pattern\平衡组\完整示例.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\平衡组\完整示例固化分组.txt">
+      <Link>XRegex\Pattern\平衡组\完整示例固化分组.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\平衡组\标准.txt">
+      <Link>XRegex\Pattern\平衡组\标准.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\平衡组\标准固化分组.txt">
+      <Link>XRegex\Pattern\平衡组\标准固化分组.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\网页\最外层嵌套.txt">
+      <Link>XRegex\Pattern\网页\最外层嵌套.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Sample\SQL查询\MSSQL表结构.txt">
+      <Link>XRegex\Sample\SQL查询\MSSQL表结构.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Sample\SQL查询\普通嵌套查询.txt">
+      <Link>XRegex\Sample\SQL查询\普通嵌套查询.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Sample\SQL查询\普通查询.txt">
+      <Link>XRegex\Sample\SQL查询\普通查询.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Sample\平衡组\算术表达式.txt">
+      <Link>XRegex\Sample\平衡组\算术表达式.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Sample\网页\最外层嵌套.txt">
+      <Link>XRegex\Sample\网页\最外层嵌套.txt</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -407,6 +407,7 @@ namespace XNet
                     _Send = TaskEx.WhenAll(ts);
                 }
             }
+#if !NET4
             else if (_Server != null)
             {
                 TaskEx.Run(async () =>
@@ -422,6 +423,7 @@ namespace XNet
                     }
                 });
             }
+#endif
         }
         #endregion
 
