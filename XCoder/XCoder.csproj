@@ -36,11 +36,11 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NewLife.Core, Version=8.1.7092.43117, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Core.8.1.2019.602\lib\net45\NewLife.Core.dll</HintPath>
+    <Reference Include="NewLife.Core, Version=8.2.7126.42291, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Core.8.2.2019.706\lib\net45\NewLife.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NewLife.Net, Version=3.5.7008.39419, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Net.3.5.2019.310\lib\net45\NewLife.Net.dll</HintPath>
+    <Reference Include="NewLife.Net, Version=3.6.7127.17019, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.Net.3.6.2019.707\lib\net45\NewLife.Net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -57,8 +57,9 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="XCode, Version=9.11.7092.43120, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.XCode.9.11.2019.602\lib\net45\XCode.dll</HintPath>
+    <Reference Include="XCode, Version=9.12.7126.42295, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewLife.XCode.9.13.2019.706\lib\net45\XCode.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="XTemplate, Version=2.0.6700.37161, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NewLife.XTemplate.2.0.6700.37161\lib\net45\XTemplate.dll</HintPath>
@@ -390,7 +391,6 @@
     <EmbeddedResource Include="XNet\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="数据库命名规范.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="XICO\leaf.png" />
@@ -410,6 +410,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="数据库命名规范.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
