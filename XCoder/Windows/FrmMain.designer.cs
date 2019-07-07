@@ -39,15 +39,10 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lb_Status = new System.Windows.Forms.ToolStripStatusLabel();
             this.gbConfig = new System.Windows.Forms.GroupBox();
-            this.lbEditHeader = new System.Windows.Forms.LinkLabel();
-            this.frmItems = new System.Windows.Forms.Button();
             this.cbRenderGenEntity = new System.Windows.Forms.CheckBox();
-            this.btnRelease = new System.Windows.Forms.Button();
             this.txtBaseClass = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.btnOpenOutputDir = new System.Windows.Forms.Button();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.txt_ConnName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -55,8 +50,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txt_OutPath = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cb_Template = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnImport = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -259,15 +252,10 @@
             this.gbConfig.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbConfig.Controls.Add(this.lbEditHeader);
-            this.gbConfig.Controls.Add(this.frmItems);
             this.gbConfig.Controls.Add(this.cbRenderGenEntity);
-            this.gbConfig.Controls.Add(this.btnRelease);
             this.gbConfig.Controls.Add(this.txtBaseClass);
             this.gbConfig.Controls.Add(this.label10);
             this.gbConfig.Controls.Add(this.btnOpenOutputDir);
-            this.gbConfig.Controls.Add(this.checkBox5);
-            this.gbConfig.Controls.Add(this.checkBox4);
             this.gbConfig.Controls.Add(this.checkBox3);
             this.gbConfig.Controls.Add(this.txt_ConnName);
             this.gbConfig.Controls.Add(this.label1);
@@ -275,8 +263,6 @@
             this.gbConfig.Controls.Add(this.label8);
             this.gbConfig.Controls.Add(this.txt_OutPath);
             this.gbConfig.Controls.Add(this.label7);
-            this.gbConfig.Controls.Add(this.label6);
-            this.gbConfig.Controls.Add(this.cb_Template);
             this.gbConfig.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.gbConfig.Location = new System.Drawing.Point(3, 189);
             this.gbConfig.Margin = new System.Windows.Forms.Padding(4);
@@ -285,32 +271,6 @@
             this.gbConfig.Size = new System.Drawing.Size(1088, 290);
             this.gbConfig.TabIndex = 26;
             this.gbConfig.TabStop = false;
-            // 
-            // lbEditHeader
-            // 
-            this.lbEditHeader.AutoSize = true;
-            this.lbEditHeader.ForeColor = System.Drawing.Color.Brown;
-            this.lbEditHeader.Location = new System.Drawing.Point(206, 76);
-            this.lbEditHeader.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbEditHeader.Name = "lbEditHeader";
-            this.lbEditHeader.Size = new System.Drawing.Size(48, 25);
-            this.lbEditHeader.TabIndex = 53;
-            this.lbEditHeader.TabStop = true;
-            this.lbEditHeader.Text = "编辑";
-            this.lbEditHeader.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbEditHeader_LinkClicked);
-            // 
-            // frmItems
-            // 
-            this.frmItems.ForeColor = System.Drawing.Color.BlueViolet;
-            this.frmItems.Location = new System.Drawing.Point(24, 243);
-            this.frmItems.Margin = new System.Windows.Forms.Padding(4);
-            this.frmItems.Name = "frmItems";
-            this.frmItems.Size = new System.Drawing.Size(376, 34);
-            this.frmItems.TabIndex = 50;
-            this.frmItems.Text = "扩展属性编辑（Config.Items[\"name\"]）";
-            this.toolTip1.SetToolTip(this.frmItems, "模版中通过Config.Items[name]使用。");
-            this.frmItems.UseVisualStyleBackColor = true;
-            this.frmItems.Click += new System.EventHandler(this.frmItems_Click);
             // 
             // cbRenderGenEntity
             // 
@@ -323,19 +283,6 @@
             this.cbRenderGenEntity.TabIndex = 49;
             this.cbRenderGenEntity.Text = "生成泛型实体类";
             this.cbRenderGenEntity.UseVisualStyleBackColor = true;
-            // 
-            // btnRelease
-            // 
-            this.btnRelease.ForeColor = System.Drawing.Color.Brown;
-            this.btnRelease.Location = new System.Drawing.Point(428, 30);
-            this.btnRelease.Margin = new System.Windows.Forms.Padding(4);
-            this.btnRelease.Name = "btnRelease";
-            this.btnRelease.Size = new System.Drawing.Size(132, 34);
-            this.btnRelease.TabIndex = 48;
-            this.btnRelease.Text = "释放内置模版";
-            this.toolTip1.SetToolTip(this.btnRelease, "释放内置的模版到Template目录，作为参考供建立模版使用。");
-            this.btnRelease.UseVisualStyleBackColor = true;
-            this.btnRelease.Click += new System.EventHandler(this.btnRelease_Click);
             // 
             // txtBaseClass
             // 
@@ -370,32 +317,6 @@
             this.btnOpenOutputDir.UseVisualStyleBackColor = true;
             this.btnOpenOutputDir.Click += new System.EventHandler(this.btnOpenOutputDir_Click);
             // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.ForeColor = System.Drawing.Color.Brown;
-            this.checkBox5.Location = new System.Drawing.Point(20, 74);
-            this.checkBox5.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(187, 29);
-            this.checkBox5.TabIndex = 42;
-            this.checkBox5.Text = "使用.cs文件头模版";
-            this.toolTip1.SetToolTip(this.checkBox5, "出现在每一个cs文件头部");
-            this.checkBox5.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.ForeColor = System.Drawing.Color.Brown;
-            this.checkBox4.Location = new System.Drawing.Point(256, 74);
-            this.checkBox4.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(110, 29);
-            this.checkBox4.TabIndex = 27;
-            this.checkBox4.Text = "调试模版";
-            this.toolTip1.SetToolTip(this.checkBox4, "输出模版编译的中间文件");
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
@@ -407,6 +328,7 @@
             this.checkBox3.TabIndex = 39;
             this.checkBox3.Text = "中文文件名";
             this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.Visible = false;
             // 
             // txt_ConnName
             // 
@@ -470,30 +392,6 @@
             this.label7.Size = new System.Drawing.Size(102, 25);
             this.label7.TabIndex = 28;
             this.label7.Text = "输出目录：";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.Color.Brown;
-            this.label6.Location = new System.Drawing.Point(16, 38);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(66, 25);
-            this.label6.TabIndex = 27;
-            this.label6.Text = "模版：";
-            // 
-            // cb_Template
-            // 
-            this.cb_Template.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_Template.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cb_Template.ForeColor = System.Drawing.Color.Brown;
-            this.cb_Template.FormattingEnabled = true;
-            this.cb_Template.Location = new System.Drawing.Point(87, 28);
-            this.cb_Template.Margin = new System.Windows.Forms.Padding(4);
-            this.cb_Template.Name = "cb_Template";
-            this.cb_Template.Size = new System.Drawing.Size(330, 35);
-            this.cb_Template.TabIndex = 26;
-            this.toolTip1.SetToolTip(this.cb_Template, "*开头的是内置系统模版。");
             // 
             // btnImport
             // 
@@ -777,24 +675,18 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txt_OutPath;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox cb_Template;
         private System.Windows.Forms.ComboBox cbConn;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.Button btnOpenOutputDir;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.TextBox txtBaseClass;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button btnRelease;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox cbRenderGenEntity;
-        private System.Windows.Forms.Button frmItems;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 模型ToolStripMenuItem;
@@ -812,7 +704,6 @@
         private System.Windows.Forms.ToolStripMenuItem 博客ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oracle客户端运行时检查ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem qQ群1600800ToolStripMenuItem1;
-        private System.Windows.Forms.LinkLabel lbEditHeader;
         private System.Windows.Forms.ToolStripMenuItem 自动格式化设置ToolStripMenuItem;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnRefreshTable;

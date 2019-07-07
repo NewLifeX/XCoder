@@ -255,12 +255,6 @@
     <Compile Include="NewModelForm\BaseForm.designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\FrmItems.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\FrmItems.Designer.cs">
-      <DependentUpon>FrmItems.cs</DependentUpon>
-    </Compile>
     <Compile Include="Windows\FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -310,9 +304,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\FrmItems.resx">
-      <DependentUpon>FrmItems.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\FrmModel.resx">
       <DependentUpon>FrmModel.cs</DependentUpon>

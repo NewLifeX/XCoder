@@ -63,8 +63,6 @@ namespace XCoder
             try
             {
                 SetDatabaseList(DAL.ConnStrs.Keys.ToList());
-
-                BindTemplate(cb_Template);
             }
             catch (Exception ex)
             {
@@ -130,7 +128,6 @@ namespace XCoder
 
             AutoLoadTables(cbConn.Text);
 
-            if (String.IsNullOrEmpty(cb_Template.Text)) cb_Template.Text = cbConn.Text;
             if (String.IsNullOrEmpty(txt_OutPath.Text)) txt_OutPath.Text = cbConn.Text;
             if (String.IsNullOrEmpty(txt_NameSpace.Text)) txt_NameSpace.Text = cbConn.Text;
         }
@@ -449,7 +446,7 @@ namespace XCoder
         {
             SaveConfig();
 
-            if (cb_Template.SelectedValue == null || cbTableList.SelectedValue == null) return;
+            if (cbTableList.SelectedValue == null) return;
 
             var table = cbTableList.SelectedValue as IDataTable;
             if (table == null) return;
@@ -480,7 +477,7 @@ namespace XCoder
         {
             SaveConfig();
 
-            if (cb_Template.SelectedValue == null || cbTableList.Items.Count < 1) return;
+            if (cbTableList.Items.Count < 1) return;
 
             var tables = Engine.Tables;
             if (tables == null || tables.Count < 1) return;
@@ -504,7 +501,7 @@ namespace XCoder
         public void LoadConfig()
         {
             cbConn.Text = Config.ConnName;
-            cb_Template.Text = Config.TemplateName;
+            //cb_Template.Text = Config.TemplateName;
             txt_OutPath.Text = Config.OutputPath;
             txt_NameSpace.Text = Config.NameSpace;
             txt_ConnName.Text = Config.EntityConnName;
@@ -512,15 +509,15 @@ namespace XCoder
             cbRenderGenEntity.Checked = Config.RenderGenEntity;
 
             checkBox3.Checked = Config.UseCNFileName;
-            checkBox5.Checked = Config.UseHeadTemplate;
+            //checkBox5.Checked = Config.UseHeadTemplate;
             //richTextBox2.Text = Config.HeadTemplate;
-            checkBox4.Checked = Config.Debug;
+            //checkBox4.Checked = Config.Debug;
         }
 
         public void SaveConfig()
         {
             Config.ConnName = cbConn.Text;
-            Config.TemplateName = cb_Template.Text;
+            //Config.TemplateName = cb_Template.Text;
             Config.OutputPath = txt_OutPath.Text;
             Config.NameSpace = txt_NameSpace.Text;
             Config.EntityConnName = txt_ConnName.Text;
@@ -528,32 +525,11 @@ namespace XCoder
             Config.RenderGenEntity = cbRenderGenEntity.Checked;
 
             Config.UseCNFileName = checkBox3.Checked;
-            Config.UseHeadTemplate = checkBox5.Checked;
+            //Config.UseHeadTemplate = checkBox5.Checked;
             //Config.HeadTemplate = richTextBox2.Text;
-            Config.Debug = checkBox4.Checked;
+            //Config.Debug = checkBox4.Checked;
 
             Config.Save();
-        }
-        #endregion
-
-        #region 附加信息
-        private void linkLabel1_LinkClicked(Object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            var control = sender as Control;
-            if (control == null) return;
-
-            var url = String.Empty;
-            if (control.Tag != null) url = control.Tag.ToString();
-            if (String.IsNullOrEmpty(url)) url = control.Text;
-            if (String.IsNullOrEmpty(url)) return;
-
-            Process.Start(url);
-        }
-
-        private void label3_Click(Object sender, EventArgs e)
-        {
-            Clipboard.SetData("1600800", null);
-            MessageBox.Show("QQ群号已复制到剪切板！", "提示");
         }
         #endregion
 
@@ -566,56 +542,6 @@ namespace XCoder
             Process.Start("explorer.exe", "\"" + dir + "\"");
             //Process.Start("explorer.exe", "/root,\"" + dir + "\"");
             //Process.Start("explorer.exe", "/select," + dir);
-        }
-
-        private void frmItems_Click(Object sender, EventArgs e)
-        {
-            //FrmItems.Create(XConfig.Current.Items).Show();
-
-            FrmItems.Create(ModelConfig.Current).Show();
-        }
-        #endregion
-
-        #region 模版相关
-        public void BindTemplate(ComboBox cb)
-        {
-            var list = new List<String>();
-            foreach (var item in Engine.FileTemplates)
-            {
-                list.Add("[文件]" + item);
-            }
-            foreach (var item in Engine.Templates.Keys)
-            {
-                var ks = item.Split('.');
-                if (ks == null || ks.Length < 1) continue;
-
-                var name = "[内置]" + ks[0];
-                if (!list.Contains(name)) list.Add(name);
-            }
-            cb.Items.Clear();
-            cb.DataSource = list;
-            //cb.DisplayMember = "value";
-            cb.Update();
-        }
-
-        private void btnRelease_Click(Object sender, EventArgs e)
-        {
-            try
-            {
-                Source.ReleaseAllTemplateFiles();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-        private void lbEditHeader_LinkClicked(Object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            var frm = FrmText.Create("C#文件头模版", Config.HeadTemplate);
-            frm.ShowDialog();
-            Config.HeadTemplate = frm.Content.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
-            frm.Dispose();
         }
         #endregion
 

@@ -187,13 +187,6 @@
     <Compile Include="..\XCoder\Tools\FrmSpeak.Designer.cs">
       <Link>Tools\FrmSpeak.Designer.cs</Link>
     </Compile>
-    <Compile Include="..\XCoder\Windows\FrmItems.cs">
-      <Link>Windows\FrmItems.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\XCoder\Windows\FrmItems.Designer.cs">
-      <Link>Windows\FrmItems.Designer.cs</Link>
-    </Compile>
     <Compile Include="..\XCoder\Windows\FrmMain.cs">
       <Link>Windows\FrmMain.cs</Link>
       <SubType>Form</SubType>
@@ -352,9 +345,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\XCoder\Tools\FrmSpeak.resx">
       <Link>Tools\FrmSpeak.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\XCoder\Windows\FrmItems.resx">
-      <Link>Windows\FrmItems.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="..\XCoder\Windows\FrmMain.resx">
       <Link>Windows\FrmMain.resx</Link>
