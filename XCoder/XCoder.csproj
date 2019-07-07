@@ -61,9 +61,6 @@
       <HintPath>..\packages\NewLife.XCode.9.13.2019.706\lib\net45\XCode.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="XTemplate, Version=2.0.6700.37161, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.XTemplate.2.0.6700.37161\lib\net45\XTemplate.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\IcoHelper.cs" />
@@ -144,7 +141,6 @@
     </Compile>
     <Compile Include="Engine\FileSource.cs" />
     <Compile Include="Engine\XConfig.cs" />
-    <Compile Include="Engine\XCoderBase.cs" />
     <Compile Include="NewModelForm\NewModel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -261,7 +257,6 @@
     <Compile Include="Windows\FrmMain.designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Engine\Engine.cs" />
     <Compile Include="Windows\FrmModel.cs">
       <SubType>Form</SubType>
     </Compile>

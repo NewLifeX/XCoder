@@ -276,7 +276,7 @@
             // 
             this.cbRenderGenEntity.AutoSize = true;
             this.cbRenderGenEntity.ForeColor = System.Drawing.Color.BlueViolet;
-            this.cbRenderGenEntity.Location = new System.Drawing.Point(270, 164);
+            this.cbRenderGenEntity.Location = new System.Drawing.Point(260, 69);
             this.cbRenderGenEntity.Margin = new System.Windows.Forms.Padding(4);
             this.cbRenderGenEntity.Name = "cbRenderGenEntity";
             this.cbRenderGenEntity.Size = new System.Drawing.Size(164, 29);
@@ -287,7 +287,7 @@
             // txtBaseClass
             // 
             this.txtBaseClass.ForeColor = System.Drawing.Color.BlueViolet;
-            this.txtBaseClass.Location = new System.Drawing.Point(110, 160);
+            this.txtBaseClass.Location = new System.Drawing.Point(100, 65);
             this.txtBaseClass.Margin = new System.Windows.Forms.Padding(4);
             this.txtBaseClass.Name = "txtBaseClass";
             this.txtBaseClass.Size = new System.Drawing.Size(144, 31);
@@ -298,7 +298,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.ForeColor = System.Drawing.Color.BlueViolet;
-            this.label10.Location = new System.Drawing.Point(20, 166);
+            this.label10.Location = new System.Drawing.Point(10, 71);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(102, 25);
@@ -308,7 +308,7 @@
             // btnOpenOutputDir
             // 
             this.btnOpenOutputDir.ForeColor = System.Drawing.Color.BlueViolet;
-            this.btnOpenOutputDir.Location = new System.Drawing.Point(428, 201);
+            this.btnOpenOutputDir.Location = new System.Drawing.Point(418, 106);
             this.btnOpenOutputDir.Margin = new System.Windows.Forms.Padding(4);
             this.btnOpenOutputDir.Name = "btnOpenOutputDir";
             this.btnOpenOutputDir.Size = new System.Drawing.Size(112, 34);
@@ -321,7 +321,7 @@
             // 
             this.checkBox3.AutoSize = true;
             this.checkBox3.ForeColor = System.Drawing.Color.BlueViolet;
-            this.checkBox3.Location = new System.Drawing.Point(270, 206);
+            this.checkBox3.Location = new System.Drawing.Point(260, 111);
             this.checkBox3.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(128, 29);
@@ -333,7 +333,7 @@
             // txt_ConnName
             // 
             this.txt_ConnName.ForeColor = System.Drawing.Color.BlueViolet;
-            this.txt_ConnName.Location = new System.Drawing.Point(417, 118);
+            this.txt_ConnName.Location = new System.Drawing.Point(407, 23);
             this.txt_ConnName.Margin = new System.Windows.Forms.Padding(4);
             this.txt_ConnName.Name = "txt_ConnName";
             this.txt_ConnName.Size = new System.Drawing.Size(144, 31);
@@ -344,7 +344,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.BlueViolet;
-            this.label1.Location = new System.Drawing.Point(327, 124);
+            this.label1.Location = new System.Drawing.Point(317, 29);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(84, 25);
@@ -354,7 +354,7 @@
             // txt_NameSpace
             // 
             this.txt_NameSpace.ForeColor = System.Drawing.Color.BlueViolet;
-            this.txt_NameSpace.Location = new System.Drawing.Point(110, 118);
+            this.txt_NameSpace.Location = new System.Drawing.Point(100, 23);
             this.txt_NameSpace.Margin = new System.Windows.Forms.Padding(4);
             this.txt_NameSpace.Name = "txt_NameSpace";
             this.txt_NameSpace.Size = new System.Drawing.Size(199, 31);
@@ -365,7 +365,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.ForeColor = System.Drawing.Color.BlueViolet;
-            this.label8.Location = new System.Drawing.Point(20, 124);
+            this.label8.Location = new System.Drawing.Point(10, 29);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(102, 25);
@@ -375,7 +375,7 @@
             // txt_OutPath
             // 
             this.txt_OutPath.ForeColor = System.Drawing.Color.BlueViolet;
-            this.txt_OutPath.Location = new System.Drawing.Point(110, 202);
+            this.txt_OutPath.Location = new System.Drawing.Point(100, 107);
             this.txt_OutPath.Margin = new System.Windows.Forms.Padding(4);
             this.txt_OutPath.Name = "txt_OutPath";
             this.txt_OutPath.Size = new System.Drawing.Size(144, 31);
@@ -386,7 +386,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.Color.BlueViolet;
-            this.label7.Location = new System.Drawing.Point(20, 208);
+            this.label7.Location = new System.Drawing.Point(10, 113);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(102, 25);

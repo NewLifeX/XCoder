@@ -55,14 +55,8 @@
     <Reference Include="XCode, Version=9.12.7126.42294, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NewLife.XCode.9.13.2019.706\lib\net40\XCode.dll</HintPath>
     </Reference>
-    <Reference Include="XTemplate, Version=2.0.6700.37168, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.XTemplate.2.0.6700.37161\lib\net40\XTemplate.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\XCoder\Engine\Engine.cs">
-      <Link>Engine\Engine.cs</Link>
-    </Compile>
     <Compile Include="..\XCoder\Engine\FileSource.cs">
       <Link>Engine\FileSource.cs</Link>
     </Compile>
@@ -74,9 +68,6 @@
     </Compile>
     <Compile Include="..\XCoder\Engine\UIConfig.cs">
       <Link>Engine\UIConfig.cs</Link>
-    </Compile>
-    <Compile Include="..\XCoder\Engine\XCoderBase.cs">
-      <Link>Engine\XCoderBase.cs</Link>
     </Compile>
     <Compile Include="..\XCoder\Engine\XConfig.cs">
       <Link>Engine\XConfig.cs</Link>

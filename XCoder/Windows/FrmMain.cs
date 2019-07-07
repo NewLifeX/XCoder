@@ -13,8 +13,8 @@ using System.Windows.Forms;
 using NewLife.Log;
 using NewLife.Reflection;
 using NewLife.Threading;
+using XCode.Code;
 using XCode.DataAccessLayer;
-using XTemplate.Templating;
 #if !NET4
 using TaskEx = System.Threading.Tasks.Task;
 #endif
@@ -26,15 +26,17 @@ namespace XCoder
     {
         #region 属性
         /// <summary>配置</summary>
-        public static ModelConfig Config { get { return ModelConfig.Current; } }
+        public static ModelConfig Config => ModelConfig.Current;
 
-        private Engine _Engine;
-        /// <summary>生成器</summary>
-        Engine Engine
-        {
-            get { return _Engine ?? (_Engine = new Engine(Config)); }
-            set { _Engine = value; }
-        }
+        //private Engine _Engine;
+        ///// <summary>生成器</summary>
+        //Engine Engine
+        //{
+        //    get { return _Engine ?? (_Engine = new Engine(Config)); }
+        //    set { _Engine = value; }
+        //}
+
+        public IList<IDataTable> Tables { get; set; }
         #endregion
 
         #region 界面初始化
@@ -91,7 +93,7 @@ namespace XCoder
 
             if (bt_Connection.Text == "连接")
             {
-                Engine = null;
+                //Engine = null;
                 LoadTables();
 
                 gbConnect.Enabled = false;
@@ -115,7 +117,7 @@ namespace XCoder
                 btnImport.Text = "导入模型";
                 bt_Connection.Text = "连接";
                 btnRefreshTable.Enabled = false;
-                Engine = null;
+                //Engine = null;
 
                 // 断开的时候再取一次，确保下次能及时得到新的
                 TaskEx.Run(() => DAL.Create(Config.ConnName).Tables);
@@ -371,7 +373,7 @@ namespace XCoder
                     var list = DAL.Create(Config.ConnName).Tables;
                     if (!cbIncludeView.Checked) list = list.Where(t => !t.IsView).ToList();
                     //if (Config.NeedFix) list = Engine.FixTable(list);
-                    Engine.Tables = list;
+                    //Engine.Tables = list;
                 }
                 catch (Exception ex)
                 {
@@ -382,7 +384,7 @@ namespace XCoder
                 this.Invoke(() =>
                 {
                     SetTables(null);
-                    SetTables(Engine.Tables);
+                    //SetTables(Engine.Tables);
                 });
             });
         }
@@ -456,14 +458,19 @@ namespace XCoder
 
             try
             {
-                var ss = Engine.Render(table);
+                //var ss = Engine.Render(table);
+
+                //var builder = new EntityBuilder();
+
+                var cfg = Config;
+                var rs = EntityBuilder.BuildTables(new[] { table }, cfg.OutputPath, cfg.NameSpace, cfg.ConnName, cfg.BaseClass);
 
                 MessageBox.Show("生成" + table + "成功！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (TemplateException ex)
-            {
-                MessageBox.Show(ex.Message, "模版错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //catch (TemplateException ex)
+            //{
+            //    MessageBox.Show(ex.Message, "模版错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -479,16 +486,19 @@ namespace XCoder
 
             if (cbTableList.Items.Count < 1) return;
 
-            var tables = Engine.Tables;
+            var tables = Tables;
             if (tables == null || tables.Count < 1) return;
 
             sw.Reset();
             sw.Start();
 
-            foreach (var tb in tables)
-            {
-                Engine.Render(tb);
-            }
+            //foreach (var tb in tables)
+            //{
+            //    Engine.Render(tb);
+            //}
+
+            var cfg = Config;
+            var rs = EntityBuilder.BuildTables(tables, cfg.OutputPath, cfg.NameSpace, cfg.ConnName, cfg.BaseClass);
 
             sw.Stop();
             lb_Status.Text = "生成 " + tables.Count + " 个类完成！耗时：" + sw.Elapsed.ToString();
@@ -613,7 +623,7 @@ namespace XCoder
         #region 模型管理
         private void 模型管理MToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            var tables = Engine.Tables;
+            var tables = Tables;
             if (tables == null || tables.Count < 1) return;
 
             FrmModel.Create(tables).Show();
@@ -621,7 +631,7 @@ namespace XCoder
 
         private void 导出模型EToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            var tables = Engine.Tables;
+            var tables = Tables;
             if (tables == null || tables.Count < 1)
             {
                 MessageBox.Show(Text, "数据库架构为空！", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -686,8 +696,9 @@ namespace XCoder
                 if (!cbIncludeView.Checked) list = list.Where(t => !t.IsView).ToList();
                 //if (Config.NeedFix) list = Engine.FixTable(list);
 
-                Engine = null;
-                Engine.Tables = list;
+                //Engine = null;
+                //Engine.Tables = list;
+                Tables = list;
 
                 SetTables(list);
 

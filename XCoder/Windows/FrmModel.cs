@@ -11,13 +11,8 @@ namespace XCoder
     public partial class FrmModel : Form
     {
         #region 属性
-        private List<IDataTable> _Tables;
         /// <summary>表集合</summary>
-        public List<IDataTable> Tables
-        {
-            get { return _Tables; }
-            set { _Tables = value; }
-        }
+        public IList<IDataTable> Tables { get; set; }
         #endregion
 
         #region 界面初始化
@@ -28,7 +23,7 @@ namespace XCoder
             Icon = Source.GetIcon();
         }
 
-        public static FrmModel Create(List<IDataTable> tables)
+        public static FrmModel Create(IList<IDataTable> tables)
         {
             if (tables == null || tables.Count < 1) throw new ArgumentNullException("tables");
 
@@ -80,7 +75,7 @@ namespace XCoder
             pgColumn.SelectedObject = row.DataBoundItem;
         }
 
-        void SetTables(List<IDataTable> tables, Int32 index)
+        void SetTables(IList<IDataTable> tables, Int32 index)
         {
             cbTables.Items.Clear();
             if (Tables != null && tables.Count > 0)

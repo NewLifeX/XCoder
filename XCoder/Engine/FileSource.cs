@@ -28,24 +28,24 @@ namespace XCoder
             return ms.ToStr();
         }
 
-        public static void ReleaseAllTemplateFiles()
-        {
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Engine.TemplatePath);
-            var dic = GetTemplates();
+        //public static void ReleaseAllTemplateFiles()
+        //{
+        //    var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Engine.TemplatePath);
+        //    var dic = GetTemplates();
 
-            foreach (var item in dic.Keys)
-            {
-                // 第一层是目录，然后是文件
-                var dir = item.Substring(0, item.IndexOf("."));
-                var file = item.Substring(dir.Length + 1);
+        //    foreach (var item in dic.Keys)
+        //    {
+        //        // 第一层是目录，然后是文件
+        //        var dir = item.Substring(0, item.IndexOf("."));
+        //        var file = item.Substring(dir.Length + 1);
 
-                dir = Path.Combine(path, dir);
-                file = Path.Combine(dir, file);
+        //        dir = Path.Combine(path, dir);
+        //        file = Path.Combine(dir, file);
 
-                if (!String.IsNullOrEmpty(dir) && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                File.WriteAllText(file, dic[item]);
-            }
-        }
+        //        if (!String.IsNullOrEmpty(dir) && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+        //        File.WriteAllText(file, dic[item]);
+        //    }
+        //}
 
         /// <summary>释放模版文件</summary>
         public static Dictionary<String, String> GetTemplates()
