@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Windows.Forms;
+using Microsoft.Win32;
 using NewLife;
 using NewLife.Collections;
 using NewLife.Reflection;
@@ -433,6 +434,13 @@ namespace XCoder.Tools
 
             var serialNumber = GetInfo("Win32_DiskDrive", "SerialNumber");
             if (!serialNumber.IsNullOrEmpty()) sb.AppendFormat("DiskSerial:\t{0}\t(Win32_DiskDrive.SerialNumber)\r\n", serialNumber);
+
+            var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Cryptography");
+            if (reg != null)
+            {
+                var guid = reg.GetValue("MachineGuid") + "";
+                if (!guid.IsNullOrEmpty()) sb.AppendFormat("MachineGuid:\t{0}\t(SOFTWARE\\Microsoft\\Cryptography)\r\n", guid);
+            }
 
 #if !NET4
             sb.AppendLine();
