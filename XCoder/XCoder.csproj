@@ -32,6 +32,7 @@
     <WarningLevel>3</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -220,22 +221,6 @@
     <EmbeddedResource Include="NewModelForm\NewModel.resx">
       <DependentUpon>NewModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面ExtAspNet\类名.aspx.cs">
-      <DependentUpon>类名.aspx</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面ExtAspNet\类名Form.aspx.cs">
-      <DependentUpon>类名Form.aspx</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类ExtAspNet\MyEntityForm.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类ExtAspNet\MyEntityList.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类ExtAspNet\MyEntityUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\实体业务\中文名.Biz.cs" />
     <Compile Include="NewModelForm\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -303,24 +288,6 @@
     <EmbeddedResource Include="Windows\FrmText.resx">
       <DependentUpon>FrmText.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面\类名.aspx.cs">
-      <DependentUpon>类名.aspx</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面\类名Form.aspx.cs">
-      <DependentUpon>类名Form.aspx</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类\MyEntityForm.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类\MyEntityList.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\页面基类\MyEntityUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Template\实体数据\中文名.cs" />
-    <EmbeddedResource Include="Template\纯属性\I中文名.cs" />
-    <EmbeddedResource Include="Template\纯属性\中文名.cs" />
     <EmbeddedResource Include="Windows\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -328,10 +295,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="leaf.ico" />
-    <EmbeddedResource Include="Template\页面\类名.aspx" />
-    <EmbeddedResource Include="Template\页面\类名Form.aspx" />
     <EmbeddedResource Include="UpdateInfo.txt" />
-    <EmbeddedResource Include="Template\数据字典\连接名数据字典.htm" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -342,14 +306,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="Template\实体业务\对象操作.xt" />
-    <EmbeddedResource Include="Template\实体业务\扩展查询.xt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Template\页面ExtAspNet\类名.aspx" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Template\页面ExtAspNet\类名Form.aspx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="XCom\FrmMain.resx">
