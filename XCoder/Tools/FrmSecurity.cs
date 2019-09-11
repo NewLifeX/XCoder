@@ -415,31 +415,31 @@ namespace XCoder.Tools
             if (macs.Count > 0) sb.AppendFormat("MAC:\t{0}\r\n", macs.Join(",", x => x.ToHex("-")));
 
             var processor = GetInfo("Win32_Processor", "Name");
-            if (!processor.IsNullOrEmpty()) sb.AppendFormat("Processor:\t{0}\t(Win32_Processor.Name)\r\n", processor);
+            /*if (!processor.IsNullOrEmpty())*/ sb.AppendFormat("Processor:\t{0}\t(Win32_Processor.Name)\r\n", processor);
 
             var cpuID = GetInfo("Win32_Processor", "ProcessorId");
-            if (!cpuID.IsNullOrEmpty()) sb.AppendFormat("ProcessorId:\t{0}\t(Win32_Processor.ProcessorId)\r\n", cpuID);
+            /*if (!cpuID.IsNullOrEmpty())*/ sb.AppendFormat("ProcessorId:\t{0}\t(Win32_Processor.ProcessorId)\r\n", cpuID);
 
             var uuid = GetInfo("Win32_ComputerSystemProduct", "UUID");
-            if (!uuid.IsNullOrEmpty()) sb.AppendFormat("UUID:\t{0}\t(Win32_ComputerSystemProduct.UUID)\r\n", uuid);
+            /*if (!uuid.IsNullOrEmpty())*/ sb.AppendFormat("UUID:\t{0}\t(Win32_ComputerSystemProduct.UUID)\r\n", uuid);
 
             var id = GetInfo("Win32_ComputerSystemProduct", "IdentifyingNumber");
-            if (!id.IsNullOrEmpty()) sb.AppendFormat("IdentifyingNumber:\t{0}\t(Win32_ComputerSystemProduct.IdentifyingNumber)\r\n", id);
+            /*if (!id.IsNullOrEmpty())*/ sb.AppendFormat("IdentifyingNumber:\t{0}\t(Win32_ComputerSystemProduct.IdentifyingNumber)\r\n", id);
 
             var bios = GetInfo("Win32_BIOS", "SerialNumber");
-            if (!bios.IsNullOrEmpty()) sb.AppendFormat("BIOS:\t{0}\t(Win32_BIOS.SerialNumber)\r\n", bios);
+            /*if (!bios.IsNullOrEmpty())*/ sb.AppendFormat("BIOS:\t{0}\t(Win32_BIOS.SerialNumber)\r\n", bios);
 
             var baseBoard = GetInfo("Win32_BaseBoard", "SerialNumber");
-            if (!baseBoard.IsNullOrEmpty()) sb.AppendFormat("BaseBoard:\t{0}\t(Win32_BaseBoard.SerialNumber)\r\n", baseBoard);
+            /*if (!baseBoard.IsNullOrEmpty())*/ sb.AppendFormat("BaseBoard:\t{0}\t(Win32_BaseBoard.SerialNumber)\r\n", baseBoard);
 
             var serialNumber = GetInfo("Win32_DiskDrive", "SerialNumber");
-            if (!serialNumber.IsNullOrEmpty()) sb.AppendFormat("DiskSerial:\t{0}\t(Win32_DiskDrive.SerialNumber)\r\n", serialNumber);
+            /*if (!serialNumber.IsNullOrEmpty())*/ sb.AppendFormat("DiskSerial:\t{0}\t(Win32_DiskDrive.SerialNumber)\r\n", serialNumber);
 
             var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Cryptography");
             if (reg != null)
             {
                 var guid = reg.GetValue("MachineGuid") + "";
-                if (!guid.IsNullOrEmpty()) sb.AppendFormat("MachineGuid:\t{0}\t(SOFTWARE\\Microsoft\\Cryptography)\r\n", guid);
+                /*if (!guid.IsNullOrEmpty())*/ sb.AppendFormat("MachineGuid:\t{0}\t(SOFTWARE\\Microsoft\\Cryptography)\r\n", guid);
             }
 
 #if !NET4
