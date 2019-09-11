@@ -368,14 +368,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\XCoder\App.config">
-      <Link>App.config</Link>
-    </None>
     <None Include="..\XCoder\Properties\app.manifest">
       <Link>Properties\app.manifest</Link>
     </None>
     <None Include="..\XCoder\Properties\Settings.settings">
       <Link>Properties\Settings.settings</Link>
+    </None>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
