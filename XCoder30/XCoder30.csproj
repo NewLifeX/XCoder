@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\XCoder\Engine\FileSource.cs" Link="Engine\FileSource.cs" />
+    <Compile Include="..\XCoder\Engine\IcoHelper.cs" Link="Engine\IcoHelper.cs" />
+    <Compile Include="..\XCoder\Engine\ModelConfig.cs" Link="Engine\ModelConfig.cs" />
+    <Compile Include="..\XCoder\Engine\UIConfig.cs" Link="Engine\UIConfig.cs" />
+    <Compile Include="..\XCoder\Engine\XConfig.cs" Link="Engine\XConfig.cs" />
+    <Compile Include="..\XCoder\FrmMDI.cs" Link="FrmMDI.cs" />
+    <Compile Include="..\XCoder\FrmMDI.Designer.cs" Link="FrmMDI.Designer.cs" />
+    <Compile Include="..\XCoder\IXForm.cs" Link="IXForm.cs" />
+    <Compile Include="..\XCoder\Program.cs" Link="Program.cs" />
+    <Compile Include="..\XCoder\XICO\FrmMain.cs" Link="XICO\FrmMain.cs" />
+    <Compile Include="..\XCoder\XICO\FrmMain.designer.cs" Link="XICO\FrmMain.designer.cs" />
+    <Compile Include="..\XCoder\XICO\IconFile.cs" Link="XICO\IconFile.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\XCoder\FrmMDI.resx" Link="FrmMDI.resx" />
+    <EmbeddedResource Include="..\XCoder\XICO\FrmMain.resx" Link="XICO\FrmMain.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NewLife.XCode" Version="9.14.2019.822" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Engine\" />
+    <Folder Include="XICO\" />
+  </ItemGroup>
+
+</Project>
