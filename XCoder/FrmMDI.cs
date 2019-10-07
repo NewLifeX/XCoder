@@ -160,7 +160,7 @@ namespace XCoder
         {
             if (auto) XTrace.WriteLine("自动更新！");
 
-            Upgrade.DeleteBuckup();
+            Upgrade.DeleteBuckup(".");
 
             var cfg = XConfig.Current;
             if (cfg.LastUpdate.Date < DateTime.Now.Date || !auto)
@@ -177,13 +177,13 @@ namespace XCoder
                 if (up.Check())
                 {
                     up.Download();
-                    if (!auto || MessageBox.Show("发现新版本{0}，是否更新？".F(up.Links[0].Time), "自动更新", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (!auto || MessageBox.Show("发现新版本{0}，是否更新？".F(up.Link.Time), "自动更新", MessageBoxButtons.YesNo) == DialogResult.Yes)
                         up.Update();
                 }
                 else if (!auto)
                 {
-                    if (up.Links != null && up.Links.Length > 0)
-                        MessageBox.Show("没有可用更新！最新{0}".F(up.Links[0].Time), "自动更新");
+                    if (up.Link != null)
+                        MessageBox.Show("没有可用更新！最新{0}".F(up.Link.Time), "自动更新");
                     else
                         MessageBox.Show("没有可用更新！", "自动更新");
                 }
