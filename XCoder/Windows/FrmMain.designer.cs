@@ -66,7 +66,6 @@
             this.导出模型EToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.架构管理SToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sQL查询器QToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.添加模型ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.组件手册ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.表名字段名命名规范ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -442,15 +441,14 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.文件ToolStripMenuItem,
             this.模型ToolStripMenuItem,
-            this.添加模型ToolStripMenuItem,
             this.关于ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
             this.menuStrip1.Size = new System.Drawing.Size(1095, 35);
             this.menuStrip1.TabIndex = 35;
             this.menuStrip1.Text = "menuStrip1";
@@ -503,21 +501,21 @@
             // 模型管理MToolStripMenuItem
             // 
             this.模型管理MToolStripMenuItem.Name = "模型管理MToolStripMenuItem";
-            this.模型管理MToolStripMenuItem.Size = new System.Drawing.Size(233, 34);
+            this.模型管理MToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.模型管理MToolStripMenuItem.Text = "模型管理(&M)";
             this.模型管理MToolStripMenuItem.Click += new System.EventHandler(this.模型管理MToolStripMenuItem_Click);
             // 
             // 导出模型EToolStripMenuItem
             // 
             this.导出模型EToolStripMenuItem.Name = "导出模型EToolStripMenuItem";
-            this.导出模型EToolStripMenuItem.Size = new System.Drawing.Size(233, 34);
+            this.导出模型EToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.导出模型EToolStripMenuItem.Text = "导出模型(&E)";
             this.导出模型EToolStripMenuItem.Click += new System.EventHandler(this.导出模型EToolStripMenuItem_Click);
             // 
             // 架构管理SToolStripMenuItem
             // 
             this.架构管理SToolStripMenuItem.Name = "架构管理SToolStripMenuItem";
-            this.架构管理SToolStripMenuItem.Size = new System.Drawing.Size(233, 34);
+            this.架构管理SToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.架构管理SToolStripMenuItem.Text = "架构管理(&S)";
             this.架构管理SToolStripMenuItem.Visible = false;
             this.架构管理SToolStripMenuItem.Click += new System.EventHandler(this.架构管理SToolStripMenuItem_Click);
@@ -525,17 +523,9 @@
             // sQL查询器QToolStripMenuItem
             // 
             this.sQL查询器QToolStripMenuItem.Name = "sQL查询器QToolStripMenuItem";
-            this.sQL查询器QToolStripMenuItem.Size = new System.Drawing.Size(233, 34);
+            this.sQL查询器QToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.sQL查询器QToolStripMenuItem.Text = "SQL查询器(&Q)";
             this.sQL查询器QToolStripMenuItem.Click += new System.EventHandler(this.sQL查询器QToolStripMenuItem_Click);
-            // 
-            // 添加模型ToolStripMenuItem
-            // 
-            this.添加模型ToolStripMenuItem.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.添加模型ToolStripMenuItem.Name = "添加模型ToolStripMenuItem";
-            this.添加模型ToolStripMenuItem.Size = new System.Drawing.Size(100, 29);
-            this.添加模型ToolStripMenuItem.Text = "添加模型";
-            this.添加模型ToolStripMenuItem.Click += new System.EventHandler(this.添加模型ToolStripMenuItem_Click);
             // 
             // 关于ToolStripMenuItem
             // 
@@ -709,7 +699,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnRefreshTable;
         private System.Windows.Forms.CheckBox cbIncludeView;
-        private System.Windows.Forms.ToolStripMenuItem 添加模型ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 在线帮助文档ToolStripMenuItem;
 	}
 }

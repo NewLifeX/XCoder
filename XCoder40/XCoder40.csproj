@@ -96,37 +96,6 @@
     <Compile Include="..\XCoder\IXForm.cs">
       <Link>IXForm.cs</Link>
     </Compile>
-    <Compile Include="..\XCoder\NewModelForm\AddField.cs">
-      <Link>NewModelForm\AddField.cs</Link>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="..\XCoder\NewModelForm\AddField.Designer.cs">
-      <Link>NewModelForm\AddField.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\XCoder\NewModelForm\AddTable.cs">
-      <Link>NewModelForm\AddTable.cs</Link>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="..\XCoder\NewModelForm\AddTable.Designer.cs">
-      <Link>NewModelForm\AddTable.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\XCoder\NewModelForm\BaseForm.cs">
-      <Link>NewModelForm\BaseForm.cs</Link>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="..\XCoder\NewModelForm\BaseForm.designer.cs">
-      <Link>NewModelForm\BaseForm.designer.cs</Link>
-    </Compile>
-    <Compile Include="..\XCoder\NewModelForm\NewModel.cs">
-      <Link>NewModelForm\NewModel.cs</Link>
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="..\XCoder\NewModelForm\NewModel.Designer.cs">
-      <Link>NewModelForm\NewModel.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\XCoder\NewModelForm\WinFormHelper.cs">
-      <Link>NewModelForm\WinFormHelper.cs</Link>
-    </Compile>
     <Compile Include="..\XCoder\Program.cs">
       <Link>Program.cs</Link>
     </Compile>
@@ -226,12 +195,18 @@
     <Compile Include="..\XCoder\XCom\FrmMain.designer.cs">
       <Link>XCom\FrmMain.designer.cs</Link>
     </Compile>
+    <Compile Include="..\XCoder\XCom\SerialPortConfig.cs">
+      <Link>XCom\SerialPortConfig.cs</Link>
+    </Compile>
     <Compile Include="..\XCoder\XCom\SerialPortList.cs">
       <Link>XCom\SerialPortList.cs</Link>
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="..\XCoder\XCom\SerialPortList.designer.cs">
       <Link>XCom\SerialPortList.designer.cs</Link>
+    </Compile>
+    <Compile Include="..\XCoder\XCom\SerialTransport.cs">
+      <Link>XCom\SerialTransport.cs</Link>
     </Compile>
     <Compile Include="..\XCoder\XICO\FrmMain.cs">
       <Link>XICO\FrmMain.cs</Link>
@@ -302,18 +277,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\XCoder\FrmMDI.resx">
       <Link>FrmMDI.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\XCoder\NewModelForm\AddField.resx">
-      <Link>NewModelForm\AddField.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\XCoder\NewModelForm\AddTable.resx">
-      <Link>NewModelForm\AddTable.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\XCoder\NewModelForm\BaseForm.resx">
-      <Link>NewModelForm\BaseForm.resx</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\XCoder\NewModelForm\NewModel.resx">
-      <Link>NewModelForm\NewModel.resx</Link>
     </EmbeddedResource>
     <EmbeddedResource Include="..\XCoder\Tools\FrmGPS.resx">
       <Link>Tools\FrmGPS.resx</Link>

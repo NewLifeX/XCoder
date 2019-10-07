@@ -716,11 +716,11 @@ namespace XCoder
         }
         #endregion
 
-        #region 添加模型-@宁波-小董 2013
-        private void 添加模型ToolStripMenuItem_Click(Object sender, EventArgs e)
-        {
-            NewModel.CreateForm().Show();
-        }
-        #endregion
+        //#region 添加模型-@宁波-小董 2013
+        //private void 添加模型ToolStripMenuItem_Click(Object sender, EventArgs e)
+        //{
+        //    NewModel.CreateForm().Show();
+        //}
+        //#endregion
     }
 }

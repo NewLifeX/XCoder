@@ -14,7 +14,7 @@
     <FileVersion>8.0.2019.1007</FileVersion>
     <AssemblyVersion>8.0.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
-    <ApplicationIcon>leaf.ico</ApplicationIcon>
+    <ApplicationIcon>..\XCoder\leaf.ico</ApplicationIcon>
     <OutputPath>..\..\XCoder\</OutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
