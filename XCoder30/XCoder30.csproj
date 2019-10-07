@@ -112,13 +112,13 @@
     <EmbeddedResource Include="..\XCoder\Yun\FrmMap.resx" Link="Yun\FrmMap.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\XCoder\leaf.ico">
+    <EmbeddedResource Include="..\XCoder\leaf.ico">
       <Link>leaf.ico</Link>
-    </Content>
-    <Content Include="..\XCoder\UpdateInfo.txt">
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\UpdateInfo.txt">
       <Link>UpdateInfo.txt</Link>
-    </Content>
-    <Content Include="..\XCoder\数据库命名规范.txt" Link="数据库命名规范.txt" />
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\数据库命名规范.txt" Link="数据库命名规范.txt" />
     <EmbeddedResource Include="..\XCoder\XICO\leaf.png">
       <Link>XICO\leaf.png</Link>
     </EmbeddedResource>

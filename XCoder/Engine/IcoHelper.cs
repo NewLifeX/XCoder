@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using NewLife.IO;
+using NewLife.Log;
 using XICO;
 
 namespace XCoder
@@ -12,7 +13,7 @@ namespace XCoder
         {
             try
             {
-                var src = FileSource.GetFileResource(null, "leaf.png");
+                var src = Source.GetFileResource(null, "leaf.png");
                 if (src == null) return null;
 
                 using (var bmp = new Bitmap(src))
@@ -27,7 +28,12 @@ namespace XCoder
                     }
                 }
             }
-            catch { return null; }
+            catch (Exception ex)
+            {
+                XTrace.WriteException(ex);
+
+                return null;
+            }
         }
 
         static Image MakeWater(Image bmp, String txt, Boolean fitSize)
