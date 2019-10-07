@@ -102,12 +102,14 @@
     <Compile Include="XApi\FrmMain.designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="XCom\SerialPortConfig.cs" />
     <Compile Include="XCom\SerialPortList.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="XCom\SerialPortList.designer.cs">
       <DependentUpon>SerialPortList.cs</DependentUpon>
     </Compile>
+    <Compile Include="XCom\SerialTransport.cs" />
     <Compile Include="XNet\BenchHelper.cs" />
     <Compile Include="XNet\IPPacket.cs" />
     <Compile Include="XNet\NetHelper2.cs" />

@@ -4,6 +4,27 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>XCoder</RootNamespace>
+    <AssemblyName>XCoder</AssemblyName>
+    <AssemblyTitle>新生命码神工具</AssemblyTitle>
+    <Description>众多开发者工具</Description>
+    <Company>新生命开发团队</Company>
+    <Copyright>©2002-2019 新生命开发团队</Copyright>
+    <Version>8.0.2019.1007</Version>
+    <FileVersion>8.0.2019.1007</FileVersion>
+    <AssemblyVersion>8.0.*</AssemblyVersion>
+    <Deterministic>false</Deterministic>
+    <ApplicationIcon>leaf.ico</ApplicationIcon>
+    <OutputPath>..\..\XCoder\</OutputPath>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;NC30;__CORE__</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,28 +33,159 @@
     <Compile Include="..\XCoder\Engine\ModelConfig.cs" Link="Engine\ModelConfig.cs" />
     <Compile Include="..\XCoder\Engine\UIConfig.cs" Link="Engine\UIConfig.cs" />
     <Compile Include="..\XCoder\Engine\XConfig.cs" Link="Engine\XConfig.cs" />
+    <Compile Include="..\XCoder\FileEncoding\FrmMain.cs" Link="FileEncoding\FrmMain.cs" />
+    <Compile Include="..\XCoder\FileEncoding\FrmMain.Designer.cs" Link="FileEncoding\FrmMain.Designer.cs" />
     <Compile Include="..\XCoder\FrmMDI.cs" Link="FrmMDI.cs" />
     <Compile Include="..\XCoder\FrmMDI.Designer.cs" Link="FrmMDI.Designer.cs" />
     <Compile Include="..\XCoder\IXForm.cs" Link="IXForm.cs" />
     <Compile Include="..\XCoder\Program.cs" Link="Program.cs" />
+    <Compile Include="..\XCoder\Tools\FrmGPS.cs" Link="Tools\FrmGPS.cs" />
+    <Compile Include="..\XCoder\Tools\FrmGPS.Designer.cs" Link="Tools\FrmGPS.Designer.cs" />
+    <Compile Include="..\XCoder\Tools\FrmInclude.cs" Link="Tools\FrmInclude.cs" />
+    <Compile Include="..\XCoder\Tools\FrmInclude.Designer.cs" Link="Tools\FrmInclude.Designer.cs" />
+    <Compile Include="..\XCoder\Tools\FrmMain.cs" Link="Tools\FrmMain.cs" />
+    <Compile Include="..\XCoder\Tools\FrmMain.Designer.cs" Link="Tools\FrmMain.Designer.cs" />
+    <Compile Include="..\XCoder\Tools\FrmSecurity.cs" Link="Tools\FrmSecurity.cs" />
+    <Compile Include="..\XCoder\Tools\FrmSecurity.Designer.cs" Link="Tools\FrmSecurity.Designer.cs" />
+    <Compile Include="..\XCoder\Tools\FrmSpeak.cs" Link="Tools\FrmSpeak.cs" />
+    <Compile Include="..\XCoder\Tools\FrmSpeak.Designer.cs" Link="Tools\FrmSpeak.Designer.cs" />
+    <Compile Include="..\XCoder\Windows\FrmMain.cs" Link="Windows\FrmMain.cs" />
+    <Compile Include="..\XCoder\Windows\FrmMain.designer.cs" Link="Windows\FrmMain.designer.cs" />
+    <Compile Include="..\XCoder\Windows\FrmModel.cs" Link="Windows\FrmModel.cs" />
+    <Compile Include="..\XCoder\Windows\FrmModel.Designer.cs" Link="Windows\FrmModel.Designer.cs" />
+    <Compile Include="..\XCoder\Windows\FrmQuery.cs" Link="Windows\FrmQuery.cs" />
+    <Compile Include="..\XCoder\Windows\FrmQuery.Designer.cs" Link="Windows\FrmQuery.Designer.cs" />
+    <Compile Include="..\XCoder\Windows\FrmSchema.cs" Link="Windows\FrmSchema.cs" />
+    <Compile Include="..\XCoder\Windows\FrmSchema.Designer.cs" Link="Windows\FrmSchema.Designer.cs" />
+    <Compile Include="..\XCoder\Windows\FrmText.cs" Link="Windows\FrmText.cs" />
+    <Compile Include="..\XCoder\Windows\FrmText.Designer.cs" Link="Windows\FrmText.Designer.cs" />
+    <Compile Include="..\XCoder\XApi\ApiConfig.cs" Link="XApi\ApiConfig.cs" />
+    <Compile Include="..\XCoder\XApi\FrmMain.cs" Link="XApi\FrmMain.cs" />
+    <Compile Include="..\XCoder\XApi\FrmMain.designer.cs" Link="XApi\FrmMain.designer.cs" />
+    <Compile Include="..\XCoder\XApi\MyApiController.cs" Link="XApi\MyApiController.cs" />
+    <Compile Include="..\XCoder\XCom\FrmMain.cs" Link="XCom\FrmMain.cs" />
+    <Compile Include="..\XCoder\XCom\FrmMain.designer.cs" Link="XCom\FrmMain.designer.cs" />
+    <Compile Include="..\XCoder\XCom\SerialPortConfig.cs" Link="XCom\SerialPortConfig.cs" />
+    <Compile Include="..\XCoder\XCom\SerialPortList.cs" Link="XCom\SerialPortList.cs" />
+    <Compile Include="..\XCoder\XCom\SerialPortList.designer.cs" Link="XCom\SerialPortList.designer.cs" />
+    <Compile Include="..\XCoder\XCom\SerialTransport.cs" Link="XCom\SerialTransport.cs" />
     <Compile Include="..\XCoder\XICO\FrmMain.cs" Link="XICO\FrmMain.cs" />
     <Compile Include="..\XCoder\XICO\FrmMain.designer.cs" Link="XICO\FrmMain.designer.cs" />
     <Compile Include="..\XCoder\XICO\IconFile.cs" Link="XICO\IconFile.cs" />
+    <Compile Include="..\XCoder\XNet\BenchHelper.cs" Link="XNet\BenchHelper.cs" />
+    <Compile Include="..\XCoder\XNet\FrmMain.cs" Link="XNet\FrmMain.cs" />
+    <Compile Include="..\XCoder\XNet\FrmMain.designer.cs" Link="XNet\FrmMain.designer.cs" />
+    <Compile Include="..\XCoder\XNet\IPPacket.cs" Link="XNet\IPPacket.cs" />
+    <Compile Include="..\XCoder\XNet\MySqlParser.cs" Link="XNet\MySqlParser.cs" />
+    <Compile Include="..\XCoder\XNet\NetConfig.cs" Link="XNet\NetConfig.cs" />
+    <Compile Include="..\XCoder\XNet\NetHelper2.cs" Link="XNet\NetHelper2.cs" />
+    <Compile Include="..\XCoder\XNet\RawSocket.cs" Link="XNet\RawSocket.cs" />
+    <Compile Include="..\XCoder\XNet\TcpPacket.cs" Link="XNet\TcpPacket.cs" />
+    <Compile Include="..\XCoder\XNet\WorkModes.cs" Link="XNet\WorkModes.cs" />
+    <Compile Include="..\XCoder\XRegex\FileResource.cs" Link="XRegex\FileResource.cs" />
+    <Compile Include="..\XCoder\XRegex\FrmMain.cs" Link="XRegex\FrmMain.cs" />
+    <Compile Include="..\XCoder\XRegex\FrmMain.designer.cs" Link="XRegex\FrmMain.designer.cs" />
+    <Compile Include="..\XCoder\Yun\FrmMap.cs" Link="Yun\FrmMap.cs" />
+    <Compile Include="..\XCoder\Yun\FrmMap.Designer.cs" Link="Yun\FrmMap.Designer.cs" />
+    <Compile Include="..\XCoder\Yun\MapSetting.cs" Link="Yun\MapSetting.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="..\XCoder\FileEncoding\FrmMain.resx" Link="FileEncoding\FrmMain.resx" />
     <EmbeddedResource Include="..\XCoder\FrmMDI.resx" Link="FrmMDI.resx" />
+    <EmbeddedResource Include="..\XCoder\Tools\FrmGPS.resx" Link="Tools\FrmGPS.resx" />
+    <EmbeddedResource Include="..\XCoder\Tools\FrmInclude.resx" Link="Tools\FrmInclude.resx" />
+    <EmbeddedResource Include="..\XCoder\Tools\FrmMain.resx" Link="Tools\FrmMain.resx" />
+    <EmbeddedResource Include="..\XCoder\Tools\FrmSecurity.resx" Link="Tools\FrmSecurity.resx" />
+    <EmbeddedResource Include="..\XCoder\Tools\FrmSpeak.resx" Link="Tools\FrmSpeak.resx" />
+    <EmbeddedResource Include="..\XCoder\Windows\FrmMain.resx" Link="Windows\FrmMain.resx" />
+    <EmbeddedResource Include="..\XCoder\Windows\FrmModel.resx" Link="Windows\FrmModel.resx" />
+    <EmbeddedResource Include="..\XCoder\Windows\FrmQuery.resx" Link="Windows\FrmQuery.resx" />
+    <EmbeddedResource Include="..\XCoder\Windows\FrmSchema.resx" Link="Windows\FrmSchema.resx" />
+    <EmbeddedResource Include="..\XCoder\Windows\FrmText.resx" Link="Windows\FrmText.resx" />
+    <EmbeddedResource Include="..\XCoder\XApi\FrmMain.resx" Link="XApi\FrmMain.resx" />
+    <EmbeddedResource Include="..\XCoder\XCom\FrmMain.resx" Link="XCom\FrmMain.resx" />
+    <EmbeddedResource Include="..\XCoder\XCom\SerialPortList.resx" Link="XCom\SerialPortList.resx" />
     <EmbeddedResource Include="..\XCoder\XICO\FrmMain.resx" Link="XICO\FrmMain.resx" />
+    <EmbeddedResource Include="..\XCoder\XNet\FrmMain.resx" Link="XNet\FrmMain.resx" />
+    <EmbeddedResource Include="..\XCoder\XRegex\FrmMain.resx" Link="XRegex\FrmMain.resx" />
+    <EmbeddedResource Include="..\XCoder\Yun\FrmMap.resx" Link="Yun\FrmMap.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\XCoder\leaf.ico">
+      <Link>leaf.ico</Link>
+    </Content>
+    <Content Include="..\XCoder\UpdateInfo.txt">
+      <Link>UpdateInfo.txt</Link>
+    </Content>
+    <Content Include="..\XCoder\数据库命名规范.txt" Link="数据库命名规范.txt" />
+    <EmbeddedResource Include="..\XCoder\XICO\leaf.png">
+      <Link>XICO\leaf.png</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\Html\无嵌套标记.txt">
+      <Link>XRegex\Pattern\Html\无嵌套标记.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\SQL查询\嵌套查询.txt">
+      <Link>XRegex\Pattern\SQL查询\嵌套查询.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\SQL查询\简单.txt">
+      <Link>XRegex\Pattern\SQL查询\简单.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\平衡组\完整示例.txt">
+      <Link>XRegex\Pattern\平衡组\完整示例.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\平衡组\完整示例固化分组.txt">
+      <Link>XRegex\Pattern\平衡组\完整示例固化分组.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\平衡组\标准.txt">
+      <Link>XRegex\Pattern\平衡组\标准.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\平衡组\标准固化分组.txt">
+      <Link>XRegex\Pattern\平衡组\标准固化分组.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Pattern\网页\最外层嵌套.txt">
+      <Link>XRegex\Pattern\网页\最外层嵌套.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Sample\SQL查询\MSSQL表结构.txt">
+      <Link>XRegex\Sample\SQL查询\MSSQL表结构.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Sample\SQL查询\普通嵌套查询.txt">
+      <Link>XRegex\Sample\SQL查询\普通嵌套查询.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Sample\SQL查询\普通查询.txt">
+      <Link>XRegex\Sample\SQL查询\普通查询.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Sample\平衡组\算术表达式.txt">
+      <Link>XRegex\Sample\平衡组\算术表达式.txt</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\XCoder\XRegex\Sample\网页\最外层嵌套.txt">
+      <Link>XRegex\Sample\网页\最外层嵌套.txt</Link>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core" Version="8.4.2019.1007" />
     <PackageReference Include="NewLife.XCode" Version="9.14.2019.923" />
+    <PackageReference Include="System.IO.Ports" Version="4.6.0" />
+    <PackageReference Include="System.Management" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Engine\" />
     <Folder Include="XICO\" />
+    <Folder Include="FileEncoding\" />
+    <Folder Include="Tools\" />
+    <Folder Include="Windows\" />
+    <Folder Include="XApi\" />
+    <Folder Include="XCom\" />
+    <Folder Include="XNet\" />
+    <Folder Include="XRegex\" />
+    <Folder Include="Yun\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\XCoder\App.config" Link="App.config" />
   </ItemGroup>
 
 </Project>

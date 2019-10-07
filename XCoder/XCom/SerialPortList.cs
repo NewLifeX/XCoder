@@ -17,20 +17,17 @@ namespace NewLife.Windows
     public partial class SerialPortList : UserControl
     {
         #region 属性
-        private SerialTransport _Port;
         /// <summary>端口</summary>
-        public SerialTransport Port { get { return _Port; } set { _Port = value; } }
+        public SerialTransport Port { get; set; }
 
         /// <summary>选择的端口</summary>
         public String SelectedPort { get { return cbName.SelectedItem + ""; } set { } }
 
-        private Int32 _BytesOfReceived;
         /// <summary>收到的字节数</summary>
-        public Int32 BytesOfReceived { get { return _BytesOfReceived; } set { _BytesOfReceived = value; } }
+        public Int32 BytesOfReceived { get; set; }
 
-        private Int32 _BytesOfSent;
         /// <summary>发送的字节数</summary>
-        public Int32 BytesOfSent { get { return _BytesOfSent; } set { _BytesOfSent = value; } }
+        public Int32 BytesOfSent { get; set; }
         #endregion
 
         #region 构造

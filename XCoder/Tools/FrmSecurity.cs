@@ -442,7 +442,7 @@ namespace XCoder.Tools
                 /*if (!guid.IsNullOrEmpty())*/ sb.AppendFormat("MachineGuid:\t{0}\t(SOFTWARE\\Microsoft\\Cryptography)\r\n", guid);
             }
 
-#if !NET4
+#if !NET4 && !__CORE__
             sb.AppendLine();
             var ci = new Microsoft.VisualBasic.Devices.ComputerInfo();
             foreach (var pi in ci.GetType().GetProperties())
