@@ -31,14 +31,10 @@
     <WarningLevel>3</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>..\XCoder\Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NewLife.Core, Version=8.2.7126.42291, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Core.8.2.2019.706\lib\net40\NewLife.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="NewLife.Net, Version=3.6.7127.17019, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.Net.3.6.2019.707\lib\net40\NewLife.Net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -52,9 +48,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="XCode, Version=9.12.7126.42294, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NewLife.XCode.9.13.2019.706\lib\net40\XCode.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\XCoder\Engine\FileSource.cs">
@@ -375,16 +368,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\XCoder\App.config">
-      <Link>App.config</Link>
-    </None>
     <None Include="..\XCoder\Properties\app.manifest">
       <Link>Properties\app.manifest</Link>
     </None>
     <None Include="..\XCoder\Properties\Settings.settings">
       <Link>Properties\Settings.settings</Link>
     </None>
-    <None Include="packages.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\XCoder\leaf.ico">
@@ -435,6 +427,17 @@
     <EmbeddedResource Include="..\XCoder\XRegex\Sample\网页\最外层嵌套.txt">
       <Link>XRegex\Sample\网页\最外层嵌套.txt</Link>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NewLife.Core">
+      <Version>8.3.2019.822</Version>
+    </PackageReference>
+    <PackageReference Include="NewLife.Net">
+      <Version>3.6.2019.707</Version>
+    </PackageReference>
+    <PackageReference Include="NewLife.XCode">
+      <Version>9.14.2019.822</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

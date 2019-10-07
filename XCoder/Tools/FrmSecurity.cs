@@ -1,11 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Management;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Windows.Forms;
+using Microsoft.Win32;
+using NewLife;
 using NewLife.Collections;
+using NewLife.Reflection;
 using NewLife.Security;
 
 namespace XCoder.Tools
@@ -397,5 +405,116 @@ namespace XCoder.Tools
 
             rtResult.Text = sb.Put(true);
         }
+
+        #region 机器信息
+        private void BtnComputerInfo_Click(Object sender, EventArgs e)
+        {
+            var sb = Pool.StringBuilder.Get();
+
+            var macs = GetMacs().ToList();
+            if (macs.Count > 0) sb.AppendFormat("MAC:\t{0}\r\n", macs.Join(",", x => x.ToHex("-")));
+
+            var processor = GetInfo("Win32_Processor", "Name");
+            /*if (!processor.IsNullOrEmpty())*/ sb.AppendFormat("Processor:\t{0}\t(Win32_Processor.Name)\r\n", processor);
+
+            var cpuID = GetInfo("Win32_Processor", "ProcessorId");
+            /*if (!cpuID.IsNullOrEmpty())*/ sb.AppendFormat("ProcessorId:\t{0}\t(Win32_Processor.ProcessorId)\r\n", cpuID);
+
+            var uuid = GetInfo("Win32_ComputerSystemProduct", "UUID");
+            /*if (!uuid.IsNullOrEmpty())*/ sb.AppendFormat("UUID:\t{0}\t(Win32_ComputerSystemProduct.UUID)\r\n", uuid);
+
+            var id = GetInfo("Win32_ComputerSystemProduct", "IdentifyingNumber");
+            /*if (!id.IsNullOrEmpty())*/ sb.AppendFormat("IdentifyingNumber:\t{0}\t(Win32_ComputerSystemProduct.IdentifyingNumber)\r\n", id);
+
+            var bios = GetInfo("Win32_BIOS", "SerialNumber");
+            /*if (!bios.IsNullOrEmpty())*/ sb.AppendFormat("BIOS:\t{0}\t(Win32_BIOS.SerialNumber)\r\n", bios);
+
+            var baseBoard = GetInfo("Win32_BaseBoard", "SerialNumber");
+            /*if (!baseBoard.IsNullOrEmpty())*/ sb.AppendFormat("BaseBoard:\t{0}\t(Win32_BaseBoard.SerialNumber)\r\n", baseBoard);
+
+            var serialNumber = GetInfo("Win32_DiskDrive", "SerialNumber");
+            /*if (!serialNumber.IsNullOrEmpty())*/ sb.AppendFormat("DiskSerial:\t{0}\t(Win32_DiskDrive.SerialNumber)\r\n", serialNumber);
+
+            var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Cryptography");
+            if (reg != null)
+            {
+                var guid = reg.GetValue("MachineGuid") + "";
+                /*if (!guid.IsNullOrEmpty())*/ sb.AppendFormat("MachineGuid:\t{0}\t(SOFTWARE\\Microsoft\\Cryptography)\r\n", guid);
+            }
+
+#if !NET4
+            sb.AppendLine();
+            var ci = new Microsoft.VisualBasic.Devices.ComputerInfo();
+            foreach (var pi in ci.GetType().GetProperties())
+            {
+                //if (sb.Length > 0) sb.AppendLine();
+                sb.AppendFormat("{0}:\t{1:n0}\r\n", pi.Name, ci.GetValue(pi));
+            }
+#endif
+
+            rtResult.Text = sb.Put(true);
+        }
+
+        private static String[] _Excludes = new[] { "Loopback", "VMware", "VBox", "Virtual", "Teredo", "Microsoft", "VPN", "VNIC", "IEEE" };
+        /// <summary>获取所有网卡MAC地址</summary>
+        /// <returns></returns>
+        public static IEnumerable<Byte[]> GetMacs()
+        {
+            foreach (var item in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (_Excludes.Any(e => item.Description.Contains(e))) continue;
+                if (item.Speed < 1_000_000) continue;
+
+                var addrs = item.GetIPProperties().UnicastAddresses.Where(e => e.Address.AddressFamily == AddressFamily.InterNetwork).ToArray();
+                if (addrs.All(e => IPAddress.IsLoopback(e.Address))) continue;
+
+                var mac = item.GetPhysicalAddress()?.GetAddressBytes();
+                if (mac != null && mac.Length == 6) yield return mac;
+            }
+        }
+
+        #endregion
+
+        #region WMI辅助
+        /// <summary>获取WMI信息</summary>
+        /// <param name="path"></param>
+        /// <param name="property"></param>
+        /// <returns></returns>
+        public static String GetInfo(String path, String property)
+        {
+            // Linux Mono不支持WMI
+            if (Runtime.Mono) return "";
+
+            var bbs = new List<String>();
+            try
+            {
+                var wql = String.Format("Select {0} From {1}", property, path);
+                var cimobject = new ManagementObjectSearcher(wql);
+                var moc = cimobject.Get();
+                foreach (var mo in moc)
+                {
+                    if (mo != null &&
+                        mo.Properties != null &&
+                        mo.Properties[property] != null &&
+                        mo.Properties[property].Value != null)
+                        bbs.Add(mo.Properties[property].Value.ToString());
+                }
+            }
+            catch
+            {
+                return "";
+            }
+
+            bbs.Sort();
+            return bbs.Join(",");
+            //var sb = new StringBuilder(bbs.Count * 15);
+            //foreach (var s in bbs)
+            //{
+            //    if (sb.Length > 0) sb.Append(",");
+            //    sb.Append(s);
+            //}
+            //return sb.ToString().Trim();
+        }
+        #endregion
     }
 }

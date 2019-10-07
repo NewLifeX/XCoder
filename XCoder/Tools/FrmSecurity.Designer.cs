@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.gbFunc = new System.Windows.Forms.GroupBox();
+            this.btnTime = new System.Windows.Forms.Button();
             this.btnSHA512 = new System.Windows.Forms.Button();
             this.btnSHA384 = new System.Windows.Forms.Button();
             this.btnSHA256 = new System.Windows.Forms.Button();
@@ -62,7 +63,7 @@
             this.gbPass = new System.Windows.Forms.GroupBox();
             this.rtPass = new System.Windows.Forms.RichTextBox();
             this.btnExchange = new System.Windows.Forms.Button();
-            this.btnTime = new System.Windows.Forms.Button();
+            this.btnComputerInfo = new System.Windows.Forms.Button();
             this.gbFunc.SuspendLayout();
             this.gbSource.SuspendLayout();
             this.gbResult.SuspendLayout();
@@ -73,6 +74,7 @@
             // 
             this.gbFunc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.gbFunc.Controls.Add(this.btnComputerInfo);
             this.gbFunc.Controls.Add(this.btnTime);
             this.gbFunc.Controls.Add(this.btnSHA512);
             this.gbFunc.Controls.Add(this.btnSHA384);
@@ -108,6 +110,17 @@
             this.gbFunc.TabIndex = 0;
             this.gbFunc.TabStop = false;
             this.gbFunc.Text = "加密解密";
+            // 
+            // btnTime
+            // 
+            this.btnTime.Location = new System.Drawing.Point(12, 952);
+            this.btnTime.Margin = new System.Windows.Forms.Padding(6);
+            this.btnTime.Name = "btnTime";
+            this.btnTime.Size = new System.Drawing.Size(150, 60);
+            this.btnTime.TabIndex = 26;
+            this.btnTime.Text = "时间戳";
+            this.btnTime.UseVisualStyleBackColor = true;
+            this.btnTime.Click += new System.EventHandler(this.btnTime_Click);
             // 
             // btnSHA512
             // 
@@ -483,16 +496,16 @@
             this.btnExchange.UseVisualStyleBackColor = true;
             this.btnExchange.Click += new System.EventHandler(this.btnExchange_Click);
             // 
-            // btnTime
+            // btnComputerInfo
             // 
-            this.btnTime.Location = new System.Drawing.Point(12, 952);
-            this.btnTime.Margin = new System.Windows.Forms.Padding(6);
-            this.btnTime.Name = "btnTime";
-            this.btnTime.Size = new System.Drawing.Size(150, 60);
-            this.btnTime.TabIndex = 26;
-            this.btnTime.Text = "时间戳";
-            this.btnTime.UseVisualStyleBackColor = true;
-            this.btnTime.Click += new System.EventHandler(this.btnTime_Click);
+            this.btnComputerInfo.Location = new System.Drawing.Point(174, 952);
+            this.btnComputerInfo.Margin = new System.Windows.Forms.Padding(6);
+            this.btnComputerInfo.Name = "btnComputerInfo";
+            this.btnComputerInfo.Size = new System.Drawing.Size(150, 60);
+            this.btnComputerInfo.TabIndex = 27;
+            this.btnComputerInfo.Text = "机器信息";
+            this.btnComputerInfo.UseVisualStyleBackColor = true;
+            this.btnComputerInfo.Click += new System.EventHandler(this.BtnComputerInfo_Click);
             // 
             // FrmSecurity
             // 
@@ -552,5 +565,6 @@
         private System.Windows.Forms.Button btnSHA256;
         private System.Windows.Forms.Button btnSHA1;
         private System.Windows.Forms.Button btnTime;
+        private System.Windows.Forms.Button btnComputerInfo;
     }
 }

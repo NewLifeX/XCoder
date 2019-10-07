@@ -26,3 +26,6 @@ bld/
 /XCoder/Model.xml
 /XCoder/Build.tt
 /Client
+/XCoder/Entity
+/XCoder40/Entity
+/XCoder40/obj4
