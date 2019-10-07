@@ -11,17 +11,14 @@ namespace XCoder
     class UIConfig
     {
         #region 属性
-        private Font _Font;
         /// <summary>字体</summary>
-        public Font Font { get { return _Font; } set { _Font = value; } }
+        public Font Font { get; set; }
 
-        private Color _BackColor;
         /// <summary>背景颜色</summary>
-        public Color BackColor { get { return _BackColor; } set { _BackColor = value; } }
+        public Color BackColor { get; set; }
 
-        private Color _ForeColor;
         /// <summary>前景颜色</summary>
-        public Color ForeColor { get { return _ForeColor; } set { _ForeColor = value; } }
+        public Color ForeColor { get; set; }
         #endregion
 
         private static UIConfig _Current;
