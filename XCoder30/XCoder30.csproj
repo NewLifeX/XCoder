@@ -186,6 +186,7 @@
 
   <ItemGroup>
     <None Include="..\XCoder\App.config" Link="App.config" />
+    <None Include="..\XCoder\Properties\app.manifest" Link="app.manifest" />
   </ItemGroup>
 
 </Project>
