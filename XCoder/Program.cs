@@ -18,7 +18,11 @@ namespace XCoder
         [STAThread]
         static void Main()
         {
+#if NC30
+            XTrace2.UseWinForm();
+#else
             XTrace.UseWinForm();
+#endif
 
             StringHelper.EnableSpeechTip = XConfig.Current.SpeechTip;
 
