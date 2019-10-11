@@ -35,6 +35,10 @@
     <Compile Include="..\XCoder\Engine\XConfig.cs" Link="Engine\XConfig.cs" />
     <Compile Include="..\XCoder\FileEncoding\FrmMain.cs" Link="FileEncoding\FrmMain.cs" />
     <Compile Include="..\XCoder\FileEncoding\FrmMain.Designer.cs" Link="FileEncoding\FrmMain.Designer.cs" />
+    <Compile Include="..\XCoder\FolderInfo\FrmMain.cs" Link="FolderInfo\FrmMain.cs" />
+    <Compile Include="..\XCoder\FolderInfo\FrmMain.Designer.cs" Link="FolderInfo\FrmMain.Designer.cs" />
+    <Compile Include="..\XCoder\FolderInfo\FrmSplitFile.cs" Link="FolderInfo\FrmSplitFile.cs" />
+    <Compile Include="..\XCoder\FolderInfo\FrmSplitFile.Designer.cs" Link="FolderInfo\FrmSplitFile.Designer.cs" />
     <Compile Include="..\XCoder\FrmMDI.cs" Link="FrmMDI.cs" />
     <Compile Include="..\XCoder\FrmMDI.Designer.cs" Link="FrmMDI.Designer.cs" />
     <Compile Include="..\XCoder\IXForm.cs" Link="IXForm.cs" />
@@ -92,6 +96,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="..\XCoder\FileEncoding\FrmMain.resx" Link="FileEncoding\FrmMain.resx" />
+    <EmbeddedResource Include="..\XCoder\FolderInfo\FrmMain.resx" Link="FolderInfo\FrmMain.resx" />
     <EmbeddedResource Include="..\XCoder\FrmMDI.resx" Link="FrmMDI.resx" />
     <EmbeddedResource Include="..\XCoder\Tools\FrmGPS.resx" Link="Tools\FrmGPS.resx" />
     <EmbeddedResource Include="..\XCoder\Tools\FrmInclude.resx" Link="Tools\FrmInclude.resx" />
@@ -183,6 +188,7 @@
     <Folder Include="XNet\" />
     <Folder Include="XRegex\" />
     <Folder Include="Yun\" />
+    <Folder Include="FolderInfo\" />
   </ItemGroup>
 
   <ItemGroup>
