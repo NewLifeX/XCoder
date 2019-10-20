@@ -90,7 +90,7 @@ namespace NewLife.Windows
 
             //cbEncoding.DataSource = new String[] { Encoding.UTF8.WebName, Encoding.ASCII.WebName, Encoding.UTF8.WebName };
             // 添加编码子菜单
-            var encs = new Encoding[] { Encoding.UTF8, Encoding.ASCII, Encoding.UTF7, Encoding.Unicode, Encoding.BigEndianUnicode, Encoding.UTF32 };
+            var encs = new Encoding[] { Encoding.UTF8, Encoding.ASCII, Encoding.UTF7, Encoding.Unicode, Encoding.BigEndianUnicode, Encoding.UTF32,Encoding.GetEncoding("GB2312") };
             var list = new List<Encoding>(encs);
             // 暂时不用这么多编码
             //list.AddRange(Encoding.GetEncodings().Select(e => e.GetEncoding()).Where(e => !encs.Contains(e)));
