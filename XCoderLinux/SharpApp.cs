@@ -1,9 +1,12 @@
 ﻿using Gtk;
+using XApi;
 
-namespace XCoderLinux
+namespace XCoder
 {
     class SharpApp : Window
     {
+        VBox vbox = new VBox(false, 2);
+        private Box xapi;
 
         public SharpApp() : base("新生命码神工具")
         {
@@ -12,8 +15,16 @@ namespace XCoderLinux
 
             DeleteEvent += delegate { Application.Quit(); };
 
-            AddButton();
             AddMenu();
+
+            //AddButton();
+
+
+            xapi = new FrmMain(Orientation.Horizontal);
+
+            vbox.PackStart(xapi, false, false, 0);
+
+            Add(vbox);
 
             //Show();
             ShowAll();
@@ -32,12 +43,12 @@ namespace XCoderLinux
             var btn4 = new Button("Button");
             btn4.SetSizeRequest(80, 40);
 
-            fix.Put(btn1, 20, 30);
-            fix.Put(btn2, 100, 30);
-            fix.Put(btn3, 20, 80);
-            fix.Put(btn4, 100, 80);
-
-            Add(fix);
+            fix.Put(btn1, 2 * 20, 2 * 30);
+            fix.Put(btn2, 2 * 100, 2 * 30);
+            fix.Put(btn3, 2 * 20, 2 * 80);
+            fix.Put(btn4, 2 * 100, 2 * 80);
+            vbox.PackStart(fix, false, false, 0);
+            //Add(fix);
         }
 
         void AddMenu()
@@ -76,11 +87,11 @@ namespace XCoderLinux
 
             mb.Append(file);
 
-            var vbox = new VBox(false, 2);
+            //var vbox = new VBox(false, 2);
             vbox.PackStart(mb, false, false, 0);
-            vbox.PackStart(new Label(), false, false, 0);
+            //vbox.PackStart(new Label("2333"), false, false, 0);
 
-            Add(vbox);
+            //Add(vbox);
         }
     }
 }

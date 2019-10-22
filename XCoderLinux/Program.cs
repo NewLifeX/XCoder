@@ -1,7 +1,7 @@
 ﻿using System;
 using Gtk;
 
-namespace XCoderLinux
+namespace XCoder
 {
     static class Program
     {
