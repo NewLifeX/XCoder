@@ -11,8 +11,6 @@ namespace XApi
         #region Windows 窗体设计器生成的代码
 
         /// <summary>
-        /// 设计器支持所需的方法 - 不要
-        /// 使用代码编辑器修改此方法的内容。
         /// </summary>
         private void InitializeComponent()
         {
@@ -37,11 +35,11 @@ namespace XApi
             this.label1 = new Label();
             this.lbAddr = new Label();
             this.cbMode = new ComboBox(new[] { "服务端", "客户端" });
-            this.cbAddr = new Entry();
+            this.cbAddr = ComboBoxText.NewWithEntry();
             this.pnlSetting = new HBox();
-            this.numPort = new SpinButton(1, 777, 1);
+            this.numPort = new SpinButton(1, 63353, 1);
             this.label5 = new Label();
-            //this.cbAction = new ComboBox();
+            this.cbAction = new ComboBoxText();
             this.gbSend = new Frame();
             this.boxSend = new VBox();
             this.boxSendSetting = new HBox();
@@ -216,9 +214,10 @@ namespace XApi
             //this.cbMode.FormattingEnabled = true;
             //this.cbMode.Location = new System.Drawing.Point(72, 11);
             //this.cbMode.Margin = 4;
+            this.cbMode.Active = 1;
             this.cbMode.Name = "cbMode";
-            this.cbMode.SetSizeRequest(1, 1);
-            //this.cbMode.Changed += new System.EventHandler(this.cbMode_SelectedIndexChanged);
+            //this.cbMode.SetSizeRequest(1, 1);
+            this.cbMode.Changed += new System.EventHandler(this.cbMode_SelectedIndexChanged);
             //
             // cbAddr
             //
@@ -226,7 +225,8 @@ namespace XApi
             this.cbAddr.Name = "cbAddr";
             this.cbAddr.SetSizeRequest(200, 18);
             // this.cbAddr.Size = new System.Drawing.Size(247, 26);
-            this.cbAddr.Editable = true;
+            this.cbAddr.Sensitive = true;
+            //this.cbAddr.
             //
             // pnlSetting
             //
@@ -268,20 +268,14 @@ namespace XApi
             this.label5.Name = "label5";
             this.label5.SetSizeRequest(62, 18);
             this.label5.Text = "端口：";
-            ////
-            //// cbAction
-            ////
-            //this.cbAction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | AnchorStyles.Left)
-            //| AnchorStyles.Right)));
-            //this.cbAction.DropDownStyle = ComboBoxStyle.DropDownList;
-            //this.cbAction.FormattingEnabled = true;
-            //this.cbAction.Location = new System.Drawing.Point(76, 71);
-            //this.cbAction.Margin = new Padding(4);
-            //this.cbAction.Name = "cbAction";
+            //
+            // cbAction
+            //
+            this.cbAction.Margin = 4;
+            this.cbAction.Name = "cbAction";
             //this.cbAction.Size = new System.Drawing.Size(470, 26);
-            //this.cbAction.TabIndex = 12;
-            //this.cbAction.Visible = false;
-            //this.cbAction.SelectedIndexChanged += new System.EventHandler(this.cbAction_SelectedIndexChanged);
+            this.cbAction.Visible = false;
+            this.cbAction.Changed += new System.EventHandler(this.cbAction_SelectedIndexChanged);
             //
             // gbSend
             //
@@ -339,7 +333,7 @@ namespace XApi
             this.txtSend.Name = "txtSend";
             this.txtSend.SetSizeRequest(621, 86);
             this.txtSend.WrapMode = WrapMode.Word;
-            this.txtSend.Editable = false;
+            //this.txtSend.Editable = false;
             //
             // btnSend
             //
@@ -347,7 +341,7 @@ namespace XApi
             this.btnSend.Name = "btnSend";
             this.btnSend.SetSizeRequest(75, 45);
             this.btnSend.Label = "发送";
-            // this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            this.btnSend.Clicked += new System.EventHandler(this.btnSend_Click);
             //
             // numMutilSend
             //
@@ -396,15 +390,14 @@ namespace XApi
             //this.ClientSize = new System.Drawing.Size(1000, 568);
             this.PackStart(this.pnlSetting, false, false, 2);
             this.PackStart(this.label3, false, false, 2);
+            this.PackStart(this.cbAction, false, false, 2);
             this.PackStart(this.gbReceive, false, false, 2);
             this.PackStart(this.gbSend, false, false, 2);
-
-            //this.Controls.Add(this.cbAction);
             //this.Margin = new Padding(4);
             //this.Name = "FrmMain";
             //this.StartPosition = FormStartPosition.CenterScreen;
             //this.Text = "Api调试";
-            //this.Load += new System.EventHandler(this.FrmMain_Load);
+            this.Shown += new System.EventHandler(this.FrmMain_Load);
             //this.menuReceive.ResumeLayout(false);
             //this.menuSend.ResumeLayout(false);
             //this.pnlSetting.ResumeLayout(false);
@@ -434,7 +427,7 @@ namespace XApi
         private Label label1;
         private Label lbAddr;
         private ComboBox cbMode;
-        private Entry cbAddr;
+        private ComboBoxText cbAddr;
         private HBox pnlSetting;
         //private ContextMenuStrip menuReceive;
         //private ToolStripMenuItem toolStripMenuItem1;
@@ -454,7 +447,7 @@ namespace XApi
         //private ToolStripMenuItem mi显示应用日志;
         //private ToolStripMenuItem mi显示编码日志;
         //private ToolTip toolTip1;
-        //private ComboBox cbAction;
+        private ComboBoxText cbAction;
         //private ToolStripMenuItem mi日志着色;
         private SpinButton numPort;
         private Label label5;

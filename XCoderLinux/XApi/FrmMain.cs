@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
+using GLib;
 using Gtk;
 using NewLife.Data;
 using NewLife.Log;
@@ -14,6 +14,8 @@ using NewLife.Reflection;
 using NewLife.Remoting;
 using NewLife.Serialization;
 using NewLife.Threading;
+using XCoder.Util;
+using Object = System.Object;
 #if !NET4
 using TaskEx = System.Threading.Tasks.Task;
 #endif
@@ -34,8 +36,14 @@ namespace XApi
         {
             InitializeComponent();
 
-            //this.Add();
+            LoadConfig();
         }
+
+        private void FrmMain_Load(Object sender, EventArgs e)
+        {
+            cbAction.Visible = false;
+        }
+
         #endregion
 
         #region 加载/保存 配置
@@ -51,7 +59,13 @@ namespace XApi
             // cbMode.SelectedItem = cfg.Mode;
             numPort.Value = cfg.Port;
             // // 历史地址列表
-            // if (!cfg.Address.IsNullOrEmpty()) cbAddr.DataSource = cfg.Address.Split(";");
+            if (!cfg.Address.IsNullOrEmpty())
+            {
+                foreach (var s in cfg.Address.Split(";"))
+                {
+                    cbAddr.AppendText(s);
+                }
+            }
 
             txtSend.Buffer.Text = cfg.SendContent;
             numMutilSend.Value = cfg.SendTimes;
@@ -69,9 +83,9 @@ namespace XApi
             // cfg.ShowReceive = mi显示接收数据.Checked;
             // cfg.ShowStat = mi显示统计信息.Checked;
 
-            // cfg.Mode = cbMode.Model + "";
+            cfg.Mode = cbMode.GetActiveObject() + "";
             cfg.Port = (Int32)numPort.Value;
-            cfg.AddAddress(cbAddr.Text);
+            cfg.AddAddress(cbAddr.ActiveText);
 
             cfg.SendContent = txtSend.Buffer.Text;
             cfg.SendTimes = (Int32)numMutilSend.Value;
@@ -90,7 +104,7 @@ namespace XApi
             _Client = null;
 
             var port = (Int32)numPort.Value;
-            var uri = new NetUri(cbAddr.Text);
+            var uri = new NetUri(cbAddr.ActiveText);
 
             var cfg = ApiConfig.Current;
             var log = BizLog;
@@ -166,15 +180,15 @@ namespace XApi
         async void GetApiAll()
         {
             var apis = await _Client.InvokeAsync<String[]>("Api/All");
-            // if (apis != null) this.Invoke(() =>
+            if (apis != null) // this.Invoke(() =>
             {
-                // cbAction.Items.Clear();
-                // foreach (var item in apis)
-                // {
-                //     cbAction.Items.Add(item);
-                // }
-                // cbAction.SelectedIndex = 0;
-                // cbAction.Visible = true;
+                cbAction.RemoveAll();
+                foreach (var item in apis)
+                {
+                    cbAction.AppendText(item);
+                }
+                //cbAction.Active = 0; // 会闪退
+                cbAction.Visible = true;
             }//);
         }
 
@@ -277,6 +291,11 @@ namespace XApi
             var str = txtSend.Buffer.Text;
             if (String.IsNullOrEmpty(str))
             {
+                var md = new MessageDialog(this.TooltipWindow,
+                    DialogFlags.DestroyWithParent, MessageType.Warning,
+                    ButtonsType.Close, "发送内容不能为空！");
+                md.Run();
+                md.Dispose();
                 // MessageBox.Show("发送内容不能为空！", Text);
                 // txtSend.Focus();
                 return;
@@ -291,32 +310,32 @@ namespace XApi
 
             SaveConfig();
 
-            var uri = new NetUri(cbAddr.Text);
+            var uri = new NetUri(cbAddr.ActiveText);
             var cfg = ApiConfig.Current;
 
             // 处理换行
             str = str.Replace("\n", "\r\n");
 
-            // var act = cbAction.SelectedItem + "";
-            // var action = act.Substring(" ", "(");
-            // if (action.IsNullOrEmpty()) return;
+            var act = cbAction.ActiveText;
+            var action = act.Substring(" ", "(");
+            if (action.IsNullOrEmpty()) return;
 
-            // var rtype = act.Substring(null, " ").GetTypeEx();
-            // if (rtype == null) rtype = typeof(Object);
-            // var ps = act.Substring("(", ")").Split(",");
+            var rtype = act.Substring(null, " ").GetTypeEx();
+            if (rtype == null) rtype = typeof(Object);
+            var ps = act.Substring("(", ")").Split(",");
 
             // 构造消息，二进制优先
             Object args = null;
-            // if (ps.Length == 1 && ps[0].StartsWith("Packet "))
-            // {
-            //     args = new Packet(str.GetBytes());
-            // }
-            // else
-            // {
-            //     var dic = new JsonParser(str).Decode() as IDictionary<String, Object>;
-            //     if (dic == null || dic.Count == 0) dic = null;
-            //     args = dic;
-            // }
+            if (ps.Length == 1 && ps[0].StartsWith("Packet "))
+            {
+                args = new Packet(str.GetBytes());
+            }
+            else
+            {
+                var dic = new JsonParser(str).Decode() as IDictionary<String, Object>;
+                if (dic == null || dic.Count == 0) dic = null;
+                args = dic;
+            }
 
             if (_Client == null) return;
 
@@ -343,9 +362,9 @@ namespace XApi
             }
             //Parallel.ForEach(list, k => OnSend(k, act, args, count));
             var sw = Stopwatch.StartNew();
-            // var ts = list.Select(k => OnSend(k, rtype, action, args, count, sleep)).ToList();
+            var ts = list.Select(k => OnSend(k, rtype, action, args, count, sleep)).ToList();
 
-            // await TaskEx.WhenAll(ts);
+            await TaskEx.WhenAll(ts);
             sw.Stop();
             _TotalCost = sw.Elapsed.TotalMilliseconds;
         }
@@ -353,7 +372,7 @@ namespace XApi
         Int64 _Invoke;
         Int64 _Cost;
         Double _TotalCost;
-        private async Task OnSend(ApiClient client, Type rtype, String act, Object args, Int32 count, Int32 sleep)
+        private async TaskEx OnSend(ApiClient client, Type rtype, String act, Object args, Int32 count, Int32 sleep)
         {
             client.Open();
 
@@ -380,7 +399,7 @@ namespace XApi
             // 间隔2~10多任务异步发送
             else if (sleep <= 10)
             {
-                var ts = new List<Task>();
+                var ts = new List<TaskEx>();
                 for (var i = 0; i < count; i++)
                 {
                     ts.Add(TaskEx.Run(async () =>
@@ -452,43 +471,43 @@ namespace XApi
         {
             if (!(sender is ComboBox cb)) return;
 
-            // var txt = cb.SelectedItem + "";
-            // if (txt.IsNullOrEmpty()) return;
+            var txt = cb.GetActiveObject() + "";
+            if (txt.IsNullOrEmpty()) return;
 
             var set = ApiConfig.Current;
 
-            // // 截取参数部分
-            // var pis = txt.Substring("(", ")").Split(",");
+            // 截取参数部分
+            var pis = txt.Substring("(", ")").Split(",");
 
             // 生成参数
             var ps = new Dictionary<String, Object>();
-            // foreach (var item in pis)
-            // {
-            //     var ss = item.Split(" ");
-            //     Object val = null;
-            //     switch (ss[0])
-            //     {
-            //         case "String":
-            //             val = "";
-            //             break;
-            //         case "Int32":
-            //             val = 0;
-            //             break;
-            //         default:
-            //             break;
-            //     }
-            //     ps[ss[1]] = val;
-            // }
+            foreach (var item in pis)
+            {
+                var ss = item.Split(" ");
+                Object val = null;
+                switch (ss[0])
+                {
+                    case "String":
+                        val = "";
+                        break;
+                    case "Int32":
+                        val = 0;
+                        break;
+                    default:
+                        break;
+                }
+                ps[ss[1]] = val;
+            }
 
-            // txtSend.Text = ps.ToJson();
+            txtSend.Buffer.Text = ps.ToJson();
         }
 
         private void cbMode_SelectedIndexChanged(Object sender, EventArgs e)
         {
-            // var mode = cbMode.SelectedItem + "";
-            // var flag = mode == "服务端";
-            // numPort.Enabled = flag;
-            // cbAddr.Enabled = !flag;
+            var mode = cbMode.GetActiveObject() + "";
+            var flag = mode == "服务端";
+            numPort.Sensitive = flag;
+            cbAddr.Sensitive = !flag;
         }
     }
 }

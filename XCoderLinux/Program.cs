@@ -13,6 +13,7 @@ namespace XCoder
         {
             Application.Init();
             new SharpApp();
+            Window.InteractiveDebugging = true;//打开调试工具
             Application.Run();
         }
     }
