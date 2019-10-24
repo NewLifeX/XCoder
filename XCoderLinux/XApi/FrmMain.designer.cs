@@ -16,6 +16,7 @@ namespace XApi
         {
             this.components = new System.ComponentModel.Container();
             this.gbReceive = new Frame();
+            this.txtReceiveScrolledWindow = new ScrolledWindow();
             this.txtReceive = new TextView();
             //this.menuReceive = new ContextMenuStrip(this.components);
             //this.toolStripMenuItem1 = new ToolStripMenuItem();
@@ -45,6 +46,7 @@ namespace XApi
             this.boxSendSetting = new HBox();
             this.numThreads = new SpinButton(1, 100000, 1);
             this.numSleep = new SpinButton(1000, 1000000, 1);
+            this.txtSendScrolledWindow = new ScrolledWindow();
             this.txtSend = new TextView();
             this.btnSend = new Button();
             this.numMutilSend = new SpinButton(1, 1000000, 1);
@@ -60,15 +62,22 @@ namespace XApi
             //
             // gbReceive
             //
-            this.gbReceive.Add(this.txtReceive);
+            this.gbReceive.Add(this.txtReceiveScrolledWindow);
             this.gbReceive.Margin = 6;
             this.gbReceive.Name = "gbReceive";
             this.gbReceive.SetSizeRequest(878, 298);
             // gbReceive.Margin = 10;
-            gbReceive.Label = "接收区：已接收0字节";
-            gbReceive.Halign = Align.Fill;
-            gbReceive.Valign = Align.Fill;
-            gbReceive.ShadowType = ShadowType.Out;
+            this.gbReceive.Label = "接收区：已接收0字节";
+            this.gbReceive.Halign = Align.Fill;
+            this.gbReceive.Valign = Align.Fill;
+            this.gbReceive.ShadowType = ShadowType.Out;
+            //
+            // txtReceiveScrolledWindow
+            //
+            this.txtReceiveScrolledWindow.Add(this.txtReceive);
+            this.txtReceiveScrolledWindow.CanFocus = true;
+            this.txtReceiveScrolledWindow.ShadowType = ShadowType.In;
+            this.txtReceiveScrolledWindow.Vexpand = true;
             //
             // txtReceive
             //
@@ -79,9 +88,9 @@ namespace XApi
             this.txtReceive.Margin = 4;
             this.txtReceive.Name = "txtReceive";
             // this.txtReceive.Size = new System.Drawing.Size(970, 269);
-            var buffer = this.txtReceive.Buffer;
-            buffer.Text = "各就各位！";
             this.txtReceive.Editable = false;
+            // 滚动方法 https://stackoverflow.com/questions/37824865/gtk-textview-auto-scroll-when-text-is-added-to-text-buffer
+            this.txtReceive.SizeAllocated += TxtReceive_SizeAllocated;
             ////
             //// menuReceive
             ////
@@ -294,7 +303,7 @@ namespace XApi
             //
             // boxSend
             //
-            this.boxSend.PackStart(this.txtSend, false, false, 2);
+            this.boxSend.PackStart(this.txtSendScrolledWindow, false, false, 2);
             this.boxSend.PackStart(this.boxSendSetting, false, false, 2);
             // this.boxSend.Orientation = Orientation.Vertical;
             this.boxSend.Margin = 4;
@@ -324,6 +333,13 @@ namespace XApi
             this.numSleep.Margin = 4;
             this.numSleep.Name = "numSleep";
             this.numSleep.SetSizeRequest(109, 28);
+            //
+            // txtSendScrolledWindow
+            //
+            this.txtSendScrolledWindow.CanFocus = true;
+            this.txtSendScrolledWindow.ShadowType = ShadowType.In;
+            this.txtSendScrolledWindow.Vexpand = true;
+            this.txtSendScrolledWindow.Add(this.txtSend);
             //
             // txtSend
             //
@@ -414,6 +430,12 @@ namespace XApi
             this.Orientation = Orientation.Vertical;
         }
 
+        private void TxtReceive_SizeAllocated(System.Object o, SizeAllocatedArgs args)
+        {
+            var s = o as TextView;
+
+            s.ScrollToIter(s.Buffer.EndIter, 0, false, 0, 0);
+        }
         #endregion
 
         private Frame gbReceive;
@@ -421,6 +443,7 @@ namespace XApi
         //private Timer timer1;
         //private ContextMenuStrip menuSend;
         //private ToolStripMenuItem mi清空2;
+        private ScrolledWindow txtReceiveScrolledWindow;
         private TextView txtReceive;
         //private FontDialog fontDialog1;
         //private ColorDialog colorDialog1;
@@ -436,6 +459,7 @@ namespace XApi
         private VBox boxSend;
         private HBox boxSendSetting;
         private SpinButton numSleep;
+        private ScrolledWindow txtSendScrolledWindow;
         private TextView txtSend;
         private Button btnSend;
         private SpinButton numMutilSend;

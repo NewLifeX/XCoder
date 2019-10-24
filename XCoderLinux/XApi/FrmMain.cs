@@ -35,13 +35,48 @@ namespace XApi
         public FrmMain(Orientation orientation, int spacing = 2) : base(orientation, spacing)
         {
             InitializeComponent();
-
-            LoadConfig();
         }
 
         private void FrmMain_Load(Object sender, EventArgs e)
         {
             cbAction.Visible = false;
+
+            var log = TextFileLog.Create(null, "Api_{0:yyyy_MM_dd}.log");
+            BizLog = txtReceive.Combine(log); // TODO 控件绑定日志
+            //txtReceive.UseWinFormControl();
+
+            //txtReceive.SetDefaultStyle(12);
+            //txtSend.SetDefaultStyle(12);
+            //numMutilSend.SetDefaultStyle(12);
+
+            //gbReceive.Tag = gbReceive.Text;
+            //gbSend.Tag = gbSend.Text;
+
+            var cfg = ApiConfig.Current;
+            //cbMode.SelectedItem = cbMode.Items[0] + "";
+            var flag = (cfg.Mode == "服务端");
+            cbMode.Active = flag ? 0 : 1;
+            numPort.Sensitive = flag;
+            cbAddr.Sensitive = !flag;
+
+            // 加载保存的颜色
+            //UIConfig.Apply(txtReceive);
+
+            LoadConfig();
+
+            // 语音识别
+            //ThreadPoolX.QueueUserWorkItem(() =>
+            //{
+            //    var sp = SpeechRecognition.Current;
+            //    if (!sp.Enable) return;
+
+            //    sp.Register("打开", () => this.Invoke(Connect))
+            //        .Register("关闭", () => this.Invoke(Disconnect))
+            //        .Register("退出", () => Application.Exit())
+            //        .Register("发送", () => this.Invoke(() => btnSend_Click(null, null)));
+
+            //    BizLog.Info("语音识别前缀：{0} 可用命令：{1}", sp.Name, sp.GetAllKeys().Join());
+            //});
         }
 
         #endregion
@@ -223,11 +258,12 @@ namespace XApi
         {
             if (!ApiConfig.Current.ShowStat) return;
 
+            // TODO api统计信息
             var msg = "";
-            if (_Client != null)
-                msg = _Client.GetStat();
-            else if (_Server != null)
-                msg = _Server.GetStat();
+            //if (_Client != null)
+            //    msg = _Client.GetStat();
+            //else if (_Server != null)
+            //    msg = _Server.GetStat();
 
             if (_Invoke > 0)
             {

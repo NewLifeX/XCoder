@@ -22,4 +22,13 @@
     <Folder Include="Windows\" />
   </ItemGroup>
 
+  <!--<ItemGroup>
+    <Reference Include="NewLife.Core">
+      <HintPath>..\..\Bin\netstandard2.1\NewLife.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="XCode">
+      <HintPath>..\..\Bin\netstandard2.1\XCode.dll</HintPath>
+    </Reference>
+  </ItemGroup>-->
+
 </Project>
