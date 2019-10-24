@@ -1,5 +1,6 @@
 ﻿using System;
 using Gtk;
+using NewLife.Log;
 
 namespace XCoder
 {
@@ -12,8 +13,9 @@ namespace XCoder
         static void Main()
         {
             Application.Init();
-            new SharpApp();
+            var window = new SharpApp();
             Window.InteractiveDebugging = true;//打开调试工具
+            XTrace2.UseWinForm(window);
             Application.Run();
         }
     }
