@@ -8,8 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\XCoder\IXForm.cs" Link="IXForm.cs" />
     <Compile Include="..\XCoder\XApi\ApiConfig.cs" Link="XApi\ApiConfig.cs" />
     <Compile Include="..\XCoder\XApi\MyApiController.cs" Link="XApi\MyApiController.cs" />
+    <Compile Include="..\XCoder\XNet\BenchHelper.cs" Link="XNet\BenchHelper.cs" />
+    <Compile Include="..\XCoder\XNet\IPPacket.cs" Link="XNet\IPPacket.cs" />
+    <Compile Include="..\XCoder\XNet\MySqlParser.cs" Link="XNet\MySqlParser.cs" />
+    <Compile Include="..\XCoder\XNet\NetConfig.cs" Link="XNet\NetConfig.cs" />
+    <Compile Include="..\XCoder\XNet\RawSocket.cs" Link="XNet\RawSocket.cs" />
+    <Compile Include="..\XCoder\XNet\TcpPacket.cs" Link="XNet\TcpPacket.cs" />
+    <Compile Include="..\XCoder\XNet\WorkModes.cs" Link="XNet\WorkModes.cs" />
   </ItemGroup>
 
   <ItemGroup>

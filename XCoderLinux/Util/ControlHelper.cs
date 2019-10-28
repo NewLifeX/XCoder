@@ -23,12 +23,18 @@ namespace XCoder.Util
             return null;
         }
 
-        public static void AppendValues(this ComboBox comboBox, params Object[] values)
+        public static void AppendValues(this ComboBox comboBox, List<String> values)
         {
-            
-            //if (!(comboBox.Model is ListStore listStore)) comboBox.Model = listStore = new ListStore(values);
 
-            //listStore.AppendValues(values);
+            if (!(comboBox.Model is ListStore listStore))
+            {
+               return;
+            }
+
+            foreach (var value in values)
+            {
+                listStore.AppendValues(value);
+            }
         }
     }
 }

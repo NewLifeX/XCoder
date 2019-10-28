@@ -14,6 +14,7 @@ using NewLife.Reflection;
 using NewLife.Remoting;
 using NewLife.Serialization;
 using NewLife.Threading;
+using XCoder;
 using XCoder.Util;
 using Object = System.Object;
 #if !NET4
@@ -23,7 +24,7 @@ using TaskEx = System.Threading.Tasks.Task;
 namespace XApi
 {
     [DisplayName("Api调试")]
-    public partial class FrmMain : Box
+    public partial class FrmMain : Box, IXForm
     {
         ApiServer _Server;
         ApiClient _Client;
@@ -32,7 +33,7 @@ namespace XApi
         ILog BizLog;
 
         #region 窗体
-        public FrmMain(Orientation orientation, int spacing = 2) : base(orientation, spacing)
+        public FrmMain(Orientation orientation = Orientation.Horizontal, Int32 spacing = 2) : base(orientation, spacing)
         {
             InitializeComponent();
         }

@@ -1,12 +1,15 @@
 ﻿using Gtk;
-using XApi;
+//using XApi;
+using XNet;
 
 namespace XCoder
 {
     class SharpApp : Window
     {
+        #region 窗口初始化
+
+        #endregion
         VBox vbox = new VBox(false, 2);
-        private Box xapi;
 
         public SharpApp() : base("新生命码神工具")
         {
@@ -20,7 +23,7 @@ namespace XCoder
             //AddButton();
 
 
-            xapi = new FrmMain(Orientation.Horizontal);
+            var xapi = new FrmMain();
 
             vbox.PackStart(xapi, false, false, 0);
 
@@ -29,28 +32,7 @@ namespace XCoder
             //Show();
             ShowAll();
         }
-
-        void AddButton()
-        {
-            var fix = new Fixed();
-
-            var btn1 = new Button("Button")
-            {
-                Sensitive = false
-            };
-            var btn2 = new Button("Button");
-            var btn3 = new Button(Stock.Close);
-            var btn4 = new Button("Button");
-            btn4.SetSizeRequest(80, 40);
-
-            fix.Put(btn1, 2 * 20, 2 * 30);
-            fix.Put(btn2, 2 * 100, 2 * 30);
-            fix.Put(btn3, 2 * 20, 2 * 80);
-            fix.Put(btn4, 2 * 100, 2 * 80);
-            vbox.PackStart(fix, false, false, 0);
-            //Add(fix);
-        }
-
+        
         void AddMenu()
         {
             var mb = new MenuBar();
