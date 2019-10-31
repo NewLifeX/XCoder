@@ -256,10 +256,10 @@ namespace XApi
             if (!ApiConfig.Current.ShowStat) return;
 
             var msg = "";
-            if (_Client != null)
-                msg = _Client.GetStat();
-            else if (_Server != null)
-                msg = _Server.GetStat();
+            //if (_Client != null)
+            //    msg = _Client.GetStat();
+            //else if (_Server != null)
+            //    msg = _Server.GetStat();
 
             if (_Invoke > 0)
             {
