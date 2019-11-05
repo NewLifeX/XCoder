@@ -13,7 +13,7 @@ namespace XCoder
 
         public SharpApp() : base("新生命码神工具")
         {
-            SetDefaultSize(250, 200);
+            //SetDefaultSize(250, 200);
             SetPosition(WindowPosition.Center);
 
             DeleteEvent += delegate { Application.Quit(); };
@@ -25,7 +25,7 @@ namespace XCoder
 
             var xapi = new FrmMain();
 
-            vbox.PackStart(xapi, false, false, 0);
+            vbox.PackStart(xapi, true, true, 0);
 
             Add(vbox);
 

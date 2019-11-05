@@ -41,7 +41,6 @@ namespace XNet
             this.pnlSetting = new HBox();
             this.numPort = new SpinButton(1, 63353, 1);
             this.label5 = new Label();
-            this.cbAction = new ComboBoxText();
             this.gbSend = new Frame();
             this.boxSend = new VBox();
             this.boxSendSetting = new HBox();
@@ -55,7 +54,6 @@ namespace XNet
             this.label7 = new Label();
             this.label8 = new Label();
             //this.toolTip1 = new ToolTip(this.components);
-            this.label3 = new Label();
 
             //this.menuReceive.SuspendLayout();
             //this.menuSend.SuspendLayout();
@@ -64,13 +62,13 @@ namespace XNet
             // gbReceive
             //
             this.gbReceive.Add(this.txtReceiveScrolledWindow);
-            this.gbReceive.Margin = 6;
+            this.gbReceive.Margin = 2;
             this.gbReceive.Name = "gbReceive";
-            this.gbReceive.SetSizeRequest(878, 298);
+            //this.gbReceive.SetSizeRequest(878, 298);
             // gbReceive.Margin = 10;
             this.gbReceive.Label = "接收区：已接收0字节";
-            this.gbReceive.Halign = Align.Fill;
-            this.gbReceive.Valign = Align.Fill;
+            //this.gbReceive.Halign = Align.Fill;
+            //this.gbReceive.Valign = Align.Fill;
             this.gbReceive.ShadowType = ShadowType.Out;
             //
             // txtReceiveScrolledWindow
@@ -78,7 +76,7 @@ namespace XNet
             this.txtReceiveScrolledWindow.Add(this.txtReceive);
             this.txtReceiveScrolledWindow.CanFocus = true;
             this.txtReceiveScrolledWindow.ShadowType = ShadowType.In;
-            this.txtReceiveScrolledWindow.Vexpand = true;
+            //this.txtReceiveScrolledWindow.Vexpand = true;
             //
             // txtReceive
             //
@@ -86,7 +84,7 @@ namespace XNet
             // this.txtReceive.Dock = DockStyle.Fill;
             // this.txtReceive.HideSelection = false;
             // this.txtReceive.Location = new System.Drawing.Point(4, 25);
-            this.txtReceive.Margin = 4;
+            this.txtReceive.Margin = 1;
             this.txtReceive.Name = "txtReceive";
             // this.txtReceive.Size = new System.Drawing.Size(970, 269);
             this.txtReceive.Editable = false;
@@ -201,8 +199,8 @@ namespace XNet
             this.label1.MarginTop = 4;
             this.label1.MarginBottom = 4;
             this.label1.Name = "label1";
-            this.label1.WidthRequest = 62;
-            this.label1.HeightRequest = 18;
+            //this.label1.WidthRequest = 62;
+            //this.label1.HeightRequest = 18;
             this.label1.Text = "模式：";
             //
             // lbAddr
@@ -214,8 +212,8 @@ namespace XNet
             this.lbAddr.MarginTop = 4;
             this.lbAddr.MarginBottom = 4;
             this.lbAddr.Name = "lbAddr";
-            this.lbAddr.WidthRequest = 62;
-            this.lbAddr.HeightRequest = 18;
+            //this.lbAddr.WidthRequest = 62;
+            //this.lbAddr.HeightRequest = 18;
             this.lbAddr.Text = "远程：";
             //
             // cbMode
@@ -240,25 +238,25 @@ namespace XNet
             //
             //this.cbRemote.Margin = 4;
             this.cbRemote.Name = "cbRemote";
-            this.cbRemote.SetSizeRequest(200, 18);
+            //this.cbRemote.SetSizeRequest(200, 18);
             // this.cbRemote.Size = new System.Drawing.Size(247, 26);
             this.cbRemote.Sensitive = true;
             //this.cbRemote.
             //
             // pnlSetting
             //
-            this.pnlSetting.PackStart(this.label1, false, false, 2);
-            this.pnlSetting.PackStart(this.cbMode, false, false, 2);
-            this.pnlSetting.PackStart(this.label5, false, false, 2);
-            this.pnlSetting.PackStart(this.cbLocal, false, false, 2);
-            this.pnlSetting.PackStart(this.lbAddr, false, false, 2);
-            this.pnlSetting.PackStart(this.cbRemote, false, false, 2);
-            this.pnlSetting.PackStart(this.numPort, false, false, 2);
-            this.pnlSetting.PackEnd(this.btnConnect, false, false, 2);
+            this.pnlSetting.PackStart(this.label1, false, false, 1);
+            this.pnlSetting.PackStart(this.cbMode, false, false, 1);
+            this.pnlSetting.PackStart(this.label5, false, false, 1);
+            this.pnlSetting.PackStart(this.cbLocal, false, false, 1);
+            this.pnlSetting.PackStart(this.lbAddr, false, false, 1);
+            this.pnlSetting.PackStart(this.cbRemote, false, false, 1);
+            this.pnlSetting.PackStart(this.numPort, false, false, 1);
+            this.pnlSetting.PackStart(this.btnConnect, false, false, 1);
 
             //this.pnlSetting.Add();
             //this.pnlSetting.Position = 5;// .Location = new System.Drawing.Point(14, 12);
-            this.pnlSetting.Margin = 4;
+            this.pnlSetting.Margin = 2;
             this.pnlSetting.Name = "pnlSetting";
             // this.pnlSetting.Valign = Align.Fill;
             // this.pnlSetting.Halign = Align.Fill;
@@ -273,7 +271,7 @@ namespace XNet
             this.numPort.Margin = 4;
             this.numPort.Name = "numPort";
             this.numPort.Value = 8080;
-            this.numPort.SetSizeRequest(94, 28);
+            //this.numPort.SetSizeRequest(94, 28);
             //
             // label5
             //
@@ -284,16 +282,8 @@ namespace XNet
             this.label5.MarginTop = 4;
             this.label5.MarginBottom = 4;
             this.label5.Name = "label5";
-            this.label5.SetSizeRequest(62, 18);
+            //this.label5.SetSizeRequest(62, 18);
             this.label5.Text = "本地：";
-            //
-            // cbAction
-            //
-            this.cbAction.Margin = 4;
-            this.cbAction.Name = "cbAction";
-            //this.cbAction.Size = new System.Drawing.Size(470, 26);
-            this.cbAction.Visible = false;
-            //this.cbAction.Changed += new System.EventHandler(this.cbAction_SelectedIndexChanged);
             //
             // gbSend
             //
@@ -305,17 +295,17 @@ namespace XNet
             // this.gbSend.Controls.Add(this.label2);
             // this.gbSend.Controls.Add(this.label7);
             // this.gbSend.Location = new System.Drawing.Point(14, 424);
-            this.gbSend.Margin = 4;
+            this.gbSend.Margin = 1;
             this.gbSend.Name = "gbSend";
-            this.gbSend.SetSizeRequest(778, 126);
+            //this.gbSend.SetSizeRequest(778, 126);
             this.gbSend.Label = "发送区：已发送0字节";
             //
             // boxSend
             //
-            this.boxSend.PackStart(this.txtSendScrolledWindow, false, false, 2);
+            this.boxSend.PackStart(this.txtSendScrolledWindow, false,false, 2);
             this.boxSend.PackStart(this.boxSendSetting, false, false, 2);
             // this.boxSend.Orientation = Orientation.Vertical;
-            this.boxSend.Margin = 4;
+            this.boxSend.Margin = 1;
             this.boxSend.Name = "boxSend";
             //
             // boxSendSetting
@@ -327,21 +317,21 @@ namespace XNet
             this.boxSendSetting.PackStart(this.label2, false, false, 2);
             this.boxSendSetting.PackStart(this.numSleep, false, false, 2);
             this.boxSendSetting.PackStart(this.btnSend, false, false, 2);
-            this.boxSendSetting.Margin = 4;
+            this.boxSendSetting.Margin = 1;
             this.boxSendSetting.Name = "sendSetting";
             //
             // numThreads
             //
             this.numThreads.Margin = 4;
             this.numThreads.Name = "numThreads";
-            this.numThreads.SetSizeRequest(78, 28);
+            //this.numThreads.SetSizeRequest(78, 28);
             // this.toolTip1.SetToolTip(this.numThreads, "模拟多客户端发送，用于压力测试！");
             //
             // numSleep
             //
-            this.numSleep.Margin = 4;
+            this.numSleep.Margin = 1;
             this.numSleep.Name = "numSleep";
-            this.numSleep.SetSizeRequest(109, 28);
+            //this.numSleep.SetSizeRequest(109, 28);
             //
             // txtSendScrolledWindow
             //
@@ -356,7 +346,7 @@ namespace XNet
             // this.txtSend.Location = new System.Drawing.Point(0, 28);
             this.txtSend.Margin = 4;
             this.txtSend.Name = "txtSend";
-            this.txtSend.SetSizeRequest(621, 86);
+            //this.txtSend.SetSizeRequest(621, 86);
             this.txtSend.WrapMode = WrapMode.Word;
             //this.txtSend.Editable = false;
             //
@@ -364,7 +354,7 @@ namespace XNet
             //
             this.btnSend.Margin = 4;
             this.btnSend.Name = "btnSend";
-            this.btnSend.SetSizeRequest(75, 45);
+            //this.btnSend.SetSizeRequest(75, 45);
             this.btnSend.Label = "发送";
             this.btnSend.Clicked += new System.EventHandler(this.btnSend_Click);
             //
@@ -372,14 +362,14 @@ namespace XNet
             //
             this.numMutilSend.Margin = 4;
             this.numMutilSend.Name = "numMutilSend";
-            this.numMutilSend.SetSizeRequest(109, 28);
+            //this.numMutilSend.SetSizeRequest(109, 28);
             //
             // label2
             //
             // this.label2.Location = new System.Drawing.Point(729, 87);
             this.label2.Margin = 4;
             this.label2.Name = "label2";
-            this.label2.SetSizeRequest(62, 18);
+            //this.label2.SetSizeRequest(62, 18);
             this.label2.Text = "间隔：";
             //
             // label7
@@ -387,26 +377,15 @@ namespace XNet
             // this.label7.Location = new System.Drawing.Point(729, 39);
             this.label7.Margin = 4;
             this.label7.Name = "label7";
-            this.label7.SetSizeRequest(62, 18);
+            //this.label7.SetSizeRequest(62, 18);
             this.label7.Text = "次数：";
             //
             // label8
             //
             this.label8.Margin = 4;
             this.label8.Name = "label8";
-            this.label8.SetSizeRequest(62, 18);
+            //this.label8.SetSizeRequest(62, 18);
             this.label8.Text = "线程：";
-            //
-            // label3
-            //
-            // this.label3.AutoSize = true;
-            // this.label3.Location = new System.Drawing.Point(15, 74);
-            this.label3.Xalign = 0.04F;
-            // this.label3.MarginTop = 4;
-            // this.label3.MarginBottom = 4;
-            this.label3.Name = "label3";
-            this.label3.SetSizeRequest(62, 18);
-            this.label3.Text = "服务：";
             ////
             //// FrmMain
             ////
@@ -414,9 +393,7 @@ namespace XNet
             //this.AutoScaleMode = AutoScaleMode.Font;
             //this.ClientSize = new System.Drawing.Size(1000, 568);
             this.PackStart(this.pnlSetting, false, false, 2);
-            this.PackStart(this.label3, false, false, 2);
-            this.PackStart(this.cbAction, false, false, 2);
-            this.PackStart(this.gbReceive, false, false, 2);
+            this.PackStart(this.gbReceive, true, true, 2);
             this.PackStart(this.gbSend, false, false, 2);
             //this.Margin = new Padding(4);
             //this.Name = "FrmMain";
@@ -433,9 +410,9 @@ namespace XNet
             //((System.ComponentModel.ISupportInitialize)(this.numMutilSend)).EndInit();
             //this.ResumeLayout(false);
             //this.PerformLayout();
-            this.Fill = true;
-            this.Halign = Align.Fill;
-            this.Valign = Align.Fill;
+            //this.Fill = true;
+            //this.Halign = Align.Fill;
+            //this.Valign = Align.Fill;
             this.Orientation = Orientation.Vertical;
         }
 
@@ -481,11 +458,9 @@ namespace XNet
         //private ToolStripMenuItem mi显示应用日志;
         //private ToolStripMenuItem mi显示编码日志;
         //private ToolTip toolTip1;
-        private ComboBoxText cbAction;
         //private ToolStripMenuItem mi日志着色;
         private SpinButton numPort;
         private Label label5;
-        private Label label3;
         //private ToolStripMenuItem mi显示发送数据;
         //private ToolStripMenuItem mi显示接收数据;
     }
