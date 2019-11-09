@@ -444,7 +444,7 @@ namespace XApi
                         try
                         {
                             //var sw = Stopwatch.StartNew();
-                            await client.InvokeAsync(rtype, act, args);
+                            await client.InvokeAsync<Object>(act, args);
                             //sw.Stop();
 
                             Interlocked.Increment(ref _Invoke);
@@ -467,7 +467,7 @@ namespace XApi
                     try
                     {
                         var sw = Stopwatch.StartNew();
-                        await client.InvokeAsync(rtype, act, args);
+                        await client.InvokeAsync<Object>(act, args);
                         sw.Stop();
 
                         Interlocked.Increment(ref _Invoke);

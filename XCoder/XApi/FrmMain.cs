@@ -152,6 +152,7 @@ namespace XApi
 
                     if (cfg.ShowSend || cfg.ShowReceive)
                     {
+                        svr.EnsureCreate();
                         var ns = svr.Server as NetServer;
                         ns.Log = log;
                         ns.LogSend = cfg.ShowSend;
@@ -256,10 +257,10 @@ namespace XApi
             if (!ApiConfig.Current.ShowStat) return;
 
             var msg = "";
-            if (_Client != null)
-                msg = _Client.GetStat();
-            else if (_Server != null)
-                msg = _Server.GetStat();
+            //if (_Client != null)
+            //    msg = _Client.GetStat();
+            //else if (_Server != null)
+            //    msg = _Server.GetStat();
 
             if (_Invoke > 0)
             {
@@ -434,7 +435,7 @@ namespace XApi
                         try
                         {
                             //var sw = Stopwatch.StartNew();
-                            await client.InvokeAsync(rtype, act, args);
+                            await client.InvokeAsync<Object>(act, args);
                             //sw.Stop();
 
                             Interlocked.Increment(ref _Invoke);
@@ -457,7 +458,7 @@ namespace XApi
                     try
                     {
                         var sw = Stopwatch.StartNew();
-                        await client.InvokeAsync(rtype, act, args);
+                        await client.InvokeAsync<Object>(act, args);
                         sw.Stop();
 
                         Interlocked.Increment(ref _Invoke);
@@ -504,6 +505,7 @@ namespace XApi
             var set = ApiConfig.Current;
 
             // 截取参数部分
+            //!! netcore3.0中新增Split(String? separator, StringSplitOptions options = StringSplitOptions.None)，优先于StringHelper扩展
             var pis = txt.Substring("(", ")").Split(",");
 
             // 生成参数
@@ -511,6 +513,8 @@ namespace XApi
             foreach (var item in pis)
             {
                 var ss = item.Split(" ");
+                if (ss == null || ss.Length < 2) continue;
+
                 Object val = null;
                 switch (ss[0])
                 {
