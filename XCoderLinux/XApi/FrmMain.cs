@@ -33,7 +33,7 @@ namespace XApi
         ILog BizLog;
 
         #region 窗体
-        public FrmMain(Orientation orientation = Orientation.Horizontal, Int32 spacing = 2) : base(orientation, spacing)
+        public FrmMain() : base(Orientation.Horizontal, 2)
         {
             InitializeComponent();
         }

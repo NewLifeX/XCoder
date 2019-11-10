@@ -38,7 +38,7 @@ namespace XNet
             _task = Task.Factory.StartNew(() => GetNetServers());
         }
 
-        public FrmMain(Orientation orientation = Orientation.Horizontal, Int32 spacing = 2) : base(orientation, spacing)
+        public FrmMain() : base(Orientation.Horizontal, 2)
         {
             InitializeComponent();
             

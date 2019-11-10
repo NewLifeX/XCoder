@@ -14,7 +14,7 @@ namespace XCoder
         {
             Application.Init();
             var window = new SharpApp();
-            Window.InteractiveDebugging = true;//打开调试工具
+            window.ShowAll();
             XTrace2.UseWinForm(window);
             Application.Run();
         }

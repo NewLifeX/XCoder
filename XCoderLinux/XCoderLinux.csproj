@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\XCoder\Engine\XConfig.cs" Link="Engine\XConfig.cs" />
     <Compile Include="..\XCoder\IXForm.cs" Link="IXForm.cs" />
     <Compile Include="..\XCoder\XApi\ApiConfig.cs" Link="XApi\ApiConfig.cs" />
     <Compile Include="..\XCoder\XApi\MyApiController.cs" Link="XApi\MyApiController.cs" />
@@ -28,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Windows\" />
+    <Folder Include="Engine\" />
   </ItemGroup>
 
   <!--<ItemGroup>
