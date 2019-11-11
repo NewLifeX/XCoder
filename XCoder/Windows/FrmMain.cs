@@ -383,7 +383,8 @@ namespace XCoder
 
                 this.Invoke(() =>
                 {
-                    SetTables(null);
+                    //SetTables(null);
+                    SetTables(Tables);    //修复数据建模界面连接数据库不显示数据表问题
                     //SetTables(Engine.Tables);
                 });
             });
