@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.cbBaundrate = new System.Windows.Forms.ComboBox();
+            this.cbBaudrate = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbName = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,13 +51,13 @@
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // cbBaundrate
+            // cbBaudrate
             // 
-            this.cbBaundrate.FormattingEnabled = true;
-            this.cbBaundrate.Location = new System.Drawing.Point(325, 3);
-            this.cbBaundrate.Name = "cbBaundrate";
-            this.cbBaundrate.Size = new System.Drawing.Size(72, 20);
-            this.cbBaundrate.TabIndex = 7;
+            this.cbBaudrate.FormattingEnabled = true;
+            this.cbBaudrate.Location = new System.Drawing.Point(325, 3);
+            this.cbBaudrate.Name = "cbBaudrate";
+            this.cbBaudrate.Size = new System.Drawing.Size(72, 20);
+            this.cbBaudrate.TabIndex = 7;
             // 
             // label2
             // 
@@ -205,7 +205,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ContextMenuStrip = this.contextMenuStrip1;
-            this.Controls.Add(this.cbBaundrate);
+            this.Controls.Add(this.cbBaudrate);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cbName);
             this.Controls.Add(this.label3);
@@ -220,7 +220,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox cbBaundrate;
+        private System.Windows.Forms.ComboBox cbBaudrate;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbName;
         private System.Windows.Forms.Label label3;

@@ -77,10 +77,10 @@ namespace NewLife.Windows
 
             var cfg = SerialPortConfig.Current;
             if (cfg.BaudRate > 0 && !bs.Contains(cfg.BaudRate)) bs.Add(cfg.BaudRate);
-            cbBaundrate.DataSource = bs;
+            cbBaudrate.DataSource = bs;
 
             cbName.SelectedItem = cfg.PortName;
-            cbBaundrate.SelectedItem = cfg.BaudRate;
+            cbBaudrate.SelectedItem = cfg.BaudRate;
             SetMenuItem(mi数据位, cfg.DataBits);
             SetMenuItem(mi停止位, cfg.StopBits);
             SetMenuItem(mi校验, cfg.Parity);
@@ -123,10 +123,10 @@ namespace NewLife.Windows
             {
                 var cfg = SerialPortConfig.Current;
                 cfg.PortName = cbName.SelectedItem + "";
-                if (cbBaundrate.SelectedItem != null)
-                    cfg.BaudRate = (Int32)cbBaundrate.SelectedItem;
+                if (cbBaudrate.SelectedItem != null)
+                    cfg.BaudRate = (Int32)cbBaudrate.SelectedItem;
                 else
-                    cfg.BaudRate = cbBaundrate.Text.ToInt();
+                    cfg.BaudRate = cbBaudrate.Text.ToInt();
                 //cfg.DataBits = (Int32)cbDataBit.SelectedItem;
                 //cfg.StopBits = (StopBits)cbStopBit.SelectedItem;
                 //cfg.Parity = (Parity)cbParity.SelectedItem;
