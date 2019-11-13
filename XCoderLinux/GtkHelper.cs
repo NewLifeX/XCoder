@@ -41,9 +41,22 @@ namespace XCoder
             var dis = di.GetDirectories();
             if (dis == null || dis.Length == 0) return false;
 
-            var gtk = dis.OrderByDescending(e => e.Name).FirstOrDefault();
-            GtkPath = gtk.FullName;
-            Version = new Version(gtk.Name.TrimStart('v', 'V'));
+            //var gtk = dis.OrderByDescending(e => e.Name).FirstOrDefault();
+            //GtkPath = gtk.FullName;
+            //Version = new Version(gtk.Name.TrimStart('v', 'V'));
+            foreach (var item in dis)
+            {
+                var gtk = item.FullName.CombinePath("libgdk-3-0.dll");
+                if (File.Exists(gtk))
+                {
+                    GtkPath = item.FullName;
+                    Version = new Version(item.Name.TrimStart('v', 'V'));
+
+                    break;
+                }
+            }
+
+            if (GtkPath.IsNullOrEmpty()) return false;
 
             XTrace.WriteLine("发现GTK运行时：[{0}] {1}", Version, GtkPath);
 
