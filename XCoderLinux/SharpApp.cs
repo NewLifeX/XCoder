@@ -7,7 +7,8 @@ using Gdk;
 using Gtk;
 using NewLife.Reflection;
 //using XApi;
-using XNet;
+//using XNet;
+using XCom;
 using Window = Gtk.Window;
 
 namespace XCoder
@@ -40,13 +41,12 @@ namespace XCoder
         private void SharpApp_Shown(System.Object sender, System.EventArgs e)
         {
             var set = XConfig.Current;
-            //if (set.Width > 0 || set.Height > 0)
-            //{
-            //    WidthRequest = set.Width;
-            //    //Top = set.Top;
-            //    //Left = set.Left;
-            //    HeightRequest = set.Height;
-            //}
+            if (set.Width > 0 || set.Height > 0)
+            {
+                DefaultWidth = set.Width;
+                DefaultHeight = set.Height;
+                //SetDefaultSize(set.Width, set.Height);
+            }
 
             SetPosition(WindowPosition.Center);
 
@@ -54,9 +54,9 @@ namespace XCoder
 
             AddMenu();
 
-            //var xapi = new FrmMain();
+            var frm = new FrmMain();
 
-            //_windowBox.PackStart(xapi, true, true, 0);
+            _windowBox.PackStart(frm, true, true, 0);
 
             Add(_windowBox);
 

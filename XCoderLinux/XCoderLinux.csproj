@@ -31,6 +31,8 @@
     <Compile Include="..\XCoder\IXForm.cs" Link="IXForm.cs" />
     <Compile Include="..\XCoder\XApi\ApiConfig.cs" Link="XApi\ApiConfig.cs" />
     <Compile Include="..\XCoder\XApi\MyApiController.cs" Link="XApi\MyApiController.cs" />
+    <Compile Include="..\XCoder\XCom\SerialPortConfig.cs" Link="XCom\SerialPortConfig.cs" />
+    <Compile Include="..\XCoder\XCom\SerialTransport.cs" Link="XCom\SerialTransport.cs" />
     <Compile Include="..\XCoder\XNet\BenchHelper.cs" Link="XNet\BenchHelper.cs" />
     <Compile Include="..\XCoder\XNet\IPPacket.cs" Link="XNet\IPPacket.cs" />
     <Compile Include="..\XCoder\XNet\MySqlParser.cs" Link="XNet\MySqlParser.cs" />
@@ -44,11 +46,23 @@
     <PackageReference Include="GtkSharp" Version="3.22.25.24" />
     <PackageReference Include="NewLife.Core" Version="8.4.2019.1109" />
     <PackageReference Include="NewLife.XCode" Version="9.14.2019.1109" />
+    <PackageReference Include="System.IO.Ports" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Windows\" />
     <Folder Include="Engine\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="XCom\FrmMain.cs" />
+    <Compile Update="XCom\FrmMain.designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Update="XCom\SerialPortList.cs" />
+    <Compile Update="XCom\SerialPortList.designer.cs">
+      <DependentUpon>SerialPortList.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <!--<ItemGroup>
