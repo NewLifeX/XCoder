@@ -52,7 +52,7 @@ namespace XCoder
 
             AddMenuButton();
 
-            //AddMenu();
+            AddMenu();
 
             //var xapi = new FrmMain();
 
@@ -96,7 +96,7 @@ namespace XCoder
                     {
                         var set = XConfig.Current;
 
-                        if(set.LastTool == item.FullName) return;
+                        if (set.LastTool == item.FullName) return;
                         var frm = item.CreateInstance() as Box;
                         CreateForm(frm);
                         Title = _title + $"[{btn.Text}]";
@@ -192,7 +192,7 @@ namespace XCoder
 
         void AddMenuButton()
         {
-            if ((AllChildren is ArrayList list) && list[^1] is HeaderBar hb)
+            if ((AllChildren is ArrayList list) && list.Count > 0 && list[^1] is HeaderBar hb)
             {
                 hb.PackStart(GetMenuTool());
                 hb.PackStart(GetMenuHelp());
