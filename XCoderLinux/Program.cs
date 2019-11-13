@@ -19,15 +19,7 @@ namespace XCoder
             GLib.ExceptionManager.UnhandledException += ExceptionManager_UnhandledException;
 
             // 检查环境
-            var task = Task.Run(async () =>
-            {
-                var gtk = new GtkHelper { Log = XTrace.Log };
-                if (!gtk.Check()) await gtk.DownloadAsync();
-
-                gtk.Install();
-            });
-            // 最多等3秒
-            task.Wait(3_000);
+            GtkHelper.CheckRuntime();
 
             Application.Init();
             var window = new SharpApp();

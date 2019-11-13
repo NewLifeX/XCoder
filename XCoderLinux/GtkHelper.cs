@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using NewLife;
 using NewLife.Log;
@@ -22,6 +23,23 @@ namespace XCoder
         #endregion
 
         #region 主要方法
+        public static Task CheckRuntime(Int32 msTimeout = 3_000)
+        {
+            var task = Task.Run(async () =>
+            {
+                var gtk = new GtkHelper { Log = XTrace.Log };
+                if (!gtk.Check()) await gtk.DownloadAsync();
+
+                gtk.Install();
+            });
+            // 最多等3秒
+            task.Wait(msTimeout);
+
+            return task;
+        }
+
+        /// <summary>检查是否安装有GTK运行时</summary>
+        /// <returns></returns>
         public Boolean Check()
         {
             // 只处理Windows
@@ -33,7 +51,7 @@ namespace XCoder
                 var data = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 GtkRoot = data.CombinePath("Gtk").GetFullPath();
             }
-            XTrace.WriteLine("查找GTK运行时：{0}", GtkRoot);
+            //XTrace.WriteLine("查找GTK运行时：{0}", GtkRoot);
 
             var di = GtkRoot.AsDirectory();
             if (!di.Exists) return false;
@@ -63,6 +81,8 @@ namespace XCoder
             return true;
         }
 
+        /// <summary>下载</summary>
+        /// <returns></returns>
         public async Task<Boolean> DownloadAsync()
         {
             var set = NewLife.Setting.Current;
@@ -92,7 +112,11 @@ namespace XCoder
             return true;
         }
 
-        public void Install() { }
+        /// <summary>安装</summary>
+        public void Install()
+        {
+            if (!GtkPath.IsNullOrEmpty()) SetDllDirectory(GtkPath);
+        }
         #endregion
 
         #region 辅助
@@ -223,6 +247,9 @@ namespace XCoder
 
             return null;
         }
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+        static extern Int32 SetDllDirectory(String pathName);
         #endregion
 
         #region 日志
