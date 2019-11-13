@@ -68,7 +68,12 @@ namespace XCoder
                 if (File.Exists(gtk))
                 {
                     GtkPath = item.FullName;
-                    Version = new Version(item.Name.TrimStart('v', 'V'));
+
+                    try
+                    {
+                        Version = new Version(item.Name.TrimStart('v', 'V'));
+                    }
+                    catch { }
 
                     break;
                 }
