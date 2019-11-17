@@ -126,7 +126,7 @@ namespace NewLife.Windows
                 var cfg = SerialPortConfig.Current;
                 cfg.PortName = cbName.GetActiveObject() + "";
                 if (cbBaudrate.GetActiveObject() != null)
-                    cfg.BaudRate = (Int32)cbBaudrate.GetActiveObject();
+                    cfg.BaudRate = cbBaudrate.GetActiveObject().ToInt();
                 //else
                 //    cfg.BaudRate = cbBaudrate.ToInt();
                 //cfg.DataBits = (Int32)cbDataBit.GetActiveObject();

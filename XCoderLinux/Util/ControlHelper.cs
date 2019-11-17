@@ -37,7 +37,7 @@ namespace XCoder.Util
         {
             if (!(comboBox.Model is ListStore listStore))
             {
-               return;
+                return;
             }
 
             foreach (var value in values)
@@ -61,7 +61,7 @@ namespace XCoder.Util
             var i = 0;
             foreach (var item in listStore)
             {
-                if (value.Equals(item))
+                if (value.Equals(((Object[])item)[0].ToInt()))
                 {
                     comboBox.Active = i;
                     return;

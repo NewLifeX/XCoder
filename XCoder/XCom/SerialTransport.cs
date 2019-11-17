@@ -373,7 +373,12 @@ namespace NewLife.Net
         public static Dictionary<String, String> GetNames()
         {
             var dic = new Dictionary<String, String>(StringComparer.OrdinalIgnoreCase);
-#if !NC30
+#if NC30
+            foreach (var item in SerialPort.GetPortNames())
+            {
+                dic.Add(item, "");
+            }
+#else
             using (var key = Registry.LocalMachine.OpenSubKey(@"HARDWARE\DEVICEMAP\SERIALCOMM", false))
             using (var usb = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Enum\USB", false))
             {
