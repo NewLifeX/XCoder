@@ -55,6 +55,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="System.Management">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Management.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Tools\FrmSecurity.cs" />
+    <Compile Update="Tools\FrmSecurity.Designer.cs">
+      <DependentUpon>FrmSecurity.cs</DependentUpon>
+    </Compile>
     <Compile Update="XCom\FrmMain.cs" />
     <Compile Update="XCom\FrmMain.designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
