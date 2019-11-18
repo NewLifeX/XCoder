@@ -65,7 +65,7 @@ namespace XApi
             this.gbReceive.Add(this.txtReceiveScrolledWindow);
             this.gbReceive.Margin = 6;
             this.gbReceive.Name = "gbReceive";
-            this.gbReceive.SetSizeRequest(878, 298);
+            //this.gbReceive.SetSizeRequest(878, 298);
             // gbReceive.Margin = 10;
             this.gbReceive.Label = "接收区：已接收0字节";
             this.gbReceive.Halign = Align.Fill;
@@ -407,7 +407,7 @@ namespace XApi
             this.PackStart(this.pnlSetting, false, false, 2);
             this.PackStart(this.label3, false, false, 2);
             this.PackStart(this.cbAction, false, false, 2);
-            this.PackStart(this.gbReceive, false, false, 2);
+            this.PackStart(this.gbReceive, true, true, 2);
             this.PackStart(this.gbSend, false, false, 2);
             //this.Margin = new Padding(4);
             //this.Name = "FrmMain";
@@ -424,9 +424,9 @@ namespace XApi
             //((System.ComponentModel.ISupportInitialize)(this.numMutilSend)).EndInit();
             //this.ResumeLayout(false);
             //this.PerformLayout();
-            this.Fill = true;
-            this.Halign = Align.Fill;
-            this.Valign = Align.Fill;
+            //this.Fill = true;
+            //this.Halign = Align.Fill;
+            //this.Valign = Align.Fill;
             this.Orientation = Orientation.Vertical;
         }
 
