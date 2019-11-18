@@ -19,7 +19,7 @@ namespace XCoder
         Task<Type[]> _load;
 
         private readonly VBox _windowBox = new VBox(false, 1);
-        private readonly VBox _menuToolBox = new VBox(false, 1);
+        private readonly Menu _menuTool = new Menu();
         private String _title = "新生命码神工具";
 
 
@@ -52,7 +52,7 @@ namespace XCoder
 
             AddMenuButton();
 
-            AddMenu();
+            //AddMenu();
 
             var frm = new FrmMain();
 
@@ -90,21 +90,21 @@ namespace XCoder
             {
                 foreach (var item in ts)
                 {
-                    var btn = new ModelButton { Text = item.GetDisplayName() ?? item.FullName };
+                    var menuItem = new MenuItem { Label = item.GetDisplayName() ?? item.FullName };
 
-                    btn.Clicked += (s, e) =>
+                    menuItem.Activated += (s, e) =>
                     {
                         var set = XConfig.Current;
 
                         if (set.LastTool == item.FullName) return;
                         var frm = item.CreateInstance() as Box;
                         CreateForm(frm);
-                        Title = _title + $"[{btn.Text}]";
+                        Title = _title + $"[{menuItem.Label}]";
                     };
 
-                    _menuToolBox.PackStart(btn, true, true, 1);
+                    _menuTool.Append(menuItem);
                 }
-                _menuToolBox.ShowAll();
+                _menuTool.ShowAll();
             });
         }
 
@@ -136,9 +136,9 @@ namespace XCoder
 
             //frm.MdiParent = this;
             //frm.WindowState = FormWindowState.Maximized;
-            if (_windowBox.Children.Length > 0)
+            if (_windowBox.Children.Length > 1)
             {
-                _windowBox.Remove(_windowBox.Children[0]);
+                _windowBox.Remove(_windowBox.Children[1]);
             }
             _windowBox.Add(frm);
             _windowBox.ShowAll();
@@ -192,65 +192,46 @@ namespace XCoder
 
         void AddMenuButton()
         {
-            if ((AllChildren is ArrayList list) && list.Count > 0 && list[^1] is HeaderBar hb)
-            {
-                hb.PackStart(GetMenuTool());
-                hb.PackStart(GetMenuHelp());
-                hb.ShowAll();
-            }
+            var mb = new MenuBar();
+
+            mb.Append(GetMenuTool());
+            mb.Append(GetMenuHelp());
+
+            _windowBox.PackStart(mb, false, false, 0);
         }
 
         /// <summary>
         /// 添加帮助菜单
         /// </summary>
         /// <returns></returns>
-        MenuButton GetMenuHelp()
+        MenuItem GetMenuHelp()
         {
-            var inspectorBtn = new ModelButton { Text = "切换开发工具" };
-            //inspectorBtn.Visible = true;
-            inspectorBtn.Clicked += InspectorBtn_Clicked;
+            var menu = new Menu();
+            var menuItem = new MenuItem("帮助")
+            {
+                Submenu = menu
+            };
 
-            var vb = new VBox();
-            //vb.Visible = true;
-            vb.PackStart(inspectorBtn, true, true, 1);
+            var inspector = new MenuItem("切换开发工具");
+            inspector.Activated += (s, e) =>  InteractiveDebugging = true;
+            menu.Append(inspector);
 
-            var menuBtn = new MenuButton { Label = "帮助", Valign = Align.Center };
-
-            var popover = new Popover(menuBtn) { vb };
-            menuBtn.Popover = popover;
-
-            vb.ShowAll();
-            return menuBtn;
+            return menuItem;
         }
 
         /// <summary>
         /// 添加工具菜单
         /// </summary>
         /// <returns></returns>
-        MenuButton GetMenuTool()
+        MenuItem GetMenuTool()
         {
-            var menuBtn = new MenuButton
+            var menu = _menuTool;
+            var menuItem = new MenuItem("工具")
             {
-                Label = "工具",
-                Valign = Align.Center
+                Submenu = menu
             };
-
-            var popover = new Popover(menuBtn)
-            {
-                _menuToolBox
-            };
-            menuBtn.Popover = popover;
-
-            var inspectorBtn = new ModelButton { Text = "切换开发工具" };
-
-            //_menuToolBox.PackStart(inspectorBtn, true, true, 1);
-            //_menuToolBox.ShowAll();
-            return menuBtn;
-        }
-
-        private void InspectorBtn_Clicked(Object sender, EventArgs e)
-        {
-            InteractiveDebugging = true;//打开调试工具
+            
+            return menuItem;
         }
         #endregion
     }

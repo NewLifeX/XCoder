@@ -50,7 +50,7 @@ namespace XCoder.Util
         /// 添加选项
         /// </summary>
         /// <param name="comboBox"></param>
-        /// <param name="values"></param>
+        /// <param name="value"></param>
         public static void SetActive<T>(this ComboBox comboBox, T value)
         {
             if (!(comboBox.Model is ListStore listStore))
