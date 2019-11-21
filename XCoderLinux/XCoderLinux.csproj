@@ -47,17 +47,12 @@
     <PackageReference Include="NewLife.Core" Version="8.4.2019.1109" />
     <PackageReference Include="NewLife.XCode" Version="9.14.2019.1109" />
     <PackageReference Include="System.IO.Ports" Version="4.6.0" />
+    <PackageReference Include="System.Management" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Windows\" />
     <Folder Include="Engine\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Management">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6\System.Management.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
