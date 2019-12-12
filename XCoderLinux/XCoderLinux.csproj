@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>XCoder</AssemblyName>
     <RootNamespace>XCoder</RootNamespace>
     <AssemblyTitle>新生命码神工具</AssemblyTitle>
     <Description>众多开发者工具</Description>
     <Company>新生命开发团队</Company>
     <Copyright>©2002-2019 新生命开发团队</Copyright>
-    <Version>8.0.2019.1007</Version>
-    <FileVersion>8.0.2019.1007</FileVersion>
+    <Version>8.0.2019.1212</Version>
+    <FileVersion>8.0.2019.1212</FileVersion>
     <AssemblyVersion>8.0.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
     <ApplicationIcon>..\XCoder\leaf.ico</ApplicationIcon>
@@ -44,10 +44,10 @@
 
   <ItemGroup>
     <PackageReference Include="GtkSharp" Version="3.22.25.24" />
-    <PackageReference Include="NewLife.Core" Version="8.4.2019.1109" />
-    <PackageReference Include="NewLife.XCode" Version="9.14.2019.1109" />
-    <PackageReference Include="System.IO.Ports" Version="4.6.0" />
-    <PackageReference Include="System.Management" Version="4.6.0" />
+    <PackageReference Include="NewLife.Core" Version="8.4.2019.1212" />
+    <PackageReference Include="NewLife.XCode" Version="9.14.2019.1212" />
+    <PackageReference Include="System.IO.Ports" Version="4.7.0" />
+    <PackageReference Include="System.Management" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
