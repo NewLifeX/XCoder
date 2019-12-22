@@ -105,7 +105,7 @@ namespace NewLife.Net
         public SerialTransport()
         {
             // 每隔一段时间检查一次串口是否已经关闭，如果串口已经不存在，则关闭该传输口
-            timer = new TimerX(CheckDisconnect, null, 3000, 3000);
+            timer = new TimerX(CheckDisconnect, null, 3000, 3000) { Async = true };
         }
 
         /// <summary>销毁</summary>

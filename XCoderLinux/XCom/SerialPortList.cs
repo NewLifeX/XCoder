@@ -45,7 +45,7 @@ namespace NewLife.Windows
             LoadInfo();
 
             // 挂载定时器
-            _timer = new TimerX(OnCheck, null, 300, 300);
+            _timer = new TimerX(OnCheck, null, 300, 300) { Async = true };
 
             //if (Parent is Form frm)
             //{
