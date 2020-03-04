@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
@@ -13,14 +14,17 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using NewLife;
 using NewLife.Collections;
+using NewLife.Log;
 using NewLife.Reflection;
 using NewLife.Security;
+using NewLife.Serialization;
 
 namespace XCoder.Tools
 {
     [DisplayName("加密解密")]
     public partial class FrmSecurity : Form, IXForm
     {
+        #region 窗体初始化
         public FrmSecurity()
         {
             InitializeComponent();
@@ -28,6 +32,70 @@ namespace XCoder.Tools
             // 动态调节宽度高度，兼容高DPI
             this.FixDpi();
         }
+
+        private void FrmSecurity_Load(Object sender, EventArgs e)
+        {
+            LoadConfig();
+        }
+
+        private void LoadConfig()
+        {
+            var file = XTrace.TempPath.CombinePath("security.json").GetFullPath();
+            if (File.Exists(file))
+            {
+                var dic = new JsonParser(File.ReadAllText(file)).Decode() as IDictionary<String, Object>;
+                LoadConfig(dic, this);
+            }
+        }
+
+        private void LoadConfig(IDictionary<String, Object> dic, Control control)
+        {
+            foreach (Control item in control.Controls)
+            {
+                switch (item)
+                {
+                    case RadioButton rb:
+                        if (dic.TryGetValue(item.Name, out var v)) rb.Checked = v.ToBoolean();
+                        break;
+                    case CheckBox cb:
+                        if (dic.TryGetValue(item.Name, out v)) cb.Checked = v.ToBoolean();
+                        break;
+                    case RichTextBox rtb:
+                        if (dic.TryGetValue(item.Name, out v)) rtb.Text = v + "";
+                        break;
+                    default:
+                        if (item.Controls.Count > 0) LoadConfig(dic, item);
+                        break;
+                }
+            }
+        }
+
+        private void SaveConfig()
+        {
+            var dic = new Dictionary<String, Object>();
+            SaveConfig(dic, this);
+
+            var file = XTrace.TempPath.CombinePath("security.json").GetFullPath();
+            file.EnsureDirectory(true);
+            File.WriteAllText(file, dic.ToJson(true));
+        }
+
+        private void SaveConfig(IDictionary<String, Object> dic, Control control)
+        {
+            foreach (Control item in control.Controls)
+            {
+                switch (item)
+                {
+                    case RadioButton rb: dic[item.Name] = rb.Checked; break;
+                    case CheckBox cb: dic[item.Name] = cb.Checked; break;
+                    case RichTextBox rtb: dic[item.Name] = rtb.Text; break;
+                    default:
+                        if (item.Controls.Count > 0) SaveConfig(dic, item);
+                        break;
+                }
+            }
+        }
+        #endregion
 
         #region 辅助
         /// <summary>从字符串中获取字节数组</summary>
@@ -54,10 +122,59 @@ namespace XCoder.Tools
 
         /// <summary>从原文中获取字节数组</summary>
         /// <returns></returns>
-        private Byte[] GetBytes()
+        private Byte[] GetSource()
         {
             var v = rtSource.Text;
-            return GetBytes(v);
+
+            if (rbString.Checked) return v.GetBytes();
+            if (rbHex.Checked) return v.ToHex();
+            if (rbBase64.Checked) return v.ToBase64();
+
+            return null;
+        }
+
+        private void rtSource_TextChanged(Object sender, EventArgs e)
+        {
+            var v = rtSource.Text;
+            if (v.IsNullOrEmpty()) return;
+
+            // 单字节
+            var enc = Encoding.UTF8;
+            if (enc.GetByteCount(v) != v.Length)
+            {
+                rbHex.Enabled = false;
+                rbBase64.Enabled = false;
+                return;
+            }
+
+            try
+            {
+                rbHex.Enabled = v.ToHex().Length > 0;
+            }
+            catch
+            {
+                rbHex.Enabled = false;
+            }
+
+            try
+            {
+                rbBase64.Enabled = v.ToBase64().Length > 0;
+            }
+            catch
+            {
+                rbBase64.Enabled = false;
+            }
+        }
+
+        private Byte[] GetPass()
+        {
+            var v = rtPass.Text;
+
+            if (rbString2.Checked) return v.GetBytes();
+            if (rbHex2.Checked) return v.ToHex();
+            if (rbBase642.Checked) return v.ToBase64();
+
+            return null;
         }
 
         private void SetResult(params String[] rs)
@@ -65,27 +182,41 @@ namespace XCoder.Tools
             var sb = new StringBuilder();
             foreach (var item in rs)
             {
-                if (sb.Length > 0)
-                {
-                    sb.AppendLine();
-                    //sb.AppendLine();
-                }
+                if (sb.Length > 0) sb.AppendLine();
                 sb.Append(item);
             }
             rtResult.Text = sb.ToString();
+
+            SaveConfig();
         }
 
         private void SetResult(Byte[] data)
         {
-            SetResult("/*HEX编码、Base64编码、Url改进Base64编码*/", data.ToHex("-"), data.ToBase64(), data.ToUrlBase64());
+            //SetResult("/*HEX编码、Base64编码、Url改进Base64编码*/", data.ToHex("-"), data.ToBase64(), data.ToUrlBase64());
+
+            var list = new List<String>();
+            if (cbString.Checked) list.Add(data.ToStr());
+            if (cbHex.Checked)
+            {
+                list.Add(data.ToHex("-"));
+                list.Add(data.ToHex(" "));
+            }
+            if (cbBase64.Checked)
+            {
+                list.Add(data.ToBase64());
+                list.Add(data.ToUrlBase64());
+            }
+
+            SetResult(list.ToArray());
         }
 
-        private void SetResult2(Byte[] data)
-        {
-            SetResult("/*字符串、HEX编码、Base64编码*/", data.ToStr(), data.ToHex("-"), data.ToBase64());
-        }
+        //private void SetResult2(Byte[] data)
+        //{
+        //    SetResult("/*字符串、HEX编码、Base64编码*/", data.ToStr(), data.ToHex("-"), data.ToBase64());
+        //}
         #endregion
 
+        #region 功能
         private void btnExchange_Click(Object sender, EventArgs e)
         {
             var v = rtSource.Text;
@@ -104,7 +235,7 @@ namespace XCoder.Tools
 
         private void btnHex_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
+            var buf = GetSource();
             //rtResult.Text = buf.ToHex(" ", 32);
             SetResult(buf.ToHex(), buf.ToHex(" ", 32), buf.ToHex("-", 32));
         }
@@ -117,7 +248,7 @@ namespace XCoder.Tools
 
         private void btnB64_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
+            var buf = GetSource();
             //rtResult.Text = buf.ToBase64();
             SetResult(buf.ToBase64(), buf.ToUrlBase64());
         }
@@ -133,22 +264,22 @@ namespace XCoder.Tools
 
         private void btnMD5_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
+            var buf = GetSource();
             var str = buf.MD5().ToHex();
             rtResult.Text = str.ToUpper() + Environment.NewLine + str.ToLower();
         }
 
         private void btnMD52_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
+            var buf = GetSource();
             var str = buf.MD5().ToHex(0, 8);
             rtResult.Text = str.ToUpper() + Environment.NewLine + str.ToLower();
         }
 
         private void btnSHA1_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
-            var key = GetBytes(rtPass.Text);
+            var buf = GetSource();
+            var key = GetPass();
 
             buf = buf.SHA1(key);
             SetResult(buf);
@@ -156,8 +287,8 @@ namespace XCoder.Tools
 
         private void btnSHA256_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
-            var key = GetBytes(rtPass.Text);
+            var buf = GetSource();
+            var key = GetPass();
 
             buf = buf.SHA256(key);
             SetResult(buf);
@@ -165,8 +296,8 @@ namespace XCoder.Tools
 
         private void btnSHA384_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
-            var key = GetBytes(rtPass.Text);
+            var buf = GetSource();
+            var key = GetPass();
 
             buf = buf.SHA384(key);
             SetResult(buf);
@@ -174,8 +305,8 @@ namespace XCoder.Tools
 
         private void btnSHA512_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
-            var key = GetBytes(rtPass.Text);
+            var buf = GetSource();
+            var key = GetPass();
 
             buf = buf.SHA512(key);
             SetResult(buf);
@@ -183,7 +314,7 @@ namespace XCoder.Tools
 
         private void btnCRC_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
+            var buf = GetSource();
             //rtResult.Text = "{0:X8}\r\n{0}".F(buf.Crc());
             var rs = buf.Crc();
             buf = rs.GetBytes(false);
@@ -192,7 +323,7 @@ namespace XCoder.Tools
 
         private void btnCRC2_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
+            var buf = GetSource();
             //rtResult.Text = "{0:X4}\r\n{0}".F(buf.Crc16());
             var rs = buf.Crc16();
             buf = rs.GetBytes(false);
@@ -201,8 +332,8 @@ namespace XCoder.Tools
 
         private void btnDES_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
-            var pass = GetBytes(rtPass.Text);
+            var buf = GetSource();
+            var pass = GetPass();
 
             var des = new DESCryptoServiceProvider();
             buf = des.Encrypt(buf, pass);
@@ -212,19 +343,19 @@ namespace XCoder.Tools
 
         private void btnDES2_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
-            var pass = GetBytes(rtPass.Text);
+            var buf = GetSource();
+            var pass = GetPass();
 
             var des = new DESCryptoServiceProvider();
             buf = des.Descrypt(buf, pass);
 
-            SetResult2(buf);
+            SetResult(buf);
         }
 
         private void btnAES_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
-            var pass = GetBytes(rtPass.Text);
+            var buf = GetSource();
+            var pass = GetPass();
 
             var aes = new AesCryptoServiceProvider();
             buf = aes.Encrypt(buf, pass);
@@ -234,19 +365,19 @@ namespace XCoder.Tools
 
         private void btnAES2_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
-            var pass = GetBytes(rtPass.Text);
+            var buf = GetSource();
+            var pass = GetPass();
 
             var aes = new AesCryptoServiceProvider();
             buf = aes.Descrypt(buf, pass);
 
-            SetResult2(buf);
+            SetResult(buf);
         }
 
         private void btnRC4_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
-            var pass = GetBytes(rtPass.Text);
+            var buf = GetSource();
+            var pass = GetPass();
             buf = buf.RC4(pass);
 
             SetResult(buf);
@@ -254,16 +385,16 @@ namespace XCoder.Tools
 
         private void btnRC42_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
-            var pass = GetBytes(rtPass.Text);
+            var buf = GetSource();
+            var pass = GetPass();
             buf = buf.RC4(pass);
 
-            SetResult2(buf);
+            SetResult(buf);
         }
 
         private void btnRSA_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
+            var buf = GetSource();
             var key = rtPass.Text;
 
             if (key.Length < 100)
@@ -279,7 +410,7 @@ namespace XCoder.Tools
 
         private void btnRSA2_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
+            var buf = GetSource();
             var pass = rtPass.Text;
 
             try
@@ -292,12 +423,12 @@ namespace XCoder.Tools
                 buf = RSAHelper.Decrypt(buf, pass, false);
             }
 
-            SetResult2(buf);
+            SetResult(buf);
         }
 
         private void btnDSA_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
+            var buf = GetSource();
             var key = rtPass.Text;
 
             if (key.Length < 100)
@@ -313,7 +444,7 @@ namespace XCoder.Tools
 
         private void btnDSA2_Click(Object sender, EventArgs e)
         {
-            var buf = GetBytes();
+            var buf = GetSource();
             var pass = rtPass.Text;
 
             var v = rtResult.Text;
@@ -405,6 +536,7 @@ namespace XCoder.Tools
 
             rtResult.Text = sb.Put(true);
         }
+        #endregion
 
         #region 机器信息
         private void BtnComputerInfo_Click(Object sender, EventArgs e)
@@ -415,31 +547,39 @@ namespace XCoder.Tools
             if (macs.Count > 0) sb.AppendFormat("MAC:\t{0}\r\n", macs.Join(",", x => x.ToHex("-")));
 
             var processor = GetInfo("Win32_Processor", "Name");
-            /*if (!processor.IsNullOrEmpty())*/ sb.AppendFormat("Processor:\t{0}\t(Win32_Processor.Name)\r\n", processor);
+            /*if (!processor.IsNullOrEmpty())*/
+            sb.AppendFormat("Processor:\t{0}\t(Win32_Processor.Name)\r\n", processor);
 
             var cpuID = GetInfo("Win32_Processor", "ProcessorId");
-            /*if (!cpuID.IsNullOrEmpty())*/ sb.AppendFormat("ProcessorId:\t{0}\t(Win32_Processor.ProcessorId)\r\n", cpuID);
+            /*if (!cpuID.IsNullOrEmpty())*/
+            sb.AppendFormat("ProcessorId:\t{0}\t(Win32_Processor.ProcessorId)\r\n", cpuID);
 
             var uuid = GetInfo("Win32_ComputerSystemProduct", "UUID");
-            /*if (!uuid.IsNullOrEmpty())*/ sb.AppendFormat("UUID:\t{0}\t(Win32_ComputerSystemProduct.UUID)\r\n", uuid);
+            /*if (!uuid.IsNullOrEmpty())*/
+            sb.AppendFormat("UUID:\t{0}\t(Win32_ComputerSystemProduct.UUID)\r\n", uuid);
 
             var id = GetInfo("Win32_ComputerSystemProduct", "IdentifyingNumber");
-            /*if (!id.IsNullOrEmpty())*/ sb.AppendFormat("IdentifyingNumber:\t{0}\t(Win32_ComputerSystemProduct.IdentifyingNumber)\r\n", id);
+            /*if (!id.IsNullOrEmpty())*/
+            sb.AppendFormat("IdentifyingNumber:\t{0}\t(Win32_ComputerSystemProduct.IdentifyingNumber)\r\n", id);
 
             var bios = GetInfo("Win32_BIOS", "SerialNumber");
-            /*if (!bios.IsNullOrEmpty())*/ sb.AppendFormat("BIOS:\t{0}\t(Win32_BIOS.SerialNumber)\r\n", bios);
+            /*if (!bios.IsNullOrEmpty())*/
+            sb.AppendFormat("BIOS:\t{0}\t(Win32_BIOS.SerialNumber)\r\n", bios);
 
             var baseBoard = GetInfo("Win32_BaseBoard", "SerialNumber");
-            /*if (!baseBoard.IsNullOrEmpty())*/ sb.AppendFormat("BaseBoard:\t{0}\t(Win32_BaseBoard.SerialNumber)\r\n", baseBoard);
+            /*if (!baseBoard.IsNullOrEmpty())*/
+            sb.AppendFormat("BaseBoard:\t{0}\t(Win32_BaseBoard.SerialNumber)\r\n", baseBoard);
 
             var serialNumber = GetInfo("Win32_DiskDrive", "SerialNumber");
-            /*if (!serialNumber.IsNullOrEmpty())*/ sb.AppendFormat("DiskSerial:\t{0}\t(Win32_DiskDrive.SerialNumber)\r\n", serialNumber);
+            /*if (!serialNumber.IsNullOrEmpty())*/
+            sb.AppendFormat("DiskSerial:\t{0}\t(Win32_DiskDrive.SerialNumber)\r\n", serialNumber);
 
             var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Cryptography");
             if (reg != null)
             {
                 var guid = reg.GetValue("MachineGuid") + "";
-                /*if (!guid.IsNullOrEmpty())*/ sb.AppendFormat("MachineGuid:\t{0}\t(SOFTWARE\\Microsoft\\Cryptography)\r\n", guid);
+                /*if (!guid.IsNullOrEmpty())*/
+                sb.AppendFormat("MachineGuid:\t{0}\t(SOFTWARE\\Microsoft\\Cryptography)\r\n", guid);
             }
 
 #if !NET4 && !__CORE__
