@@ -37,7 +37,7 @@ namespace NewLife.Net
     /// }
     /// </code>
     /// </example>
-    public class SerialTransport : DisposeBase, ITransport, IDisposable
+    public class SerialTransport : DisposeBase, ITransport
     {
         #region 属性
         private SerialPort _Serial;
@@ -110,9 +110,9 @@ namespace NewLife.Net
 
         /// <summary>销毁</summary>
         /// <param name="disposing"></param>
-        protected override void OnDispose(Boolean disposing)
+        protected override void Dispose(Boolean disposing)
         {
-            base.OnDispose(disposing);
+            base.Dispose(disposing);
 
             try
             {

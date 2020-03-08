@@ -301,13 +301,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NewLife.Core">
-      <Version>8.4.2019.1212</Version>
+      <Version>8.7.2020.308</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
       <Version>3.6.2019.1117</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>9.14.2019.1212</Version>
+      <Version>9.16.2020.308</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
