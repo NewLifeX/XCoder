@@ -64,14 +64,14 @@ namespace XCoder
 
             try
             {
-                SetDatabaseList(DAL.ConnStrs.Keys);
+                SetDatabaseList(DAL.ConnStrs.Keys.ToList());
             }
             catch (Exception ex)
             {
                 XTrace.WriteException(ex);
             }
 
-            LoadConfig();
+            //LoadConfig();
 
             ThreadPoolX.QueueUserWorkItem(AutoDetectDatabase);
         }
@@ -320,6 +320,78 @@ namespace XCoder
             }
         }
 
+        void DetectMySql(Object state)
+        {
+            var item = (String)state;
+            try
+            {
+                var dal = DAL.Create(item);
+                if (dal.DbType != DatabaseType.MySql) return;
+
+                var sw = Stopwatch.StartNew();
+
+                // 列出所有数据库
+                DataTable dt = null;
+                if (dal.Db.CreateMetaData().MetaDataCollections.Contains("Databases"))
+                {
+                    dt = dal.Db.CreateSession().GetSchema(null, "Databases", null);
+                }
+                if (dt == null) return;
+
+                var dbprovider = dal.DbType.ToString();
+                var builder = new DbConnectionStringBuilder
+                {
+                    ConnectionString = dal.ConnStr
+                };
+
+                // 统计库名
+                var n = 0;
+                var names = new List<String>();
+                var sysdbnames = new String[] { "mysql" };
+                foreach (DataRow dr in dt.Rows)
+                {
+                    var dbname = dr["database_name"].ToString();
+                    if (Array.IndexOf(sysdbnames, dbname) >= 0) continue;
+
+                    var connName = String.Format("{0}_{1}", item, dbname);
+
+                    builder["Database"] = dbname;
+                    DAL.AddConnStr(connName, builder.ToString(), null, dbprovider);
+                    n++;
+
+                    try
+                    {
+                        var ver = dal.Db.ServerVersion;
+                        names.Add(connName);
+                    }
+                    catch
+                    {
+                        if (DAL.ConnStrs.ContainsKey(connName)) DAL.ConnStrs.Remove(connName);
+                    }
+                }
+
+
+                sw.Stop();
+                XTrace.WriteLine("发现远程数据库{0}个，耗时：{1}！", n, sw.Elapsed);
+
+                if (names != null && names.Count > 0)
+                {
+                    var list = new List<String>();
+                    foreach (var elm in DAL.ConnStrs)
+                    {
+                        if (!String.IsNullOrEmpty(elm.Value)) list.Add(elm.Key);
+                    }
+                    list.AddRange(names);
+
+                    this.Invoke(SetDatabaseList, list);
+                }
+            }
+            catch
+            {
+                //if (item == localName) DAL.ConnStrs.Remove(localName);
+            }
+        }
+
         void DetectRemote()
         {
             var list = new List<String>();
@@ -328,12 +400,13 @@ namespace XCoder
                 if (!String.IsNullOrEmpty(item.Value)) list.Add(item.Key);
             }
 
-            var localName = "local_MSSQL";
             foreach (var item in list)
             {
                 Task.Factory.StartNew(DetectSqlServer, item);
+                Task.Factory.StartNew(DetectMySql, item);
             }
 
+            var localName = "local_MSSQL";
             if (DAL.ConnStrs.ContainsKey(localName)) DAL.ConnStrs.Remove(localName);
             //if (list.Contains(localName)) list.Remove(localName);
         }
