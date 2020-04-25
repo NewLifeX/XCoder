@@ -2,29 +2,36 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
     <RootNamespace>XCoder</RootNamespace>
     <AssemblyName>XCoder</AssemblyName>
     <AssemblyTitle>新生命码神工具</AssemblyTitle>
     <Description>众多开发者工具</Description>
     <Company>新生命开发团队</Company>
-    <Copyright>©2002-2019 新生命开发团队</Copyright>
-    <Version>8.0.2019.1212</Version>
-    <FileVersion>8.0.2019.1212</FileVersion>
+    <Copyright>©2002-2020 新生命开发团队</Copyright>
+    <Version>8.0.2020.0425</Version>
+    <FileVersion>8.0.2020.0425</FileVersion>
     <AssemblyVersion>8.0.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
     <ApplicationIcon>..\XCoder\leaf.ico</ApplicationIcon>
     <OutputPath>..\..\XCoder\</OutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <DefineConstants>TRACE;NC30;__CORE__</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net461'">
+    <DefineConstants>$(DefineConstants);__WIN__;NET461</DefineConstants>
+    <ApplicationManifest>..\XCoder\Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+    <DefineConstants>$(DefineConstants);__WIN__;NC30;__CORE__</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -170,11 +177,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
-    <PackageReference Include="NewLife.Core" Version="8.7.2020.308" />
-    <PackageReference Include="NewLife.WinCore" Version="8.6.2020.204" />
-    <PackageReference Include="NewLife.XCode" Version="9.16.2020.308" />
+    <PackageReference Include="NewLife.Core" Version="8.7.2020.425-beta" />
+    <PackageReference Include="NewLife.XCode" Version="9.16.2020.425-beta" />
     <PackageReference Include="System.IO.Ports" Version="4.7.0" />
     <PackageReference Include="System.Management" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+    <PackageReference Include="NewLife.WinCore" Version="8.7.2020.425-beta" />
   </ItemGroup>
 
   <ItemGroup>

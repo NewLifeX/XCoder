@@ -40,7 +40,8 @@ namespace XCoder.Tools
 
         private void LoadConfig()
         {
-            var file = XTrace.TempPath.CombinePath("security.json").GetFullPath();
+            var dataPath = Setting.Current.DataPath;
+            var file = dataPath.CombinePath("security.json").GetFullPath();
             if (File.Exists(file))
             {
                 var dic = new JsonParser(File.ReadAllText(file)).Decode() as IDictionary<String, Object>;
@@ -75,7 +76,8 @@ namespace XCoder.Tools
             var dic = new Dictionary<String, Object>();
             SaveConfig(dic, this);
 
-            var file = XTrace.TempPath.CombinePath("security.json").GetFullPath();
+            var dataPath = Setting.Current.DataPath;
+            var file = dataPath.CombinePath("security.json").GetFullPath();
             file.EnsureDirectory(true);
             File.WriteAllText(file, dic.ToJson(true));
         }
@@ -347,7 +349,7 @@ namespace XCoder.Tools
             var pass = GetPass();
 
             var des = new DESCryptoServiceProvider();
-            buf = des.Descrypt(buf, pass);
+            buf = des.Decrypt(buf, pass);
 
             SetResult(buf);
         }
@@ -369,7 +371,7 @@ namespace XCoder.Tools
             var pass = GetPass();
 
             var aes = new AesCryptoServiceProvider();
-            buf = aes.Descrypt(buf, pass);
+            buf = aes.Decrypt(buf, pass);
 
             SetResult(buf);
         }

@@ -20,6 +20,7 @@ namespace XCoder
         {
 #if NC30
             XTrace2.UseWinForm();
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
 #else
             XTrace.UseWinForm();
 #endif

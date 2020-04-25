@@ -51,7 +51,7 @@ namespace XCoder.Yun
             var cb = cbMap;
             cb.Items.Clear();
             cb.DisplayMember = "Name";
-            foreach (var item in typeof(IMap).GetAllSubclasses(true))
+            foreach (var item in typeof(IMap).GetAllSubclasses())
             {
                 //var name = item.GetDisplayName() ?? item.Name;
                 //Maps[name] = item;

@@ -220,7 +220,7 @@ namespace XCoder.Tools
             var pass = GetBytes(rtPass.Buffer.Text);
 
             var des = new DESCryptoServiceProvider();
-            buf = des.Descrypt(buf, pass);
+            buf = des.Decrypt(buf, pass);
 
             SetResult2(buf);
         }
@@ -242,7 +242,7 @@ namespace XCoder.Tools
             var pass = GetBytes(rtPass.Buffer.Text);
 
             var aes = new AesCryptoServiceProvider();
-            buf = aes.Descrypt(buf, pass);
+            buf = aes.Decrypt(buf, pass);
 
             SetResult2(buf);
         }

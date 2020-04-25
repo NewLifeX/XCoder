@@ -26,7 +26,7 @@ namespace XCoder
 
         public SharpApp() : base("新生命码神工具")
         {
-            _load = Task<Type[]>.Factory.StartNew(() => typeof(IXForm).GetAllSubclasses(true).ToArray());
+            _load = Task<Type[]>.Factory.StartNew(() => typeof(IXForm).GetAllSubclasses().ToArray());
 
             DeleteEvent += delegate
             {

@@ -563,7 +563,7 @@ namespace XNet
                 if (_ns != null) return _ns;
 
                 var dic = new Dictionary<String, Type>();
-                foreach (var item in typeof(NetServer).GetAllSubclasses(true))
+                foreach (var item in typeof(NetServer).GetAllSubclasses())
                 {
                     try
                     {

@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("XCoder")]
 [assembly: AssemblyCompany("新生命开发团队")]
-[assembly: AssemblyCopyright("©2002-2018 新生命开发团队 http://www.NewLifeX.com")]
+[assembly: AssemblyCopyright("©2002-2020 新生命开发团队 http://www.NewLifeX.com")]
 [assembly: AssemblyTrademark("四叶草")]
 [assembly: AssemblyCulture("")]
 
@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 //      修订号
 //
 [assembly: AssemblyVersion("7.0.*")]
-[assembly: AssemblyFileVersion("7.0.2019.1212")]
+[assembly: AssemblyFileVersion("7.0.2020.0425")]
 
 /*
  * v6.9.2017.0101   增加消息调试工具，支持调试网络库的消息收发功能
