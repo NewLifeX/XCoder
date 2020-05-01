@@ -41,6 +41,22 @@ namespace XCoder
         [Description("语音提示。默认true")]
         public Boolean SpeechTip { get; set; } = true;
 
+        /// <summary>证书</summary>
+        [Description("证书")]
+        public String Code { get; set; }
+
+        /// <summary>密钥</summary>
+        [Description("密钥")]
+        public String Secret { get; set; }
+
+        /// <summary>服务地址端口。默认为空，子网内自动发现</summary>
+        [Description("服务地址端口。默认为空，子网内自动发现")]
+        public String Server { get; set; } = "";
+
+        /// <summary>更新通道。默认Release</summary>
+        [Description("更新通道。默认Release")]
+        public String Channel { get; set; } = "Release";
+
         /// <summary>更新服务器</summary>
         [Description("更新服务器")]
         public String UpdateServer { get; set; } = "";
@@ -62,6 +78,8 @@ namespace XCoder
         protected override void OnLoaded()
         {
             if (UpdateServer.IsNullOrEmpty() || UpdateServer.EqualIgnoreCase("http://x.newlifex.com/")) UpdateServer = NewLife.Setting.Current.PluginServer;
+
+            if (Server.IsNullOrEmpty()) Server = "http://star.newlifex.com:6600";
 
             base.OnLoaded();
         }
