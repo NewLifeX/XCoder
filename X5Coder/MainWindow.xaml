@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:X5Coder"
          x:Class="X5Coder.MainWindow"
         mc:Ignorable="d"
-                         UseLayoutRounding="True"
-  Title="新生命码神工具" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    Title="新生命码神工具" Height="450" Width="800" WindowStartupLocation="CenterScreen"       
+    UseLayoutRounding="True">
     <Grid>
         <Menu>
             <MenuItem Header="开发工具">
@@ -29,8 +29,8 @@
                 <MenuItem Header="地图接口"/>
             </MenuItem>
             <MenuItem Header="帮助">
-                <MenuItem Header="检查更新"/>
-                <MenuItem Header="关于"/>
+                <MenuItem Header="检查更新" Click="CheckUpdate_Click"/>
+                <MenuItem Header="关于" Click="About_Click"/>
             </MenuItem>
         </Menu>
     </Grid>

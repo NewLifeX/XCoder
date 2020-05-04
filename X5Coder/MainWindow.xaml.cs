@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,16 @@ namespace X5Coder
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void CheckUpdate_Click(Object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void About_Click(Object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://www.newlifex.com");
         }
     }
 }
