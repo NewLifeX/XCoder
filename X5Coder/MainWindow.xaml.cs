@@ -26,6 +26,36 @@ namespace X5Coder
             InitializeComponent();
         }
 
+        #region 开发工具
+        private void Regex_Click(Object sender, RoutedEventArgs e)
+        {
+            frame.Navigate("Views\\Regex.xaml");
+        }
+
+        private void Ico_Click(Object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Security_Click(Object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Speech_Click(Object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region 网络通信
+        private void Network_Click(Object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region 帮助
         private void CheckUpdate_Click(Object sender, RoutedEventArgs e)
         {
 
@@ -35,5 +65,6 @@ namespace X5Coder
         {
             Process.Start("https://www.newlifex.com");
         }
+        #endregion
     }
 }
