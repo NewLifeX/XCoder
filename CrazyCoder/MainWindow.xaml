@@ -31,6 +31,6 @@
                 <MenuItem Header="关于" Click="About_Click"/>
             </MenuItem>
         </Menu>
-        <Frame x:Name="frame" NavigationUIVisibility="Visible" Margin="0,24,0,0" />
+        <Frame x:Name="frame" NavigationUIVisibility="Hidden" Margin="0,24,0,0" />
     </Grid>
 </Window>

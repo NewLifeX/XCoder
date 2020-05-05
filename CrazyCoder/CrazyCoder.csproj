@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net45;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net45;</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <AssemblyTitle>新生命码神工具</AssemblyTitle>
     <Description>众多开发者工具</Description>
@@ -14,6 +14,7 @@
     <Deterministic>false</Deterministic>
     <ApplicationIcon>Images\leaf.ico</ApplicationIcon>
     <OutputPath>..\Bin\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
@@ -30,30 +31,11 @@
   <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
     <DefineConstants>$(DefineConstants);__WIN__;NC30;__CORE__</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Images\leaf.ico" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NewLife.Core" Version="8.7.2020.501" />
     <PackageReference Include="NewLife.Stardust" Version="1.0.2020.501" />
     <PackageReference Include="NewLife.XCode" Version="9.17.2020.501" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Images\leaf.ico">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Images\leaf.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Images\leaf.ico">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
   <ItemGroup>
