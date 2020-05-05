@@ -29,7 +29,7 @@ namespace CrazyCoder
         #region 开发工具
         private void Regex_Click(Object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new Uri("Views\\Regex.xaml", UriKind.Relative));
+            //frame.Navigate(new Uri("Views\\Regex.xaml", UriKind.Relative));
         }
 
         private void Ico_Click(Object sender, RoutedEventArgs e)
@@ -63,7 +63,7 @@ namespace CrazyCoder
 
         private void About_Click(Object sender, RoutedEventArgs e)
         {
-            frame.Navigate(new Uri("https://github.com/newlifex"));
+            //frame.Navigate(new Uri("https://github.com/newlifex"));
             //Process.Start("https://www.newlifex.com");
         }
         #endregion
