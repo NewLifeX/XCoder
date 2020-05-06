@@ -5,9 +5,225 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CrazyCoder"
         mc:Ignorable="d"
-        Title="新生命码神工具" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="新生命码神工具" Height="450" Width="800" WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="RadioButtonStyle" TargetType="{x:Type RadioButton}">
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Margin" Value="0 2 0 0"/>
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                            <Border x:Name="border" BorderBrush="Red" BorderThickness="0"  SnapsToDevicePixels="True"/>
+                            <Border x:Name="bd2"/>
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Content="{TemplateBinding Content}" Grid.Column="1" 
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasContent" Value="True">
+                                <Setter Property="FocusVisualStyle">
+                                    <Setter.Value>
+                                        <Style>
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Padding" Value="4,-1,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F7F7F7" TargetName="border"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="Foreground"  Value="Green"/>
+                                <Setter Property="BorderThickness" Value="4 0 0 0" TargetName="bd2"/>
+                                <Setter Property="BorderBrush" Value="Green" TargetName="bd2"/>
+                                <Setter Property="Background" Value="Green" TargetName="border"/>
+                                <Setter Property="Opacity" Value="0.05" TargetName="border"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="{x:Null}"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="MinHeight" Value="44"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Menu>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!--<Border Grid.Column="0" Panel.ZIndex="1" Background="#FFFFFF">
+            <Border.Effect>
+                <DropShadowEffect Color="#D1D1D1" BlurRadius="30"  ShadowDepth="10" Opacity="1" />
+            </Border.Effect>
+        </Border>-->
+
+        <Grid Panel.ZIndex="1">
+            <Grid.Background>
+                <ImageBrush ImageSource="./Images/leaf.png" Stretch="Uniform" Opacity="0.12" />
+            </Grid.Background>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Border Margin="30 0 30 0" BorderBrush="#E3E4E8"  BorderThickness="0 0 0 1"/>
+            <TextBlock Text="新生命码神工具" FontWeight="Light" FontSize="22"  HorizontalAlignment="Center" VerticalAlignment="Center" MouseDown="Nav_MouseDown"/>
+
+            <StackPanel Grid.Row="1">
+                <RadioButton   Style="{DynamicResource RadioButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe635;" FontFamily="./Fonts/#iconfont" FontSize="22"  Margin="10 0 0 0" Foreground="Green"/>
+                        <TextBlock Margin="10 0 0 0" Text="数据建模"  FontSize="14" VerticalAlignment="Center" 
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}" />
+                    </StackPanel>
+                </RadioButton>
+
+                <Border BorderThickness="0 1 0 0" Margin="10" BorderBrush="#EAEAEA" />
+
+                <RadioButton   Style="{DynamicResource RadioButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe635;" FontFamily="./Fonts/#iconfont" FontSize="22"  Margin="10 0 0 0" Foreground="Green"/>
+                        <TextBlock Margin="10 0 0 0" Text="正则表达式"  FontSize="14" VerticalAlignment="Center" 
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}" />
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton  Style="{DynamicResource RadioButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe6b6;" FontFamily="./Fonts/#iconfont" FontSize="22" Margin="10 0 0 0" Foreground="#CD3700"/>
+                        <TextBlock  Margin="10 0 0 0" Text="图标水印"  FontSize="14" VerticalAlignment="Center"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}" />
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton  Style="{DynamicResource RadioButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe6e1;" FontFamily="./Fonts/#iconfont" FontSize="22" Margin="10 0 0 0" Foreground="Green"/>
+                        <TextBlock  Margin="10 0 0 0" Text="加密解密"  FontSize="14" VerticalAlignment="Center"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}" />
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton  Style="{DynamicResource RadioButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe614;" FontFamily="./Fonts/#iconfont" FontSize="22"  Margin="10 0 0 0" Foreground="#CD3700"/>
+                        <TextBlock  Margin="10 0 0 0" Text="语音助手"  FontSize="14" VerticalAlignment="Center"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}" />
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton  Style="{DynamicResource RadioButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe755;" FontFamily="./Fonts/#iconfont" FontSize="22" Margin="10 0 0 0" Foreground="Green" />
+                        <TextBlock  Margin="10 0 0 0" Text="文件夹统计"  FontSize="14" VerticalAlignment="Center"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}" />
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton  Style="{DynamicResource RadioButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe61e;" FontFamily="./Fonts/#iconfont" FontSize="22" Margin="10 0 0 0" Foreground="#6074C2" />
+                        <TextBlock  Margin="10 0 0 0" Text="文件编码"  FontSize="14" VerticalAlignment="Center"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}" />
+                    </StackPanel>
+                </RadioButton>
+
+                <Border BorderThickness="0 1 0 0" Margin="10" BorderBrush="#EAEAEA" />
+
+                <RadioButton  Style="{DynamicResource RadioButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe61e;" FontFamily="./Fonts/#iconfont" FontSize="22" Margin="10 0 0 0" Foreground="#6074C2" />
+                        <TextBlock  Margin="10 0 0 0" Text="网络工具"  FontSize="14" VerticalAlignment="Center"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}" />
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton  Style="{DynamicResource RadioButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe61e;" FontFamily="./Fonts/#iconfont" FontSize="22" Margin="10 0 0 0" Foreground="#6074C2" />
+                        <TextBlock  Margin="10 0 0 0" Text="RPC工具"  FontSize="14" VerticalAlignment="Center"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}" />
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton  Style="{DynamicResource RadioButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe61e;" FontFamily="./Fonts/#iconfont" FontSize="22" Margin="10 0 0 0" Foreground="#6074C2" />
+                        <TextBlock  Margin="10 0 0 0" Text="串口工具"  FontSize="14" VerticalAlignment="Center"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}" />
+                    </StackPanel>
+                </RadioButton>
+
+                <RadioButton  Style="{DynamicResource RadioButtonStyle}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xe61e;" FontFamily="./Fonts/#iconfont" FontSize="22" Margin="10 0 0 0" Foreground="#6074C2" />
+                        <TextBlock  Margin="10 0 0 0" Text="地图接口"  FontSize="14" VerticalAlignment="Center"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type RadioButton}}}" />
+                    </StackPanel>
+                </RadioButton>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1" Background="#2D8660">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" MouseDown="Nav_MouseDown">
+                <Button Width="45" Height="30" Content="─" Foreground="White" BorderThickness="0" Background="Transparent" Click="Min_Click" />
+                <Button Width="45" Height="30" Content="☐" Foreground="White" BorderThickness="0" Background="Transparent" Click="Max_Click" />
+                <Button Width="45" Height="30" Content="✕" Foreground="White" BorderThickness="0" Background="Transparent" Click="Close_Click" />
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="我的一天" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="30"/>
+                    <TextBlock Text="9月17日,星期二" FontSize="15" Foreground="White" VerticalAlignment="Center"/>
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+
+        <!--<Menu>
             <MenuItem Header="开发工具">
                 <MenuItem Header="正则表达式" Click="Regex_Click"/>
                 <MenuItem Header="图标水印" Click="Ico_Click" />
@@ -31,6 +247,6 @@
                 <MenuItem Header="关于" Click="About_Click"/>
             </MenuItem>
         </Menu>
-        <Frame x:Name="frame" NavigationUIVisibility="Hidden" Margin="0,24,0,0" />
+        <Frame x:Name="frame" NavigationUIVisibility="Hidden" Margin="0,24,0,0" />-->
     </Grid>
 </Window>

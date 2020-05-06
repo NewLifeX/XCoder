@@ -67,5 +67,22 @@ namespace CrazyCoder
             //Process.Start("https://www.newlifex.com");
         }
         #endregion
+
+        private void Nav_MouseDown(Object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed) DragMove();
+        }
+
+        private void Min_Click(Object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Max_Click(Object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Close_Click(Object sender, RoutedEventArgs e)
+        {
+        }
     }
 }
