@@ -59,7 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Setting.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\Regex.xaml.cs">
       <DependentUpon>Regex.xaml</DependentUpon>
     </Compile>
@@ -111,6 +113,9 @@
     <PackageReference Include="MaterialDesignThemes">
       <Version>3.1.1</Version>
     </PackageReference>
+    <PackageReference Include="MvvmLightLibs">
+      <Version>5.4.1.1</Version>
+    </PackageReference>
     <PackageReference Include="NewLife.Core">
       <Version>8.7.2020.501</Version>
     </PackageReference>
@@ -124,6 +129,9 @@
   <ItemGroup>
     <Resource Include="Images\leaf.ico" />
     <Resource Include="Images\leaf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Converters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
