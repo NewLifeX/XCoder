@@ -17,9 +17,9 @@ namespace CrazyCoder.Views
     /// <summary>
     /// Regex.xaml 的交互逻辑
     /// </summary>
-    public partial class Regex : Window
+    public partial class RegexWindow : Window
     {
-        public Regex()
+        public RegexWindow()
         {
             InitializeComponent();
         }

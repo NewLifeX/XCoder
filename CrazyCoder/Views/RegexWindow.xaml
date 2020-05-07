@@ -1,12 +1,12 @@
-﻿<Window x:Class="CrazyCoder.Views.Regex"
+﻿<Window x:Class="CrazyCoder.Views.RegexWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CrazyCoder.Views"
         mc:Ignorable="d"
-        Title="Regex" Height="450" Width="800">
+        Title="正则表达式" Height="450" Width="800">
     <Grid>
-        
+        <TextBlock Text="正则表达式"/>
     </Grid>
 </Window>

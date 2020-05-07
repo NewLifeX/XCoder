@@ -9,5 +9,7 @@ namespace CrazyCoder.Models
         public String Title { get; set; }
 
         public String BackColor { get; set; }
+
+        public Type Type { get; set; }
     }
 }

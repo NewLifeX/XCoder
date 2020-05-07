@@ -1,7 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using CrazyCoder.Models;
+using CrazyCoder.Views;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using NewLife.Reflection;
 
 namespace CrazyCoder.ViewModels
 {
@@ -15,7 +18,7 @@ namespace CrazyCoder.ViewModels
             menus.Add(new MenuModel() { IconFont = "\xe6e1", Title = "RPC工具", BackColor = "#218868" });
             menus.Add(new MenuModel() { IconFont = "\xe614", Title = "串口工具", BackColor = "#EE3B3B" });
             menus.Add(new MenuModel() { IconFont = "\xe755", Title = "地图接口", BackColor = "#218868" });
-            menus.Add(new MenuModel() { IconFont = "\xe635", Title = "正则表达式", BackColor = "#218868" });
+            menus.Add(new MenuModel() { IconFont = "\xe635", Title = "正则表达式", BackColor = "#218868", Type = typeof(RegexWindow) });
             menus.Add(new MenuModel() { IconFont = "\xe6b6", Title = "图标水印", BackColor = "#EE3B3B" });
             menus.Add(new MenuModel() { IconFont = "\xe6e1", Title = "加密解密", BackColor = "#218868" });
             menus.Add(new MenuModel() { IconFont = "\xe614", Title = "语音助手", BackColor = "#EE3B3B" });
@@ -45,6 +48,15 @@ namespace CrazyCoder.ViewModels
 
         public RelayCommand<MenuModel> SelectedCommand { get; set; }
 
-        private void Select(MenuModel model) => SelectedMenu = model;
+        private void Select(MenuModel model)
+        {
+            SelectedMenu = model;
+
+            if (model.Type != null)
+            {
+                var window = model.Type.CreateInstance() as Window;
+                window?.Show();
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using CrazyCoder.ViewModels;
+using CrazyCoder.Views;
 
 namespace CrazyCoder
 {
@@ -21,6 +22,8 @@ namespace CrazyCoder
         private void Regex_Click(Object sender, RoutedEventArgs e)
         {
             //frame.Navigate(new Uri("Views\\Regex.xaml", UriKind.Relative));
+            var frm = new RegexWindow();
+            frm.Show();
         }
 
         private void Ico_Click(Object sender, RoutedEventArgs e)
@@ -59,6 +62,7 @@ namespace CrazyCoder
         }
         #endregion
 
+        #region 窗口控制
         private void Nav_MouseDown(Object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed) DragMove();
@@ -81,5 +85,6 @@ namespace CrazyCoder
         {
             Close();
         }
+        #endregion
     }
 }
