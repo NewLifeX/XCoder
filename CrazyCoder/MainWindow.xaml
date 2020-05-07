@@ -252,9 +252,9 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" MouseDown="Nav_MouseDown">
-                <Button Name="btnMin" Width="45" Height="30" Content="─" Foreground="White" BorderThickness="0" Background="Transparent" />
-                <Button Name="btnMax" Width="45" Height="30" Content="☐" Foreground="White" BorderThickness="0" Background="Transparent" />
-                <Button Name="btnClose" Width="45" Height="30" Content="✕" Foreground="White" BorderThickness="0" Background="Transparent" />
+                <Button Name="btnMin" Width="45" Height="30" Content="─" Foreground="White" BorderThickness="0" Background="Transparent" Click="Min_Click" />
+                <Button Name="btnMax" Width="45" Height="30" Content="☐" Foreground="White" BorderThickness="0" Background="Transparent" Click="Max_Click" />
+                <Button Name="btnClose" Width="45" Height="30" Content="✕" Foreground="White" BorderThickness="0" Background="Transparent" Click="Close_Click" />
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.ColumnSpan="2">

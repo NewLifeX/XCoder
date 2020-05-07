@@ -66,14 +66,20 @@ namespace CrazyCoder
 
         private void Min_Click(Object sender, RoutedEventArgs e)
         {
+            WindowState = WindowState.Minimized;
         }
 
         private void Max_Click(Object sender, RoutedEventArgs e)
         {
+            if (WindowState == WindowState.Maximized)
+                WindowState = WindowState.Normal;
+            else
+                WindowState = WindowState.Maximized;
         }
 
         private void Close_Click(Object sender, RoutedEventArgs e)
         {
+            Close();
         }
     }
 }
