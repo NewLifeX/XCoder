@@ -178,7 +178,10 @@ namespace XCoder
                 {
                     up.Download();
                     if (!auto || MessageBox.Show("发现新版本{0}，是否更新？".F(up.Link.Time), "自动更新", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                        up.Update();
+                    {
+                        var rs = up.Update();
+                        MessageBox.Show("更新" + (rs ? "成功" : "失败"), "自动更新");
+                    }
                 }
                 else if (!auto)
                 {

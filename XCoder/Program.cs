@@ -68,6 +68,8 @@ namespace XCoder
                 }
             };
 
+            client.UseTrace();
+
             Application.ApplicationExit += (s, e) => client.Logout("ApplicationExit");
 
             // 可能需要多次尝试

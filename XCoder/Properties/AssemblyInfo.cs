@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 //      修订号
 //
 [assembly: AssemblyVersion("7.1.*")]
-[assembly: AssemblyFileVersion("7.1.2020.0501")]
+[assembly: AssemblyFileVersion("7.1.2020.0518")]
 
 /*
  * v7.1.2020.0501   集成星尘
