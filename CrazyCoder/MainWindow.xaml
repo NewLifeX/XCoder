@@ -270,6 +270,9 @@
             </StackPanel>
 
             <Grid Grid.Row="2">
+                <ContentControl Grid.Row="1" Grid.Column="2" x:Name="ContentControl" >
+                    <!--<Frame Source="Views/RegexWindow.xaml"/>-->
+                </ContentControl>
             </Grid>
         </Grid>
 
