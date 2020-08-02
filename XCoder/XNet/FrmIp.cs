@@ -73,5 +73,14 @@ namespace XNet
         {
 
         }
+
+        private void btnRestore_Click(Object sender, EventArgs e)
+        {
+            var ni = gbInfo.Tag as NetworkInterface;
+            if (ni == null) return;
+
+            var args = $"interface ip set address name=\"{ni.Name}\" source=dhcp";
+            "netsh".Run(args);
+        }
     }
 }

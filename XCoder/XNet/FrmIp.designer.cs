@@ -43,6 +43,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbAdapter = new System.Windows.Forms.ComboBox();
             this.pnlSetting = new System.Windows.Forms.Panel();
+            this.btnRestore = new System.Windows.Forms.Button();
             this.gbInfo.SuspendLayout();
             this.pnlSetting.SuspendLayout();
             this.SuspendLayout();
@@ -52,6 +53,7 @@
             this.gbInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbInfo.Controls.Add(this.btnRestore);
             this.gbInfo.Controls.Add(this.txtIp2);
             this.gbInfo.Controls.Add(this.label6);
             this.gbInfo.Controls.Add(this.txtDns);
@@ -217,6 +219,17 @@
             this.pnlSetting.Size = new System.Drawing.Size(858, 46);
             this.pnlSetting.TabIndex = 13;
             // 
+            // btnRestore
+            // 
+            this.btnRestore.Location = new System.Drawing.Point(711, 439);
+            this.btnRestore.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRestore.Name = "btnRestore";
+            this.btnRestore.Size = new System.Drawing.Size(100, 44);
+            this.btnRestore.TabIndex = 42;
+            this.btnRestore.Text = "恢复DHCP";
+            this.btnRestore.UseVisualStyleBackColor = true;
+            this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
+            // 
             // FrmIp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -254,5 +267,6 @@
         private System.Windows.Forms.TextBox txtSubMark;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtIp;
+        private System.Windows.Forms.Button btnRestore;
     }
 }
