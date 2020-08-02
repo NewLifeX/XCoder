@@ -150,6 +150,8 @@ namespace XNet
             args = $"interface ip set dns name=\"{ni.Name}\" source=dhcp";
             rs = "netsh".Run(args, 5_000, s => XTrace.WriteLine(s));
 
+            rs = "ipconfig".Run("/renew");
+
             MessageBox.Show($"执行成功！返回 {rs}");
         }
     }
