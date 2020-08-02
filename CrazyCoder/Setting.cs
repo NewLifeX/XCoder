@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using NewLife;
 using NewLife.Xml;
 
 namespace CrazyCoder
