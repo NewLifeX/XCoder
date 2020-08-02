@@ -91,7 +91,7 @@ namespace XNet
                 rs = "netsh".Run(args, 5_000, s => XTrace.WriteLine(s));
                 if (dns.Length > 1)
                 {
-                    args = $"interface ip add dns name=\"{ni.Name}\" source=static addr={dns[1]} index=2";
+                    args = $"interface ip add dnsservers name=\"{ni.Name}\" addr={dns[1]} index=2";
                     rs = "netsh".Run(args, 5_000, s => XTrace.WriteLine(s));
                 }
             }
@@ -128,8 +128,8 @@ namespace XNet
                 }
             }
 
-            // 设置私有IP
-            var addrs = ips.Select(e => IPAddress.Parse(e)).ToArray();
+            // 设置私有IP，排序
+            var addrs = ips.Select(e => IPAddress.Parse(e)).OrderBy(e => e.GetAddressBytes().ToLong()).ToArray();
             foreach (var item in addrs)
             {
                 args = $"interface ip add address name=\"{ni.Name}\" {item} {mark} {gateway}";
