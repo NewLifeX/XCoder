@@ -174,7 +174,7 @@
             this.btnSet.Name = "btnSet";
             this.btnSet.Size = new System.Drawing.Size(100, 44);
             this.btnSet.TabIndex = 18;
-            this.btnSet.Text = "打开";
+            this.btnSet.Text = "设置IP";
             this.btnSet.UseVisualStyleBackColor = true;
             this.btnSet.Click += new System.EventHandler(this.btnSet_Click);
             // 

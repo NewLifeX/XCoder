@@ -71,7 +71,72 @@ namespace XNet
 
         private void btnSet_Click(Object sender, EventArgs e)
         {
+            var ni = gbInfo.Tag as NetworkInterface;
+            if (ni == null) return;
 
+            var ip = txtIp.Text?.Trim();
+            var mark = txtSubMark.Text?.Trim();
+            var gateway = txtGateway.Text?.Trim();
+            if (ip.IsNullOrEmpty() || mark.IsNullOrEmpty()) return;
+
+            // 设置主IP
+            var args = $"interface ip add address name=\"{ni.Name}\" {ip} {mark} {gateway}";
+            var rs = "netsh".Run(args, 5_000, s => XTrace.WriteLine(s));
+
+            // 设置DNS
+            var dns = txtDns.Text.Split(",");
+            if (dns.Length > 0)
+            {
+                args = $"interface ip set dns name=\"{ni.Name}\" source=static addr={dns[0]} register=primary";
+                rs = "netsh".Run(args, 5_000, s => XTrace.WriteLine(s));
+                if (dns.Length > 1)
+                {
+                    args = $"interface ip add dns name=\"{ni.Name}\" source=static addr={dns[1]} index=2";
+                    rs = "netsh".Run(args, 5_000, s => XTrace.WriteLine(s));
+                }
+            }
+            else
+            {
+                args = $"interface ip set dns name=\"{ni.Name}\" source=dhcp";
+                rs = "netsh".Run(args, 5_000, s => XTrace.WriteLine(s));
+            }
+
+            // 解析私有IP，特殊格式如 10.0.0.30-50
+            var ips = txtIp2.Text.Split("\r", "\n", "\t", ",", " ").ToList();
+            // 倒序，要拆分插入末尾
+            for (var i = ips.Count - 1; i >= 0; i--)
+            {
+                ip = ips[i];
+                var p = ip.LastIndexOf('-');
+                if (p > 0)
+                {
+                    var p2 = ip.LastIndexOf('.');
+                    if (p2 > 0)
+                    {
+                        // 删掉这一行，因为要拆分为多行
+                        ips.RemoveAt(i);
+
+                        // 解析前缀、开始、结束
+                        var prefix = ip.Substring(0, p2 + 1);
+                        var start = ip.Substring(p2 + 1, p - p2 - 1).ToInt();
+                        var end = ip.Substring(p + 1).ToInt();
+                        for (var k = start; k <= end; k++)
+                        {
+                            ips.Add($"{prefix}{k}");
+                        }
+                    }
+                }
+            }
+
+            // 设置私有IP
+            var addrs = ips.Select(e => IPAddress.Parse(e)).ToArray();
+            foreach (var item in addrs)
+            {
+                args = $"interface ip add address name=\"{ni.Name}\" {item} {mark} {gateway}";
+                rs = "netsh".Run(args, 5_000, s => XTrace.WriteLine(s));
+            }
+
+            MessageBox.Show($"执行成功！返回 {rs}");
         }
 
         private void btnRestore_Click(Object sender, EventArgs e)
@@ -80,7 +145,12 @@ namespace XNet
             if (ni == null) return;
 
             var args = $"interface ip set address name=\"{ni.Name}\" source=dhcp";
-            "netsh".Run(args);
+            var rs = "netsh".Run(args, 5_000, s => XTrace.WriteLine(s));
+
+            args = $"interface ip set dns name=\"{ni.Name}\" source=dhcp";
+            rs = "netsh".Run(args, 5_000, s => XTrace.WriteLine(s));
+
+            MessageBox.Show($"执行成功！返回 {rs}");
         }
     }
 }
