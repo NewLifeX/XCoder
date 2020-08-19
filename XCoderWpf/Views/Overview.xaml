@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="XCoderWpf.Views.Overview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/" 
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <hc:Watermark Mark="NewLifeX ">
+        <Grid>
+            <TextBlock Style="{DynamicResource TextBlockDefaultInfo}" FontSize="40" Text="{Binding About}"/>
+        </Grid>
+    </hc:Watermark>
+</UserControl>
