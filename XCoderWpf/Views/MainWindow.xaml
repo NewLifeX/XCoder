@@ -44,11 +44,11 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <ListBox Style="{StaticResource ListBoxModernStyle}">
-            <ListBoxItem Tag="DataBasePublish" Margin="10,10,10,0" Content="Basic Kanban"/>
-            <ListBoxItem Tag="RegexWindow" Margin="10,0" Content="Select Country"/>
-            <ListBoxItem Tag="UploadToCloud" Margin="10,0" Content="Upload To Cloud"/>
-            <ListBoxItem Tag="MusicPlayer" hc:ListBoxAttach.IsNew="True" Margin="10,0" Content="Music Player"/>
-            <ListBoxItem Tag="Login" hc:ListBoxAttach.IsNew="True" Margin="10,0" Content="Login"/>
+            <ListBoxItem Tag="DataBasePublish" Margin="10,10,10,0" Content="数据建模工具"/>
+            <ListBoxItem Tag="RegexWindow" Margin="10,0" Content="正则表达式工具"/>
+            <ListBoxItem Tag="UploadToCloud" Margin="10,0" Content="网络调试工具"/>
+            <ListBoxItem Tag="MusicPlayer" hc:ListBoxAttach.IsNew="True" Margin="10,0" Content="Api调试"/>
+            <ListBoxItem Tag="Login" hc:ListBoxAttach.IsNew="True" Margin="10,0" Content="语音小助手"/>
             <hc:Interaction.Triggers>
                 <hc:EventTrigger EventName="SelectionChanged">
                     <hc:EventToCommand Command="{Binding SwitchItemCommand}" PassEventArgsToCommand="True"/>
