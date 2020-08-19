@@ -8,6 +8,7 @@ namespace CrazyCoder
     [XmlConfigFile("Config\\CrazyCoder.config")]
     public class Setting : XmlConfig<Setting>
     {
+        //提交测试
         #region 属性
         /// <summary>标题</summary>
         [Description("标题")]
