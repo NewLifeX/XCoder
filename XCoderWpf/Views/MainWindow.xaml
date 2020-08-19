@@ -43,7 +43,7 @@
             <ColumnDefinition Width="260"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ListBox Style="{StaticResource ListBoxModernStyle}">
+        <!--<ListBox Style="{StaticResource ListBoxModernStyle}">
             <ListBoxItem Tag="DataBasePublish" Margin="10,10,10,0" Content="数据建模工具"/>
             <ListBoxItem Tag="RegexWindow" Margin="10,0" Content="正则表达式工具"/>
             <ListBoxItem Tag="UploadToCloud" Margin="10,0" Content="网络调试工具"/>
@@ -54,7 +54,149 @@
                     <hc:EventToCommand Command="{Binding SwitchItemCommand}" PassEventArgsToCommand="True"/>
                 </hc:EventTrigger>
             </hc:Interaction.Triggers>
-        </ListBox>
+        </ListBox>-->
+        <hc:SideMenu BorderThickness="1" Margin="3">
+            <hc:Interaction.Triggers>
+                <hc:EventTrigger EventName="SelectionChanged">
+                    <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="True"  />
+                </hc:EventTrigger>
+            </hc:Interaction.Triggers>
+            <hc:SideMenuItem Header="数据库">
+                <hc:SideMenuItem.Icon>
+                    <Image Source="/Resources/MainMenu/database.png" Width="24" Height="24"/>
+                </hc:SideMenuItem.Icon>
+                <hc:SideMenuItem Header="数据库模型" Tag="DataBasePublish"   Command="{Binding SelectCmd}"   CommandParameter="{Binding Header,RelativeSource={RelativeSource Self}}">
+                    <hc:SideMenuItem.Icon>
+                        <Image Source="/Resources/MainMenu/database1.png" Width="16" Height="16"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="分库分表"  Command="{Binding SelectCmd}"   CommandParameter="{Binding Header,RelativeSource={RelativeSource Self}}">
+                    <hc:SideMenuItem.Icon>
+                        <Image Source="/Resources/MainMenu/database2.png" Width="16" Height="16"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="备份"   CommandParameter="{Binding Header,RelativeSource={RelativeSource Self}}">
+                    <hc:SideMenuItem.Icon>
+                        <Image Source="/Resources/MainMenu/database3.png" Width="16" Height="16"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+            </hc:SideMenuItem>
+            <hc:SideMenuItem Header="网络">
+                <hc:SideMenuItem.Icon>
+                    <Image Source="/Resources/MainMenu/Tcp.png" Width="24" Height="24"/>
+                </hc:SideMenuItem.Icon>
+                <hc:SideMenuItem Header="Work Items">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf314;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Boards">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf444;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Backlogs">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf6bf;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Sprints">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf3b0;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Queries">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf2b8;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+            </hc:SideMenuItem>
+            <hc:SideMenuItem Header="图表库">
+                <hc:SideMenuItem.Icon>
+                    <Image Source="/Resources/MainMenu/data.png" Width="24" Height="24"/>
+                </hc:SideMenuItem.Icon>
+                <hc:SideMenuItem Header="Files">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf30e;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Commits">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf293;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Pushes">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf298;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Branches">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xebc2;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Tags">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xe8ec;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Pull requests">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf296;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+            </hc:SideMenuItem>
+            <hc:SideMenuItem Header="文件">
+                <hc:SideMenuItem.Icon>
+                    <Image Source="/Resources/MainMenu/file.png" Width="24" Height="24"/>
+                </hc:SideMenuItem.Icon>
+                <hc:SideMenuItem Header="Builds">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf28f;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Releases">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf3b3;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Library">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xe8f1;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Task groups">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf2ae;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Deployment groups">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf29d;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+            </hc:SideMenuItem>
+            <hc:SideMenuItem Header="传输">
+                <hc:SideMenuItem.Icon>
+                    <Image Source="/Resources/MainMenu/print.png" Width="24" Height="24"/>
+                </hc:SideMenuItem.Icon>
+                <hc:SideMenuItem Header="Test Plans">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf3ab;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Runs">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xf3ac;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+                <hc:SideMenuItem Header="Load test">
+                    <hc:SideMenuItem.Icon>
+                        <TextBlock Text="&#xe8a9;" Style="{StaticResource TextBlockTitle}"/>
+                    </hc:SideMenuItem.Icon>
+                </hc:SideMenuItem>
+            </hc:SideMenuItem>
+        </hc:SideMenu>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Column="1" />
     </Grid>
 </hc:Window>
