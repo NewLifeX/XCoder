@@ -4,6 +4,78 @@
              xmlns:prism="http://prismlibrary.com/"    
              xmlns:hc="https://handyorg.github.io/handycontrol"
              prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <Style x:Key="RadioButtonStyle" TargetType="{x:Type RadioButton}">
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Margin" Value="0 2 0 0"/>
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                            <Border x:Name="border" BorderBrush="Red" BorderThickness="0"  SnapsToDevicePixels="True"/>
+                            <Border x:Name="bd2"/>
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Content="{TemplateBinding Content}" Grid.Column="1" 
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasContent" Value="True">
+                                <Setter Property="FocusVisualStyle">
+                                    <Setter.Value>
+                                        <Style>
+                                            <Setter Property="Control.Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Padding" Value="4,-1,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F7F7F7" TargetName="border"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Foreground"  Value="{Binding BackColor}"/>
+                                <Setter Property="BorderThickness" Value="4 0 0 0" TargetName="bd2"/>
+                                <Setter Property="BorderBrush" Value="{Binding BackColor}" TargetName="bd2"/>
+                                <Setter Property="Background" Value="{Binding BackColor}" TargetName="border"/>
+                                <Setter Property="Opacity" Value="0.05" TargetName="border"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="{x:Null}"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="MinHeight" Value="44"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+    </UserControl.Resources>
     <Grid Background="{DynamicResource BackgroundBrush}">
         <Border Background="{DynamicResource RegionBrush}"  Effect="{StaticResource EffectShadow4}" CornerRadius="16" Margin="10">
             <Grid >
@@ -13,27 +85,53 @@
                 </Grid.ColumnDefinitions>
 
                 <Border Effect="{StaticResource EffectShadow4}" Background="{DynamicResource DarkDefaultBrush}" CornerRadius="16,0,0,16">
-                   
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Vertical">
-                        <hc:ComboBox Margin="30,30,30,0" AutoComplete="True" ShowClearButton="True" ItemsSource="{Binding DataList}" IsEditable="True" hc:InfoElement.Placeholder="请选择"  hc:TitleElement.Title="数据库连接"/>
 
-                        <TextBlock Margin="40,80,0,0" Foreground="White">
+                    <StackPanel >
+                        <hc:SearchBar  Margin="20,30,20,0"  Style="{StaticResource SearchBarExtend}"/>
+
+                        <hc:TransitioningContentControl  Margin="20,10,20,0">
+                            <ListBox Height="200"  ItemsSource="{Binding Menus}" SelectedItem="{Binding SelectedMenu}" BorderThickness="0">
+                               
+
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <RadioButton  
+                                         CommandParameter="{Binding}">
+                                            <RadioButton.IsChecked>
+                                                <Binding Path="IsSelected" RelativeSource="{RelativeSource AncestorType=ListBoxItem}" Mode="TwoWay"/>
+                                            </RadioButton.IsChecked>
+
+                                            <StackPanel  Orientation="Horizontal">
+                                                <TextBlock Grid.Column="0" Text="{Binding IconFont}" FontFamily="./Fonts/#iconfont" FontSize="22" 
+                                                   Margin="10 0 0 0" Foreground="Red"/>
+                                                <TextBlock Margin="10 0 0 0" Text="{Binding Title}"  FontSize="14" VerticalAlignment="Center" 
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, 
+                                        AncestorType={x:Type RadioButton}}}" />
+                                            </StackPanel>
+
+                                        </RadioButton>
+
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </hc:TransitioningContentControl>
+                        <TextBlock Margin="40,20,0,0" Foreground="White">
                             <Bold>提示</Bold>path
                         </TextBlock>
 
                         <TextBlock FontWeight="DemiBold" FontSize="22" Foreground="White" Margin="40">
                             2种用法<LineBreak/>
-                            
+
                         </TextBlock>
-                        <TextBlock FontWeight="Medium" Margin="40,0" Foreground="{DynamicResource ThirdlyTextBrush}">
+                        <TextBlock FontWeight="Medium" Margin="20,0" Foreground="{DynamicResource ThirdlyTextBrush}">
                                 1.连接数据库,得到数据表信息<LineBreak/>
                                 2.导入模型,得到数据表信息<LineBreak/>
-                                
+
                         </TextBlock>
-                        <Image Margin="40,280" Width="46" HorizontalAlignment="Left" Source="{StaticResource Sagittarius}"/>
+                        <Image Margin="40,20" Width="46" HorizontalAlignment="Left" Source="{StaticResource Sagittarius}"/>
                     </StackPanel>
                 </Border>
-                
+
                 <Border Effect="{StaticResource EffectShadow4}" Grid.Column="1" Background="{DynamicResource RegionBrush}" CornerRadius="0,16,16,0">
                     <StackPanel HorizontalAlignment="Center">
                         <Image Margin="30" Source="{StaticResource Table}" Width="128"/>
@@ -57,6 +155,8 @@
                         </TextBlock>
                     </StackPanel>
                 </Border>
+            
+            
             </Grid>
         </Border>
     </Grid>
