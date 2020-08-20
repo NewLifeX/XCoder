@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NewLife;
 using NewLife.Threading;
 using XCode.DataAccessLayer;
 

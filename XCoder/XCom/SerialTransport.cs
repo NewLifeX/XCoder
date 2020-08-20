@@ -110,17 +110,17 @@ namespace NewLife.Net
 
         /// <summary>销毁</summary>
         /// <param name="disposing"></param>
-        protected override void Dispose(Boolean disposing)
-        {
-            base.Dispose(disposing);
+        //protected override void Dispose(Boolean disposing)
+        //{
+        //    base.Dispose(disposing);
 
-            try
-            {
-                if (Serial != null) Close();
-                if (timer != null) timer.Dispose();
-            }
-            catch { }
-        }
+        //    try
+        //    {
+        //        if (Serial != null) Close();
+        //        if (timer != null) timer.Dispose();
+        //    }
+        //    catch { }
+        //}
         #endregion
 
         #region 方法
@@ -523,6 +523,8 @@ namespace NewLife.Net
             else
                 return "(SerialPort)";
         }
+
+      
         #endregion
     }
 }

@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using NewLife;
 using NewLife.Net;
 using NewLife.Serialization;
 

@@ -6,6 +6,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
+using NewLife;
 using NewLife.Log;
 
 namespace XCoder.XNet

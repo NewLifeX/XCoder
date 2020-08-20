@@ -9,6 +9,7 @@ using NewLife.Net;
 using System.IO;
 using NewLife.Log;
 using NewLife.Threading;
+using NewLife;
 
 namespace XCoder
 {

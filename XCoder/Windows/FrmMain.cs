@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NewLife;
 using NewLife.Log;
 using NewLife.Reflection;
 using NewLife.Threading;

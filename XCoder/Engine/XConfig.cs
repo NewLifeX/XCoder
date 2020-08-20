@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Text;
+using NewLife;
 using NewLife.Xml;
 
 namespace XCoder
