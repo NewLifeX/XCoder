@@ -284,9 +284,10 @@ namespace XNet
             if (!NetConfig.Current.ShowStat) return;
 
             var msg = "";
-            if (_Client != null)
-                msg = _Client.GetStat();
-            else if (_Server != null)
+            //if (_Client != null)
+            //    msg = _Client.GetStat();
+            //else
+            if (_Server != null)
                 msg = _Server.GetStat();
 
             if (!msg.IsNullOrEmpty() && msg != _lastStat)
@@ -388,11 +389,11 @@ namespace XNet
 
             if (_Client != null)
             {
-                if (ths <= 1)
-                {
-                    _Client.SendMulti(pk, count, sleep);
-                }
-                else
+                //if (ths <= 1)
+                //{
+                //    _Client.SendMulti(pk, count, sleep);
+                //}
+                //else
                 {
                     var any = _Client.Local.Address.IsAny();
                     var list = new List<ISocketClient>();
@@ -400,8 +401,8 @@ namespace XNet
                     {
                         var client = _Client.Remote.CreateRemote();
                         if (!any) client.Local.EndPoint = new IPEndPoint(_Client.Local.Address, 2000 + i);
-                        client.StatSend = _Client.StatSend;
-                        client.StatReceive = _Client.StatReceive;
+                        //client.StatSend = _Client.StatSend;
+                        //client.StatReceive = _Client.StatReceive;
                         //client.SendMulti(buf, count, sleep);
 
                         list.Add(client);

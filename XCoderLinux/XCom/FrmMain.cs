@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Gtk;
+using NewLife;
 using NewLife.Log;
 using NewLife.Threading;
 using NewLife.Windows;

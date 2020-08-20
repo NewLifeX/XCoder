@@ -170,9 +170,9 @@ namespace NewLife.Net
         #region 发送
         /// <summary>写入数据</summary>
         /// <param name="pk">数据包</param>
-        public virtual Boolean Send(Packet pk)
+        public virtual Int32 Send(Packet pk)
         {
-            if (!Open()) return false;
+            if (!Open()) return -1;
 
             WriteLog("Send:{0}", pk.ToHex());
 
@@ -182,7 +182,7 @@ namespace NewLife.Net
                 sp.Write(pk.Data, pk.Offset, pk.Count);
             }
 
-            return true;
+            return pk.Total;
         }
 
         /// <summary>异步发送数据并等待响应</summary>
@@ -524,7 +524,7 @@ namespace NewLife.Net
                 return "(SerialPort)";
         }
 
-      
+
         #endregion
     }
 }

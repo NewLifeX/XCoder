@@ -384,8 +384,8 @@ namespace XApi
                 //ct2.StatSend = ct.StatSend;
                 //ct2.StatReceive = ct.StatReceive;
 
-                client.StatSend = _Client.StatSend;
-                client.StatReceive = _Client.StatReceive;
+                //client.StatSend = _Client.StatSend;
+                //client.StatReceive = _Client.StatReceive;
 
                 list.Add(client);
             }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using GLib;
 using Gtk;
+using NewLife;
 using NewLife.Data;
 using NewLife.Log;
 using NewLife.Net;
@@ -392,8 +393,8 @@ namespace XApi
                 //ct2.StatSend = ct.StatSend;
                 //ct2.StatReceive = ct.StatReceive;
 
-                client.StatSend = _Client.StatSend;
-                client.StatReceive = _Client.StatReceive;
+                //client.StatSend = _Client.StatSend;
+                //client.StatReceive = _Client.StatReceive;
 
                 list.Add(client);
             }

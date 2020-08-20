@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Gdk;
 using Gtk;
+using NewLife;
 using NewLife.Reflection;
 //using XApi;
 //using XNet;

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using Gtk;
+using NewLife;
 
 namespace XCoder.Tools
 {
