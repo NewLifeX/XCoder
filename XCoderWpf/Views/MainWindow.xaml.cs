@@ -2,6 +2,10 @@
 using HandyControl.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using XCoderWpf.Common;
+using XCoderWpf.ViewModels;
 
 namespace XCoderWpf.Views
 {
@@ -10,7 +14,11 @@ namespace XCoderWpf.Views
     /// </summary>
     public partial class MainWindow
     {
-        public MainWindow() => InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
+            new MainMenu(DataContext as MainWindowViewModel, MainSideMenu).InitializeSystemMenu();
+        }
 
         #region Change Skin
         private void ButtonConfig_OnClick(Object sender, RoutedEventArgs e) => PopupConfig.IsOpen = true;

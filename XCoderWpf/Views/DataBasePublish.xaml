@@ -1,18 +1,63 @@
 ﻿<UserControl x:Class="XCoderWpf.Views.DataBasePublish"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:XCoderWpf.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Style="{StaticResource TextBlockLarge}">ahahahahahaha非常好</TextBlock>
-            <Button Margin="10" Style="{StaticResource ButtonDanger}"> 11111111111111111</Button>
-            <Button Margin="10" Style="{StaticResource ButtonSuccess}">2222222222 2221</Button>
-            <Button Margin="10" Style="{StaticResource ButtonWarning}">2222222222 2221</Button>
+             xmlns:prism="http://prismlibrary.com/"    
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid Background="{DynamicResource BackgroundBrush}">
+        <Border Background="{DynamicResource RegionBrush}"  Effect="{StaticResource EffectShadow4}" CornerRadius="16" Margin="10">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
 
-        </StackPanel>
+                <Border Effect="{StaticResource EffectShadow4}" Background="{DynamicResource DarkDefaultBrush}" CornerRadius="16,0,0,16">
+                   
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Vertical">
+                        <hc:ComboBox Margin="30,30,30,0" AutoComplete="True" ShowClearButton="True" ItemsSource="{Binding DataList}" IsEditable="True" hc:InfoElement.Placeholder="请选择"  hc:TitleElement.Title="数据库连接"/>
+
+                        <TextBlock Margin="40,80,0,0" Foreground="White">
+                            <Bold>提示</Bold>path
+                        </TextBlock>
+
+                        <TextBlock FontWeight="DemiBold" FontSize="22" Foreground="White" Margin="40">
+                            2种用法<LineBreak/>
+                            
+                        </TextBlock>
+                        <TextBlock FontWeight="Medium" Margin="40,0" Foreground="{DynamicResource ThirdlyTextBrush}">
+                                1.连接数据库,得到数据表信息<LineBreak/>
+                                2.导入模型,得到数据表信息<LineBreak/>
+                                
+                        </TextBlock>
+                        <Image Margin="40,280" Width="46" HorizontalAlignment="Left" Source="{StaticResource Sagittarius}"/>
+                    </StackPanel>
+                </Border>
+                
+                <Border Effect="{StaticResource EffectShadow4}" Grid.Column="1" Background="{DynamicResource RegionBrush}" CornerRadius="0,16,16,0">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Image Margin="30" Source="{StaticResource Table}" Width="128"/>
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <Image Width="24" Source="{StaticResource Graduation}"/>
+                            <TextBlock Margin="5,0" Text="Create an account" FontWeight="Bold" FontSize="14"/>
+                        </StackPanel>
+                        <Button Width="350" Margin="0,40">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Margin="10,0" Source="{StaticResource Google}"/>
+
+                                <TextBlock Text="Sign up with Google"/>
+                            </StackPanel>
+                        </Button>
+                        <hc:Divider Width="350" Content="OR"/>
+                        <TextBox Style="{StaticResource TextBoxExtend}" hc:TitleElement.Title="Your email" Text="mahdidvb72@gmail.com"/>
+                        <PasswordBox Style="{StaticResource PasswordBoxExtend}" hc:TitleElement.Title="Set password"/>
+                        <Button Content="Sign up" Style="{DynamicResource ButtonViolet}" Margin="0,30" Width="350"/>
+                        <TextBlock Margin="0,50,0,0" HorizontalAlignment="Center" >
+                                Already have an account? <Button Margin="-4,-10" Content="Sign in" BorderThickness="0" Foreground="Purple" FontWeight="DemiBold" />
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

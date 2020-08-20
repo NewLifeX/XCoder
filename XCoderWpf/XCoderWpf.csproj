@@ -7,30 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\MainMenu\data.png" />
-    <None Remove="Resources\MainMenu\database.png" />
-    <None Remove="Resources\MainMenu\database1.png" />
-    <None Remove="Resources\MainMenu\database2.png" />
-    <None Remove="Resources\MainMenu\database3.png" />
-    <None Remove="Resources\MainMenu\file.png" />
-    <None Remove="Resources\MainMenu\Print.png" />
-    <None Remove="Resources\MainMenu\Tcp.png" />
+    <None Remove="Resources\iconfont.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\iconfont.ttf" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="HandyControls" Version="2.5.3.2" />
     <PackageReference Include="Prism.DryIoc" Version="8.0.0.1740-pre" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\MainMenu\data.png" />
-    <Resource Include="Resources\MainMenu\database.png" />
-    <Resource Include="Resources\MainMenu\database1.png" />
-    <Resource Include="Resources\MainMenu\database2.png" />
-    <Resource Include="Resources\MainMenu\database3.png" />
-    <Resource Include="Resources\MainMenu\file.png" />
-    <Resource Include="Resources\MainMenu\Print.png" />
-    <Resource Include="Resources\MainMenu\Tcp.png" />
   </ItemGroup>
 
 </Project>

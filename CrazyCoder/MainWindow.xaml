@@ -139,7 +139,7 @@
 
                                 <StackPanel  Orientation="Horizontal">
                                     <TextBlock Grid.Column="0" Text="{Binding IconFont}" FontFamily="./Fonts/#iconfont" FontSize="22" 
-                                                   Margin="10 0 0 0" Foreground="{Binding BackColor}"/>
+                                                   Margin="10 0 0 0" Foreground="Red"/>
                                     <TextBlock Margin="10 0 0 0" Text="{Binding Title}"  FontSize="14" VerticalAlignment="Center" 
                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, 
                                         AncestorType={x:Type RadioButton}}}" />
