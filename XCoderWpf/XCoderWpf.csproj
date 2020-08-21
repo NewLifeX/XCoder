@@ -2,16 +2,22 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\iconfont.ttf" />
+    <None Remove="Resources\Images\SqlServer\mssql.png" />
+    <None Remove="Resources\Images\SqlServer\mysql.png" />
+    <None Remove="Resources\Images\SqlServer\sqlite.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\iconfont.ttf" />
+    <Resource Include="Resources\Images\SqlServer\mssql.png" />
+    <Resource Include="Resources\Images\SqlServer\mysql.png" />
+    <Resource Include="Resources\Images\SqlServer\sqlite.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,71 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:hc="https://handyorg.github.io/handycontrol"
+                    xmlns:conver="clr-namespace:XCoderWpf.Common.Converaters">
+
+
+    <conver:BoolToVisibilityConverter x:Key="VisibilityConverter"/>
+    <DataTemplate x:Key="DataBaseItems">
+        <ContentControl>
+            <RadioButton GroupName="ConnectionStringGroup" Command="{Binding Command}" CommandParameter="{Binding}" Style="{x:Null}">
+                <RadioButton.Template>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="{DynamicResource DarkDefaultBrush}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=RadioButton}}" Value="True">
+                                            <Setter Property="Background" Value="#E6E6E6"/>
+                                        </DataTrigger>
+
+                                        <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RadioButton}}" Value="True">
+                                            <Setter Property="Background" Value="#CECDCD"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Border  Grid.RowSpan="2" Width="35" Height="35" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
+                                    <Image Source="/Resources/Images/SqlServer/mysql.png" Stretch="UniformToFill" />
+                                </Border>
+                              
+                                <TextBlock Grid.Row="0" Grid.Column="1" Padding="0" Text="{Binding Title, FallbackValue='******'}" Foreground="{StaticResource PrimaryTextBrush}" />
+                                <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Padding="0" FontSize="10" Text="{Binding Server, FallbackValue='********'}" Foreground="{StaticResource BorderBrush}" />
+                                <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Foreground="White"  Text="已连接" Background="{StaticResource DarkDangerBrush}" 
+                                           Visibility="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RadioButton},UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
+                                
+                                <!--<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" >
+                                   
+                                </StackPanel>-->
+                            </Grid>
+
+                        </Border>
+                    </ControlTemplate>
+                </RadioButton.Template>
+            </RadioButton>
+        </ContentControl>
+    </DataTemplate>
+
+    <ControlTemplate x:Key="News" TargetType="ContentControl">
+        <Border BorderBrush="Black" BorderThickness="2" Background="White">
+            <DockPanel>
+                <Border BorderBrush="Black" BorderThickness="1,0,0,0" DockPanel.Dock="Right" Padding="4">
+                    <TextBlock Text="{Binding Datetime,FallbackValue='*2019/12/12 0:00:00*'}"  VerticalAlignment="Center"/>
+                </Border>
+                <StackPanel Orientation="Vertical" Margin="4">
+                    <TextBlock Text="{Binding Title, FallbackValue='*标题*'}" FontSize="16" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding ReporterName, FallbackValue='*记者名称*'}"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </ControlTemplate>
+</ResourceDictionary>
