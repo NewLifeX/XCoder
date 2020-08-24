@@ -8,15 +8,23 @@
 
   <ItemGroup>
     <None Remove="Resources\iconfont.ttf" />
-    <None Remove="Resources\Images\SqlServer\mssql.png" />
+    <None Remove="Resources\Images\SqlServer\access.png" />
     <None Remove="Resources\Images\SqlServer\mysql.png" />
+    <None Remove="Resources\Images\SqlServer\none.png" />
+    <None Remove="Resources\Images\SqlServer\Oracle.png" />
+    <None Remove="Resources\Images\SqlServer\postgresql.png" />
     <None Remove="Resources\Images\SqlServer\sqlite.png" />
+    <None Remove="Resources\Images\SqlServer\sqlserver.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\iconfont.ttf" />
-    <Resource Include="Resources\Images\SqlServer\mssql.png" />
+    <Resource Include="Resources\Images\SqlServer\access.png" />
+    <Resource Include="Resources\Images\SqlServer\sqlserver.png" />
     <Resource Include="Resources\Images\SqlServer\mysql.png" />
+    <Resource Include="Resources\Images\SqlServer\none.png" />
+    <Resource Include="Resources\Images\SqlServer\oracle.png" />
+    <Resource Include="Resources\Images\SqlServer\postgresql.png" />
     <Resource Include="Resources\Images\SqlServer\sqlite.png" />
   </ItemGroup>
 

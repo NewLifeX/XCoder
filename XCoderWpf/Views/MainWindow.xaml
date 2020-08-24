@@ -44,17 +44,13 @@
             <ColumnDefinition Width="170"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Border x:Name="BorderMain" Margin="{Binding MenuMargin}" BorderThickness="0,1,1,1" Panel.ZIndex="1" BorderBrush="#DDDDDD">
-            <hc:TransitioningContentControl>
-                <hc:SideMenu Foreground="#7F4463" x:Name="MainSideMenu" ExpandMode="Freedom" AutoSelect="False">
-                    <hc:Interaction.Triggers>
-                        <hc:EventTrigger EventName="SelectionChanged">
-                            <hc:EventToCommand Command="{Binding SwitchItemCommand}" PassEventArgsToCommand="True"  />
-                        </hc:EventTrigger>
-                    </hc:Interaction.Triggers>
-                </hc:SideMenu>
-            </hc:TransitioningContentControl>
-        </Border>
+        <hc:SideMenu Foreground="#7F4463"  Margin="{Binding MenuMargin}" BorderBrush="#DDDDDD" x:Name="MainSideMenu" ExpandMode="Freedom" AutoSelect="False">
+            <hc:Interaction.Triggers>
+                <hc:EventTrigger EventName="SelectionChanged">
+                    <hc:EventToCommand Command="{Binding SwitchItemCommand}" PassEventArgsToCommand="True"  />
+                </hc:EventTrigger>
+            </hc:Interaction.Triggers>
+        </hc:SideMenu>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Column="1" />
     </Grid>
 </hc:Window>

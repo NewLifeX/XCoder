@@ -4,10 +4,10 @@
              xmlns:prism="http://prismlibrary.com/"    
              xmlns:hc="https://handyorg.github.io/handycontrol"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    
+
     <Grid Background="{DynamicResource BackgroundBrush}">
         <Border Background="{DynamicResource RegionBrush}"  Effect="{StaticResource EffectShadow4}" CornerRadius="16" Margin="10">
-            <Grid >
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="2*"/>
@@ -16,17 +16,14 @@
                 <Border Effect="{StaticResource EffectShadow4}" Background="{DynamicResource DarkDefaultBrush}" CornerRadius="16,0,0,16">
 
                     <StackPanel >
-                        <hc:SearchBar  Margin="20,30,20,0"  Style="{StaticResource SearchBarExtend}"/>
-
-                        <hc:TransitioningContentControl Margin="20,10,20,0">
-                            <ItemsControl ItemsSource="{Binding ConnectionStringList}" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}" ItemTemplate="{StaticResource DataBaseItems}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Vertical"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                        </hc:TransitioningContentControl>
+                        <hc:SearchBar  Margin="20,30,20,0" Text="{Binding SearchFilter,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchBarExtend}"/>
+                        <ItemsControl Margin="20,10,20,0" ItemsSource="{Binding ConnectionStringCollection}" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}" ItemTemplate="{StaticResource DataBaseItems}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
                         <TextBlock Margin="40,20,0,0" Foreground="White">
                             <Bold>提示</Bold>path
                         </TextBlock>
@@ -67,8 +64,8 @@
                         </TextBlock>
                     </StackPanel>
                 </Border>
-            
-            
+
+
             </Grid>
         </Border>
     </Grid>
