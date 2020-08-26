@@ -15,30 +15,65 @@
 
                 <Border Effect="{StaticResource EffectShadow4}" Background="{DynamicResource DarkDefaultBrush}" CornerRadius="16,0,0,16">
 
-                    <StackPanel >
-                        <hc:SearchBar  Margin="20,30,20,0" Text="{Binding SearchFilter,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchBarExtend}"/>
-                        <ItemsControl Margin="20,10,20,0" ItemsSource="{Binding ConnectionStringCollection}" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}" ItemTemplate="{StaticResource DataBaseItems}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Vertical"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                        <TextBlock Margin="40,20,0,0" Foreground="White">
-                            <Bold>提示</Bold>path
-                        </TextBlock>
+                    <DockPanel LastChildFill="True">
+                        <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="10" Background="{DynamicResource BorderBrush}" Effect="{StaticResource EffectShadow5}">
+                            <StackPanel>
+                                <Border Style="{StaticResource BorderTipDanger}">
+                                    <TextBlock HorizontalAlignment="Left"  Style="{StaticResource TextBlockDefaultAccent}">  <Bold>数据源1:</Bold> xml文件</TextBlock>
+                                </Border>
+                                <Button Margin="0,10,0,0" Content="读取文件" Command="{Binding SelectCmd}" HorizontalAlignment="Right" DockPanel.Dock="Bottom"  Style="{StaticResource ButtonSuccess}"/>
+                            </StackPanel>
+                        </Border>
 
-                        <TextBlock FontWeight="DemiBold" FontSize="22" Foreground="White" Margin="40">
+                        <Border Style="{StaticResource BorderRegion}" Margin="10" Background="{DynamicResource BorderBrush}" Effect="{StaticResource EffectShadow5}">
+                            <DockPanel LastChildFill="True">
+                                <Border DockPanel.Dock="Top" Style="{StaticResource BorderTipDanger}">
+                                    <TextBlock  HorizontalAlignment="Left" Style="{StaticResource TextBlockDefaultAccent}"><Bold>数据源2:</Bold> config配置</TextBlock>
+                                </Border>
+                                <DockPanel LastChildFill="True" DockPanel.Dock="Top" Margin="0,10,0,0" >
+                                    <Button Margin="10,0,0,0" Content="读取配置" DockPanel.Dock="Right"  Command="{Binding SelectCmd}"  Style="{StaticResource ButtonSuccess}"/>
+                                    <hc:SearchBar  x:Name="SearchBarByTitle"   Text="{Binding SearchFilter,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchBarExtend}"/>
+                                </DockPanel>
+                                <Border  Margin="0,10,0,0" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                                        <ItemsControl ItemsSource="{Binding ConnectionStringCollection}" BorderThickness="0"  ItemTemplate="{StaticResource DataBaseItems}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Vertical"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Border>
+                            </DockPanel>
+                        </Border>
+
+                        <!--<TextBlock HorizontalAlignment="Left" DockPanel.Dock="Top" Margin="5" Text="数据源" Style="{StaticResource TextBlockLargeBold}"/>-->
+                        <!--<TextBlock  Margin="20,10,20,0" Foreground="White">
+                            <Bold>数据源</Bold>path
+                        </TextBlock>-->
+
+                        <!--<StackPanel DockPanel.Dock="Bottom" Height="50"  Margin="20,10,20,0">
+
+                            <Button Content="导入模型" Command="{Binding SelectCmd}" HorizontalAlignment="Right" DockPanel.Dock="Bottom"  Style="{StaticResource ButtonSuccess}"/>
+
+                            <TextBlock  Margin="20,10,20,0" Foreground="White">
+                            <Bold>提示</Bold>path
+                            </TextBlock>
+
+                            <TextBlock DockPanel.Dock="Top" FontWeight="DemiBold" FontSize="22" Foreground="White" Margin="40">
                             2种用法<LineBreak/>
 
-                        </TextBlock>
-                        <TextBlock FontWeight="Medium" Margin="20,0" Foreground="{DynamicResource ThirdlyTextBrush}">
+                            </TextBlock>
+                            <TextBlock DockPanel.Dock="Top" FontWeight="Medium" Margin="20,0" Foreground="{DynamicResource ThirdlyTextBrush}">
                                 1.连接数据库,得到数据表信息<LineBreak/>
                                 2.导入模型,得到数据表信息<LineBreak/>
 
-                        </TextBlock>
-                        <Image Margin="40,20" Width="46" HorizontalAlignment="Left" Source="{StaticResource Sagittarius}"/>
-                    </StackPanel>
+                            </TextBlock>
+                            <Image  DockPanel.Dock="Top" Margin="40,20" Width="46" HorizontalAlignment="Left" Source="{StaticResource Sagittarius}"/>
+                        </StackPanel>-->
+
+                    </DockPanel>
                 </Border>
 
                 <Border Effect="{StaticResource EffectShadow4}" Grid.Column="1" Background="{DynamicResource RegionBrush}" CornerRadius="0,16,16,0">

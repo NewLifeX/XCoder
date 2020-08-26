@@ -42,7 +42,7 @@ namespace XCoderWpf.ViewModels
 
         public MainWindowViewModel(IRegionManager regionManager) => _region = regionManager;
 
-        public DelegateCommand<FunctionEventArgs<object>> SwitchItemCommand => new Lazy<DelegateCommand<FunctionEventArgs<object>>>(() => new DelegateCommand<FunctionEventArgs<object>>(OnSwitchItem)).Value;
+        public DelegateCommand<FunctionEventArgs<object>> SwitchItemCmd => new Lazy<DelegateCommand<FunctionEventArgs<object>>>(() => new DelegateCommand<FunctionEventArgs<object>>(OnSwitchItem)).Value;
         public DelegateCommand<string> SelectCmd => new Lazy<DelegateCommand<string>>(() => new DelegateCommand<string>(Select)).Value;
 
 

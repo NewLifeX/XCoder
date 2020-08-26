@@ -47,7 +47,7 @@
         <hc:SideMenu Foreground="#7F4463"  Margin="{Binding MenuMargin}" BorderBrush="#DDDDDD" x:Name="MainSideMenu" ExpandMode="Freedom" AutoSelect="False">
             <hc:Interaction.Triggers>
                 <hc:EventTrigger EventName="SelectionChanged">
-                    <hc:EventToCommand Command="{Binding SwitchItemCommand}" PassEventArgsToCommand="True"  />
+                    <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="True"  />
                 </hc:EventTrigger>
             </hc:Interaction.Triggers>
         </hc:SideMenu>
