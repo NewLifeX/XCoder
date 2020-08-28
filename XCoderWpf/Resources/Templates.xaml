@@ -57,17 +57,4 @@
         </ContentControl>
     </DataTemplate>
 
-    <ControlTemplate x:Key="News" TargetType="ContentControl">
-        <Border BorderBrush="Black" BorderThickness="2" Background="White">
-            <DockPanel>
-                <Border BorderBrush="Black" BorderThickness="1,0,0,0" DockPanel.Dock="Right" Padding="4">
-                    <TextBlock Text="{Binding Datetime,FallbackValue='*2019/12/12 0:00:00*'}"  VerticalAlignment="Center"/>
-                </Border>
-                <StackPanel Orientation="Vertical" Margin="4">
-                    <TextBlock Text="{Binding Title, FallbackValue='*标题*'}" FontSize="16" FontWeight="Bold"/>
-                    <TextBlock Text="{Binding ReporterName, FallbackValue='*记者名称*'}"/>
-                </StackPanel>
-            </DockPanel>
-        </Border>
-    </ControlTemplate>
 </ResourceDictionary>

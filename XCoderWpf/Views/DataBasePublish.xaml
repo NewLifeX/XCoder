@@ -21,7 +21,7 @@
                                 <Border Style="{StaticResource BorderTipDanger}">
                                     <TextBlock HorizontalAlignment="Left"  Style="{StaticResource TextBlockDefaultAccent}">  <Bold>数据源1:</Bold> xml文件</TextBlock>
                                 </Border>
-                                <Button Margin="0,10,0,0" Content="读取文件" Command="{Binding SelectCmd}" HorizontalAlignment="Right" DockPanel.Dock="Bottom"  Style="{StaticResource ButtonSuccess}"/>
+                                <RepeatButton Margin="0,10,0,0" Content="读取文件" Command="{Binding SelectCmd}" HorizontalAlignment="Right" DockPanel.Dock="Bottom"  Style="{StaticResource RepeatButtonDashedDanger}"/>
                             </StackPanel>
                         </Border>
 
@@ -31,7 +31,7 @@
                                     <TextBlock  HorizontalAlignment="Left" Style="{StaticResource TextBlockDefaultAccent}"><Bold>数据源2:</Bold> config配置</TextBlock>
                                 </Border>
                                 <DockPanel LastChildFill="True" DockPanel.Dock="Top" Margin="0,10,0,0" >
-                                    <Button Margin="10,0,0,0" Content="读取配置" DockPanel.Dock="Right"  Command="{Binding SelectCmd}"  Style="{StaticResource ButtonSuccess}"/>
+                                    <RepeatButton Margin="10,0,0,0" Content="读取配置" DockPanel.Dock="Right"  Command="{Binding SelectCmd}"  Style="{StaticResource RepeatButtonDashedDanger}"/>
                                     <hc:SearchBar  x:Name="SearchBarByTitle"   Text="{Binding SearchFilter,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchBarExtend}"/>
                                 </DockPanel>
                                 <Border  Margin="0,10,0,0" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
@@ -47,60 +47,125 @@
                                 </Border>
                             </DockPanel>
                         </Border>
-
-                        <!--<TextBlock HorizontalAlignment="Left" DockPanel.Dock="Top" Margin="5" Text="数据源" Style="{StaticResource TextBlockLargeBold}"/>-->
-                        <!--<TextBlock  Margin="20,10,20,0" Foreground="White">
-                            <Bold>数据源</Bold>path
-                        </TextBlock>-->
-
-                        <!--<StackPanel DockPanel.Dock="Bottom" Height="50"  Margin="20,10,20,0">
-
-                            <Button Content="导入模型" Command="{Binding SelectCmd}" HorizontalAlignment="Right" DockPanel.Dock="Bottom"  Style="{StaticResource ButtonSuccess}"/>
-
-                            <TextBlock  Margin="20,10,20,0" Foreground="White">
-                            <Bold>提示</Bold>path
-                            </TextBlock>
-
-                            <TextBlock DockPanel.Dock="Top" FontWeight="DemiBold" FontSize="22" Foreground="White" Margin="40">
-                            2种用法<LineBreak/>
-
-                            </TextBlock>
-                            <TextBlock DockPanel.Dock="Top" FontWeight="Medium" Margin="20,0" Foreground="{DynamicResource ThirdlyTextBrush}">
-                                1.连接数据库,得到数据表信息<LineBreak/>
-                                2.导入模型,得到数据表信息<LineBreak/>
-
-                            </TextBlock>
-                            <Image  DockPanel.Dock="Top" Margin="40,20" Width="46" HorizontalAlignment="Left" Source="{StaticResource Sagittarius}"/>
-                        </StackPanel>-->
-
                     </DockPanel>
                 </Border>
 
                 <Border Effect="{StaticResource EffectShadow4}" Grid.Column="1" Background="{DynamicResource RegionBrush}" CornerRadius="0,16,16,0">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Margin="30" Source="{StaticResource Table}" Width="128"/>
-                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                            <Image Width="24" Source="{StaticResource Graduation}"/>
-                            <TextBlock Margin="5,0" Text="Create an account" FontWeight="Bold" FontSize="14"/>
-                        </StackPanel>
-                        <Button Width="350" Margin="0,40">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Margin="10,0" Source="{StaticResource Google}"/>
-
-                                <TextBlock Text="Sign up with Google"/>
+                    <DockPanel LastChildFill="True">
+                        <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="10" Padding="1">
+                            <StackPanel Margin="10,0,0,0" Orientation="Horizontal" HorizontalAlignment="Left">
+                                <TextBlock FontFamily="/Resources/#iconfont" VerticalAlignment="Center">
+                                    <Run ToolTip="导出文件存储位置" FontSize="18" Foreground="{StaticResource AccentBrush}">&#xe694;</Run>
+                                    <Run ToolTip="ahahhahhaha">C:\Xiong\输出目录\</Run>
+                                </TextBlock>
+                                <TextBox BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinWidth="100" Text="目录" hc:InfoElement.Placeholder="输出目录" Style="{StaticResource TextBoxExtend}"/>
                             </StackPanel>
-                        </Button>
-                        <hc:Divider Width="350" Content="OR"/>
-                        <TextBox Style="{StaticResource TextBoxExtend}" hc:TitleElement.Title="Your email" Text="mahdidvb72@gmail.com"/>
-                        <PasswordBox Style="{StaticResource PasswordBoxExtend}" hc:TitleElement.Title="Set password"/>
-                        <Button Content="Sign up" Style="{DynamicResource ButtonViolet}" Margin="0,30" Width="350"/>
-                        <TextBlock Margin="0,50,0,0" HorizontalAlignment="Center" >
-                                Already have an account? <Button Margin="-4,-10" Content="Sign in" BorderThickness="0" Foreground="Purple" FontWeight="DemiBold" />
-                        </TextBlock>
-                    </StackPanel>
+                        </Border>
+
+                        <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="10,0,10,0" Padding="1">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                                <TextBlock>
+                                    <Run Foreground="Blue" Text="using "/> System; <LineBreak/> <Run Foreground="Blue" Text="using "/> XCode;
+                                </TextBlock>
+                                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" >
+                                    <TextBlock Foreground="Blue" VerticalAlignment="Center" Text="namespace "></TextBlock>
+                                    <TextBox BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinWidth="100" Text="NameSpace" hc:InfoElement.Placeholder="命名空间" Style="{StaticResource TextBoxExtend}"/>
+                                </StackPanel>
+                                <TextBlock VerticalAlignment="Center">{</TextBlock>
+                                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <TextBlock VerticalAlignment="Center">
+                                        <Run Foreground="Blue" Text="    public partial class "/><Run  Foreground="#3DC9B0" Text="Demo" /> :
+                                    </TextBlock>
+                                    <TextBox VerticalAlignment="Center"  BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinWidth="100" Text="Entity1" hc:InfoElement.Placeholder="实体基类" Style="{StaticResource TextBoxExtend}"/>
+                                    <TextBlock VerticalAlignment="Center">
+                                         &lt; <Run Foreground="#3DC9B0" Text="Demo" /><Run Text=">"/>&#160;{&#160;...&#160;}
+                                    </TextBlock>
+                                </StackPanel>
+                                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <TextBlock VerticalAlignment="Center">
+                                        &#160;&#160;&#160;&#160;[<Run  Foreground="#3DC9B0" Text="BindTable" /><Run Foreground="#9E9D62" Text="(&quot;Demo&quot;"/>, Description =  <Run Foreground="#9E9D62" Text="&quot;&quot;"/>, ConnName =
+                                    </TextBlock>
+                                    <TextBox VerticalAlignment="Center"  BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinWidth="60" Text="ConnName1" hc:InfoElement.Placeholder="连接名" Style="{StaticResource TextBoxExtend}"/>
+                                    <TextBlock VerticalAlignment="Center"><Run Foreground="#9E9D62" Text=")"/>]</TextBlock>
+                                </StackPanel>
+                                <TextBlock VerticalAlignment="Center">
+                                        <Run Foreground="Blue" Text="    public partial class "/><Run  Foreground="#3DC9B0" Text="Demo" />&#160;:<Run Foreground="#87D778" Text=" IDemo" /> &#160;&#160;&#160;&#160;{&#160;...&#160;}
+                                </TextBlock>
+                                <TextBlock VerticalAlignment="Center" Text="}"/>
+                            </StackPanel>
+
+                        </Border>
+
+                        <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="10,10,10,0" Padding="1">
+                            <DockPanel>
+                                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                                    <CheckBox Margin="5,0,0,0" Content="全选"/>
+                                    <CheckBox  Margin="10,0,0,0" Content="包含视图"/>
+                                    <hc:Badge HorizontalAlignment="Right" Text="125" BadgeMargin="0,-14,-20,0" Height="30"  Margin="10,3,0,3" Style="{StaticResource BadgeDanger}">
+                                        <Button Content="刷新"/>
+                                    </hc:Badge>
+
+                                </StackPanel>
+
+                                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <RepeatButton Margin="10,0,10,0" Content="生成选中表"  Style="{StaticResource RepeatButtonDashed}" hc:IconElement.Width="15" hc:IconElement.Height="12" hc:IconElement.Geometry="{StaticResource DownloadGeometry}"/>
+                                    <!--<RepeatButton Margin="10,3,0,3" Content="生成选中表" IsEnabled="False" Style="{StaticResource RepeatButtonDashed}" hc:IconElement.Geometry="{StaticResource DownloadGeometry}"/>-->
+
+
+                                </StackPanel>
+                            </DockPanel>
+                        </Border>
+                        <Border Style="{StaticResource BorderRegion}" Margin="10" Padding="1">
+                            <ListBox ItemsSource="{Binding ConnectionStringCollection}" BorderThickness="0">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemContainerStyle>
+                                    <Style  TargetType="ListBoxItem">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="{StaticResource DarkInfoBrush}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <CheckBox VerticalAlignment="Center" Style="{x:Null}" Name="CheckBoxZone"/>
+                                            <Label Content="视图" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="35" Margin="30,5,50,5" Padding="3" hc:BorderElement.CornerRadius="10">
+                                                <Label.Style>
+                                                    <Style TargetType="Label">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Title}" Value="MySql">
+                                                                <Setter Property="Background" Value="#F0F5FF"/>
+                                                                <Setter Property="BorderBrush" Value="#ADC6FF"/>
+                                                                <Setter Property="Foreground" Value="#A577EC"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Title}" Value="MSSQL">
+                                                                <Setter Property="Background" Value="#F6FDEE"/>
+                                                                <Setter Property="BorderBrush" Value="#C0ED9F"/>
+                                                                <Setter Property="Foreground" Value="#6BCB3B"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+
+                                                </Label.Style>
+
+                                            </Label>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Title}"></TextBlock>
+                                        </StackPanel>
+
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+
+                    </DockPanel>
                 </Border>
-
-
             </Grid>
         </Border>
     </Grid>
