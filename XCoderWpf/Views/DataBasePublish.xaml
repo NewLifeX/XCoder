@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="XCoderWpf.Views.DataBasePublish"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:prism="http://prismlibrary.com/"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"    
              xmlns:hc="https://handyorg.github.io/handycontrol"
              prism:ViewModelLocator.AutoWireViewModel="True">
 
@@ -21,7 +21,7 @@
                                 <Border Style="{StaticResource BorderTipDanger}">
                                     <TextBlock HorizontalAlignment="Left"  Style="{StaticResource TextBlockDefaultAccent}">  <Bold>数据源1:</Bold> xml文件</TextBlock>
                                 </Border>
-                                <RepeatButton Margin="0,10,0,0" Content="读取文件" Command="{Binding SelectCmd}" HorizontalAlignment="Right" DockPanel.Dock="Bottom"  Style="{StaticResource RepeatButtonDashedDanger}"/>
+                                <RepeatButton Margin="0,10,0,0" Content="读取文件" Command="{Binding ImportXmlCmd}" HorizontalAlignment="Right" DockPanel.Dock="Bottom"  Style="{StaticResource RepeatButtonDashedDanger}"/>
                             </StackPanel>
                         </Border>
 
@@ -31,7 +31,7 @@
                                     <TextBlock  HorizontalAlignment="Left" Style="{StaticResource TextBlockDefaultAccent}"><Bold>数据源2:</Bold> config配置</TextBlock>
                                 </Border>
                                 <DockPanel LastChildFill="True" DockPanel.Dock="Top" Margin="0,10,0,0" >
-                                    <RepeatButton Margin="10,0,0,0" Content="读取配置" DockPanel.Dock="Right"  Command="{Binding SelectCmd}"  Style="{StaticResource RepeatButtonDashedDanger}"/>
+                                    <RepeatButton Margin="10,0,0,0" Content="读取配置" DockPanel.Dock="Right"  Command="{Binding ImportConfigCmd}"  Style="{StaticResource RepeatButtonDashedDanger}"/>
                                     <hc:SearchBar  x:Name="SearchBarByTitle"   Text="{Binding SearchFilter,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchBarExtend}"/>
                                 </DockPanel>
                                 <Border  Margin="0,10,0,0" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
@@ -99,8 +99,8 @@
                         <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="10,10,10,0" Padding="1">
                             <DockPanel>
                                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                                    <CheckBox Margin="5,0,0,0" Content="全选"/>
-                                    <CheckBox  Margin="10,0,0,0" Content="包含视图"/>
+                                    <CheckBox IsChecked="{Binding IsAllSelected}" Margin="5,0,0,0" Content="全选"/>
+                                    <CheckBox IsChecked="{Binding IsView}" Margin="10,0,0,0" Content="包含视图"/>
                                     <hc:Badge HorizontalAlignment="Right" Text="125" BadgeMargin="0,-14,-20,0" Height="30"  Margin="10,3,0,3" Style="{StaticResource BadgeDanger}">
                                         <Button Content="刷新"/>
                                     </hc:Badge>
@@ -116,7 +116,7 @@
                             </DockPanel>
                         </Border>
                         <Border Style="{StaticResource BorderRegion}" Margin="10" Padding="1">
-                            <ListBox ItemsSource="{Binding ConnectionStringCollection}" BorderThickness="0">
+                            <ListBox ItemsSource="{Binding TableCollection}" BorderThickness="0">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Vertical"/>
@@ -136,19 +136,21 @@
 
                                         <StackPanel Orientation="Horizontal">
                                             <CheckBox VerticalAlignment="Center" Style="{x:Null}" Name="CheckBoxZone"/>
-                                            <Label Content="视图" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="35" Margin="30,5,50,5" Padding="3" hc:BorderElement.CornerRadius="10">
+                                            <Label Content="表" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="35" Margin="30,5,50,5" Padding="3" hc:BorderElement.CornerRadius="10">
                                                 <Label.Style>
                                                     <Style TargetType="Label">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Title}" Value="MySql">
+                                                            <DataTrigger Binding="{Binding IsView}" Value="True">
                                                                 <Setter Property="Background" Value="#F0F5FF"/>
                                                                 <Setter Property="BorderBrush" Value="#ADC6FF"/>
                                                                 <Setter Property="Foreground" Value="#A577EC"/>
+                                                                <Setter Property="Content" Value="视图"/>
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Title}" Value="MSSQL">
+                                                            <DataTrigger Binding="{Binding IsView}" Value="False">
                                                                 <Setter Property="Background" Value="#F6FDEE"/>
                                                                 <Setter Property="BorderBrush" Value="#C0ED9F"/>
                                                                 <Setter Property="Foreground" Value="#6BCB3B"/>
+                                                                <Setter Property="Content" Value="表"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
@@ -156,7 +158,7 @@
                                                 </Label.Style>
 
                                             </Label>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Title}"></TextBlock>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}"></TextBlock>
                                         </StackPanel>
 
                                     </DataTemplate>
