@@ -15,7 +15,7 @@ namespace XCoderWpf.Models
         public string Title { get; set; }
         public string Server { get; set; }
         public string ShortName => Server?.Length > 30 ? Server.Substring(0, 30) : Server ?? "";
-        public DelegateCommand<ConnectionStringModel> SelectCmd { get; set; }
+        public DelegateCommand<ConnectionStringModel> SelectConncectionCmd { get; set; }
     }
 
     public class TableInfoModel

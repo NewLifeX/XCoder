@@ -5,12 +5,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using HandyControl.Controls;
 using Microsoft.Win32;
 using NewLife;
 using NewLife.Configuration;
+using NewLife.Threading;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -18,6 +20,7 @@ using Prism.Services.Dialogs;
 using XCode.DataAccessLayer;
 using XCoder;
 using XCoderWpf.Models;
+using XCoderWpf.Views;
 
 namespace XCoderWpf.ViewModels
 {
@@ -28,10 +31,6 @@ namespace XCoderWpf.ViewModels
         /// </summary>
         private List<ConnectionStringModel> _connectionStringList;
         public IList<IDataTable> Tables { get; set; }
-        private IList<string> _datalist;
-        public IList<string> DataList { get { return _datalist; } set { SetProperty(ref _datalist, value); } }
-
-
 
         public DataBasePublishViewModel()
         {
@@ -40,7 +39,7 @@ namespace XCoderWpf.ViewModels
                 Title = x.Key,
                 Server = x.Value,
                 IconSource = new Uri($"/Resources/Images/SqlServer/{DAL.Create(x.Key).DbType.ToString().ToLower()}.png", UriKind.Relative),
-                SelectCmd = new Lazy<DelegateCommand<ConnectionStringModel>>(() => new DelegateCommand<ConnectionStringModel>((x) => _selectConnectionStringModel = x)).Value,
+                SelectConncectionCmd = new Lazy<DelegateCommand<ConnectionStringModel>>(() => new DelegateCommand<ConnectionStringModel>((x) => _selectConnectionStringModel = x)).Value,
 
             }));
             _connectionStringCollection = new ObservableCollection<ConnectionStringModel>(_connectionStringList);
@@ -85,8 +84,8 @@ namespace XCoderWpf.ViewModels
         private bool _isAllSelected;
         public bool IsAllSelected { get => _isAllSelected; set { SetProperty(ref _isAllSelected, value); } }
 
-        private bool _isView;
-        public bool IsView { get => _isView; set { SetProperty(ref _isView, value); } }
+        private bool _isContainsView = true;
+        public bool IsContainsView { get => _isContainsView; set { SetProperty(ref _isContainsView, value); _ = SetTablesListByIsView(); } }
 
         private MenuModel selectedMenu;
         /// <summary>选中菜单</summary>
@@ -96,7 +95,8 @@ namespace XCoderWpf.ViewModels
             set { selectedMenu = value; RaisePropertyChanged(); }
         }
 
-
+        private int _tableListCount;
+        public int TableListCount { get => _tableListCount; set { SetProperty(ref _tableListCount, value); } }
 
         #endregion
 
@@ -107,7 +107,7 @@ namespace XCoderWpf.ViewModels
               MessageBox.Show("123");
           });
 
-        public DelegateCommand ImportXmlCmd => new DelegateCommand(() =>
+        public DelegateCommand ImportXmlCmd => new Lazy<DelegateCommand>(new DelegateCommand(() =>
         {
             var openFileDialog = new OpenFileDialog();
             if (!openFileDialog.ShowDialog().Value || String.IsNullOrEmpty(openFileDialog.FileName)) return;
@@ -132,37 +132,49 @@ namespace XCoderWpf.ViewModels
                 //MessageBox.Show(ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-        });
+        })).Value;
 
-        public DelegateCommand ImportConfigCmd => new Lazy<DelegateCommand>(new DelegateCommand(() =>
-       {
-           try
-           {
-               var list = DAL.Create(ModelConfig.Current.ConnName).Tables;
-               if (IsView) list = list.Where(t => !t.IsView).ToList();
-                //if (Config.NeedFix) list = Engine.FixTable(list);
-                Tables = list;
-               _TableCollection.Clear();
-               _TableCollection.AddRange(list.Select(x => new TableInfoModel { Name = $"{x.TableName} ({(string.IsNullOrWhiteSpace(x.Description) ? x.Name : x.Description)})", IsView = x.IsView }));
-           }
-           catch (Exception ex)
-           {
-               MessageBox.Show(ex.ToString());
-               return;
-           }
+        public DelegateCommand ImportConfigCmd => new Lazy<DelegateCommand>(new DelegateCommand(async () =>
+        {
+            await GetTablesList();
+        })).Value;
 
-       })).Value;
+        public DelegateCommand<ConnectionStringModel> SelectConncectionCmd => new Lazy<DelegateCommand<ConnectionStringModel>>(new DelegateCommand<ConnectionStringModel>((x) =>
+        {
+            MessageBox.Show("aaaaaaaaaa");
+
+        })).Value;
 
         #endregion
 
-
         #region Method
-        /// <summary>
-        /// 读取xml文件
-        /// </summary>
-        private void ImportModel()
-        {
 
+        private async Task GetTablesList()
+        {
+            
+            try
+            {
+                IList<IDataTable> list = null;
+                await Task.Run(() => { Thread.Sleep(10000); list = DAL.Create(_selectConnectionStringModel.Title).Tables; });
+                if (list == null) return;
+                Tables = list;
+                await SetTablesListByIsView();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            Debug.WriteLine("33333333333333333333333");
+        }
+
+        private async Task<IList<IDataTable>> SetTablesListByIsView()
+        {
+            var list = Tables;
+            if (!_isContainsView) list = list.Where(t => !t.IsView).ToList();
+            TableListCount = list.Count();
+            _TableCollection.Clear();
+            _TableCollection.AddRange(list.Select(x => new TableInfoModel { Name = $"{x.TableName} ({(string.IsNullOrWhiteSpace(x.Description) ? x.Name : x.Description)})", IsView = x.IsView }));
+            return await Task.FromResult(list);
         }
 
         //private  void SetTables(Object source)

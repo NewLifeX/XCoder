@@ -7,7 +7,7 @@
     <DataTemplate x:Key="DataBaseItems">
         <ContentControl>
             <!--CommandParameter="{Binding}"-->
-            <RadioButton GroupName="ConnectionStringGroup" Command="{Binding SelectCmd}" CommandParameter="{Binding}"
+            <RadioButton GroupName="ConnectionStringGroup" Command="{Binding SelectConncectionCmd}" CommandParameter="{Binding}"
                           Style="{x:Null}">
 
                 <RadioButton.Template>

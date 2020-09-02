@@ -31,4 +31,8 @@ namespace XCoderWpf.Views
         }
         #endregion
     }
+
+    public class LoadingWindow : Window
+    {
+    }
 }

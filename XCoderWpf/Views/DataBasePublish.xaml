@@ -36,7 +36,7 @@
                                 </DockPanel>
                                 <Border  Margin="0,10,0,0" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
                                     <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                                        <ItemsControl ItemsSource="{Binding ConnectionStringCollection}" BorderThickness="0"  ItemTemplate="{StaticResource DataBaseItems}">
+                                        <ItemsControl ItemsSource="{Binding ConnectionStringCollection}" BorderThickness="0" VirtualizingStackPanel.VirtualizationMode="Recycling"  ItemTemplate="{StaticResource DataBaseItems}">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <StackPanel Orientation="Vertical"/>
@@ -100,8 +100,8 @@
                             <DockPanel>
                                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
                                     <CheckBox IsChecked="{Binding IsAllSelected}" Margin="5,0,0,0" Content="全选"/>
-                                    <CheckBox IsChecked="{Binding IsView}" Margin="10,0,0,0" Content="包含视图"/>
-                                    <hc:Badge HorizontalAlignment="Right" Text="125" BadgeMargin="0,-14,-20,0" Height="30"  Margin="10,3,0,3" Style="{StaticResource BadgeDanger}">
+                                    <CheckBox IsChecked="{Binding IsContainsView}" Margin="10,0,0,0" Content="包含视图"/>
+                                    <hc:Badge HorizontalAlignment="Right" Text="{Binding TableListCount}" BadgeMargin="0,-14,-20,0" Height="30"  Margin="10,3,0,3" Style="{StaticResource BadgeDanger}">
                                         <Button Content="刷新"/>
                                     </hc:Badge>
 
@@ -116,13 +116,13 @@
                             </DockPanel>
                         </Border>
                         <Border Style="{StaticResource BorderRegion}" Margin="10" Padding="1">
-                            <ListBox ItemsSource="{Binding TableCollection}" BorderThickness="0">
-                                <ListBox.ItemsPanel>
+                            <ListBox ItemsSource="{Binding TableCollection}" BorderThickness="0" VirtualizingStackPanel.VirtualizationMode="Recycling">
+                                <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Vertical"/>
+                                        <VirtualizingStackPanel Orientation="Vertical"/>
                                     </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <ListBox.ItemContainerStyle>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemContainerStyle>
                                     <Style  TargetType="ListBoxItem">
                                         <Style.Triggers>
                                             <Trigger Property="IsSelected" Value="True">
@@ -130,13 +130,13 @@
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
-                                </ListBox.ItemContainerStyle>
-                                <ListBox.ItemTemplate>
+                                </ItemsControl.ItemContainerStyle>
+                                <ItemsControl.ItemTemplate>
                                     <DataTemplate>
 
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal" Height="40">
                                             <CheckBox VerticalAlignment="Center" Style="{x:Null}" Name="CheckBoxZone"/>
-                                            <Label Content="表" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="35" Margin="30,5,50,5" Padding="3" hc:BorderElement.CornerRadius="10">
+                                            <Label BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="35" Margin="30,5,50,5" Padding="3" hc:BorderElement.CornerRadius="10">
                                                 <Label.Style>
                                                     <Style TargetType="Label">
                                                         <Style.Triggers>
@@ -162,7 +162,7 @@
                                         </StackPanel>
 
                                     </DataTemplate>
-                                </ListBox.ItemTemplate>
+                                </ItemsControl.ItemTemplate>
                             </ListBox>
                         </Border>
 
