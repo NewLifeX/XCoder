@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Windows;
 using Prism.Commands;
+using Prism.Mvvm;
+using XCode.DataAccessLayer;
 
 namespace XCoderWpf.Models
 {
     public class DataBasePublishModel
     {
 
+    }
+    public enum DataSourceType
+    {
+        Xml,
+        Db
     }
 
     public class ConnectionStringModel
@@ -18,10 +25,13 @@ namespace XCoderWpf.Models
         public DelegateCommand<ConnectionStringModel> SelectConncectionCmd { get; set; }
     }
 
-    public class TableInfoModel
+    public class TableInfoModel : BindableBase
     {
-        public bool IsChecked { get; set; }
+        public bool IsChecked { get => _isChecked; set => SetProperty(ref _isChecked, value); }
+        private bool _isChecked;
+
         public string Name { get; set; }
         public bool IsView { get; set; }
+        public IDataTable Data { get; set; }
     }
 }

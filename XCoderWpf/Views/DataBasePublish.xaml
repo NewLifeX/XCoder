@@ -5,170 +5,174 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <Grid Background="{DynamicResource BackgroundBrush}">
-        <Border Background="{DynamicResource RegionBrush}"  Effect="{StaticResource EffectShadow4}" CornerRadius="16" Margin="10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
+    <Border Background="{DynamicResource RegionBrush}" CornerRadius="4" Margin="3">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2.5*"/>
+            </Grid.ColumnDefinitions>
 
-                <Border Effect="{StaticResource EffectShadow4}" Background="{DynamicResource DarkDefaultBrush}" CornerRadius="16,0,0,16">
-
-                    <DockPanel LastChildFill="True">
-                        <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="10" Background="{DynamicResource BorderBrush}" Effect="{StaticResource EffectShadow5}">
-                            <StackPanel>
-                                <Border Style="{StaticResource BorderTipDanger}">
-                                    <TextBlock HorizontalAlignment="Left"  Style="{StaticResource TextBlockDefaultAccent}">  <Bold>数据源1:</Bold> xml文件</TextBlock>
-                                </Border>
-                                <RepeatButton Margin="0,10,0,0" Content="读取文件" Command="{Binding ImportXmlCmd}" HorizontalAlignment="Right" DockPanel.Dock="Bottom"  Style="{StaticResource RepeatButtonDashedDanger}"/>
+            <Border BorderThickness="0">
+                <DockPanel LastChildFill="True">
+                    <Border Padding="5" Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="5" Background="{DynamicResource BorderBrush}" Effect="{StaticResource EffectShadow5}">
+                        <StackPanel>
+                            <Border Style="{StaticResource BorderTipDanger}">
+                                <TextBlock HorizontalAlignment="Left"  Style="{StaticResource TextBlockDefaultAccent}">  <Bold>数据源1:</Bold> xml文件</TextBlock>
+                            </Border>
+                            <StackPanel Margin="0,5,0,0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <TextBlock VerticalAlignment="Center" Text="{Binding FileName}"/>
+                                <hc:Badge HorizontalAlignment="Right" Text="{Binding XmlTableListCount}" BadgeMargin="0,-10,-10,0" Height="30" ToolTip="数量" Style="{StaticResource BadgeDanger}">
+                                    <RepeatButton Margin="10,0,0,0" Content="读取表"  Command="{Binding ImportXmlCmd}" Style="{StaticResource RepeatButtonDashedDanger}"/>
+                                </hc:Badge>
                             </StackPanel>
-                        </Border>
+                        </StackPanel>
+                    </Border>
 
-                        <Border Style="{StaticResource BorderRegion}" Margin="10" Background="{DynamicResource BorderBrush}" Effect="{StaticResource EffectShadow5}">
-                            <DockPanel LastChildFill="True">
-                                <Border DockPanel.Dock="Top" Style="{StaticResource BorderTipDanger}">
-                                    <TextBlock  HorizontalAlignment="Left" Style="{StaticResource TextBlockDefaultAccent}"><Bold>数据源2:</Bold> config配置</TextBlock>
-                                </Border>
-                                <DockPanel LastChildFill="True" DockPanel.Dock="Top" Margin="0,10,0,0" >
-                                    <RepeatButton Margin="10,0,0,0" Content="读取配置" DockPanel.Dock="Right"  Command="{Binding ImportConfigCmd}"  Style="{StaticResource RepeatButtonDashedDanger}"/>
-                                    <hc:SearchBar  x:Name="SearchBarByTitle"   Text="{Binding SearchFilter,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchBarExtend}"/>
-                                </DockPanel>
-                                <Border  Margin="0,10,0,0" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
-                                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
-                                        <ItemsControl ItemsSource="{Binding ConnectionStringCollection}" BorderThickness="0" VirtualizingStackPanel.VirtualizationMode="Recycling"  ItemTemplate="{StaticResource DataBaseItems}">
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <StackPanel Orientation="Vertical"/>
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                        </ItemsControl>
-                                    </ScrollViewer>
-                                </Border>
+                    <Border Padding="5" Style="{StaticResource BorderRegion}" Margin="5" Background="{DynamicResource BorderBrush}" Effect="{StaticResource EffectShadow5}">
+                        <DockPanel LastChildFill="True">
+                            <Border DockPanel.Dock="Top" Style="{StaticResource BorderTipDanger}">
+                                <TextBlock  HorizontalAlignment="Left" Style="{StaticResource TextBlockDefaultAccent}"><Bold>数据源2:</Bold> config配置</TextBlock>
+                            </Border>
+                            <DockPanel LastChildFill="True" DockPanel.Dock="Top" Margin="0,5,0,0" >
+                                <hc:Badge HorizontalAlignment="Right" DockPanel.Dock="Right"  Text="{Binding DbTableListCount}" BadgeMargin="0,-10,-10,0" Height="30" ToolTip="数量" Style="{StaticResource BadgeDanger}">
+                                    <RepeatButton Margin="10,0,0,0" Content="读取表"  Command="{Binding ImportConfigCmd}" Style="{StaticResource RepeatButtonDashedDanger}" ToolTip="获取当前选中连接中的表、视图"/>
+                                </hc:Badge>
+                                <hc:SearchBar Text="{Binding SearchConnectionStringFilter,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchBarExtend}" ToolTip="删选连接"/>
                             </DockPanel>
-                        </Border>
-                    </DockPanel>
-                </Border>
+                            <Border Margin="0,5,0,0" BorderThickness="1" BorderBrush="{StaticResource BorderBrush}">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                                    <ItemsControl ItemsSource="{Binding ConnectionStringCollection}" BorderThickness="0" VirtualizingStackPanel.VirtualizationMode="Recycling"  ItemTemplate="{StaticResource DataBaseItems}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Vertical"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Border>
+                        </DockPanel>
+                    </Border>
+                </DockPanel>
+            </Border>
 
-                <Border Effect="{StaticResource EffectShadow4}" Grid.Column="1" Background="{DynamicResource RegionBrush}" CornerRadius="0,16,16,0">
-                    <DockPanel LastChildFill="True">
-                        <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="10" Padding="1">
-                            <StackPanel Margin="10,0,0,0" Orientation="Horizontal" HorizontalAlignment="Left">
-                                <TextBlock FontFamily="/Resources/#iconfont" VerticalAlignment="Center">
+            <Border BorderThickness="0" Grid.Column="1" Margin="5" >
+                <DockPanel LastChildFill="True">
+                    <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Padding="0" >
+                        <StackPanel Margin="10,0,0,0" Orientation="Horizontal" HorizontalAlignment="Left">
+                            <TextBlock FontFamily="/Resources/#iconfont" VerticalAlignment="Center">
                                     <Run ToolTip="导出文件存储位置" FontSize="18" Foreground="{StaticResource AccentBrush}">&#xe694;</Run>
-                                    <Run ToolTip="ahahhahhaha">C:\Xiong\输出目录\</Run>
-                                </TextBlock>
-                                <TextBox BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinWidth="100" Text="目录" hc:InfoElement.Placeholder="输出目录" Style="{StaticResource TextBoxExtend}"/>
-                            </StackPanel>
-                        </Border>
+                                    <Hyperlink Command="{Binding OpenOutputFolderCmd}"> 
+                                        <Run ToolTip="{Binding CurrentDirectoryFullPath}" Text="{Binding CurrentDirectoryShortPath,Mode=OneTime}"/>
+                                    </Hyperlink>
+                            </TextBlock>
+                            <TextBox Text="{Binding OutputPath}" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" Padding="0" MinWidth="100" hc:InfoElement.Placeholder="输出目录" Style="{StaticResource TextBoxExtend}"/>
+                        </StackPanel>
+                    </Border>
 
-                        <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="10,0,10,0" Padding="1">
-                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
-                                <TextBlock>
+                    <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="0,5,0,0" Padding="10,0">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <TextBlock>
                                     <Run Foreground="Blue" Text="using "/> System; <LineBreak/> <Run Foreground="Blue" Text="using "/> XCode;
-                                </TextBlock>
-                                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" >
-                                    <TextBlock Foreground="Blue" VerticalAlignment="Center" Text="namespace "></TextBlock>
-                                    <TextBox BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinWidth="100" Text="NameSpace" hc:InfoElement.Placeholder="命名空间" Style="{StaticResource TextBoxExtend}"/>
-                                </StackPanel>
-                                <TextBlock VerticalAlignment="Center">{</TextBlock>
-                                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <TextBlock VerticalAlignment="Center">
-                                        <Run Foreground="Blue" Text="    public partial class "/><Run  Foreground="#3DC9B0" Text="Demo" /> :
-                                    </TextBlock>
-                                    <TextBox VerticalAlignment="Center"  BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinWidth="100" Text="Entity1" hc:InfoElement.Placeholder="实体基类" Style="{StaticResource TextBoxExtend}"/>
-                                    <TextBlock VerticalAlignment="Center">
-                                         &lt; <Run Foreground="#3DC9B0" Text="Demo" /><Run Text=">"/>&#160;{&#160;...&#160;}
-                                    </TextBlock>
-                                </StackPanel>
-                                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <TextBlock VerticalAlignment="Center">
-                                        &#160;&#160;&#160;&#160;[<Run  Foreground="#3DC9B0" Text="BindTable" /><Run Foreground="#9E9D62" Text="(&quot;Demo&quot;"/>, Description =  <Run Foreground="#9E9D62" Text="&quot;&quot;"/>, ConnName =
-                                    </TextBlock>
-                                    <TextBox VerticalAlignment="Center"  BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinWidth="60" Text="ConnName1" hc:InfoElement.Placeholder="连接名" Style="{StaticResource TextBoxExtend}"/>
-                                    <TextBlock VerticalAlignment="Center"><Run Foreground="#9E9D62" Text=")"/>]</TextBlock>
-                                </StackPanel>
+                            </TextBlock>
+                            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" >
+                                <TextBlock Foreground="Blue" VerticalAlignment="Center" Text="namespace "></TextBlock>
+                                <TextBox BorderThickness="0,0,0,1" Margin="0" Padding="0" hc:BorderElement.CornerRadius="0" MinWidth="100" Text="{Binding NameSpace}" hc:InfoElement.Placeholder="命名空间" Style="{StaticResource TextBoxExtend}"/>
+                            </StackPanel>
+                            <TextBlock VerticalAlignment="Center">{</TextBlock>
+                            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
                                 <TextBlock VerticalAlignment="Center">
-                                        <Run Foreground="Blue" Text="    public partial class "/><Run  Foreground="#3DC9B0" Text="Demo" />&#160;:<Run Foreground="#87D778" Text=" IDemo" /> &#160;&#160;&#160;&#160;{&#160;...&#160;}
+                                        <Run Foreground="Blue" Text="    public partial class "/><Run  Foreground="#3DC9B0" Text="Demo" /> :
                                 </TextBlock>
-                                <TextBlock VerticalAlignment="Center" Text="}"/>
+                                <TextBox VerticalAlignment="Center" Padding="0" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinWidth="100" Text="{Binding BaseClass}" hc:InfoElement.Placeholder="实体基类" Style="{StaticResource TextBoxExtend}"/>
+                                <TextBlock VerticalAlignment="Center">
+                                         &lt; <Run Foreground="#3DC9B0" Text="Demo" /><Run Text=">"/>&#160;{&#160;...&#160;}
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left">
+                                <TextBlock VerticalAlignment="Center">
+                                        &#160;&#160;&#160;&#160;[<Run  Foreground="#3DC9B0" Text="BindTable" /><Run Foreground="#9E9D62" Text="(&quot;Demo&quot;"/>, Description =  <Run Foreground="#9E9D62" Text="&quot;&quot;"/>, ConnName =
+                                </TextBlock>
+                                <TextBox VerticalAlignment="Center" Padding="0" BorderThickness="0,0,0,1" hc:BorderElement.CornerRadius="0" MinWidth="60" Text="{Binding EntityConnName}" hc:InfoElement.Placeholder="实体链接名" Style="{StaticResource TextBoxExtend}"/>
+                                <TextBlock VerticalAlignment="Center"><Run Foreground="#9E9D62" Text=")"/>]</TextBlock>
+                            </StackPanel>
+                            <TextBlock VerticalAlignment="Center">
+                                        <Run Foreground="Blue" Text="    public partial class "/><Run  Foreground="#3DC9B0" Text="Demo" />&#160;:<Run Foreground="#87D778" Text=" IDemo" /> &#160;&#160;&#160;&#160;{&#160;...&#160;}
+                            </TextBlock>
+                            <TextBlock VerticalAlignment="Center" Text="}"/>
+                        </StackPanel>
+
+                    </Border>
+
+                    <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="0,5,0,0" Padding="1">
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding IsAllSelected}" Margin="5,0,0,0" Content="全选"/>
+                                <CheckBox IsChecked="{Binding IsContainsView}" Margin="10,0,0,0" Content="包含视图"/>
+                                <hc:SearchBar  Margin="10,3,0,3" Width="120" Text="{Binding SearchTableFilter,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SearchBarExtend}" ToolTip="筛选表"/>
+
                             </StackPanel>
 
-                        </Border>
-
-                        <Border Style="{StaticResource BorderRegion}" DockPanel.Dock="Top" Margin="10,10,10,0" Padding="1">
-                            <DockPanel>
-                                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                                    <CheckBox IsChecked="{Binding IsAllSelected}" Margin="5,0,0,0" Content="全选"/>
-                                    <CheckBox IsChecked="{Binding IsContainsView}" Margin="10,0,0,0" Content="包含视图"/>
-                                    <hc:Badge HorizontalAlignment="Right" Text="{Binding TableListCount}" BadgeMargin="0,-14,-20,0" Height="30"  Margin="10,3,0,3" Style="{StaticResource BadgeDanger}">
-                                        <Button Content="刷新"/>
-                                    </hc:Badge>
-
-                                </StackPanel>
-
-                                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <RepeatButton Margin="10,0,10,0" Content="生成选中表"  Style="{StaticResource RepeatButtonDashed}" hc:IconElement.Width="15" hc:IconElement.Height="12" hc:IconElement.Geometry="{StaticResource DownloadGeometry}"/>
-                                    <!--<RepeatButton Margin="10,3,0,3" Content="生成选中表" IsEnabled="False" Style="{StaticResource RepeatButtonDashed}" hc:IconElement.Geometry="{StaticResource DownloadGeometry}"/>-->
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <RepeatButton Command="{Binding BuildTablesCmd}" Margin="0,0,3,0" Content="生成选中表"  Style="{StaticResource RepeatButtonDashed}" hc:IconElement.Width="15" hc:IconElement.Height="12" hc:IconElement.Geometry="{StaticResource DownloadGeometry}"/>
+                                <!--<RepeatButton Margin="10,3,0,3" Content="生成选中表" IsEnabled="False" Style="{StaticResource RepeatButtonDashed}" hc:IconElement.Geometry="{StaticResource DownloadGeometry}"/>-->
 
 
-                                </StackPanel>
-                            </DockPanel>
-                        </Border>
-                        <Border Style="{StaticResource BorderRegion}" Margin="10" Padding="1">
-                            <ListBox ItemsSource="{Binding TableCollection}" BorderThickness="0" VirtualizingStackPanel.VirtualizationMode="Recycling">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel Orientation="Vertical"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemContainerStyle>
-                                    <Style  TargetType="ListBoxItem">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter Property="Background" Value="{StaticResource DarkInfoBrush}" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ItemsControl.ItemContainerStyle>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                    <Border Style="{StaticResource BorderRegion}" Margin="0,5,0,0" Padding="0">
+                        <ListBox ItemsSource="{Binding TableCollection}" Margin="0,5" BorderThickness="0" VirtualizingStackPanel.VirtualizationMode="Recycling">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style  TargetType="ListBoxItem">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource DarkInfoBrush}" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
 
-                                        <StackPanel Orientation="Horizontal" Height="40">
-                                            <CheckBox VerticalAlignment="Center" Style="{x:Null}" Name="CheckBoxZone"/>
-                                            <Label BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="35" Margin="30,5,50,5" Padding="3" hc:BorderElement.CornerRadius="10">
-                                                <Label.Style>
-                                                    <Style TargetType="Label">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding IsView}" Value="True">
-                                                                <Setter Property="Background" Value="#F0F5FF"/>
-                                                                <Setter Property="BorderBrush" Value="#ADC6FF"/>
-                                                                <Setter Property="Foreground" Value="#A577EC"/>
-                                                                <Setter Property="Content" Value="视图"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsView}" Value="False">
-                                                                <Setter Property="Background" Value="#F6FDEE"/>
-                                                                <Setter Property="BorderBrush" Value="#C0ED9F"/>
-                                                                <Setter Property="Foreground" Value="#6BCB3B"/>
-                                                                <Setter Property="Content" Value="表"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
+                                    <StackPanel Orientation="Horizontal" Height="40">
+                                        <CheckBox VerticalAlignment="Center" Style="{x:Null}" Name="CheckBoxZone" IsChecked="{Binding IsChecked}"/>
+                                        <Label BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="35" Margin="30,5,50,5" Padding="3" hc:BorderElement.CornerRadius="10">
+                                            <Label.Style>
+                                                <Style TargetType="Label">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsView}" Value="True">
+                                                            <Setter Property="Background" Value="#F0F5FF"/>
+                                                            <Setter Property="BorderBrush" Value="#ADC6FF"/>
+                                                            <Setter Property="Foreground" Value="#A577EC"/>
+                                                            <Setter Property="Content" Value="视图"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsView}" Value="False">
+                                                            <Setter Property="Background" Value="#F6FDEE"/>
+                                                            <Setter Property="BorderBrush" Value="#C0ED9F"/>
+                                                            <Setter Property="Foreground" Value="#6BCB3B"/>
+                                                            <Setter Property="Content" Value="表"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
 
-                                                </Label.Style>
+                                            </Label.Style>
 
-                                            </Label>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}"></TextBlock>
-                                        </StackPanel>
+                                        </Label>
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding Name}" Style="{StaticResource TextBlockDefault}"></TextBlock>
+                                    </StackPanel>
 
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ListBox>
-                        </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ListBox>
+                    </Border>
 
-                    </DockPanel>
-                </Border>
-            </Grid>
-        </Border>
-    </Grid>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Border>
 </UserControl>
