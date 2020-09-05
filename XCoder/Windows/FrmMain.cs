@@ -538,7 +538,14 @@ namespace XCoder
                 //var builder = new EntityBuilder();
 
                 var cfg = Config;
-                var rs = EntityBuilder.BuildTables(new[] { table }, cfg.OutputPath, cfg.NameSpace, cfg.EntityConnName, cfg.BaseClass);
+                var option = new BuilderOption
+                {
+                    BaseClass = cfg.BaseClass,
+                    ConnName = cfg.EntityConnName,
+                    Namespace = cfg.NameSpace,
+                    Output = cfg.OutputPath,
+                };
+                var rs = EntityBuilder.BuildTables(new[] { table }, option);
 
                 MessageBox.Show("生成" + table + "成功！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -573,7 +580,14 @@ namespace XCoder
             //}
 
             var cfg = Config;
-            var rs = EntityBuilder.BuildTables(tables, cfg.OutputPath, cfg.NameSpace, cfg.EntityConnName, cfg.BaseClass);
+            var option = new BuilderOption
+            {
+                BaseClass = cfg.BaseClass,
+                ConnName = cfg.EntityConnName,
+                Namespace = cfg.NameSpace,
+                Output = cfg.OutputPath,
+            };
+            var rs = EntityBuilder.BuildTables(tables, option);
 
             sw.Stop();
             lb_Status.Text = "生成 " + tables.Count + " 个类完成！耗时：" + sw.Elapsed.ToString();
