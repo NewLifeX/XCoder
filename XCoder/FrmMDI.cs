@@ -161,7 +161,8 @@ namespace XCoder
         {
             if (auto) XTrace.WriteLine("自动更新！");
 
-            Upgrade.DeleteBuckup(".");
+            var up = new Upgrade();
+            up.DeleteBackup(".");
 
             var cfg = XConfig.Current;
             if (cfg.LastUpdate.Date < DateTime.Now.Date || !auto)
@@ -170,7 +171,6 @@ namespace XCoder
                 cfg.Save();
 
                 var root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var up = new Upgrade();
                 up.Log = XTrace.Log;
                 up.Name = "XCoder";
                 up.Server = cfg.UpdateServer;
@@ -178,7 +178,7 @@ namespace XCoder
                 if (up.Check())
                 {
                     up.Download();
-                    if (!auto || MessageBox.Show("发现新版本{0}，是否更新？".F(up.Link.Time), "自动更新", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (!auto || MessageBox.Show($"发现新版本{up.Link.Time}，是否更新？", "自动更新", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         var rs = up.Update();
                         MessageBox.Show("更新" + (rs ? "成功" : "失败"), "自动更新");
@@ -187,7 +187,7 @@ namespace XCoder
                 else if (!auto)
                 {
                     if (up.Link != null)
-                        MessageBox.Show("没有可用更新！最新{0}".F(up.Link.Time), "自动更新");
+                        MessageBox.Show($"没有可用更新！最新{up.Link.Time}", "自动更新");
                     else
                         MessageBox.Show("没有可用更新！", "自动更新");
                 }

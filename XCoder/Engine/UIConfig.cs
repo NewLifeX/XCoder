@@ -51,7 +51,7 @@ namespace XCoder
             binary.EncodeInt = true;
             binary.AddHandler<BinaryFont>(11);
             binary.AddHandler<BinaryColor>(12);
-            binary.AddHandler<BinaryUnknown>(20);
+            //binary.AddHandler<BinaryUnknown>(20);
             binary.Stream = ms;
 
             //binary.Debug = true;
@@ -70,7 +70,7 @@ namespace XCoder
             binary.EncodeInt = true;
             binary.AddHandler<BinaryFont>(11);
             binary.AddHandler<BinaryColor>(12);
-            binary.AddHandler<BinaryUnknown>(20);
+            //binary.AddHandler<BinaryUnknown>(20);
 
             //binary.Debug = true;
             //binary.EnableTrace();

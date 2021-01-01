@@ -310,7 +310,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NewLife.Core">
-      <Version>8.10.2020.1002</Version>
+      <Version>8.10.2021.101</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
       <Version>3.6.2020.802</Version>
@@ -319,7 +319,7 @@
       <Version>1.2.2020.1002</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>10.0.2020.1002</Version>
+      <Version>10.0.2021.101</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
