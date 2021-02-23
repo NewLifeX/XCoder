@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using NewLife;
 
 namespace XICO
 {

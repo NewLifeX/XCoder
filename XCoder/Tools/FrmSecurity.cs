@@ -14,10 +14,12 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using NewLife;
 using NewLife.Collections;
+using NewLife.Data;
 using NewLife.Log;
 using NewLife.Reflection;
 using NewLife.Security;
 using NewLife.Serialization;
+using NewLife.Web;
 
 namespace XCoder.Tools
 {
@@ -258,10 +260,17 @@ namespace XCoder.Tools
         private void btnB642_Click(Object sender, EventArgs e)
         {
             var v = rtSource.Text;
-            //rtResult.Text = v.ToBase64().ToStr();
-            var buf = v.ToBase64();
-            //rtResult.Text = buf.ToStr() + Environment.NewLine + buf.ToHex();
-            SetResult(buf.ToStr(), buf.ToHex());
+
+            var vs = v.Split(".");
+            if (vs.Length <= 1)
+            {
+                var buf = v.ToBase64();
+                SetResult(buf.ToStr(), buf.ToHex());
+            }
+            else
+            {
+                SetResult(vs.Select(e => e.ToBase64().ToStr()).ToArray());
+            }
         }
 
         private void btnMD5_Click(Object sender, EventArgs e)
@@ -537,6 +546,68 @@ namespace XCoder.Tools
             }
 
             rtResult.Text = sb.Put(true);
+        }
+
+        private void btnSnowflake_Click(Object sender, EventArgs e)
+        {
+            var v = rtSource.Text.ToLong();
+            if (v <= 0) return;
+
+            var snow = new Snowflake();
+
+            // 指定基准时间
+            if (!rtPass.Text.IsNullOrEmpty())
+            {
+                var baseTime = rtPass.Text.ToDateTime();
+                if (baseTime.Year > 1000) snow.StartTimestamp = baseTime;
+            }
+
+            // 计算结果
+            {
+                if (!snow.TryParse(v, out var time, out var workerId, out var sequence)) throw new Exception("解码失败！");
+
+                SetResult(
+                    $"基准：{snow.StartTimestamp:yyyy-MM-dd}",
+                    $"时间：{time.ToFullString()}",
+                    $"节点：{workerId} ({workerId:X4})",
+                    $"序号：{sequence} ({sequence:X4})");
+            }
+        }
+
+        private void btnJWT_Click(Object sender, EventArgs e)
+        {
+            var v = rtSource.Text;
+            if (v.IsNullOrEmpty()) return;
+
+            var pass = rtPass.Text?.Trim();
+
+            var vs = v.Split('.');
+            if (vs.Length == 3)
+            {
+                var jwt = new JwtBuilder
+                {
+                    Secret = pass
+                };
+
+                var rs = jwt.TryDecode(v, out var message);
+
+                SetResult($"验证结果：{rs}", jwt.ToJson(true));
+            }
+            else if (vs.Length == 2)
+            {
+                var prv = new TokenProvider
+                {
+                    Key = pass
+                };
+
+                var rs = prv.TryDecode(v, out var user, out var expire);
+
+                SetResult($"验证结果：{rs}", new { user, expire }.ToJson(true));
+            }
+            else
+            {
+                SetResult(vs.Select(e => e.ToBase64().ToStr()).ToArray());
+            }
         }
         #endregion
 

@@ -117,13 +117,13 @@
       <Version>5.4.1.1</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Core">
-      <Version>8.10.2021.101</Version>
+      <Version>8.10.2021.212-beta1</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>1.2.2020.1002</Version>
+      <Version>1.2.2021.103</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>10.0.2021.101</Version>
+      <Version>10.0.2021.212-beta1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
