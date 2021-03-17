@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 //      修订号
 //
 [assembly: AssemblyVersion("7.2.*")]
-[assembly: AssemblyFileVersion("7.2.2020.0802")]
+[assembly: AssemblyFileVersion("7.2.2021.0317")]
 
 /*
  * v7.2.2020.0802   增加IP设置工具
