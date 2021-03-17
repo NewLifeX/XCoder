@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
     <AssemblyName>XCoder</AssemblyName>
     <RootNamespace>XCoder</RootNamespace>
     <AssemblyTitle>新生命码神工具</AssemblyTitle>
@@ -25,6 +25,10 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Tools\MachineInfo.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\XCoder\Engine\XConfig.cs" Link="Engine\XConfig.cs" />

@@ -54,6 +54,8 @@ namespace XCoder.Tools
             this.rtPass = new TextView();
             this.btnExchange = new Button();
             this.btnComputerInfo = new Button();
+            this.btnSnowflake = new Button();
+            this.btnJWT = new Button();
             this.rightBox = new VBox();
             this.middleBox = new HBox();
             // 
@@ -65,6 +67,8 @@ namespace XCoder.Tools
             //
             // tablrFunc
             //
+            this.tableFunc.Attach(this.btnJWT, 1, 2, 14, 15);
+            this.tableFunc.Attach(this.btnSnowflake, 0, 1, 14, 15);
             this.tableFunc.Attach(this.btnComputerInfo, 1, 2, 13, 14);
             this.tableFunc.Attach(this.btnTime, 0, 1,    13,14);
             this.tableFunc.Attach(this.btnHtml2, 1, 2   ,12,13);
@@ -320,6 +324,18 @@ namespace XCoder.Tools
             this.btnComputerInfo.Name = "btnComputerInfo";
             this.btnComputerInfo.Label = "机器信息";
             this.btnComputerInfo.Clicked += new System.EventHandler(this.BtnComputerInfo_Click);
+            // 
+            // btnSnowflake
+            //
+            this.btnSnowflake.Name = "btnSnowflake";
+            this.btnSnowflake.Label = "雪花Id";
+            this.btnSnowflake.Clicked += new System.EventHandler(this.btnSnowflake_Click);
+            // 
+            // btnJWT
+            //
+            this.btnJWT.Name = "btnJWT";
+            this.btnJWT.Label = "JWT令牌";
+            this.btnJWT.Clicked += new System.EventHandler(this.btnJWT_Click);
             //
             // middleBox
             //
@@ -383,6 +399,17 @@ namespace XCoder.Tools
         private Button btnSHA1;
         private Button btnTime;
         private Button btnComputerInfo;
+        //private CheckBox cbBase64;
+        //private CheckBox cbHex;
+        //private CheckBox cbString;
+        private RadioButton rbBase64;
+        private RadioButton rbHex;
+        private RadioButton rbString;
+        private RadioButton rbBase642;
+        private RadioButton rbHex2;
+        private RadioButton rbString2;
+        private Button btnJWT;
+        private Button btnSnowflake;
         private VBox rightBox;
         private HBox middleBox;
     }

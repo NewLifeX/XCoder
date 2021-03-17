@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Gtk;
+using NewLife;
 using NewLife.Log;
-using NewLife.Threading;
 
 namespace XCoder
 {
@@ -15,6 +14,7 @@ namespace XCoder
         static void Main()
         {
             XTrace.UseConsole();
+            MachineInfo.RegisterAsync();
 
             GLib.ExceptionManager.UnhandledException += ExceptionManager_UnhandledException;
 
