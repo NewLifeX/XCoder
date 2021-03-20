@@ -28,10 +28,12 @@ using System.Runtime.InteropServices;
 //      内部版本号
 //      修订号
 //
-[assembly: AssemblyVersion("7.2.*")]
-[assembly: AssemblyFileVersion("7.2.2021.0317")]
+[assembly: AssemblyVersion("7.3.*")]
+[assembly: AssemblyFileVersion("7.3.2021.0321")]
 
 /*
+ * v7.3.2021.0321   支持星尘升级码神工具
+ * 
  * v7.2.2020.0802   增加IP设置工具
  * 
  * v7.1.2020.0501   集成星尘

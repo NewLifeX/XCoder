@@ -104,9 +104,15 @@ namespace XCoder
                 {
                     //StopWork("Upgrade");
 
-                    var p = Process.GetCurrentProcess();
-                    p.Close();
-                    p.Kill();
+                    // 重新拉起进程
+                    var star = "XCoder.exe";
+                    XTrace.WriteLine("强制升级，拉起进程 {0} -upgrade", star.GetFullPath());
+                    Process.Start(star.GetFullPath(), "-upgrade");
+
+                    //var p = Process.GetCurrentProcess();
+                    //p.Close();
+                    //p.Kill();
+                    Application.Exit();
                 }
             }
         }
