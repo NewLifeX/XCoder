@@ -616,6 +616,11 @@ namespace XCoder.Tools
         {
             var sb = Pool.StringBuilder.Get();
 
+            var mi = MachineInfo.Current;
+            mi.Refresh();
+            sb.AppendLine(mi.ToJson(true));
+            sb.AppendLine();
+
             var macs = GetMacs().ToList();
             if (macs.Count > 0) sb.AppendFormat("MAC:\t{0}\r\n", macs.Join(",", x => x.ToHex("-")));
 

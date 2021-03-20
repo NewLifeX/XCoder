@@ -548,6 +548,7 @@ namespace XCoder.Tools
             var sb = Pool.StringBuilder.Get();
 
             var mi = MachineInfo.Current;
+            mi.Refresh();
             sb.AppendLine(mi.ToJson(true));
             sb.AppendLine();
 
