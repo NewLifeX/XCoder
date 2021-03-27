@@ -337,8 +337,9 @@ namespace XCoder.Tools
             var buf = GetSource();
             //rtResult.Text = "{0:X4}\r\n{0}".F(buf.Crc16());
             var rs = buf.Crc16();
-            buf = rs.GetBytes(false);
-            SetResult("/*数字、HEX编码、Base64编码*/", rs + "", buf.ToHex(), buf.ToBase64());
+            var data = rs.GetBytes(false);
+            var mcrc = Modbus_CRC(buf, 0, buf.Length);
+            SetResult("/*数字、HEX编码、Base64编码、Modbus-Crc*/", rs + "", data.ToHex(), data.ToBase64(), mcrc.GetBytes().ToHex("-"));
         }
 
         private void btnDES_Click(Object sender, EventArgs e)
@@ -732,6 +733,34 @@ namespace XCoder.Tools
             //    sb.Append(s);
             //}
             //return sb.ToString().Trim();
+        }
+        #endregion
+
+        #region Modbus_CRC
+        private static readonly UInt16[] crc_ta = new UInt16[16] { 0x0000, 0xCC01, 0xD801, 0x1400, 0xF001, 0x3C00, 0x2800, 0xE401, 0xA001, 0x6C00, 0x7800, 0xB401, 0x5000, 0x9C01, 0x8801, 0x4400, };
+
+        /// <summary>Crc校验</summary>
+        /// <param name="data"></param>
+        /// <param name="offset">偏移</param>
+        /// <param name="count">数量</param>
+        /// <returns></returns>
+        public static UInt16 Modbus_CRC(Byte[] data, Int32 offset, Int32 count = -1)
+        {
+            if (data == null || data.Length < 1) return 0;
+
+            UInt16 u = 0xFFFF;
+            Byte b;
+
+            if (count == 0) count = data.Length - offset;
+
+            for (var i = offset; i < count; i++)
+            {
+                b = data[i];
+                u = (UInt16)(crc_ta[(b ^ u) & 15] ^ (u >> 4));
+                u = (UInt16)(crc_ta[((b >> 4) ^ u) & 15] ^ (u >> 4));
+            }
+
+            return u;
         }
         #endregion
     }
