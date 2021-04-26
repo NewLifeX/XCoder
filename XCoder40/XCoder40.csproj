@@ -11,7 +11,7 @@
     <RootNamespace>XCoder</RootNamespace>
     <AssemblyName>XCoder</AssemblyName>
     <ApplicationIcon>..\XCoder\leaf.ico</ApplicationIcon>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <BaseIntermediateOutputPath>obj4\</BaseIntermediateOutputPath>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -387,20 +387,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Bcl.Async">
-      <Version>1.0.168</Version>
-    </PackageReference>
     <PackageReference Include="NewLife.Core">
-      <Version>8.9.2020.802</Version>
+      <Version>8.10.2021.420-beta2</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
-      <Version>3.6.2020.802</Version>
-    </PackageReference>
-    <PackageReference Include="NewLife.Stardust">
-      <Version>1.1.2020.802</Version>
+      <Version>3.6.2020.1002</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>9.19.2020.802</Version>
+      <Version>10.1.2021.420-beta2</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

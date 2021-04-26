@@ -269,7 +269,7 @@ namespace XCoder.Tools
             }
             else
             {
-                SetResult(vs.Select(e => e.ToBase64().ToStr()).ToArray());
+                SetResult(vs.Select(e2 => e2.ToBase64().ToStr()).ToArray());
             }
         }
 
@@ -607,7 +607,7 @@ namespace XCoder.Tools
             }
             else
             {
-                SetResult(vs.Select(e => e.ToBase64().ToStr()).ToArray());
+                SetResult(vs.Select(e2 => e2.ToBase64().ToStr()).ToArray());
             }
         }
         #endregion

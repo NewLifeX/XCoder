@@ -9,8 +9,10 @@ using NewLife.Log;
 using NewLife.Net;
 using NewLife.Threading;
 using NewLife.Xml;
-using Stardust;
 using XCode.DataAccessLayer;
+#if !NET4
+using Stardust;
+#endif
 
 namespace XCoder
 {
@@ -27,7 +29,9 @@ namespace XCoder
             XTrace.UseWinForm();
 #endif
 
+#if !NET4
             StartClient();
+#endif
 
             StringHelper.EnableSpeechTip = XConfig.Current.SpeechTip;
 
@@ -38,6 +42,7 @@ namespace XCoder
             Application.Run(new FrmMDI());
         }
 
+#if !NET4
         static TimerX _timer;
         static StarClient _Client;
         //static ServiceManager _Manager;
@@ -116,5 +121,6 @@ namespace XCoder
                 }
             }
         }
+#endif
     }
 }
