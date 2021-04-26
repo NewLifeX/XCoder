@@ -28,6 +28,7 @@ namespace XCoder
 #else
             XTrace.UseWinForm();
 #endif
+            MachineInfo.RegisterAsync();
 
 #if !NET4
             StartClient();
