@@ -518,7 +518,10 @@ namespace XCoder.Tools
             {
                 dt = n.ToDateTime();
                 if (dt.Year > 1000 && dt.Year < 3000)
+                {
                     sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff} (Unix毫秒)\r\n", dt);
+                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff} (现在)\r\n", dt.ToLocalTime());
+                }
 
                 //sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(-n));
                 //sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(n));
@@ -527,7 +530,10 @@ namespace XCoder.Tools
             {
                 dt = v.ToInt().ToDateTime();
                 if (dt.Year > 1000 && dt.Year < 3000)
+                {
                     sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss} (Unix秒)\r\n", dt);
+                    sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss} (现在)\r\n", dt.ToLocalTime());
+                }
 
                 //sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(-n));
                 //sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(n));
