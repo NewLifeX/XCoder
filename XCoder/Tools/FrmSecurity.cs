@@ -202,6 +202,8 @@ namespace XCoder.Tools
             if (cbString.Checked) list.Add(data.ToStr());
             if (cbHex.Checked)
             {
+                list.Add(data.ToHex().ToUpper());
+                list.Add(data.ToHex().ToLower());
                 list.Add(data.ToHex("-"));
                 list.Add(data.ToHex(" "));
             }
@@ -276,15 +278,15 @@ namespace XCoder.Tools
         private void btnMD5_Click(Object sender, EventArgs e)
         {
             var buf = GetSource();
-            var str = buf.MD5().ToHex();
-            rtResult.Text = str.ToUpper() + Environment.NewLine + str.ToLower();
+            buf = buf.MD5();
+            SetResult(buf);
         }
 
         private void btnMD52_Click(Object sender, EventArgs e)
         {
             var buf = GetSource();
-            var str = buf.MD5().ToHex(0, 8);
-            rtResult.Text = str.ToUpper() + Environment.NewLine + str.ToLower();
+            buf = buf.MD5().Take(8).ToArray();
+            SetResult(buf);
         }
 
         private void btnSHA1_Click(Object sender, EventArgs e)
