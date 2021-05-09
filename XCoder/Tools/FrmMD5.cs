@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -53,6 +54,9 @@ namespace XCoder.Tools
                     case RichTextBox rtb:
                         if (dic.TryGetValue(item.Name, out v)) rtb.Text = v + "";
                         break;
+                    case NumericUpDown nud:
+                        if (dic.TryGetValue(item.Name, out v)) nud.Value = v.ToInt();
+                        break;
                     default:
                         if (item.Controls.Count > 0) LoadConfig(dic, item);
                         break;
@@ -80,6 +84,7 @@ namespace XCoder.Tools
                     case RadioButton rb: dic[item.Name] = rb.Checked; break;
                     case CheckBox cb: dic[item.Name] = cb.Checked; break;
                     case RichTextBox rtb: dic[item.Name] = rtb.Text; break;
+                    case NumericUpDown nud: dic[item.Name] = nud.Value; break;
                     default:
                         if (item.Controls.Count > 0) SaveConfig(dic, item);
                         break;
@@ -171,12 +176,15 @@ namespace XCoder.Tools
             }
 
             // 总计算量
-            var total = (Int64)Math.Pow(sb.Length, length);
-            lbTotal.Text = total.ToString("n0");
+            _total = (Int64)Math.Pow(sb.Length, length);
+            lbTotal.Text = _total.ToString("n0");
 
             return sb.ToString();
         }
 
+        private Int64 _total;
+        private Int64 _p;
+        private Stopwatch _watch;
         private async void btnMD5_Click(Object sender, EventArgs e)
         {
             SaveConfig();
@@ -186,13 +194,14 @@ namespace XCoder.Tools
             var result = buf.ToStr().ToUpper();
 
             var length = (Int32)numLength.Value;
-            var total = (Int64)Math.Pow(chars.Length, length);
             var cpu = Environment.ProcessorCount;
-            var step = total / cpu;
+            var step = _total / cpu;
+            _watch = Stopwatch.StartNew();
+            rtResult.Text = null;
 
             var btn = sender as Button;
             btn.Enabled = false;
-
+            timer1.Enabled = true;
             try
             {
                 //var source = new TaskCompletionSource<String>();
@@ -212,6 +221,10 @@ namespace XCoder.Tools
             finally
             {
                 btn.Enabled = true;
+                timer1.Enabled = false;
+
+                timer1_Tick(null, null);
+                _watch.Stop();
             }
         }
 
@@ -225,6 +238,8 @@ namespace XCoder.Tools
 
             for (var i = start; i < end && !cts.Token.IsCancellationRequested; i++)
             {
+                Interlocked.Increment(ref _p);
+
                 // 生成字符串。倒序，逐级取余，得到字符
                 var n = i;
                 for (var j = length - 1; j >= 0; j--)
@@ -250,6 +265,17 @@ namespace XCoder.Tools
         private void numLength_ValueChanged(Object sender, EventArgs e)
         {
             var chars = GetChars();
+        }
+
+        private void timer1_Tick(Object sender, EventArgs e)
+        {
+            lbPosition.Text = _p.ToString("n0");
+            lbProgress.Text = ((Double)_p / _total).ToString("p2");
+            lbCost.Text = _watch.Elapsed.ToString();
+
+            var speed = _p * 1000d / _watch.ElapsedMilliseconds;
+            lbSpeed.Text = speed.ToString("n0") + "/s";
+            lbMaxCost.Text = TimeSpan.FromSeconds(_total / speed).ToString();
         }
     }
 }

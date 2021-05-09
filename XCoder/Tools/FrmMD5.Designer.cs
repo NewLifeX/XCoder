@@ -59,6 +59,12 @@
             this.rbBase64 = new System.Windows.Forms.RadioButton();
             this.rbHex = new System.Windows.Forms.RadioButton();
             this.rbString = new System.Windows.Forms.RadioButton();
+            this.lbCost = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lbMaxCost = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lbSpeed = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.gbFunc.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numLength)).BeginInit();
             this.gbSource.SuspendLayout();
@@ -70,6 +76,12 @@
             // 
             this.gbFunc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.gbFunc.Controls.Add(this.lbMaxCost);
+            this.gbFunc.Controls.Add(this.lbSpeed);
+            this.gbFunc.Controls.Add(this.label8);
+            this.gbFunc.Controls.Add(this.label6);
+            this.gbFunc.Controls.Add(this.lbCost);
+            this.gbFunc.Controls.Add(this.label4);
             this.gbFunc.Controls.Add(this.lbProgress);
             this.gbFunc.Controls.Add(this.label7);
             this.gbFunc.Controls.Add(this.lbPosition);
@@ -96,7 +108,7 @@
             // 
             this.lbProgress.AutoSize = true;
             this.lbProgress.ForeColor = System.Drawing.Color.Red;
-            this.lbProgress.Location = new System.Drawing.Point(100, 267);
+            this.lbProgress.Location = new System.Drawing.Point(100, 268);
             this.lbProgress.Name = "lbProgress";
             this.lbProgress.Size = new System.Drawing.Size(53, 18);
             this.lbProgress.TabIndex = 16;
@@ -105,7 +117,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 267);
+            this.label7.Location = new System.Drawing.Point(7, 268);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(98, 18);
             this.label7.TabIndex = 15;
@@ -219,7 +231,7 @@
             // 
             // btnMD5
             // 
-            this.btnMD5.Location = new System.Drawing.Point(53, 299);
+            this.btnMD5.Location = new System.Drawing.Point(58, 444);
             this.btnMD5.Margin = new System.Windows.Forms.Padding(4);
             this.btnMD5.Name = "btnMD5";
             this.btnMD5.Size = new System.Drawing.Size(112, 45);
@@ -394,6 +406,11 @@
             this.rtPass.TabIndex = 2;
             this.rtPass.Text = "NewLife";
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 500;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // rbBase64
             // 
             this.rbBase64.AutoSize = true;
@@ -428,6 +445,63 @@
             this.rbString.TabStop = true;
             this.rbString.Text = "字符串";
             this.rbString.UseVisualStyleBackColor = true;
+            // 
+            // lbCost
+            // 
+            this.lbCost.AutoSize = true;
+            this.lbCost.ForeColor = System.Drawing.Color.Red;
+            this.lbCost.Location = new System.Drawing.Point(100, 301);
+            this.lbCost.Name = "lbCost";
+            this.lbCost.Size = new System.Drawing.Size(17, 18);
+            this.lbCost.TabIndex = 18;
+            this.lbCost.Text = "0";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(7, 301);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 18);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "耗时：";
+            // 
+            // lbMaxCost
+            // 
+            this.lbMaxCost.AutoSize = true;
+            this.lbMaxCost.ForeColor = System.Drawing.Color.Red;
+            this.lbMaxCost.Location = new System.Drawing.Point(100, 368);
+            this.lbMaxCost.Name = "lbMaxCost";
+            this.lbMaxCost.Size = new System.Drawing.Size(17, 18);
+            this.lbMaxCost.TabIndex = 20;
+            this.lbMaxCost.Text = "0";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 334);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(62, 18);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "速度：";
+            // 
+            // lbSpeed
+            // 
+            this.lbSpeed.AutoSize = true;
+            this.lbSpeed.ForeColor = System.Drawing.Color.Red;
+            this.lbSpeed.Location = new System.Drawing.Point(100, 334);
+            this.lbSpeed.Name = "lbSpeed";
+            this.lbSpeed.Size = new System.Drawing.Size(17, 18);
+            this.lbSpeed.TabIndex = 22;
+            this.lbSpeed.Text = "0";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(7, 368);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(98, 18);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "估算耗时：";
             // 
             // FrmMD5
             // 
@@ -487,5 +561,11 @@
         private System.Windows.Forms.RadioButton rbBase64;
         private System.Windows.Forms.RadioButton rbHex;
         private System.Windows.Forms.RadioButton rbString;
+        private System.Windows.Forms.Label lbCost;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lbMaxCost;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lbSpeed;
+        private System.Windows.Forms.Label label8;
     }
 }
