@@ -32,14 +32,14 @@ namespace XCoder.Common
             {
                 switch (item)
                 {
+                    case TextBoxBase txt:
+                        if (dic.TryGetValue(item.Name, out var v)) txt.Text = v + "";
+                        break;
                     case RadioButton rb:
-                        if (dic.TryGetValue(item.Name, out var v)) rb.Checked = v.ToBoolean();
+                        if (dic.TryGetValue(item.Name, out v)) rb.Checked = v.ToBoolean();
                         break;
                     case CheckBox cb:
                         if (dic.TryGetValue(item.Name, out v)) cb.Checked = v.ToBoolean();
-                        break;
-                    case RichTextBox rtb:
-                        if (dic.TryGetValue(item.Name, out v)) rtb.Text = v + "";
                         break;
                     case NumericUpDown nud:
                         if (dic.TryGetValue(item.Name, out v)) nud.Value = v.ToInt();
@@ -71,9 +71,9 @@ namespace XCoder.Common
             {
                 switch (item)
                 {
+                    case TextBoxBase txt: dic[item.Name] = txt.Text; break;
                     case RadioButton rb: dic[item.Name] = rb.Checked; break;
                     case CheckBox cb: dic[item.Name] = cb.Checked; break;
-                    case RichTextBox rtb: dic[item.Name] = rtb.Text; break;
                     case NumericUpDown nud: dic[item.Name] = nud.Value; break;
                     case ComboBox cbox:
                         var list = new List<String> { cbox.Text };

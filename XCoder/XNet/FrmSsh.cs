@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using NewLife;
 using NewLife.Log;
 using NewLife.Net;
+using Renci.SshNet;
 using XCoder;
 using XCoder.Common;
 using XCoder.XNet;
@@ -15,7 +16,7 @@ namespace XNet
     public partial class FrmSsh : Form, IXForm
     {
         private ControlConfig _config;
-        ISocketClient _Client;
+        private SshClient _Client;
 
         #region 窗体
         public FrmSsh()
@@ -47,7 +48,7 @@ namespace XNet
         #endregion
 
         #region 收发数据
-        void Connect()
+        private void Connect()
         {
             _Client = null;
 
@@ -56,12 +57,8 @@ namespace XNet
             if (uri.Type == NetType.Unknown) uri.Type = NetType.Tcp;
             if (uri.Port == 0) uri.Port = 22;
 
-            var client = uri.CreateRemote();
-
-            client.Received += OnReceived;
-            client.Log = XTrace.Log;
-
-            if (!client.Open()) return;
+            var client = new SshClient(uri.Host ?? (uri.Address + ""), uri.Port, txtUser.Text, txtPass.Text);
+            client.Connect();
 
             _Client = client;
 
@@ -73,7 +70,7 @@ namespace XNet
             _config.Save();
         }
 
-        void Disconnect()
+        private void Disconnect()
         {
             if (_Client != null)
             {
@@ -98,16 +95,13 @@ namespace XNet
                 Disconnect();
         }
 
-        void OnReceived(Object sender, ReceivedEventArgs e)
-        {
-            XTrace.WriteLine(e.Packet.ToStr());
-        }
+        private void OnReceived(Object sender, ReceivedEventArgs e) => XTrace.WriteLine(e.Packet.ToStr());
 
-        Int32 _pColor = 0;
-        Int32 BytesOfReceived = 0;
-        Int32 BytesOfSent = 0;
-        Int32 lastReceive = 0;
-        Int32 lastSend = 0;
+        private Int32 _pColor = 0;
+        private Int32 BytesOfReceived = 0;
+        private Int32 BytesOfSent = 0;
+        private Int32 lastReceive = 0;
+        private Int32 lastSend = 0;
         private void timer1_Tick(Object sender, EventArgs e)
         {
             var rcount = BytesOfReceived;
@@ -141,7 +135,13 @@ namespace XNet
             // 处理换行
             str = str.Replace("\n", "\r\n");
 
-            if (_Client != null) _Client.Send(str);
+            if (_Client != null)
+            {
+                XTrace.WriteLine(str);
+
+                var rs = _Client.RunCommand(str);
+                if (rs != null && !rs.Result.IsNullOrEmpty()) XTrace.WriteLine(rs.Result);
+            }
         }
         #endregion
 
@@ -156,58 +156,6 @@ namespace XNet
         {
             txtSend.Clear();
             BytesOfSent = 0;
-        }
-
-        private void mi显示应用日志_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
-
-        private void mi显示网络日志_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
-
-        private void mi显示发送数据_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
-
-        private void mi显示接收数据_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
-
-        private void mi显示统计信息_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            NetConfig.Current.ShowStat = mi.Checked = !mi.Checked;
-        }
-
-        private void mi显示接收字符串_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            NetConfig.Current.ShowReceiveString = mi.Checked = !mi.Checked;
-        }
-
-        private void miHex发送_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            NetConfig.Current.HexSend = mi.Checked = !mi.Checked;
-        }
-
-        private void 查看Tcp参数ToolStripMenuItem_Click(Object sender, EventArgs e)
-        {
-            NetHelper2.ShowTcpParameters();
-        }
-
-        private void 设置最大TcpToolStripMenuItem_Click(Object sender, EventArgs e)
-        {
-            NetHelper2.SetTcpMax();
         }
 
         private void mi日志着色_Click(Object sender, EventArgs e)
