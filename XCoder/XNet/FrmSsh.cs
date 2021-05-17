@@ -7,7 +7,6 @@ using NewLife.Net;
 using Renci.SshNet;
 using XCoder;
 using XCoder.Common;
-using XCoder.XNet;
 
 namespace XNet
 {
@@ -17,6 +16,7 @@ namespace XNet
     {
         private ControlConfig _config;
         private SshClient _Client;
+        private ILog _log;
 
         #region 窗体
         public FrmSsh()
@@ -34,16 +34,15 @@ namespace XNet
             _config = new ControlConfig { Control = this, FileName = "ssh.json" };
             _config.Load();
 
-            txtReceive.UseWinFormControl();
+            _log = new TextControlLog { Control = txtReceive };
+
+            //txtReceive.UseWinFormControl();
             txtReceive.Clear();
             txtReceive.SetDefaultStyle(12);
             txtSend.SetDefaultStyle(12);
 
             gbReceive.Tag = gbReceive.Text;
             gbSend.Tag = gbSend.Text;
-
-            // 加载保存的颜色
-            UIConfig.Apply(txtReceive);
         }
         #endregion
 
@@ -58,6 +57,7 @@ namespace XNet
             if (uri.Port == 0) uri.Port = 22;
 
             var client = new SshClient(uri.Host ?? (uri.Address + ""), uri.Port, txtUser.Text, txtPass.Text);
+            client.ErrorOccurred += Client_ErrorOccurred;
             client.Connect();
 
             _Client = client;
@@ -95,7 +95,10 @@ namespace XNet
                 Disconnect();
         }
 
-        private void OnReceived(Object sender, ReceivedEventArgs e) => XTrace.WriteLine(e.Packet.ToStr());
+        private void Client_ErrorOccurred(Object sender, Renci.SshNet.Common.ExceptionEventArgs e)
+        {
+            _log.Error(e.Exception.ToString());
+        }
 
         private Int32 _pColor = 0;
         private Int32 BytesOfReceived = 0;
@@ -132,15 +135,21 @@ namespace XNet
                 return;
             }
 
+            _config.Save();
+
             // 处理换行
             str = str.Replace("\n", "\r\n");
 
             if (_Client != null)
             {
-                XTrace.WriteLine(str);
+                _log.Info(str);
 
                 var rs = _Client.RunCommand(str);
-                if (rs != null && !rs.Result.IsNullOrEmpty()) XTrace.WriteLine(rs.Result);
+                if (rs != null)
+                {
+                    if (!rs.Result.IsNullOrEmpty()) _log.Info(rs.Result);
+                    if (!rs.Error.IsNullOrEmpty()) _log.Error(rs.Error);
+                }
             }
         }
         #endregion
