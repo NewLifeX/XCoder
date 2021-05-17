@@ -70,8 +70,8 @@ namespace XCoder
                 var ms = new Dictionary<String, ToolStripMenuItem>();
                 foreach (ToolStripMenuItem item in menuStrip.Items)
                 {
-                    var name = item.Text.Substring(null, "(");
-                    ms[name] = item;
+                    var name2 = item.Text.Substring(null, "(");
+                    ms[name2] = item;
                 }
                 foreach (var item in ts)
                 {

@@ -20,6 +20,7 @@ using NewLife.Reflection;
 using NewLife.Security;
 using NewLife.Serialization;
 using NewLife.Web;
+using XCoder.Common;
 
 namespace XCoder.Tools
 {
@@ -27,6 +28,8 @@ namespace XCoder.Tools
     [DisplayName("加密解密")]
     public partial class FrmSecurity : Form, IXForm
     {
+        private ControlConfig _config;
+
         #region 窗体初始化
         public FrmSecurity()
         {
@@ -38,67 +41,8 @@ namespace XCoder.Tools
 
         private void FrmSecurity_Load(Object sender, EventArgs e)
         {
-            LoadConfig();
-        }
-
-        private void LoadConfig()
-        {
-            var dataPath = Setting.Current.DataPath;
-            var file = dataPath.CombinePath("security.json").GetFullPath();
-            if (File.Exists(file))
-            {
-                var dic = new JsonParser(File.ReadAllText(file)).Decode() as IDictionary<String, Object>;
-                LoadConfig(dic, this);
-            }
-        }
-
-        private void LoadConfig(IDictionary<String, Object> dic, Control control)
-        {
-            foreach (Control item in control.Controls)
-            {
-                switch (item)
-                {
-                    case RadioButton rb:
-                        if (dic.TryGetValue(item.Name, out var v)) rb.Checked = v.ToBoolean();
-                        break;
-                    case CheckBox cb:
-                        if (dic.TryGetValue(item.Name, out v)) cb.Checked = v.ToBoolean();
-                        break;
-                    case RichTextBox rtb:
-                        if (dic.TryGetValue(item.Name, out v)) rtb.Text = v + "";
-                        break;
-                    default:
-                        if (item.Controls.Count > 0) LoadConfig(dic, item);
-                        break;
-                }
-            }
-        }
-
-        private void SaveConfig()
-        {
-            var dic = new Dictionary<String, Object>();
-            SaveConfig(dic, this);
-
-            var dataPath = Setting.Current.DataPath;
-            var file = dataPath.CombinePath("security.json").GetFullPath();
-            file.EnsureDirectory(true);
-            File.WriteAllText(file, dic.ToJson(true));
-        }
-
-        private void SaveConfig(IDictionary<String, Object> dic, Control control)
-        {
-            foreach (Control item in control.Controls)
-            {
-                switch (item)
-                {
-                    case RadioButton rb: dic[item.Name] = rb.Checked; break;
-                    case CheckBox cb: dic[item.Name] = cb.Checked; break;
-                    case RichTextBox rtb: dic[item.Name] = rtb.Text; break;
-                    default:
-                        if (item.Controls.Count > 0) SaveConfig(dic, item);
-                        break;
-                }
-            }
+            _config = new ControlConfig { Control = this, FileName = "security.json" };
+            _config.Load();
         }
         #endregion
 
@@ -192,7 +136,7 @@ namespace XCoder.Tools
             }
             rtResult.Text = sb.ToString();
 
-            SaveConfig();
+            _config.Save();
         }
 
         private void SetResult(Byte[] data)

@@ -1,0 +1,94 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using NewLife;
+using NewLife.Serialization;
+
+namespace XCoder.Common
+{
+    /// <summary>控件配置</summary>
+    internal class ControlConfig
+    {
+        public Control Control { get; set; }
+
+        public String FileName { get; set; }
+
+        public void Load()
+        {
+            var dataPath = Setting.Current.DataPath;
+            var file = dataPath.CombinePath(FileName).GetFullPath();
+            if (File.Exists(file))
+            {
+                var dic = JsonParser.Decode(File.ReadAllText(file));
+                LoadConfig(dic, Control);
+            }
+        }
+
+        private void LoadConfig(IDictionary<String, Object> dic, Control control)
+        {
+            foreach (Control item in control.Controls)
+            {
+                switch (item)
+                {
+                    case RadioButton rb:
+                        if (dic.TryGetValue(item.Name, out var v)) rb.Checked = v.ToBoolean();
+                        break;
+                    case CheckBox cb:
+                        if (dic.TryGetValue(item.Name, out v)) cb.Checked = v.ToBoolean();
+                        break;
+                    case RichTextBox rtb:
+                        if (dic.TryGetValue(item.Name, out v)) rtb.Text = v + "";
+                        break;
+                    case NumericUpDown nud:
+                        if (dic.TryGetValue(item.Name, out v)) nud.Value = v.ToInt();
+                        break;
+                    case ComboBox cbox:
+                        if (dic.TryGetValue(item.Name, out v)) cbox.DataSource = (v + "").Split(",");
+                        break;
+                    default:
+                        if (item.Controls.Count > 0) LoadConfig(dic, item);
+                        break;
+                }
+            }
+        }
+
+        public void Save()
+        {
+            var dic = new Dictionary<String, Object>();
+            SaveConfig(dic, Control);
+
+            var dataPath = Setting.Current.DataPath;
+            var file = dataPath.CombinePath(FileName).GetFullPath();
+            file.EnsureDirectory(true);
+            File.WriteAllText(file, dic.ToJson(true));
+        }
+
+        private void SaveConfig(IDictionary<String, Object> dic, Control control)
+        {
+            foreach (Control item in control.Controls)
+            {
+                switch (item)
+                {
+                    case RadioButton rb: dic[item.Name] = rb.Checked; break;
+                    case CheckBox cb: dic[item.Name] = cb.Checked; break;
+                    case RichTextBox rtb: dic[item.Name] = rtb.Text; break;
+                    case NumericUpDown nud: dic[item.Name] = nud.Value; break;
+                    case ComboBox cbox:
+                        var list = new List<String> { cbox.Text };
+                        for (var i = 0; i < cbox.Items.Count; i++)
+                        {
+                            var elm = cbox.Items[i];
+                            if (elm != null) list.Add(elm + "");
+                        }
+                        dic[item.Name] = list.Where(e => !e.IsNullOrEmpty()).Distinct().Join();
+                        break;
+                    default:
+                        if (item.Controls.Count > 0) SaveConfig(dic, item);
+                        break;
+                }
+            }
+        }
+    }
+}
