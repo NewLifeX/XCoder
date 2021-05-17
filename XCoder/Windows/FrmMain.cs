@@ -22,6 +22,7 @@ using TaskEx = System.Threading.Tasks.Task;
 
 namespace XCoder
 {
+    [Category("数据工具")]
     [DisplayName("数据建模工具")]
     public partial class FrmMain : Form, IXForm
     {

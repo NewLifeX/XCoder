@@ -23,6 +23,7 @@ using TaskEx = System.Threading.Tasks.Task;
 
 namespace XApi
 {
+    [Category("网络通信")]
     [DisplayName("Api调试")]
     public partial class FrmMain : Form, IXForm
     {

@@ -10,6 +10,8 @@ using System.IO;
 using NewLife.Log;
 using NewLife.Threading;
 using NewLife;
+using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace XCoder
 {
@@ -65,9 +67,24 @@ namespace XCoder
 
             this.Invoke(() =>
             {
-                var root = toolsMenu;
+                var ms = new Dictionary<String, ToolStripMenuItem>();
+                foreach (ToolStripMenuItem item in menuStrip.Items)
+                {
+                    var name = item.Text.Substring(null, "(");
+                    ms[name] = item;
+                }
                 foreach (var item in ts)
                 {
+                    var att = item.GetCustomAttribute<CategoryAttribute>();
+                    var cat = att?.Category;
+                    if (cat == null) cat = "工具";
+
+                    if (!ms.TryGetValue(cat, out var root))
+                    {
+                        root = menuStrip.Items.Add(cat) as ToolStripMenuItem;
+                        ms[cat] = root;
+                    }
+
                     var mi = root.DropDownItems.Add(item.GetDisplayName() ?? item.FullName);
                     mi.Tag = item;
                     mi.Click += (s, e) =>

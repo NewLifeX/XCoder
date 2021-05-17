@@ -23,6 +23,7 @@ using NewLife.Web;
 
 namespace XCoder.Tools
 {
+    [Category("安全工具")]
     [DisplayName("加密解密")]
     public partial class FrmSecurity : Form, IXForm
     {

@@ -14,6 +14,7 @@ using NewLife.Yun;
 
 namespace XCoder.Yun
 {
+    [Category("地理信息")]
     [DisplayName("地图接口")]
     public partial class FrmMap : Form, IXForm
     {

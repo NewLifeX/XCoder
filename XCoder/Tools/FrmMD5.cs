@@ -14,6 +14,7 @@ using NewLife.Serialization;
 
 namespace XCoder.Tools
 {
+    [Category("安全工具")]
     [DisplayName("MD5解密")]
     public partial class FrmMD5 : Form, IXForm
     {

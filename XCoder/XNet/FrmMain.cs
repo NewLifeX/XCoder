@@ -21,6 +21,7 @@ using TaskEx = System.Threading.Tasks.Task;
 
 namespace XNet
 {
+    [Category("网络通信")]
     [DisplayName("网络调试工具")]
     public partial class FrmMain : Form, IXForm
     {

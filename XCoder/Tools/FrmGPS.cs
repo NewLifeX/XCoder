@@ -11,6 +11,8 @@ using NewLife;
 
 namespace XCoder.Tools
 {
+    [Category("地理信息")]
+    [DisplayName("GPS辅助")]
     public partial class FrmGPS : Form
     {
         public FrmGPS()

@@ -1,27 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife;
-using NewLife.Data;
 using NewLife.Log;
-using NewLife.Net;
-using NewLife.Reflection;
-using NewLife.Threading;
-using NewLife.Windows;
 using XCoder;
-using XCoder.XNet;
 #if !NET4
-using TaskEx = System.Threading.Tasks.Task;
 #endif
 
 namespace XNet
 {
+    [Category("网络通信")]
     [DisplayName("IP设置")]
     public partial class FrmIp : Form, IXForm
     {

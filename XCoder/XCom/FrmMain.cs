@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife;
 using NewLife.Log;
@@ -12,6 +11,7 @@ using XCoder;
 
 namespace XCom
 {
+    [Category("网络通信")]
     [DisplayName("串口调试工具")]
     public partial class FrmMain : Form, IXForm
     {
