@@ -89,6 +89,12 @@
     <Compile Include="Tools\FrmMD5.Designer.cs">
       <DependentUpon>FrmMD5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\FrmSymmetric.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FrmSymmetric.Designer.cs">
+      <DependentUpon>FrmSymmetric.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\FrmSecurity.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FrmMD5.resx">
       <DependentUpon>FrmMD5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FrmSymmetric.resx">
+      <DependentUpon>FrmSymmetric.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FrmSecurity.resx">
       <DependentUpon>FrmSecurity.cs</DependentUpon>

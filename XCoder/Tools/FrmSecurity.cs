@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
@@ -15,7 +14,6 @@ using Microsoft.Win32;
 using NewLife;
 using NewLife.Collections;
 using NewLife.Data;
-using NewLife.Log;
 using NewLife.Reflection;
 using NewLife.Security;
 using NewLife.Serialization;
@@ -287,68 +285,6 @@ namespace XCoder.Tools
             var data = rs.GetBytes(false);
             var mcrc = Modbus_CRC(buf, 0, buf.Length);
             SetResult("/*数字、HEX编码、Base64编码、Modbus-Crc*/", rs + "", data.ToHex(), data.ToBase64(), mcrc.GetBytes().ToHex("-"));
-        }
-
-        private void btnDES_Click(Object sender, EventArgs e)
-        {
-            var buf = GetSource();
-            var pass = GetPass();
-
-            var des = new DESCryptoServiceProvider();
-            buf = des.Encrypt(buf, pass);
-
-            SetResult(buf);
-        }
-
-        private void btnDES2_Click(Object sender, EventArgs e)
-        {
-            var buf = GetSource();
-            var pass = GetPass();
-
-            var des = new DESCryptoServiceProvider();
-            buf = des.Decrypt(buf, pass);
-
-            SetResult(buf);
-        }
-
-        private void btnAES_Click(Object sender, EventArgs e)
-        {
-            var buf = GetSource();
-            var pass = GetPass();
-
-            var aes = new AesCryptoServiceProvider();
-            buf = aes.Encrypt(buf, pass);
-
-            SetResult(buf);
-        }
-
-        private void btnAES2_Click(Object sender, EventArgs e)
-        {
-            var buf = GetSource();
-            var pass = GetPass();
-
-            var aes = new AesCryptoServiceProvider();
-            buf = aes.Decrypt(buf, pass);
-
-            SetResult(buf);
-        }
-
-        private void btnRC4_Click(Object sender, EventArgs e)
-        {
-            var buf = GetSource();
-            var pass = GetPass();
-            buf = buf.RC4(pass);
-
-            SetResult(buf);
-        }
-
-        private void btnRC42_Click(Object sender, EventArgs e)
-        {
-            var buf = GetSource();
-            var pass = GetPass();
-            buf = buf.RC4(pass);
-
-            SetResult(buf);
         }
 
         private void btnRSA_Click(Object sender, EventArgs e)
