@@ -238,6 +238,78 @@ namespace XCoder.Tools
 
             SetResult(buf);
         }
+
+        private void btnRC2_Click(Object sender, EventArgs e)
+        {
+            var buf = GetSource();
+            var pass = GetPass();
+
+            var mode = (CipherMode)Enum.Parse(typeof(CipherMode), cmbCipher.SelectedItem + "");
+            var padding = (PaddingMode)Enum.Parse(typeof(PaddingMode), cmbPadding.SelectedItem + "");
+            buf = RC2.Create().Encrypt(buf, pass, mode, padding);
+
+            SetResult(buf);
+        }
+
+        private void btnRC22_Click(Object sender, EventArgs e)
+        {
+            var buf = GetSource();
+            var pass = GetPass();
+
+            var mode = (CipherMode)Enum.Parse(typeof(CipherMode), cmbCipher.SelectedItem + "");
+            var padding = (PaddingMode)Enum.Parse(typeof(PaddingMode), cmbPadding.SelectedItem + "");
+            buf = RC2.Create().Decrypt(buf, pass, mode, padding);
+
+            SetResult(buf);
+        }
+
+        private void btnRijndael_Click(Object sender, EventArgs e)
+        {
+            var buf = GetSource();
+            var pass = GetPass();
+
+            var mode = (CipherMode)Enum.Parse(typeof(CipherMode), cmbCipher.SelectedItem + "");
+            var padding = (PaddingMode)Enum.Parse(typeof(PaddingMode), cmbPadding.SelectedItem + "");
+            buf = Rijndael.Create().Encrypt(buf, pass, mode, padding);
+
+            SetResult(buf);
+        }
+
+        private void btnRijndael2_Click(Object sender, EventArgs e)
+        {
+            var buf = GetSource();
+            var pass = GetPass();
+
+            var mode = (CipherMode)Enum.Parse(typeof(CipherMode), cmbCipher.SelectedItem + "");
+            var padding = (PaddingMode)Enum.Parse(typeof(PaddingMode), cmbPadding.SelectedItem + "");
+            buf = Rijndael.Create().Decrypt(buf, pass, mode, padding);
+
+            SetResult(buf);
+        }
+
+        private void btn3DES_Click(Object sender, EventArgs e)
+        {
+            var buf = GetSource();
+            var pass = GetPass();
+
+            var mode = (CipherMode)Enum.Parse(typeof(CipherMode), cmbCipher.SelectedItem + "");
+            var padding = (PaddingMode)Enum.Parse(typeof(PaddingMode), cmbPadding.SelectedItem + "");
+            buf = TripleDES.Create().Encrypt(buf, pass, mode, padding);
+
+            SetResult(buf);
+        }
+
+        private void btn3DES2_Click(Object sender, EventArgs e)
+        {
+            var buf = GetSource();
+            var pass = GetPass();
+
+            var mode = (CipherMode)Enum.Parse(typeof(CipherMode), cmbCipher.SelectedItem + "");
+            var padding = (PaddingMode)Enum.Parse(typeof(PaddingMode), cmbPadding.SelectedItem + "");
+            buf = TripleDES.Create().Decrypt(buf, pass, mode, padding);
+
+            SetResult(buf);
+        }
         #endregion
     }
 }

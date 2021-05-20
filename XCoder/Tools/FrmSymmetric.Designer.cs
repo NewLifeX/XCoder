@@ -55,6 +55,12 @@
             this.cmbCipher = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbPadding = new System.Windows.Forms.ComboBox();
+            this.btnRC22 = new System.Windows.Forms.Button();
+            this.btnRC2 = new System.Windows.Forms.Button();
+            this.btnRijndael2 = new System.Windows.Forms.Button();
+            this.btnRijndael = new System.Windows.Forms.Button();
+            this.btn3DES2 = new System.Windows.Forms.Button();
+            this.btn3DES = new System.Windows.Forms.Button();
             this.gbFunc.SuspendLayout();
             this.gbSource.SuspendLayout();
             this.gbResult.SuspendLayout();
@@ -65,6 +71,12 @@
             // 
             this.gbFunc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.gbFunc.Controls.Add(this.btn3DES2);
+            this.gbFunc.Controls.Add(this.btn3DES);
+            this.gbFunc.Controls.Add(this.btnRijndael2);
+            this.gbFunc.Controls.Add(this.btnRijndael);
+            this.gbFunc.Controls.Add(this.btnRC22);
+            this.gbFunc.Controls.Add(this.btnRC2);
             this.gbFunc.Controls.Add(this.cmbPadding);
             this.gbFunc.Controls.Add(this.label2);
             this.gbFunc.Controls.Add(this.cmbCipher);
@@ -400,6 +412,72 @@
             this.cmbPadding.Size = new System.Drawing.Size(121, 26);
             this.cmbPadding.TabIndex = 17;
             // 
+            // btnRC22
+            // 
+            this.btnRC22.Location = new System.Drawing.Point(129, 503);
+            this.btnRC22.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRC22.Name = "btnRC22";
+            this.btnRC22.Size = new System.Drawing.Size(112, 45);
+            this.btnRC22.TabIndex = 19;
+            this.btnRC22.Text = "RC2解密";
+            this.btnRC22.UseVisualStyleBackColor = true;
+            this.btnRC22.Click += new System.EventHandler(this.btnRC22_Click);
+            // 
+            // btnRC2
+            // 
+            this.btnRC2.Location = new System.Drawing.Point(8, 503);
+            this.btnRC2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRC2.Name = "btnRC2";
+            this.btnRC2.Size = new System.Drawing.Size(112, 45);
+            this.btnRC2.TabIndex = 18;
+            this.btnRC2.Text = "RC2加密";
+            this.btnRC2.UseVisualStyleBackColor = true;
+            this.btnRC2.Click += new System.EventHandler(this.btnRC2_Click);
+            // 
+            // btnRijndael2
+            // 
+            this.btnRijndael2.Location = new System.Drawing.Point(129, 556);
+            this.btnRijndael2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRijndael2.Name = "btnRijndael2";
+            this.btnRijndael2.Size = new System.Drawing.Size(112, 45);
+            this.btnRijndael2.TabIndex = 21;
+            this.btnRijndael2.Text = "Rijndael解";
+            this.btnRijndael2.UseVisualStyleBackColor = true;
+            this.btnRijndael2.Click += new System.EventHandler(this.btnRijndael2_Click);
+            // 
+            // btnRijndael
+            // 
+            this.btnRijndael.Location = new System.Drawing.Point(8, 556);
+            this.btnRijndael.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRijndael.Name = "btnRijndael";
+            this.btnRijndael.Size = new System.Drawing.Size(112, 45);
+            this.btnRijndael.TabIndex = 20;
+            this.btnRijndael.Text = "Rijndael加";
+            this.btnRijndael.UseVisualStyleBackColor = true;
+            this.btnRijndael.Click += new System.EventHandler(this.btnRijndael_Click);
+            // 
+            // btn3DES2
+            // 
+            this.btn3DES2.Location = new System.Drawing.Point(129, 609);
+            this.btn3DES2.Margin = new System.Windows.Forms.Padding(4);
+            this.btn3DES2.Name = "btn3DES2";
+            this.btn3DES2.Size = new System.Drawing.Size(112, 45);
+            this.btn3DES2.TabIndex = 23;
+            this.btn3DES2.Text = "3DES解密";
+            this.btn3DES2.UseVisualStyleBackColor = true;
+            this.btn3DES2.Click += new System.EventHandler(this.btn3DES2_Click);
+            // 
+            // btn3DES
+            // 
+            this.btn3DES.Location = new System.Drawing.Point(8, 609);
+            this.btn3DES.Margin = new System.Windows.Forms.Padding(4);
+            this.btn3DES.Name = "btn3DES";
+            this.btn3DES.Size = new System.Drawing.Size(112, 45);
+            this.btn3DES.TabIndex = 22;
+            this.btn3DES.Text = "3DES加密";
+            this.btn3DES.UseVisualStyleBackColor = true;
+            this.btn3DES.Click += new System.EventHandler(this.btn3DES_Click);
+            // 
             // FrmSymmetric
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -454,5 +532,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbCipher;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btn3DES2;
+        private System.Windows.Forms.Button btn3DES;
+        private System.Windows.Forms.Button btnRijndael2;
+        private System.Windows.Forms.Button btnRijndael;
+        private System.Windows.Forms.Button btnRC22;
+        private System.Windows.Forms.Button btnRC2;
     }
 }
