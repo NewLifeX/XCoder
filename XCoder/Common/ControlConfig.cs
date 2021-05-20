@@ -15,7 +15,7 @@ namespace XCoder.Common
 
         public String FileName { get; set; }
 
-        public IDictionary<String, Object> Items { get; set; }
+        public IDictionary<String, Object> Items { get; set; } = new Dictionary<String, Object>();
 
         public void Load()
         {
@@ -26,7 +26,7 @@ namespace XCoder.Common
                 var dic = JsonParser.Decode(File.ReadAllText(file));
                 LoadConfig(dic, Control);
 
-                Items = dic;
+                Items.Merge(dic);
             }
         }
 
