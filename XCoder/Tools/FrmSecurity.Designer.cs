@@ -114,7 +114,7 @@
             // 
             // btnJWT
             // 
-            this.btnJWT.Location = new System.Drawing.Point(129, 767);
+            this.btnJWT.Location = new System.Drawing.Point(129, 610);
             this.btnJWT.Margin = new System.Windows.Forms.Padding(4);
             this.btnJWT.Name = "btnJWT";
             this.btnJWT.Size = new System.Drawing.Size(112, 45);
@@ -125,7 +125,7 @@
             // 
             // btnSnowflake
             // 
-            this.btnSnowflake.Location = new System.Drawing.Point(9, 767);
+            this.btnSnowflake.Location = new System.Drawing.Point(9, 610);
             this.btnSnowflake.Margin = new System.Windows.Forms.Padding(4);
             this.btnSnowflake.Name = "btnSnowflake";
             this.btnSnowflake.Size = new System.Drawing.Size(112, 45);
@@ -136,7 +136,7 @@
             // 
             // btnComputerInfo
             // 
-            this.btnComputerInfo.Location = new System.Drawing.Point(130, 714);
+            this.btnComputerInfo.Location = new System.Drawing.Point(130, 557);
             this.btnComputerInfo.Margin = new System.Windows.Forms.Padding(4);
             this.btnComputerInfo.Name = "btnComputerInfo";
             this.btnComputerInfo.Size = new System.Drawing.Size(112, 45);
@@ -147,7 +147,7 @@
             // 
             // btnTime
             // 
-            this.btnTime.Location = new System.Drawing.Point(9, 714);
+            this.btnTime.Location = new System.Drawing.Point(9, 557);
             this.btnTime.Margin = new System.Windows.Forms.Padding(4);
             this.btnTime.Name = "btnTime";
             this.btnTime.Size = new System.Drawing.Size(112, 45);
@@ -202,7 +202,7 @@
             // 
             // btnHtml2
             // 
-            this.btnHtml2.Location = new System.Drawing.Point(130, 660);
+            this.btnHtml2.Location = new System.Drawing.Point(130, 503);
             this.btnHtml2.Margin = new System.Windows.Forms.Padding(4);
             this.btnHtml2.Name = "btnHtml2";
             this.btnHtml2.Size = new System.Drawing.Size(112, 45);
@@ -213,7 +213,7 @@
             // 
             // btnHtml
             // 
-            this.btnHtml.Location = new System.Drawing.Point(9, 660);
+            this.btnHtml.Location = new System.Drawing.Point(9, 503);
             this.btnHtml.Margin = new System.Windows.Forms.Padding(4);
             this.btnHtml.Name = "btnHtml";
             this.btnHtml.Size = new System.Drawing.Size(112, 45);
@@ -224,7 +224,7 @@
             // 
             // btnUrl2
             // 
-            this.btnUrl2.Location = new System.Drawing.Point(130, 608);
+            this.btnUrl2.Location = new System.Drawing.Point(130, 451);
             this.btnUrl2.Margin = new System.Windows.Forms.Padding(4);
             this.btnUrl2.Name = "btnUrl2";
             this.btnUrl2.Size = new System.Drawing.Size(112, 45);
@@ -235,7 +235,7 @@
             // 
             // btnUrl
             // 
-            this.btnUrl.Location = new System.Drawing.Point(9, 608);
+            this.btnUrl.Location = new System.Drawing.Point(9, 451);
             this.btnUrl.Margin = new System.Windows.Forms.Padding(4);
             this.btnUrl.Name = "btnUrl";
             this.btnUrl.Size = new System.Drawing.Size(112, 45);
@@ -246,7 +246,7 @@
             // 
             // btnDSA2
             // 
-            this.btnDSA2.Location = new System.Drawing.Point(130, 555);
+            this.btnDSA2.Location = new System.Drawing.Point(130, 398);
             this.btnDSA2.Margin = new System.Windows.Forms.Padding(4);
             this.btnDSA2.Name = "btnDSA2";
             this.btnDSA2.Size = new System.Drawing.Size(112, 45);
@@ -257,7 +257,7 @@
             // 
             // btnDSA
             // 
-            this.btnDSA.Location = new System.Drawing.Point(9, 555);
+            this.btnDSA.Location = new System.Drawing.Point(9, 398);
             this.btnDSA.Margin = new System.Windows.Forms.Padding(4);
             this.btnDSA.Name = "btnDSA";
             this.btnDSA.Size = new System.Drawing.Size(112, 45);
@@ -268,7 +268,7 @@
             // 
             // btnRSA2
             // 
-            this.btnRSA2.Location = new System.Drawing.Point(130, 502);
+            this.btnRSA2.Location = new System.Drawing.Point(130, 345);
             this.btnRSA2.Margin = new System.Windows.Forms.Padding(4);
             this.btnRSA2.Name = "btnRSA2";
             this.btnRSA2.Size = new System.Drawing.Size(112, 45);
@@ -279,7 +279,7 @@
             // 
             // btnRSA
             // 
-            this.btnRSA.Location = new System.Drawing.Point(9, 502);
+            this.btnRSA.Location = new System.Drawing.Point(9, 345);
             this.btnRSA.Margin = new System.Windows.Forms.Padding(4);
             this.btnRSA.Name = "btnRSA";
             this.btnRSA.Size = new System.Drawing.Size(112, 45);

@@ -98,7 +98,7 @@
             // 
             // btnRC42
             // 
-            this.btnRC42.Location = new System.Drawing.Point(130, 450);
+            this.btnRC42.Location = new System.Drawing.Point(139, 242);
             this.btnRC42.Margin = new System.Windows.Forms.Padding(4);
             this.btnRC42.Name = "btnRC42";
             this.btnRC42.Size = new System.Drawing.Size(112, 45);
@@ -109,7 +109,7 @@
             // 
             // btnRC4
             // 
-            this.btnRC4.Location = new System.Drawing.Point(9, 450);
+            this.btnRC4.Location = new System.Drawing.Point(18, 242);
             this.btnRC4.Margin = new System.Windows.Forms.Padding(4);
             this.btnRC4.Name = "btnRC4";
             this.btnRC4.Size = new System.Drawing.Size(112, 45);
@@ -120,7 +120,7 @@
             // 
             // btnAES2
             // 
-            this.btnAES2.Location = new System.Drawing.Point(130, 398);
+            this.btnAES2.Location = new System.Drawing.Point(139, 190);
             this.btnAES2.Margin = new System.Windows.Forms.Padding(4);
             this.btnAES2.Name = "btnAES2";
             this.btnAES2.Size = new System.Drawing.Size(112, 45);
@@ -131,7 +131,7 @@
             // 
             // btnAES
             // 
-            this.btnAES.Location = new System.Drawing.Point(9, 398);
+            this.btnAES.Location = new System.Drawing.Point(18, 190);
             this.btnAES.Margin = new System.Windows.Forms.Padding(4);
             this.btnAES.Name = "btnAES";
             this.btnAES.Size = new System.Drawing.Size(112, 45);
@@ -142,7 +142,7 @@
             // 
             // btnDES2
             // 
-            this.btnDES2.Location = new System.Drawing.Point(130, 345);
+            this.btnDES2.Location = new System.Drawing.Point(139, 137);
             this.btnDES2.Margin = new System.Windows.Forms.Padding(4);
             this.btnDES2.Name = "btnDES2";
             this.btnDES2.Size = new System.Drawing.Size(112, 45);
@@ -153,7 +153,7 @@
             // 
             // btnDES
             // 
-            this.btnDES.Location = new System.Drawing.Point(9, 345);
+            this.btnDES.Location = new System.Drawing.Point(18, 137);
             this.btnDES.Margin = new System.Windows.Forms.Padding(4);
             this.btnDES.Name = "btnDES";
             this.btnDES.Size = new System.Drawing.Size(112, 45);
@@ -414,7 +414,7 @@
             // 
             // btnRC22
             // 
-            this.btnRC22.Location = new System.Drawing.Point(129, 503);
+            this.btnRC22.Location = new System.Drawing.Point(138, 295);
             this.btnRC22.Margin = new System.Windows.Forms.Padding(4);
             this.btnRC22.Name = "btnRC22";
             this.btnRC22.Size = new System.Drawing.Size(112, 45);
@@ -425,7 +425,7 @@
             // 
             // btnRC2
             // 
-            this.btnRC2.Location = new System.Drawing.Point(8, 503);
+            this.btnRC2.Location = new System.Drawing.Point(17, 295);
             this.btnRC2.Margin = new System.Windows.Forms.Padding(4);
             this.btnRC2.Name = "btnRC2";
             this.btnRC2.Size = new System.Drawing.Size(112, 45);
@@ -436,7 +436,7 @@
             // 
             // btnRijndael2
             // 
-            this.btnRijndael2.Location = new System.Drawing.Point(129, 556);
+            this.btnRijndael2.Location = new System.Drawing.Point(138, 348);
             this.btnRijndael2.Margin = new System.Windows.Forms.Padding(4);
             this.btnRijndael2.Name = "btnRijndael2";
             this.btnRijndael2.Size = new System.Drawing.Size(112, 45);
@@ -447,7 +447,7 @@
             // 
             // btnRijndael
             // 
-            this.btnRijndael.Location = new System.Drawing.Point(8, 556);
+            this.btnRijndael.Location = new System.Drawing.Point(17, 348);
             this.btnRijndael.Margin = new System.Windows.Forms.Padding(4);
             this.btnRijndael.Name = "btnRijndael";
             this.btnRijndael.Size = new System.Drawing.Size(112, 45);
@@ -458,7 +458,7 @@
             // 
             // btn3DES2
             // 
-            this.btn3DES2.Location = new System.Drawing.Point(129, 609);
+            this.btn3DES2.Location = new System.Drawing.Point(138, 401);
             this.btn3DES2.Margin = new System.Windows.Forms.Padding(4);
             this.btn3DES2.Name = "btn3DES2";
             this.btn3DES2.Size = new System.Drawing.Size(112, 45);
@@ -469,7 +469,7 @@
             // 
             // btn3DES
             // 
-            this.btn3DES.Location = new System.Drawing.Point(8, 609);
+            this.btn3DES.Location = new System.Drawing.Point(17, 401);
             this.btn3DES.Margin = new System.Windows.Forms.Padding(4);
             this.btn3DES.Name = "btn3DES";
             this.btn3DES.Size = new System.Drawing.Size(112, 45);

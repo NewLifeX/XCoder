@@ -137,7 +137,7 @@ namespace XCoder.Tools
             _config.Save();
         }
 
-        private void SetResult(Byte[] data)
+        private List<String> SetResult(Byte[] data)
         {
             //SetResult("/*HEX编码、Base64编码、Url改进Base64编码*/", data.ToHex("-"), data.ToBase64(), data.ToUrlBase64());
 
@@ -157,6 +157,8 @@ namespace XCoder.Tools
             }
 
             SetResult(list.ToArray());
+
+            return list;
         }
 
         //private void SetResult2(Byte[] data)
@@ -238,7 +240,10 @@ namespace XCoder.Tools
             var key = GetPass();
 
             buf = buf.SHA1(key);
-            SetResult(buf);
+            var rs = SetResult(buf);
+            rs.Add($"sha1${key.ToStr()}${buf.ToBase64()}");
+
+            SetResult(rs.ToArray());
         }
 
         private void btnSHA256_Click(Object sender, EventArgs e)
@@ -247,7 +252,10 @@ namespace XCoder.Tools
             var key = GetPass();
 
             buf = buf.SHA256(key);
-            SetResult(buf);
+            var rs = SetResult(buf);
+            rs.Add($"sha256${key.ToStr()}${buf.ToBase64()}");
+
+            SetResult(rs.ToArray());
         }
 
         private void btnSHA384_Click(Object sender, EventArgs e)
@@ -256,7 +264,10 @@ namespace XCoder.Tools
             var key = GetPass();
 
             buf = buf.SHA384(key);
-            SetResult(buf);
+            var rs = SetResult(buf);
+            rs.Add($"sha384${key.ToStr()}${buf.ToBase64()}");
+
+            SetResult(rs.ToArray());
         }
 
         private void btnSHA512_Click(Object sender, EventArgs e)
@@ -265,7 +276,10 @@ namespace XCoder.Tools
             var key = GetPass();
 
             buf = buf.SHA512(key);
-            SetResult(buf);
+            var rs = SetResult(buf);
+            rs.Add($"sha512${key.ToStr()}${buf.ToBase64()}");
+
+            SetResult(rs.ToArray());
         }
 
         private void btnCRC_Click(Object sender, EventArgs e)
