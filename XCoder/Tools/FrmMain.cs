@@ -5,7 +5,8 @@ using NewLife;
 
 namespace XCoder.Tools
 {
-    [DisplayName("小工具")]
+    [Category("地理信息")]
+    [DisplayName("坐标转换")]
     public partial class FrmMain : Form, IXForm
     {
         public FrmMain()

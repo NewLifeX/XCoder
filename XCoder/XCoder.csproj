@@ -56,6 +56,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ControlConfig.cs" />
+    <Compile Include="Data\FrmRedis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Data\FrmRedis.Designer.cs">
+      <DependentUpon>FrmRedis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\FrmRedisConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Data\FrmRedisConfig.Designer.cs">
+      <DependentUpon>FrmRedisConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\RedisConfig.cs" />
     <Compile Include="Engine\IcoHelper.cs" />
     <Compile Include="Engine\ModelConfig.cs" />
     <Compile Include="FileEncoding\FrmMain.cs">
@@ -196,6 +209,12 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Yun\MapSetting.cs" />
+    <EmbeddedResource Include="Data\FrmRedis.resx">
+      <DependentUpon>FrmRedis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\FrmRedisConfig.resx">
+      <DependentUpon>FrmRedisConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileEncoding\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -338,16 +357,19 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NewLife.Core">
-      <Version>8.10.2021.505</Version>
+      <Version>8.10.2021.519-beta5</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
       <Version>3.6.2020.1002</Version>
+    </PackageReference>
+    <PackageReference Include="NewLife.Redis">
+      <Version>3.9.2021.505</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
       <Version>1.5.2021.505</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>10.1.2021.505</Version>
+      <Version>10.1.2021.519-beta5</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2020.0.1</Version>

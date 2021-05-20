@@ -73,6 +73,7 @@ namespace XCoder
                     var name2 = item.Text.Substring(null, "(");
                     ms[name2] = item;
                 }
+                var idx = 1;
                 foreach (var item in ts)
                 {
                     var att = item.GetCustomAttribute<CategoryAttribute>();
@@ -81,7 +82,9 @@ namespace XCoder
 
                     if (!ms.TryGetValue(cat, out var root))
                     {
-                        root = menuStrip.Items.Add(cat) as ToolStripMenuItem;
+                        //root = menuStrip.Items.Add(cat) as ToolStripMenuItem;
+                        root = new ToolStripMenuItem(cat);
+                        menuStrip.Items.Insert(idx++, root);
                         ms[cat] = root;
                     }
 

@@ -15,6 +15,8 @@ namespace XCoder.Common
 
         public String FileName { get; set; }
 
+        public IDictionary<String, Object> Items { get; set; }
+
         public void Load()
         {
             var dataPath = Setting.Current.DataPath;
@@ -23,6 +25,8 @@ namespace XCoder.Common
             {
                 var dic = JsonParser.Decode(File.ReadAllText(file));
                 LoadConfig(dic, Control);
+
+                Items = dic;
             }
         }
 
@@ -56,7 +60,8 @@ namespace XCoder.Common
 
         public void Save()
         {
-            var dic = new Dictionary<String, Object>();
+            //var dic = new Dictionary<String, Object>();
+            var dic = Items;
             SaveConfig(dic, Control);
 
             var dataPath = Setting.Current.DataPath;
