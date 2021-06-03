@@ -470,11 +470,18 @@ namespace XCoder.Tools
             {
                 if (!snow.TryParse(v, out var time, out var workerId, out var sequence)) throw new Exception("解码失败！");
 
+                // 初始化一次，用于获取本机workerId
+                snow.NewId();
+
+                var t = (Int64)(time - snow.StartTimestamp).TotalMilliseconds;
                 SetResult(
+                    $"十六：{v:X16}",
+                    $"编码：{(t << 2):X8} {workerId:X2} {sequence:X3}",
                     $"基准：{snow.StartTimestamp:yyyy-MM-dd}",
-                    $"时间：{time.ToFullString()}",
+                    $"时间：{time.ToFullString()} ({t} / {(t << 22):X8})",
                     $"节点：{workerId} ({workerId:X4})",
-                    $"序号：{sequence} ({sequence:X4})");
+                    $"序号：{sequence} ({sequence:X4})",
+                    $"本机：{snow.WorkerId} ({snow.WorkerId:X4})");
             }
         }
 
