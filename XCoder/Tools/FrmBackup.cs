@@ -80,13 +80,14 @@ namespace XCoder.Tools
             pnlSetting.Enabled = false;
             btnBackup.Enabled = false;
 
-            await Task.Run(() => DoBackup(cfg.DestDir, cfg.SrcDir1, cfg.AllowDelete));
-            await Task.Run(() => DoBackup(cfg.DestDir, cfg.SrcDir2, cfg.AllowDelete));
-            await Task.Run(() => DoBackup(cfg.DestDir, cfg.SrcDir3, cfg.AllowDelete));
-            await Task.Run(() => DoBackup(cfg.DestDir, cfg.SrcDir4, cfg.AllowDelete));
-            await Task.Run(() => DoBackup(cfg.DestDir, cfg.SrcDir5, cfg.AllowDelete));
+            var total = 0;
+            total += await Task.Run(() => DoBackup(cfg.DestDir, cfg.SrcDir1, cfg.AllowDelete));
+            total += await Task.Run(() => DoBackup(cfg.DestDir, cfg.SrcDir2, cfg.AllowDelete));
+            total += await Task.Run(() => DoBackup(cfg.DestDir, cfg.SrcDir3, cfg.AllowDelete));
+            total += await Task.Run(() => DoBackup(cfg.DestDir, cfg.SrcDir4, cfg.AllowDelete));
+            total += await Task.Run(() => DoBackup(cfg.DestDir, cfg.SrcDir5, cfg.AllowDelete));
 
-            XTrace.WriteLine("备份完成！");
+            XTrace.WriteLine("备份完成，共处理文件 {0} 个！", total);
 
             pnlSetting.Enabled = true;
             btnBackup.Enabled = true;
@@ -106,10 +107,11 @@ namespace XCoder.Tools
             }
         }
 
-        void DoBackup(String dest, String src, Boolean allowDelete)
+        Int32 DoBackup(String dest, String src, Boolean allowDelete)
         {
-            if (src.IsNullOrEmpty()) return;
+            if (src.IsNullOrEmpty()) return 0;
 
+            var total = 0;
             foreach (var fi in src.AsDirectory().GetAllFiles("*.jpg;*.jpeg;*.png;*.mp4", true))
             {
                 var newName = fi.Name;
@@ -134,6 +136,8 @@ namespace XCoder.Tools
                             fi.MoveTo(newName);
                         else
                             fi.CopyTo(newName);
+
+                        total++;
                     }
                     else
                     {
@@ -147,6 +151,8 @@ namespace XCoder.Tools
                         {
                             XTrace.WriteLine("删除：{0}", fi.FullName);
                             fi.Delete();
+
+                            total++;
                         }
                     }
                 }
@@ -155,6 +161,8 @@ namespace XCoder.Tools
                     XTrace.WriteLine("无法识别时间！");
                 }
             }
+
+            return total;
         }
 
         static Boolean TryGetTime(FileInfo fi, ref String fileName, out DateTime time)
@@ -224,6 +232,15 @@ namespace XCoder.Tools
                 {
                     XTrace.WriteException(ex);
                 }
+            }
+
+            var fileName2 = fileName.Substring(null, ".");
+
+            // 微信图片时间，最后带有Unix时间戳
+            if (fileName2.Length >= 13 && fileName2.Substring(fileName2.Length - 13).ToLong() > 0)
+            {
+                time = fileName2.Substring(fileName2.Length - 13).ToLong().ToDateTime();
+                return true;
             }
 
             return false;
