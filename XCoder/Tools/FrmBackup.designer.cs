@@ -34,7 +34,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lbAddr = new System.Windows.Forms.Label();
             this.pnlSetting = new System.Windows.Forms.Panel();
-            this.cbAllowDelete = new System.Windows.Forms.CheckBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnBrowser = new System.Windows.Forms.Button();
             this.txtSrc5 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtSrc4 = new System.Windows.Forms.TextBox();
@@ -45,12 +50,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtSrc1 = new System.Windows.Forms.TextBox();
             this.txtDest = new System.Windows.Forms.TextBox();
-            this.btnBrowser = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.cbAllowDelete = new System.Windows.Forms.CheckBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.gbReceive.SuspendLayout();
             this.pnlSetting.SuspendLayout();
@@ -139,15 +139,71 @@
             this.pnlSetting.Size = new System.Drawing.Size(708, 237);
             this.pnlSetting.TabIndex = 13;
             // 
-            // cbAllowDelete
+            // button5
             // 
-            this.cbAllowDelete.AutoSize = true;
-            this.cbAllowDelete.Location = new System.Drawing.Point(792, 85);
-            this.cbAllowDelete.Name = "cbAllowDelete";
-            this.cbAllowDelete.Size = new System.Drawing.Size(106, 22);
-            this.cbAllowDelete.TabIndex = 18;
-            this.cbAllowDelete.Text = "允许删除";
-            this.cbAllowDelete.UseVisualStyleBackColor = true;
+            this.button5.Location = new System.Drawing.Point(601, 190);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(69, 26);
+            this.button5.TabIndex = 24;
+            this.button5.Tag = "txtSrc5";
+            this.button5.Text = "浏览";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.btnBrowser_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(601, 156);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(69, 26);
+            this.button4.TabIndex = 23;
+            this.button4.Tag = "txtSrc4";
+            this.button4.Text = "浏览";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.btnBrowser_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(601, 122);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(69, 26);
+            this.button3.TabIndex = 22;
+            this.button3.Tag = "txtSrc3";
+            this.button3.Text = "浏览";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.btnBrowser_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(601, 88);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(69, 26);
+            this.button2.TabIndex = 21;
+            this.button2.Tag = "txtSrc2";
+            this.button2.Text = "浏览";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.btnBrowser_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(601, 54);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(69, 26);
+            this.button1.TabIndex = 20;
+            this.button1.Tag = "txtSrc1";
+            this.button1.Text = "浏览";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnBrowser_Click);
+            // 
+            // btnBrowser
+            // 
+            this.btnBrowser.Location = new System.Drawing.Point(601, 12);
+            this.btnBrowser.Name = "btnBrowser";
+            this.btnBrowser.Size = new System.Drawing.Size(69, 26);
+            this.btnBrowser.TabIndex = 19;
+            this.btnBrowser.Tag = "txtDest";
+            this.btnBrowser.Text = "浏览";
+            this.btnBrowser.UseVisualStyleBackColor = true;
+            this.btnBrowser.Click += new System.EventHandler(this.btnBrowser_Click);
             // 
             // txtSrc5
             // 
@@ -231,71 +287,15 @@
             this.txtDest.Size = new System.Drawing.Size(465, 28);
             this.txtDest.TabIndex = 8;
             // 
-            // btnBrowser
+            // cbAllowDelete
             // 
-            this.btnBrowser.Location = new System.Drawing.Point(601, 12);
-            this.btnBrowser.Name = "btnBrowser";
-            this.btnBrowser.Size = new System.Drawing.Size(69, 26);
-            this.btnBrowser.TabIndex = 19;
-            this.btnBrowser.Tag = "txtDest";
-            this.btnBrowser.Text = "浏览";
-            this.btnBrowser.UseVisualStyleBackColor = true;
-            this.btnBrowser.Click += new System.EventHandler(this.btnBrowser_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(601, 54);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(69, 26);
-            this.button1.TabIndex = 20;
-            this.button1.Tag = "txtSrc1";
-            this.button1.Text = "浏览";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnBrowser_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(601, 88);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(69, 26);
-            this.button2.TabIndex = 21;
-            this.button2.Tag = "txtSrc2";
-            this.button2.Text = "浏览";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.btnBrowser_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(601, 122);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(69, 26);
-            this.button3.TabIndex = 22;
-            this.button3.Tag = "txtSrc3";
-            this.button3.Text = "浏览";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.btnBrowser_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(601, 156);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(69, 26);
-            this.button4.TabIndex = 23;
-            this.button4.Tag = "txtSrc4";
-            this.button4.Text = "浏览";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.btnBrowser_Click);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(601, 190);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(69, 26);
-            this.button5.TabIndex = 24;
-            this.button5.Tag = "txtSrc5";
-            this.button5.Text = "浏览";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.btnBrowser_Click);
+            this.cbAllowDelete.AutoSize = true;
+            this.cbAllowDelete.Location = new System.Drawing.Point(792, 85);
+            this.cbAllowDelete.Name = "cbAllowDelete";
+            this.cbAllowDelete.Size = new System.Drawing.Size(106, 22);
+            this.cbAllowDelete.TabIndex = 18;
+            this.cbAllowDelete.Text = "允许删除";
+            this.cbAllowDelete.UseVisualStyleBackColor = true;
             // 
             // folderBrowserDialog1
             // 
@@ -313,7 +313,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmBackup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "图片备份";
+            this.Text = "手机备份";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.gbReceive.ResumeLayout(false);
             this.pnlSetting.ResumeLayout(false);

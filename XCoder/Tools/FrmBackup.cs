@@ -11,7 +11,7 @@ using NewLife.Log;
 
 namespace XCoder.Tools
 {
-    [DisplayName("图片备份")]
+    [DisplayName("手机备份")]
     public partial class FrmBackup : Form, IXForm
     {
         #region 窗体
@@ -112,7 +112,7 @@ namespace XCoder.Tools
             if (src.IsNullOrEmpty()) return 0;
 
             var total = 0;
-            foreach (var fi in src.AsDirectory().GetAllFiles("*.jpg;*.jpeg;*.png;*.mp4", true))
+            foreach (var fi in src.AsDirectory().GetAllFiles("*.jpg;*.jpeg;*.png;*.mp4;*.m4a;*.aac;*.mp3", true))
             {
                 var newName = fi.Name;
 
@@ -180,6 +180,11 @@ namespace XCoder.Tools
                 time = dt;
                 return true;
             }
+            else if (ss.Length >= 4 && ss[3].Length >= 6 && DateTime.TryParseExact($"{ss[2]}_{ss[3].Substring(0, 6)}", "yyyyMMdd_HHmmss", null, DateTimeStyles.None, out dt) && dt.Year > 2000)
+            {
+                time = dt;
+                return true;
+            }
             else if (ss.Length >= 2 && ss[0].Length >= 14 && DateTime.TryParseExact($"{ss[0].Substring(0, 14)}", "yyyyMMddHHmmss", null, DateTimeStyles.None, out dt) && dt.Year > 2000)
             {
                 time = dt;
@@ -241,6 +246,13 @@ namespace XCoder.Tools
             {
                 time = fileName2.Substring(fileName2.Length - 13).ToLong().ToDateTime();
                 if (time.Year > 2000 && time.Year <= DateTime.Now.Year) return true;
+            }
+
+            // 语音
+            if (fileName.EndsWithIgnoreCase(".aac") && ss.Length >= 4 && DateTime.TryParseExact($"{ss[ss.Length - 4]}_{ss[ss.Length - 3]}", "yyyyMMdd_HHmmss", null, DateTimeStyles.None, out dt) && dt.Year > 2000)
+            {
+                time = dt;
+                return true;
             }
 
             return false;
