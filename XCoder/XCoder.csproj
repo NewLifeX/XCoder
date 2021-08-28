@@ -96,6 +96,13 @@
       <DependentUpon>FrmMDI.cs</DependentUpon>
     </Compile>
     <Compile Include="IXForm.cs" />
+    <Compile Include="Tools\BackupConfig.cs" />
+    <Compile Include="Tools\FrmBackup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\FrmBackup.designer.cs">
+      <DependentUpon>FrmBackup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\FrmMD5.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMDI.resx">
       <DependentUpon>FrmMDI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\FrmBackup.resx">
+      <DependentUpon>FrmBackup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\FrmMD5.resx">
       <DependentUpon>FrmMD5.cs</DependentUpon>
