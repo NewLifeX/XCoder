@@ -240,7 +240,7 @@ namespace XCoder.Tools
             if (fileName2.Length >= 13 && fileName2.Substring(fileName2.Length - 13).ToLong() > 0)
             {
                 time = fileName2.Substring(fileName2.Length - 13).ToLong().ToDateTime();
-                return true;
+                if (time.Year > 2000 && time.Year <= DateTime.Now.Year) return true;
             }
 
             return false;
