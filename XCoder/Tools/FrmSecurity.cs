@@ -405,8 +405,17 @@ namespace XCoder.Tools
             var dt = v.ToDateTime();
             if (dt.Year > 1 && dt.Year < 3000)
             {
-                sb.AppendLine("Unix秒：" + dt.ToInt());
-                sb.AppendLine("Unix毫秒：" + dt.ToLong());
+                var s = dt.ToInt();
+                var m = dt.ToLong();
+
+                if(DateTime.TryParse(rtPass.Text,out var dt2))
+                {
+                    s -= dt2.ToInt();
+                    m -= dt2.ToLong();
+                }
+
+                sb.AppendLine("Unix秒：" + s);
+                sb.AppendLine("Unix毫秒：" + m);
             }
 
             var now = DateTime.Now;
