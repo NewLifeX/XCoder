@@ -30,8 +30,8 @@
 
   <ItemGroup>
     <PackageReference Include="HandyControls" Version="3.3.7" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="3.0.0" />
-    <PackageReference Include="NewLife.XCode" Version="10.2.2021.826-beta2" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="3.0.1" />
+    <PackageReference Include="NewLife.XCode" Version="10.2.2021.923-beta1" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
   </ItemGroup>
 

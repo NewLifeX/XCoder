@@ -111,19 +111,19 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes">
-      <Version>4.1.0</Version>
+      <Version>4.2.1</Version>
     </PackageReference>
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1.1</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Core">
-      <Version>8.11.2021.826-beta2</Version>
+      <Version>8.11.2021.923-beta1</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>1.5.2021.505</Version>
+      <Version>1.5.2021.926-Beta1</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>10.2.2021.826-beta2</Version>
+      <Version>10.2.2021.923-beta1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
