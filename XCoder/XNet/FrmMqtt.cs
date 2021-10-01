@@ -96,7 +96,7 @@ namespace XNet
         {
             if (_Client != null)
             {
-                _Client.ReConnect = false;
+                _Client.Reconnect = false;
                 await _Client.DisconnectAsync();
                 _Client.Dispose();
                 _Client = null;
