@@ -212,7 +212,7 @@ namespace XCoder.Tools
             if (vs.Length <= 1)
             {
                 var buf = v.ToBase64();
-                SetResult(buf.ToStr(), buf.ToHex());
+                SetResult(buf);
             }
             else
             {
@@ -408,7 +408,7 @@ namespace XCoder.Tools
                 var s = dt.ToInt();
                 var m = dt.ToLong();
 
-                if(DateTime.TryParse(rtPass.Text,out var dt2))
+                if (DateTime.TryParse(rtPass.Text, out var dt2))
                 {
                     s -= dt2.ToInt();
                     m -= dt2.ToLong();
