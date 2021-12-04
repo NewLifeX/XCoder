@@ -10,6 +10,7 @@ using NewLife.Net;
 using NewLife.Threading;
 using NewLife.Xml;
 using XCode.DataAccessLayer;
+using System.Threading.Tasks;
 #if !NET4
 using Stardust;
 #endif
@@ -84,12 +85,12 @@ namespace XCoder
             _Client = client;
         }
 
-        private static void TryConnectServer(Object state)
+        private static async Task TryConnectServer(Object state)
         {
             var client = state as StarClient;
             var set = XConfig.Current;
-            client.Login().Wait();
-            CheckUpgrade(client, set.Channel);
+            await client.Login();
+            await CheckUpgrade(client, set.Channel);
 
             // 登录成功，销毁定时器
             //TimerX.Current.Period = 0;
@@ -97,28 +98,44 @@ namespace XCoder
             _timer = null;
         }
 
-        private static void CheckUpgrade(StarClient client, String channel)
+        private static String _lastVersion;
+        private static async Task CheckUpgrade(StarClient client, String channel)
         {
+            var ug = new Stardust.Web.Upgrade { Log = XTrace.Log };
+
             // 检查更新
-            var ur = client.Upgrade(channel).Result;
-            if (ur != null)
+            var ur = await client.Upgrade(channel);
+            if (ur != null && ur.Version != _lastVersion)
             {
-                var rs = client.ProcessUpgrade(ur);
+                ug.Url = ur.Source;
+                await ug.Download();
 
-                // 强制更新时，马上重启
-                if (rs && ur.Force)
+                // 检查文件完整性
+                if (ur.FileHash.IsNullOrEmpty() || ug.CheckFileHash(ur.FileHash))
                 {
-                    //StopWork("Upgrade");
+                    // 执行更新，解压缩覆盖文件
+                    var rs = ug.Update();
+                    if (rs && !ur.Executor.IsNullOrEmpty()) ug.Run(ur.Executor);
+                    _lastVersion = ur.Version;
 
-                    // 重新拉起进程
-                    var star = "XCoder.exe";
-                    XTrace.WriteLine("强制升级，拉起进程 {0} -upgrade", star.GetFullPath());
-                    Process.Start(star.GetFullPath(), "-upgrade");
+                    // 去除多余入口文件
+                    ug.Trim("StarAgent");
 
-                    //var p = Process.GetCurrentProcess();
-                    //p.Close();
-                    //p.Kill();
-                    Application.Exit();
+                    // 强制更新时，马上重启
+                    if (rs && ur.Force)
+                    {
+                        //StopWork("Upgrade");
+
+                        // 重新拉起进程
+                        var star = "XCoder.exe";
+                        XTrace.WriteLine("强制升级，拉起进程 {0} -upgrade", star.GetFullPath());
+                        Process.Start(star.GetFullPath(), "-upgrade");
+
+                        //var p = Process.GetCurrentProcess();
+                        //p.Close();
+                        //p.Kill();
+                        Application.Exit();
+                    }
                 }
             }
         }

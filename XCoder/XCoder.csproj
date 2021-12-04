@@ -376,22 +376,22 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NewLife.Core">
-      <Version>8.11.2021.1017-beta1</Version>
+      <Version>8.11.2021.1204</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
-      <Version>1.0.2021.1001</Version>
+      <Version>1.0.2021.1204</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
-      <Version>3.6.2020.1002</Version>
+      <Version>3.6.2021.1204</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
-      <Version>3.9.2021.1001</Version>
+      <Version>3.9.2021.1204</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>1.5.2021.1001</Version>
+      <Version>1.5.2021.1204</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>10.3.2021.1017-beta1</Version>
+      <Version>10.3.2021.1204</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2020.0.1</Version>

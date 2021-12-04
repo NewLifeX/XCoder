@@ -94,15 +94,15 @@ namespace CrazyCoder
             var ur = client.Upgrade(channel).Result;
             if (ur != null)
             {
-                var rs = client.ProcessUpgrade(ur);
+                //var rs = client.ProcessUpgrade(ur);
 
-                // 强制更新时，马上重启
-                if (rs && ur.Force)
-                {
-                    var p = Process.GetCurrentProcess();
-                    p.Close();
-                    p.Kill();
-                }
+                //// 强制更新时，马上重启
+                //if (rs && ur.Force)
+                //{
+                //    var p = Process.GetCurrentProcess();
+                //    p.Close();
+                //    p.Kill();
+                //}
             }
         }
     }
