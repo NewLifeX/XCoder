@@ -29,8 +29,6 @@ namespace XNet
 
             // 动态调节宽度高度，兼容高DPI
             this.FixDpi();
-
-            Icon = IcoHelper.GetIcon("Modbus");
         }
 
         private void FrmMain_Load(Object sender, EventArgs e)
@@ -52,12 +50,18 @@ namespace XNet
         #region 收发数据
         private void btnConnect_Click(Object sender, EventArgs e)
         {
+            _config.Save();
+
             var btn = sender as Button;
             if (btn.Text == "开始")
             {
                 var svr = new NetServer((Int32)numPort.Value)
                 {
-                    Log = _log
+                    Log = _log,
+                    SessionLog = _log,
+                    SocketLog = _log,
+                    LogReceive = true,
+                    LogSend = true,
                 };
                 svr.Received += OnReceived;
                 svr.Start();
@@ -68,8 +72,6 @@ namespace XNet
 
                 pnlSetting.Enabled = false;
                 btn.Text = "停止";
-
-                _config.Save();
             }
             else
             {
@@ -140,8 +142,13 @@ namespace XNet
 
             for (var i = 0; i < _data.Length; i++)
             {
-                var x = (Rand.Next(20) - 10) / 100.0;
-                _data[i].Value = (UInt16)(_data[i].Value * (1 + x));
+                if (_data[i].Value == 0)
+                    _data[i].Value = (UInt16)Rand.Next(UInt16.MaxValue);
+                else
+                {
+                    var x = (Rand.Next(20) - 10) / 100.0;
+                    _data[i].Value = (UInt16)(_data[i].Value * (1 + x));
+                }
             }
             //dataGridView1.DataSource = _data;
             dataGridView1.Refresh();

@@ -150,6 +150,12 @@
     <Compile Include="XNet\FrmIp.designer.cs">
       <DependentUpon>FrmIp.cs</DependentUpon>
     </Compile>
+    <Compile Include="XNet\FrmModbusMaster.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XNet\FrmModbusMaster.designer.cs">
+      <DependentUpon>FrmModbusMaster.cs</DependentUpon>
+    </Compile>
     <Compile Include="XNet\FrmModbusSlave.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +175,9 @@
       <DependentUpon>FrmSsh.cs</DependentUpon>
     </Compile>
     <Compile Include="XNet\IPPacket.cs" />
+    <Compile Include="Protocols\Modbus.cs" />
+    <Compile Include="Protocols\ModbusRtu.cs" />
+    <Compile Include="Protocols\ModbusTcp.cs" />
     <Compile Include="XNet\NetHelper2.cs" />
     <Compile Include="XNet\RawSocket.cs" />
     <Compile Include="XNet\RegisterUnit.cs" />
@@ -267,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="XNet\FrmIp.resx">
       <DependentUpon>FrmIp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XNet\FrmModbusMaster.resx">
+      <DependentUpon>FrmModbusMaster.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="XNet\FrmModbusSlave.resx">
       <DependentUpon>FrmModbusSlave.cs</DependentUpon>
