@@ -65,6 +65,8 @@ namespace XCoder
                 }
             }
 
+            ts = ts.OrderBy(t => t.FullName).ToArray();
+
             this.Invoke(() =>
             {
                 var ms = new Dictionary<String, ToolStripMenuItem>();
