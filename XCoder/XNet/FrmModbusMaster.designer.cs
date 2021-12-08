@@ -29,11 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.gbReceive = new System.Windows.Forms.GroupBox();
-            this.txtReceive = new System.Windows.Forms.RichTextBox();
             this.btnConnect = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pnlSetting = new System.Windows.Forms.Panel();
+            this.txtAddress = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.numHost = new System.Windows.Forms.NumericUpDown();
@@ -45,40 +44,15 @@
             this.numAddress = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtAddress = new System.Windows.Forms.TextBox();
-            this.gbReceive.SuspendLayout();
+            this.txtReceive = new System.Windows.Forms.RichTextBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.pnlSetting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHost)).BeginInit();
             this.gbSend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAddress)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // gbReceive
-            // 
-            this.gbReceive.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbReceive.Controls.Add(this.txtReceive);
-            this.gbReceive.Location = new System.Drawing.Point(12, 54);
-            this.gbReceive.Margin = new System.Windows.Forms.Padding(4);
-            this.gbReceive.Name = "gbReceive";
-            this.gbReceive.Padding = new System.Windows.Forms.Padding(4);
-            this.gbReceive.Size = new System.Drawing.Size(869, 292);
-            this.gbReceive.TabIndex = 4;
-            this.gbReceive.TabStop = false;
-            this.gbReceive.Text = "接收区：";
-            // 
-            // txtReceive
-            // 
-            this.txtReceive.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtReceive.HideSelection = false;
-            this.txtReceive.Location = new System.Drawing.Point(4, 22);
-            this.txtReceive.Margin = new System.Windows.Forms.Padding(4);
-            this.txtReceive.Name = "txtReceive";
-            this.txtReceive.Size = new System.Drawing.Size(861, 266);
-            this.txtReceive.TabIndex = 1;
-            this.txtReceive.Text = "";
             // 
             // btnConnect
             // 
@@ -108,6 +82,14 @@
             this.pnlSetting.Name = "pnlSetting";
             this.pnlSetting.Size = new System.Drawing.Size(763, 39);
             this.pnlSetting.TabIndex = 13;
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.Location = new System.Drawing.Point(72, 7);
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(208, 25);
+            this.txtAddress.TabIndex = 19;
+            this.txtAddress.Text = "tcp://127.0.0.1:502";
             // 
             // label3
             // 
@@ -175,9 +157,8 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(340, 41);
+            this.label1.Location = new System.Drawing.Point(451, 42);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 15);
@@ -199,13 +180,12 @@
             "16 写多个保持寄存器"});
             this.cbFunctionCode.Location = new System.Drawing.Point(72, 37);
             this.cbFunctionCode.Name = "cbFunctionCode";
-            this.cbFunctionCode.Size = new System.Drawing.Size(100, 23);
+            this.cbFunctionCode.Size = new System.Drawing.Size(208, 23);
             this.cbFunctionCode.TabIndex = 19;
             // 
             // numCount
             // 
-            this.numCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numCount.Location = new System.Drawing.Point(400, 36);
+            this.numCount.Location = new System.Drawing.Point(511, 37);
             this.numCount.Margin = new System.Windows.Forms.Padding(4);
             this.numCount.Maximum = new decimal(new int[] {
             100000,
@@ -229,8 +209,7 @@
             // 
             // btnSend
             // 
-            this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSend.Location = new System.Drawing.Point(509, 29);
+            this.btnSend.Location = new System.Drawing.Point(620, 30);
             this.btnSend.Margin = new System.Windows.Forms.Padding(4);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(67, 38);
@@ -241,8 +220,7 @@
             // 
             // numAddress
             // 
-            this.numAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numAddress.Location = new System.Drawing.Point(235, 36);
+            this.numAddress.Location = new System.Drawing.Point(346, 37);
             this.numAddress.Margin = new System.Windows.Forms.Padding(4);
             this.numAddress.Maximum = new decimal(new int[] {
             65535,
@@ -266,7 +244,6 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(16, 41);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -277,38 +254,53 @@
             // 
             // label7
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(189, 41);
+            this.label7.Location = new System.Drawing.Point(300, 42);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(52, 15);
             this.label7.TabIndex = 15;
             this.label7.Text = "地址：";
             // 
-            // txtAddress
+            // txtReceive
             // 
-            this.txtAddress.Location = new System.Drawing.Point(72, 7);
-            this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(208, 25);
-            this.txtAddress.TabIndex = 19;
-            this.txtAddress.Text = "tcp://127.0.0.1:502";
+            this.txtReceive.HideSelection = false;
+            this.txtReceive.Location = new System.Drawing.Point(466, 57);
+            this.txtReceive.Margin = new System.Windows.Forms.Padding(4);
+            this.txtReceive.Name = "txtReceive";
+            this.txtReceive.Size = new System.Drawing.Size(406, 290);
+            this.txtReceive.TabIndex = 1;
+            this.txtReceive.Text = "";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 56);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 27;
+            this.dataGridView1.Size = new System.Drawing.Size(449, 291);
+            this.dataGridView1.TabIndex = 16;
             // 
             // FrmModbusMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(889, 474);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.txtReceive);
             this.Controls.Add(this.gbSend);
             this.Controls.Add(this.pnlSetting);
             this.Controls.Add(this.btnConnect);
-            this.Controls.Add(this.gbReceive);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmModbusMaster";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "网络调试";
             this.Load += new System.EventHandler(this.FrmMain_Load);
-            this.gbReceive.ResumeLayout(false);
             this.pnlSetting.ResumeLayout(false);
             this.pnlSetting.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHost)).EndInit();
@@ -316,16 +308,14 @@
             this.gbSend.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAddress)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox gbReceive;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.RichTextBox txtReceive;
         private System.Windows.Forms.Panel pnlSetting;
         private System.Windows.Forms.GroupBox gbSend;
         private System.Windows.Forms.Button btnSend;
@@ -339,6 +329,8 @@
         private System.Windows.Forms.ComboBox cbFunctionCode;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtAddress;
+        private System.Windows.Forms.RichTextBox txtReceive;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 
