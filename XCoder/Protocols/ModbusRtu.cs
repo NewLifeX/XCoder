@@ -57,13 +57,13 @@ namespace NewLife.IoT.Protocols
         /// <param name="address"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override Byte[] SendCommand(Byte host, Byte code, UInt16 address, UInt16 value)
+        public override Byte[] SendCommand(Byte host, FunctionCodes code, UInt16 address, UInt16 value)
         {
             Open();
 
             var cmd = new Byte[8];
             cmd[0] = host;
-            cmd[1] = code;
+            cmd[1] = (Byte)code;
             cmd[2] = (Byte)(address >> 8);
             cmd[3] = (Byte)(address & 0xFF);
             cmd[4] = (Byte)(value >> 8);

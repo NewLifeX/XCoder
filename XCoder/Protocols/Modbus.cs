@@ -28,7 +28,7 @@ namespace NewLife.IoT.Protocols
         {
             using var span = Tracer?.NewSpan("modbus:WriteSingleCoil", $"{host} {address:X4} {value:X4}");
 
-            var rs = SendCommand(host, 0x05, address, value);
+            var rs = SendCommand(host, FunctionCodes.WriteCoil, address, value);
             if (rs == null || rs.Length <= 0) return null;
 
             return rs.ReadBytes(1, rs[0]);
@@ -43,7 +43,7 @@ namespace NewLife.IoT.Protocols
         {
             using var span = Tracer?.NewSpan("modbus:WriteRegister", $"{host} {address:X4} {value:X4}");
 
-            var rs = SendCommand(host, 0x06, address, value);
+            var rs = SendCommand(host, FunctionCodes.WriteHolding, address, value);
             if (rs == null || rs.Length <= 0) return null;
 
             return rs;
@@ -58,7 +58,7 @@ namespace NewLife.IoT.Protocols
         {
             using var span = Tracer?.NewSpan("modbus:ReadCoil", $"{host} {address:X4} {count:X4}");
 
-            var rs = SendCommand(host, 0x01, address, count);
+            var rs = SendCommand(host, FunctionCodes.ReadCoil, address, count);
             if (rs == null || rs.Length <= 0) return null;
 
             return rs.ReadBytes(1, rs[0]);
@@ -73,7 +73,7 @@ namespace NewLife.IoT.Protocols
         {
             using var span = Tracer?.NewSpan("modbus:ReadHoldingRegister", $"{host} {address:X4} {count:X4}");
 
-            var rs = SendCommand(host, 0x03, address, count);
+            var rs = SendCommand(host, FunctionCodes.ReadHolding, address, count);
             if (rs == null || rs.Length <= 0) return null;
 
             // 校验数据长度
@@ -88,7 +88,7 @@ namespace NewLife.IoT.Protocols
         /// <param name="address">地址。例如0x0002</param>
         /// <param name="value">数据值</param>
         /// <returns></returns>
-        public abstract Byte[] SendCommand(Byte host, Byte code, UInt16 address, UInt16 value);
+        public abstract Byte[] SendCommand(Byte host, FunctionCodes code, UInt16 address, UInt16 value);
         #endregion
 
         #region 日志

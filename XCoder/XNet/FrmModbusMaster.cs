@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using NewLife;
 using NewLife.IoT.Protocols;
@@ -36,6 +35,8 @@ namespace XNet
 
             txtReceive.SetDefaultStyle(12);
 
+            cbFunctionCode.DataSource = Enum.GetValues(typeof(FunctionCodes));
+
             // 加载保存的颜色
             UIConfig.Apply(txtReceive);
         }
@@ -62,6 +63,7 @@ namespace XNet
 
                 pnlSetting.Enabled = false;
                 btn.Text = "断开";
+                gbSend.Enabled = true;
             }
             else
             {
@@ -70,6 +72,7 @@ namespace XNet
 
                 pnlSetting.Enabled = true;
                 btn.Text = "打开";
+                gbSend.Enabled= false;
             }
         }
 
@@ -83,8 +86,7 @@ namespace XNet
 
         private void btnSend_Click(Object sender, EventArgs e)
         {
-            var mode = cbFunctionCode.SelectedItem + "";
-            var code = mode.Substring(null, " ").ToInt();
+            var code = (FunctionCodes)cbFunctionCode.SelectedItem;
             var host = (Byte)numHost.Value;
             var address = (UInt16)numAddress.Value;
             var count = (UInt16)numCount.Value;
@@ -93,13 +95,20 @@ namespace XNet
 
             switch (code)
             {
-                case 1:
+                case FunctionCodes.ReadCoil:
+                    _modbus.ReadCoil(host, address, count);
                     break;
-                case 2:
+                case FunctionCodes.ReadDiscrete:
                     break;
-                case 3:
+                case FunctionCodes.ReadHolding:
                     _modbus.ReadHoldingRegister(host, address, count);
                     break;
+                case FunctionCodes.ReadInput:
+                    break;
+                //case FunctionCodes.WriteCoil:
+                //    break;
+                //case FunctionCodes.WriteHolding:
+                //    break;
                 default:
                     break;
             }

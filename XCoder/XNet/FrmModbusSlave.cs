@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 using NewLife;
+using NewLife.Data;
+using NewLife.IoT.Protocols;
 using NewLife.Log;
 using NewLife.Net;
+using NewLife.Net.Handlers;
 using NewLife.Security;
+using NewLife.Serialization;
 using NewLife.Threading;
 using XCoder;
 using XCoder.Common;
@@ -63,6 +68,8 @@ namespace XNet
                     LogReceive = true,
                     LogSend = true,
                 };
+                // 加入定长编码器，处理Tcp粘包
+                svr.Add(new LengthFieldCodec { Offset = 4, Size = -2 });
                 svr.Received += OnReceived;
                 svr.Start();
 
@@ -156,20 +163,31 @@ namespace XNet
 
         private void OnReceived(Object sender, ReceivedEventArgs e)
         {
-            var session = sender as ISocketSession;
-            if (session == null)
+            var session = sender as INetSession;
+            if (session == null) return;
+
+            var msg = ModbusMessage.Read(e.Packet);
+            if (msg == null) return;
+
+            _log.Info("<= {0}", msg);
+
+            var rs = msg.CreateReply();
+            switch (msg.Code)
             {
-                var ns = sender as INetSession;
-                if (ns == null) return;
-                session = ns.Session;
+                case FunctionCodes.ReadHolding:
+                    var addr = msg.Address - _data[0].Address;
+                    if (addr >= 0 && addr + msg.Count <= _data.Length)
+                    {
+                        rs.Payload = _data.Skip(addr).Take(msg.Count).SelectMany(e => e.Value.GetBytes()).ToArray();
+                    }
+                    break;
+                default:
+                    break;
             }
 
-            if (NetConfig.Current.ShowReceiveString)
-            {
-                var line = e.Packet.ToStr();
+            _log.Info("=> {0}", rs);
 
-                _log.Info(line);
-            }
+            session.Send(rs.ToPacket());
         }
 
         private Int32 _pColor = 0;

@@ -146,6 +146,7 @@
             this.gbSend.Controls.Add(this.numAddress);
             this.gbSend.Controls.Add(this.label2);
             this.gbSend.Controls.Add(this.label7);
+            this.gbSend.Enabled = false;
             this.gbSend.Location = new System.Drawing.Point(12, 354);
             this.gbSend.Margin = new System.Windows.Forms.Padding(4);
             this.gbSend.Name = "gbSend";
@@ -264,11 +265,14 @@
             // 
             // txtReceive
             // 
+            this.txtReceive.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtReceive.HideSelection = false;
-            this.txtReceive.Location = new System.Drawing.Point(466, 57);
+            this.txtReceive.Location = new System.Drawing.Point(319, 57);
             this.txtReceive.Margin = new System.Windows.Forms.Padding(4);
             this.txtReceive.Name = "txtReceive";
-            this.txtReceive.Size = new System.Drawing.Size(406, 290);
+            this.txtReceive.Size = new System.Drawing.Size(562, 290);
             this.txtReceive.TabIndex = 1;
             this.txtReceive.Text = "";
             // 
@@ -283,7 +287,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(449, 291);
+            this.dataGridView1.Size = new System.Drawing.Size(300, 291);
             this.dataGridView1.TabIndex = 16;
             // 
             // FrmModbusMaster
@@ -299,7 +303,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmModbusMaster";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "网络调试";
+            this.Text = "ModbusMaster";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.pnlSetting.ResumeLayout(false);
             this.pnlSetting.PerformLayout();

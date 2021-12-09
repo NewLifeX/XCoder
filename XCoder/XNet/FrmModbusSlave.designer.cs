@@ -59,10 +59,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtReceive.HideSelection = false;
-            this.txtReceive.Location = new System.Drawing.Point(468, 55);
+            this.txtReceive.Location = new System.Drawing.Point(319, 55);
             this.txtReceive.Margin = new System.Windows.Forms.Padding(4);
             this.txtReceive.Name = "txtReceive";
-            this.txtReceive.Size = new System.Drawing.Size(404, 407);
+            this.txtReceive.Size = new System.Drawing.Size(553, 407);
             this.txtReceive.TabIndex = 1;
             this.txtReceive.Text = "";
             // 
@@ -279,7 +279,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(449, 406);
+            this.dataGridView1.Size = new System.Drawing.Size(300, 406);
             this.dataGridView1.TabIndex = 14;
             // 
             // FrmModbusSlave
@@ -294,7 +294,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmModbusSlave";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "网络调试";
+            this.Text = "ModbusSlave";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
             this.pnlSetting.ResumeLayout(false);
