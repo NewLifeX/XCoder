@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Threading;
+using NewLife.Data;
 using NewLife.Net;
 
 namespace NewLife.IoT.Protocols
@@ -65,25 +66,12 @@ namespace NewLife.IoT.Protocols
         /// <param name="address"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override Byte[] SendCommand(Byte host, FunctionCodes code, UInt16 address, UInt16 value)
+        public override Byte[] SendCommand(Byte host, FunctionCodes code, UInt16 address, Object value)
         {
             Open();
 
             var tid = Interlocked.Increment(ref _transactionId);
 
-            //var cmd = new Byte[12];
-            //cmd[0] = (Byte)(tid >> 8);
-            //cmd[1] = (Byte)(tid & 0xFF);
-            //cmd[2] = (Byte)(ProtocolId >> 8);
-            //cmd[3] = (Byte)(ProtocolId & 0xFF);
-            //cmd[4] = 0;
-            //cmd[5] = 1 + 1 + 2 + 2;
-            //cmd[6] = host;
-            //cmd[7] = code;
-            //cmd[8] = (Byte)(address >> 8);
-            //cmd[9] = (Byte)(address & 0xFF);
-            //cmd[10] = (Byte)(value >> 8);
-            //cmd[11] = (Byte)(value & 0xFF);
             var msg = new ModbusMessage
             {
                 TransactionId = (UInt16)tid,
@@ -91,8 +79,15 @@ namespace NewLife.IoT.Protocols
                 Host = host,
                 Code = code,
                 Address = address,
-                Count = value
+                //Count = value
             };
+            if (value is UInt16 v)
+                msg.Count = v;
+            else if (value is Packet pk)
+                msg.Payload = pk;
+            else if (value is Byte[] buf)
+                msg.Payload = buf;
+
             WriteLog("=> {0}", msg);
             var cmd = msg.ToPacket().ToArray();
 
@@ -103,24 +98,29 @@ namespace NewLife.IoT.Protocols
                 Thread.Sleep(10);
             }
 
+            using var span2 = Tracer?.NewSpan("modbus:ReceiveCommand");
             try
             {
-                using var span = Tracer?.NewSpan("modbus:ReceiveCommand");
 
                 var buf = new Byte[BufferSize];
                 var c = _stream.Read(buf, 0, buf.Length);
                 buf = buf.ReadBytes(0, c);
 
-                if (span != null) span.Tag = buf.ToHex();
+                if (span2 != null) span2.Tag = buf.ToHex();
 
-                var rs = ModbusMessage.Read(buf);
+                var rs = ModbusMessage.Read(buf, true);
                 if (rs == null) return null;
 
-                WriteLog("<= {0}", Server, rs);
+                WriteLog("<= {0}", rs);
 
                 return rs.Payload?.ToArray();
             }
-            catch (TimeoutException) { return null; }
+            catch (Exception ex)
+            {
+                span2?.SetError(ex, null);
+                if (ex is TimeoutException) return null;
+                throw;
+            }
         }
         #endregion
     }

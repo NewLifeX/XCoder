@@ -57,7 +57,7 @@ namespace NewLife.IoT.Protocols
         /// <param name="address"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override Byte[] SendCommand(Byte host, FunctionCodes code, UInt16 address, UInt16 value)
+        public override Byte[] SendCommand(Byte host, FunctionCodes code, UInt16 address, Object value)
         {
             Open();
 
@@ -66,8 +66,12 @@ namespace NewLife.IoT.Protocols
             cmd[1] = (Byte)code;
             cmd[2] = (Byte)(address >> 8);
             cmd[3] = (Byte)(address & 0xFF);
-            cmd[4] = (Byte)(value >> 8);
-            cmd[5] = (Byte)(value & 0xFF);
+
+            if (value is UInt16 v)
+            {
+                cmd[4] = (Byte)(v >> 8);
+                cmd[5] = (Byte)(v & 0xFF);
+            }
 
             var crc = Crc(cmd, 0, cmd.Length - 2);
             cmd[6] = (Byte)(crc & 0xFF);

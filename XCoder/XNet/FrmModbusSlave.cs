@@ -4,13 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using NewLife;
-using NewLife.Data;
 using NewLife.IoT.Protocols;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Net.Handlers;
 using NewLife.Security;
-using NewLife.Serialization;
 using NewLife.Threading;
 using XCoder;
 using XCoder.Common;
@@ -64,9 +62,9 @@ namespace XNet
                 {
                     Log = _log,
                     SessionLog = _log,
-                    SocketLog = _log,
-                    LogReceive = true,
-                    LogSend = true,
+                    //SocketLog = _log,
+                    //LogReceive = true,
+                    //LogSend = true,
                 };
                 // 加入定长编码器，处理Tcp粘包
                 svr.Add(new LengthFieldCodec { Offset = 4, Size = -2 });
@@ -174,7 +172,7 @@ namespace XNet
             var rs = msg.CreateReply();
             switch (msg.Code)
             {
-                case FunctionCodes.ReadHolding:
+                case FunctionCodes.ReadRegister:
                     var addr = msg.Address - _data[0].Address;
                     if (addr >= 0 && addr + msg.Count <= _data.Length)
                     {

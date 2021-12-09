@@ -63,7 +63,7 @@ namespace NewLife.IoT.Protocols
             TransactionId = binary.Read<UInt16>();
             ProtocolId = binary.Read<UInt16>();
             var len = binary.Read<UInt16>();
-            if (len != 1 + 1 + 2 + 2) return false;
+            if (len < 1 + 1 + 2 + 2) return false;
 
             Host = binary.ReadByte();
             Code = (FunctionCodes)binary.ReadByte();
