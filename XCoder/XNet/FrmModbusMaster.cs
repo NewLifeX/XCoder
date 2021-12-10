@@ -19,7 +19,7 @@ namespace XNet
         private ControlConfig _config;
         private ILog _log;
         private ModbusTcp _modbus;
-        private readonly List<RegisterUnit> _data = new List<RegisterUnit>();
+        private List<RegisterUnit> _data = new();
 
         #region 窗体
         public FrmModbusMaster()
@@ -76,6 +76,9 @@ namespace XNet
                 _modbus.TryDispose();
                 _modbus = null;
 
+                _data.Clear();
+                dataGridView1.DataSource = null;
+
                 pnlSetting.Enabled = true;
                 btn.Text = "打开";
                 gbSend.Enabled = false;
@@ -125,6 +128,7 @@ namespace XNet
             if (data != null && data.Length > 0)
             {
                 var dt = _data;
+                var len = dt.Count;
                 for (var i = 0; i < count && i < data.Length; i++)
                 {
                     var addr = address + i;
@@ -133,11 +137,16 @@ namespace XNet
 
                     unit.Value = data[i];
                 }
-                _data.Sort((x, y) => x.Address.CompareTo(y.Address));
+                //_data.Sort((x, y) => x.Address.CompareTo(y.Address));
 
                 this.Invoke(() =>
                 {
-                    dataGridView1.DataSource = _data;
+                    if (len != _data.Count)
+                    {
+                        _data = _data.OrderBy(e => e.Address).ToList();
+                        dataGridView1.DataSource = null;
+                        dataGridView1.DataSource = _data;
+                    }
                     dataGridView1.Refresh();
                 });
             }
