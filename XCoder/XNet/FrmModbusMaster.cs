@@ -12,7 +12,7 @@ using XCoder.XNet;
 
 namespace XNet
 {
-    [Category("网络通信")]
+    [Category("工业电子")]
     [DisplayName("ModbusMaster")]
     public partial class FrmModbusMaster : Form, IXForm
     {
@@ -34,17 +34,22 @@ namespace XNet
         {
             _log = new TextControlLog { Control = txtReceive };
 
-            _config = new ControlConfig { Control = this, FileName = "ModbusMaster.json" };
-            _config.Load();
-
             txtReceive.SetDefaultStyle(12);
 
-            cbFunctionCode.DataSource = Enum.GetValues(typeof(FunctionCodes));
+            var list = new List<FunctionCodes>();
+            foreach (FunctionCodes item in Enum.GetValues(typeof(FunctionCodes)))
+            {
+                if (item.ToString().StartsWith("Read")) list.Add(item);
+            }
+            cbFunctionCode.DataSource = list;
 
             // 加载保存的颜色
             UIConfig.Apply(txtReceive);
 
             dataGridView1.DataSource = _data;
+
+            _config = new ControlConfig { Control = this, FileName = "ModbusMaster.json" };
+            _config.Load();
         }
         #endregion
 
@@ -102,42 +107,19 @@ namespace XNet
 
             _config.Save();
 
-            Byte[] data = null;
-            switch (code)
-            {
-                case FunctionCodes.ReadCoil:
-                    data = _modbus.ReadCoil(host, address, count);
-                    break;
-                case FunctionCodes.ReadDiscrete:
-                    data = _modbus.ReadDiscrete(host, address, count);
-                    break;
-                case FunctionCodes.ReadRegister:
-                    data = _modbus.ReadRegister(host, address, count);
-                    break;
-                case FunctionCodes.ReadInput:
-                    data = _modbus.ReadInput(host, address, count);
-                    break;
-                //case FunctionCodes.WriteCoil:
-                //    break;
-                //case FunctionCodes.WriteHolding:
-                //    break;
-                default:
-                    break;
-            }
-
+            var data = _modbus.Read(code, host, address, count);
             if (data != null && data.Length > 0)
             {
                 var dt = _data;
                 var len = dt.Count;
-                for (var i = 0; i < count && i < data.Length; i++)
+                for (var i = 0; i < count * 2 && i < data.Length; i += 2)
                 {
                     var addr = address + i;
                     var unit = dt.FirstOrDefault(e => e.Address == addr);
                     if (unit == null) dt.Add(unit = new RegisterUnit { Address = addr });
 
-                    unit.Value = data[i];
+                    unit.Value = data.ToUInt16(i, true);
                 }
-                //_data.Sort((x, y) => x.Address.CompareTo(y.Address));
 
                 this.Invoke(() =>
                 {

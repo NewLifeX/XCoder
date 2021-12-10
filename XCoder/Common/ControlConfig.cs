@@ -49,7 +49,13 @@ namespace XCoder.Common
                         if (dic.TryGetValue(item.Name, out v)) nud.Value = v.ToInt();
                         break;
                     case ComboBox cbox:
-                        if (dic.TryGetValue(item.Name, out v)) cbox.DataSource = (v + "").Split(",");
+                        if (dic.TryGetValue(item.Name, out v))
+                        {
+                            if (cbox.DropDownStyle == ComboBoxStyle.DropDownList)
+                                cbox.SelectedItem = v;
+                            else
+                                cbox.DataSource = (v + "").Split(",");
+                        }
                         break;
                     default:
                         if (item.Controls.Count > 0) LoadConfig(dic, item);
@@ -81,13 +87,18 @@ namespace XCoder.Common
                     case CheckBox cb: dic[item.Name] = cb.Checked; break;
                     case NumericUpDown nud: dic[item.Name] = nud.Value; break;
                     case ComboBox cbox:
-                        var list = new List<String> { cbox.Text };
-                        for (var i = 0; i < cbox.Items.Count; i++)
+                        if (cbox.DropDownStyle == ComboBoxStyle.DropDownList)
+                            dic[item.Name] = cbox.SelectedItem + "";
+                        else
                         {
-                            var elm = cbox.Items[i];
-                            if (elm != null) list.Add(elm + "");
+                            var list = new List<String> { cbox.Text };
+                            for (var i = 0; i < cbox.Items.Count; i++)
+                            {
+                                var elm = cbox.Items[i];
+                                if (elm != null) list.Add(elm + "");
+                            }
+                            dic[item.Name] = list.Where(e => !e.IsNullOrEmpty()).Distinct().Join();
                         }
-                        dic[item.Name] = list.Where(e => !e.IsNullOrEmpty()).Distinct().Join();
                         break;
                     default:
                         if (item.Controls.Count > 0) SaveConfig(dic, item);

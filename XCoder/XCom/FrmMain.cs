@@ -11,7 +11,7 @@ using XCoder;
 
 namespace XCom
 {
-    [Category("网络通信")]
+    [Category("工业电子")]
     [DisplayName("串口调试工具")]
     public partial class FrmMain : Form, IXForm
     {

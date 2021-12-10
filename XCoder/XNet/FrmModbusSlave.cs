@@ -16,7 +16,7 @@ using XCoder.XNet;
 
 namespace XNet
 {
-    [Category("网络通信")]
+    [Category("工业电子")]
     [DisplayName("ModbusSlave")]
     public partial class FrmModbusSlave : Form, IXForm
     {
