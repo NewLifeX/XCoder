@@ -51,7 +51,7 @@ namespace XNet
             // 加载保存的颜色
             UIConfig.Apply(txtReceive);
 
-            dataGridView1.DataSource = _data;
+            //dgv.DataSource = _data;
 
             _config = new ControlConfig { Control = this, FileName = "ModbusMaster.json" };
             _config.Load();
@@ -87,7 +87,7 @@ namespace XNet
                 _modbus = null;
 
                 _data.Clear();
-                dataGridView1.DataSource = null;
+                dgv.DataSource = null;
 
                 pnlSetting.Enabled = true;
                 btn.Text = "打开";
@@ -134,10 +134,10 @@ namespace XNet
                         if (len != _data.Count)
                         {
                             _data = _data.OrderBy(e => e.Address).ToList();
-                            dataGridView1.DataSource = null;
-                            dataGridView1.DataSource = _data;
+                            dgv.DataSource = null;
+                            dgv.DataSource = _data;
                         }
-                        dataGridView1.Refresh();
+                        dgv.Refresh();
                     });
                 }
             }
@@ -160,11 +160,48 @@ namespace XNet
         private void cbFunctionCode_SelectedIndexChanged(Object sender, EventArgs e)
         {
             var code = (FunctionCodes)Enum.ToObject(typeof(FunctionCodes), cbFunctionCode.SelectedValue);
+
+            numCount.Enabled = true;
+
+            switch (code)
+            {
+                case FunctionCodes.ReadCoil:
+                    break;
+                case FunctionCodes.ReadDiscrete:
+                    break;
+                case FunctionCodes.ReadRegister:
+                    break;
+                case FunctionCodes.ReadInput:
+                    break;
+                case FunctionCodes.WriteCoil:
+                    numCount.Enabled = false;
+                    break;
+                case FunctionCodes.WriteRegister:
+                    numCount.Enabled = false;
+                    break;
+                case FunctionCodes.WriteCoils:
+                    break;
+                case FunctionCodes.WriteRegisters:
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void dataGridView1_CellValueChanged(Object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView1.Refresh();
+            dgv.Refresh();
+        }
+
+        private void btnAdd_Click(Object sender, EventArgs e)
+        {
+            var unit = new RegisterUnit();
+            if (_data.Count > 0) unit.Address = _data[_data.Count - 1].Address + 2;
+            _data.Add(unit);
+
+            dgv.DataSource = null;
+            dgv.DataSource = _data;
+            dgv.Refresh();
         }
     }
 }

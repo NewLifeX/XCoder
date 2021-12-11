@@ -23,7 +23,7 @@ namespace XNet
         private ControlConfig _config;
         private ILog _log;
         private NetServer _Server;
-        private RegisterUnit[] _data;
+        private List<RegisterUnit> _data;
 
         #region 窗体
         public FrmModbusSlave()
@@ -102,25 +102,25 @@ namespace XNet
                 case "0x0000":
                     for (var i = 0; i < count; i++)
                     {
-                        list.Add(new RegisterUnit { Address = addr + i, Value = 0 });
+                        list.Add(new RegisterUnit { Address = addr + i * 2, Value = 0 });
                     }
                     break;
                 case "0x7777":
                     for (var i = 0; i < count; i++)
                     {
-                        list.Add(new RegisterUnit { Address = addr + i, Value = 0x7777 });
+                        list.Add(new RegisterUnit { Address = addr + i * 2, Value = 0x7777 });
                     }
                     break;
                 case "0xFFFF":
                     for (var i = 0; i < count; i++)
                     {
-                        list.Add(new RegisterUnit { Address = addr + i, Value = 0xFFFF });
+                        list.Add(new RegisterUnit { Address = addr + i * 2, Value = 0xFFFF });
                     }
                     break;
                 case "递增":
                     for (var i = 0; i < count; i++)
                     {
-                        list.Add(new RegisterUnit { Address = addr + i, Value = (UInt16)i });
+                        list.Add(new RegisterUnit { Address = addr + i * 2, Value = (UInt16)i });
                     }
                     break;
                 case "静态随机":
@@ -128,16 +128,16 @@ namespace XNet
                 default:
                     for (var i = 0; i < count; i++)
                     {
-                        list.Add(new RegisterUnit { Address = addr + i, Value = (UInt16)Rand.Next(UInt16.MaxValue) });
+                        list.Add(new RegisterUnit { Address = addr + i * 2, Value = (UInt16)Rand.Next(UInt16.MaxValue) });
                     }
                     break;
             }
 
             if (mode == "动态随机") _timer = new TimerX(DoRefreshData, null, 1_000, 1_000);
 
-            _data = list.ToArray();
+            _data = list;
 
-            dataGridView1.DataSource = _data;
+            dgv.DataSource = _data;
         }
 
         private TimerX _timer;
@@ -145,7 +145,7 @@ namespace XNet
         {
             if (_data == null) return;
 
-            for (var i = 0; i < _data.Length; i++)
+            for (var i = 0; i < _data.Count; i++)
             {
                 if (_data[i].Value == 0)
                     _data[i].Value = (UInt16)Rand.Next(UInt16.MaxValue);
@@ -156,7 +156,7 @@ namespace XNet
                 }
             }
             //dataGridView1.DataSource = _data;
-            dataGridView1.Refresh();
+            dgv.Refresh();
         }
 
         private void OnReceived(Object sender, ReceivedEventArgs e)
@@ -178,7 +178,7 @@ namespace XNet
                         // 连续地址
                         var count = (Int32)Math.Ceiling(msg.Count / 8.0);
                         var addr = msg.Address - _data[0].Address;
-                        if (addr >= 0 && addr + count <= _data.Length)
+                        if (addr >= 0 && addr + count <= _data.Count)
                         {
                             rs.Payload = _data.Skip(addr).Take(count).SelectMany(e => e.Value.GetBytes()).ToArray();
                         }
@@ -189,7 +189,7 @@ namespace XNet
                     {
                         // 连续地址
                         var addr = msg.Address - _data[0].Address;
-                        if (addr >= 0 && addr + msg.Count <= _data.Length)
+                        if (addr >= 0 && addr + msg.Count <= _data.Count)
                         {
                             rs.Payload = _data.Skip(addr).Take(msg.Count).SelectMany(e => e.Value.GetBytes()).ToArray();
                         }
@@ -220,5 +220,21 @@ namespace XNet
             _pColor = txtReceive.TextLength;
         }
         #endregion
+
+        private void dataGridView1_CellValueChanged(Object sender, DataGridViewCellEventArgs e)
+        {
+            dgv.Refresh();
+        }
+
+        private void btnAdd_Click(Object sender, EventArgs e)
+        {
+            var unit = new RegisterUnit();
+            if (_data.Count > 0) unit.Address = _data[_data.Count - 1].Address + 2;
+            _data.Add(unit);
+
+            dgv.DataSource = null;
+            dgv.DataSource = _data;
+            dgv.Refresh();
+        }
     }
 }
