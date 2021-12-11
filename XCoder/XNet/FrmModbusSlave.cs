@@ -61,11 +61,18 @@ namespace XNet
                 var svr = new NetServer((Int32)numPort.Value)
                 {
                     Log = _log,
-                    SessionLog = _log,
+                    //SessionLog = _log,
                     //SocketLog = _log,
                     //LogReceive = true,
                     //LogSend = true,
                 };
+
+                var set = NetConfig.Current;
+                if (set.ShowLog) svr.SessionLog = _log;
+                if (set.ShowSocketLog) svr.SocketLog = _log;
+                if (set.ShowSend) svr.LogSend = true;
+                if (set.ShowReceive) svr.LogReceive = true;
+
                 // 加入定长编码器，处理Tcp粘包
                 svr.Add(new LengthFieldCodec { Offset = 4, Size = -2 });
                 svr.Received += OnReceived;
@@ -161,13 +168,13 @@ namespace XNet
 
         private void OnReceived(Object sender, ReceivedEventArgs e)
         {
-            var session = sender as INetSession;
+            var session = sender as NetSession;
             if (session == null) return;
 
             var msg = ModbusMessage.Read(e.Packet);
             if (msg == null) return;
 
-            _log.Info("<= {0}", msg);
+            session.Log?.Info("<= {0}", msg);
 
             var rs = msg.CreateReply();
             switch (msg.Code)
@@ -207,7 +214,7 @@ namespace XNet
                     break;
             }
 
-            _log.Info("=> {0}", rs);
+            session.Log?.Info("=> {0}", rs);
 
             session.Send(rs.ToPacket());
         }
@@ -218,6 +225,16 @@ namespace XNet
             var cfg = NetConfig.Current;
             if (cfg.ColorLog) txtReceive.ColourDefault(_pColor);
             _pColor = txtReceive.TextLength;
+        }
+        #endregion
+
+        #region 右键菜单
+        private void mi清空_Click(Object sender, EventArgs e) => txtReceive.Clear();
+
+        private void Menu_Click(Object sender, EventArgs e)
+        {
+            var mi = sender as ToolStripMenuItem;
+            mi.Checked = !mi.Checked;
         }
         #endregion
 

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NewLife;
 
 namespace XCoder.XNet
 {
@@ -14,6 +15,6 @@ namespace XCoder.XNet
 
         public UInt16 Value { get; set; }
 
-        public String ValueHex => Value.ToString("X4");
+        public String ValueHex => Value.GetBytes(false).ToHex();
     }
 }
