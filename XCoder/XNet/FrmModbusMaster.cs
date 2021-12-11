@@ -112,32 +112,59 @@ namespace XNet
 
             _config.Save();
 
-            var data = _modbus.Read(code, host, address, count);
-            if (data != null && data.Length > 0)
+            // 读取
+            if (code <= FunctionCodes.ReadInput)
             {
-                var dt = _data;
-                var len = dt.Count;
-                for (var i = 0; i < count * 2 && i < data.Length; i += 2)
+                var data = _modbus.Read(code, host, address, count);
+                if (data != null && data.Length > 0)
                 {
-                    var addr = address + i;
-                    var unit = dt.FirstOrDefault(e => e.Address == addr);
-                    if (unit == null) dt.Add(unit = new RegisterUnit { Address = addr });
+                    var dt = _data;
+                    var len = dt.Count;
+                    for (var i = 0; i < count * 2 && i < data.Length; i += 2)
+                    {
+                        var addr = address + i;
+                        var unit = dt.FirstOrDefault(e => e.Address == addr);
+                        if (unit == null) dt.Add(unit = new RegisterUnit { Address = addr });
 
-                    unit.Value = data.ToUInt16(i, true);
+                        unit.Value = data.ToUInt16(i, true);
+                    }
+
+                    this.Invoke(() =>
+                    {
+                        if (len != _data.Count)
+                        {
+                            _data = _data.OrderBy(e => e.Address).ToList();
+                            dataGridView1.DataSource = null;
+                            dataGridView1.DataSource = _data;
+                        }
+                        dataGridView1.Refresh();
+                    });
+                }
+            }
+            // 写入
+            else
+            {
+                var values = new UInt16[count];
+                for (var i = 0; i < count; i++)
+                {
+                    var addr = address + i * 2;
+                    var unit = _data.FirstOrDefault(e => e.Address == addr);
+                    if (unit != null) values[i] = unit.Value;
                 }
 
-                this.Invoke(() =>
-                {
-                    if (len != _data.Count)
-                    {
-                        _data = _data.OrderBy(e => e.Address).ToList();
-                        dataGridView1.DataSource = null;
-                        dataGridView1.DataSource = _data;
-                    }
-                    dataGridView1.Refresh();
-                });
+                var rs = _modbus.Write(code, host, address, values);
             }
         }
         #endregion
+
+        private void cbFunctionCode_SelectedIndexChanged(Object sender, EventArgs e)
+        {
+            var code = (FunctionCodes)Enum.ToObject(typeof(FunctionCodes), cbFunctionCode.SelectedValue);
+        }
+
+        private void dataGridView1_CellValueChanged(Object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView1.Refresh();
+        }
     }
 }
