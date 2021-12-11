@@ -23,7 +23,7 @@ namespace XCoder
         [STAThread]
         static void Main()
         {
-#if NC30
+#if NET5_0_OR_GREATER
             XTrace2.UseWinForm();
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
 #else

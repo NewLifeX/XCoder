@@ -1,0 +1,117 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <AssemblyTitle>新生命码神工具</AssemblyTitle>
+    <Description>众多开发者工具，网络、串口、加解密、正则表达式、Modbus</Description>
+    <Company>新生命开发团队</Company>
+    <Copyright>©2002-2021 NewLife</Copyright>
+    <Version>8.0.2021.1211</Version>
+    <FileVersion>8.0.2021.1211</FileVersion>
+    <AssemblyVersion>8.0.*</AssemblyVersion>
+    <Deterministic>false</Deterministic>
+    <ApplicationIcon>leaf.ico</ApplicationIcon>
+    <LangVersion>latest</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <OutputPath>..\Bin\CrazyCoder</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="XCom\SerialPortList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="leaf.ico" />
+    <EmbeddedResource Include="UpdateInfo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="XICO\leaf.png" />
+    <EmbeddedResource Include="XRegex\Pattern\Html\无嵌套标记.txt" />
+    <EmbeddedResource Include="XRegex\Pattern\SQL查询\嵌套查询.txt" />
+    <EmbeddedResource Include="XRegex\Pattern\SQL查询\简单.txt" />
+    <EmbeddedResource Include="XRegex\Pattern\平衡组\完整示例.txt" />
+    <EmbeddedResource Include="XRegex\Pattern\平衡组\完整示例固化分组.txt" />
+    <EmbeddedResource Include="XRegex\Pattern\平衡组\标准.txt" />
+    <EmbeddedResource Include="XRegex\Pattern\平衡组\标准固化分组.txt" />
+    <EmbeddedResource Include="XRegex\Pattern\网页\最外层嵌套.txt" />
+    <EmbeddedResource Include="XRegex\Sample\SQL查询\MSSQL表结构.txt" />
+    <EmbeddedResource Include="XRegex\Sample\SQL查询\普通嵌套查询.txt" />
+    <EmbeddedResource Include="XRegex\Sample\SQL查询\普通查询.txt" />
+    <EmbeddedResource Include="XRegex\Sample\平衡组\算术表达式.txt" />
+    <EmbeddedResource Include="XRegex\Sample\网页\最外层嵌套.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="数据库命名规范.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+    <PackageReference Include="NewLife.Core">
+      <Version>8.11.2021.1204</Version>
+    </PackageReference>
+    <PackageReference Include="NewLife.MQTT">
+      <Version>1.0.2021.1204</Version>
+    </PackageReference>
+    <PackageReference Include="NewLife.Net">
+      <Version>3.6.2021.1204</Version>
+    </PackageReference>
+    <PackageReference Include="NewLife.Redis">
+      <Version>3.9.2021.1204</Version>
+    </PackageReference>
+    <PackageReference Include="NewLife.Stardust">
+      <Version>1.5.2021.1204</Version>
+    </PackageReference>
+    <PackageReference Include="NewLife.WinCore" Version="8.11.2021.1204" />
+    <PackageReference Include="NewLife.XCode">
+      <Version>10.3.2021.1204</Version>
+    </PackageReference>
+    <PackageReference Include="SSH.NET">
+      <Version>2020.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.IO.Ports" Version="6.0.0" />
+    <PackageReference Include="System.Management" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Star\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="NewModelForm\AddField.cs" />
+    <Compile Remove="NewModelForm\AddField.Designer.cs" />
+    <Compile Remove="NewModelForm\AddTable.cs" />
+    <Compile Remove="NewModelForm\AddTable.Designer.cs" />
+    <Compile Remove="NewModelForm\BaseForm.cs" />
+    <Compile Remove="NewModelForm\BaseForm.designer.cs" />
+    <Compile Remove="NewModelForm\NewModel.cs" />
+    <Compile Remove="NewModelForm\NewModel.Designer.cs" />
+    <Compile Remove="NewModelForm\WinFormHelper.cs" />
+    <Compile Remove="XMessage\FrmMain.cs" />
+    <Compile Remove="XMessage\FrmMain.designer.cs" />
+    <Compile Remove="XMessage\MessageConfig.cs" />
+    <Compile Remove="XNet\MySqlParser.cs" />
+    <EmbeddedResource Remove="NewModelForm\AddField.resx" />
+    <EmbeddedResource Remove="NewModelForm\AddTable.resx" />
+    <EmbeddedResource Remove="NewModelForm\BaseForm.resx" />
+    <EmbeddedResource Remove="NewModelForm\NewModel.resx" />
+    <EmbeddedResource Remove="XMessage\FrmMain.resx" />
+  </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>del "$(TargetDir)*.xml" /q</PostBuildEvent>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+</Project>
