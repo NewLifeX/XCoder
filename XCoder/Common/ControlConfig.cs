@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using NewLife;
+using NewLife.Reflection;
 using NewLife.Serialization;
 
 namespace XCoder.Common
@@ -52,7 +53,12 @@ namespace XCoder.Common
                         if (dic.TryGetValue(item.Name, out v))
                         {
                             if (cbox.DropDownStyle == ComboBoxStyle.DropDownList)
-                                cbox.SelectedValue = v;
+                            {
+                                if (cbox.Items.Count > 0 && cbox.Items[0].GetType().GetTypeCode() == TypeCode.Object)
+                                    cbox.SelectedValue = v;
+                                else
+                                    cbox.SelectedItem = v;
+                            }
                             else
                                 cbox.DataSource = (v + "").Split(",");
                         }
@@ -88,7 +94,12 @@ namespace XCoder.Common
                     case NumericUpDown nud: dic[item.Name] = nud.Value; break;
                     case ComboBox cbox:
                         if (cbox.DropDownStyle == ComboBoxStyle.DropDownList)
-                            dic[item.Name] = cbox.SelectedValue;
+                        {
+                            if (cbox.SelectedValue != null)
+                                dic[item.Name] = cbox.SelectedValue;
+                            else
+                                dic[item.Name] = cbox.SelectedItem;
+                        }
                         else
                         {
                             var list = new List<String> { cbox.Text };
