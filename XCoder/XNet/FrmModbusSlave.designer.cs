@@ -43,7 +43,15 @@
             this.numCount = new System.Windows.Forms.NumericUpDown();
             this.numAddress = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.menuReceive = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi日志着色 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.mi显示应用日志 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi显示网络日志 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi显示接收字符串 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi显示发送数据 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi显示接收数据 = new System.Windows.Forms.ToolStripMenuItem();
             this.dgv = new System.Windows.Forms.DataGridView();
             this.btnAdd = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
@@ -51,6 +59,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numHost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAddress)).BeginInit();
+            this.menuReceive.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,6 +68,7 @@
             this.txtReceive.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtReceive.ContextMenuStrip = this.menuReceive;
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(401, 66);
             this.txtReceive.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -139,7 +149,6 @@
             this.numPort.Size = new System.Drawing.Size(76, 28);
             this.numPort.TabIndex = 11;
             this.numPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.toolTip1.SetToolTip(this.numPort, "端口");
             this.numPort.Value = new decimal(new int[] {
             502,
             0,
@@ -182,7 +191,6 @@
             this.numHost.Size = new System.Drawing.Size(76, 28);
             this.numHost.TabIndex = 21;
             this.numHost.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.toolTip1.SetToolTip(this.numHost, "端口");
             this.numHost.Value = new decimal(new int[] {
             1,
             0,
@@ -227,7 +235,6 @@
             this.numCount.Size = new System.Drawing.Size(76, 28);
             this.numCount.TabIndex = 18;
             this.numCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.toolTip1.SetToolTip(this.numCount, "端口");
             this.numCount.Value = new decimal(new int[] {
             32,
             0,
@@ -252,7 +259,6 @@
             this.numAddress.Size = new System.Drawing.Size(96, 28);
             this.numAddress.TabIndex = 17;
             this.numAddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.toolTip1.SetToolTip(this.numAddress, "端口");
             this.numAddress.Value = new decimal(new int[] {
             40000,
             0,
@@ -268,6 +274,75 @@
             this.label2.Size = new System.Drawing.Size(62, 18);
             this.label2.TabIndex = 19;
             this.label2.Text = "端口：";
+            // 
+            // menuReceive
+            // 
+            this.menuReceive.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuReceive.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.mi日志着色,
+            this.toolStripMenuItem3,
+            this.mi显示应用日志,
+            this.mi显示网络日志,
+            this.mi显示接收字符串,
+            this.mi显示发送数据,
+            this.mi显示接收数据});
+            this.menuReceive.Name = "menuSend";
+            this.menuReceive.Size = new System.Drawing.Size(184, 178);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(183, 24);
+            this.toolStripMenuItem1.Text = "清空";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.mi清空_Click);
+            // 
+            // mi日志着色
+            // 
+            this.mi日志着色.Name = "mi日志着色";
+            this.mi日志着色.Size = new System.Drawing.Size(183, 24);
+            this.mi日志着色.Text = "日志着色";
+            this.mi日志着色.Click += new System.EventHandler(this.Menu_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 6);
+            // 
+            // mi显示应用日志
+            // 
+            this.mi显示应用日志.Name = "mi显示应用日志";
+            this.mi显示应用日志.Size = new System.Drawing.Size(183, 24);
+            this.mi显示应用日志.Text = "显示应用日志";
+            this.mi显示应用日志.Click += new System.EventHandler(this.Menu_Click);
+            // 
+            // mi显示网络日志
+            // 
+            this.mi显示网络日志.Name = "mi显示网络日志";
+            this.mi显示网络日志.Size = new System.Drawing.Size(183, 24);
+            this.mi显示网络日志.Text = "显示网络日志";
+            this.mi显示网络日志.Click += new System.EventHandler(this.Menu_Click);
+            // 
+            // mi显示接收字符串
+            // 
+            this.mi显示接收字符串.Name = "mi显示接收字符串";
+            this.mi显示接收字符串.Size = new System.Drawing.Size(183, 24);
+            this.mi显示接收字符串.Text = "显示接收字符串";
+            this.mi显示接收字符串.Click += new System.EventHandler(this.Menu_Click);
+            // 
+            // mi显示发送数据
+            // 
+            this.mi显示发送数据.Name = "mi显示发送数据";
+            this.mi显示发送数据.Size = new System.Drawing.Size(183, 24);
+            this.mi显示发送数据.Text = "显示发送数据";
+            this.mi显示发送数据.Click += new System.EventHandler(this.Menu_Click);
+            // 
+            // mi显示接收数据
+            // 
+            this.mi显示接收数据.Name = "mi显示接收数据";
+            this.mi显示接收数据.Size = new System.Drawing.Size(183, 24);
+            this.mi显示接收数据.Text = "显示接收数据";
+            this.mi显示接收数据.Click += new System.EventHandler(this.Menu_Click);
             // 
             // dgv
             // 
@@ -315,6 +390,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numHost)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numAddress)).EndInit();
+            this.menuReceive.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);
 
@@ -329,7 +405,6 @@
         private System.Windows.Forms.ComboBox cbMode;
         private System.Windows.Forms.NumericUpDown numPort;
         private System.Windows.Forms.Panel pnlSetting;
-        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.NumericUpDown numCount;
         private System.Windows.Forms.NumericUpDown numAddress;
         private System.Windows.Forms.DataGridView dgv;
@@ -338,6 +413,15 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown numHost;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.ContextMenuStrip menuReceive;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem mi日志着色;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem mi显示应用日志;
+        private System.Windows.Forms.ToolStripMenuItem mi显示网络日志;
+        private System.Windows.Forms.ToolStripMenuItem mi显示接收字符串;
+        private System.Windows.Forms.ToolStripMenuItem mi显示发送数据;
+        private System.Windows.Forms.ToolStripMenuItem mi显示接收数据;
     }
 }
 

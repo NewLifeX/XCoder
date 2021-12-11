@@ -55,6 +55,33 @@ namespace XNet
 
             _config = new ControlConfig { Control = this, FileName = "ModbusMaster.json" };
             _config.Load();
+            LoadConfig();
+        }
+        #endregion
+
+        #region 加载/保存 配置
+        void LoadConfig()
+        {
+            var cfg = NetConfig.Current;
+            mi显示应用日志.Checked = cfg.ShowLog;
+            mi显示网络日志.Checked = cfg.ShowSocketLog;
+            mi显示接收字符串.Checked = cfg.ShowReceiveString;
+            mi显示发送数据.Checked = cfg.ShowSend;
+            mi显示接收数据.Checked = cfg.ShowReceive;
+            mi日志着色.Checked = cfg.ColorLog;
+        }
+
+        void SaveConfig()
+        {
+            var cfg = NetConfig.Current;
+            cfg.ShowLog = mi显示应用日志.Checked;
+            cfg.ShowSocketLog = mi显示网络日志.Checked;
+            cfg.ShowReceiveString = mi显示接收字符串.Checked;
+            cfg.ShowSend = mi显示发送数据.Checked;
+            cfg.ShowReceive = mi显示接收数据.Checked;
+            cfg.ColorLog = mi日志着色.Checked;
+
+            cfg.Save();
         }
         #endregion
 
@@ -62,17 +89,22 @@ namespace XNet
         private void btnConnect_Click(Object sender, EventArgs e)
         {
             _config.Save();
+            SaveConfig();
 
             var btn = sender as Button;
             if (btn.Text == "打开")
             {
                 var address = txtAddress.Text;
+                var set = NetConfig.Current;
 
                 var mb = new ModbusTcp
                 {
                     Server = address,
-                    Log = _log
+                    //Log = _log
                 };
+
+                if (set.ShowLog) mb.Log = _log;
+
                 mb.Open();
 
                 _modbus = mb;
@@ -111,6 +143,7 @@ namespace XNet
             var count = (UInt16)numCount.Value;
 
             _config.Save();
+            SaveConfig();
 
             // 读取
             if (code <= FunctionCodes.ReadInput)
