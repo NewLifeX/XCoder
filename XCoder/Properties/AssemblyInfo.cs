@@ -28,10 +28,12 @@ using System.Runtime.InteropServices;
 //      内部版本号
 //      修订号
 //
-[assembly: AssemblyVersion("7.4.*")]
-[assembly: AssemblyFileVersion("7.4.2021.1001")]
+[assembly: AssemblyVersion("7.5.*")]
+[assembly: AssemblyFileVersion("7.5.2021.1211")]
 
 /*
+ * v7.5.2021.1211   新增ModbusMaster/ModbusSlave
+ * 
  * v7.4.2021.1001   新增MQTT客户端工具
  * 
  * v7.3.2021.0321   支持星尘升级码神工具
