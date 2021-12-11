@@ -36,12 +36,17 @@ namespace XNet
 
             txtReceive.SetDefaultStyle(12);
 
-            var list = new List<FunctionCodes>();
-            foreach (FunctionCodes item in Enum.GetValues(typeof(FunctionCodes)))
-            {
-                if (item.ToString().StartsWith("Read")) list.Add(item);
-            }
-            cbFunctionCode.DataSource = list;
+            var dic = EnumHelper.GetDescriptions(typeof(FunctionCodes));
+            //var dic = EnumHelper.GetDescriptions<FunctionCodes>();
+            //var list = new List<FunctionCodes>();
+            //foreach (FunctionCodes item in Enum.GetValues(typeof(FunctionCodes)))
+            //{
+            //    if (item.ToString().StartsWith("Read")) list.Add(item);
+            //}
+            cbFunctionCode.ValueMember = "key";
+            cbFunctionCode.DisplayMember = "value";
+            cbFunctionCode.DataSource = new BindingSource { DataSource = dic };
+            if (cbFunctionCode.SelectedIndex < 0) cbFunctionCode.SelectedIndex = 0;
 
             // 加载保存的颜色
             UIConfig.Apply(txtReceive);
@@ -100,7 +105,7 @@ namespace XNet
 
         private void btnSend_Click(Object sender, EventArgs e)
         {
-            var code = (FunctionCodes)cbFunctionCode.SelectedItem;
+            var code = (FunctionCodes)Enum.ToObject(typeof(FunctionCodes), cbFunctionCode.SelectedValue);
             var host = (Byte)numHost.Value;
             var address = (UInt16)numAddress.Value;
             var count = (UInt16)numCount.Value;

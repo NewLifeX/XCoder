@@ -52,7 +52,7 @@ namespace XCoder.Common
                         if (dic.TryGetValue(item.Name, out v))
                         {
                             if (cbox.DropDownStyle == ComboBoxStyle.DropDownList)
-                                cbox.SelectedItem = v;
+                                cbox.SelectedValue = v;
                             else
                                 cbox.DataSource = (v + "").Split(",");
                         }
@@ -88,7 +88,7 @@ namespace XCoder.Common
                     case NumericUpDown nud: dic[item.Name] = nud.Value; break;
                     case ComboBox cbox:
                         if (cbox.DropDownStyle == ComboBoxStyle.DropDownList)
-                            dic[item.Name] = cbox.SelectedItem + "";
+                            dic[item.Name] = cbox.SelectedValue;
                         else
                         {
                             var list = new List<String> { cbox.Text };
