@@ -38,15 +38,42 @@ namespace XNet
         {
             _log = new TextControlLog { Control = txtReceive };
 
-            _config = new ControlConfig { Control = this, FileName = "ModbusSlave.json" };
-            _config.Load();
-
             if (cbMode.SelectedIndex < 0) cbMode.SelectedIndex = 0;
 
             txtReceive.SetDefaultStyle(12);
 
             // 加载保存的颜色
             UIConfig.Apply(txtReceive);
+
+            _config = new ControlConfig { Control = this, FileName = "ModbusSlave.json" };
+            _config.Load();
+            LoadConfig();
+        }
+        #endregion
+
+        #region 加载/保存 配置
+        void LoadConfig()
+        {
+            var cfg = NetConfig.Current;
+            mi显示应用日志.Checked = cfg.ShowLog;
+            mi显示网络日志.Checked = cfg.ShowSocketLog;
+            mi显示接收字符串.Checked = cfg.ShowReceiveString;
+            mi显示发送数据.Checked = cfg.ShowSend;
+            mi显示接收数据.Checked = cfg.ShowReceive;
+            mi日志着色.Checked = cfg.ColorLog;
+        }
+
+        void SaveConfig()
+        {
+            var cfg = NetConfig.Current;
+            cfg.ShowLog = mi显示应用日志.Checked;
+            cfg.ShowSocketLog = mi显示网络日志.Checked;
+            cfg.ShowReceiveString = mi显示接收字符串.Checked;
+            cfg.ShowSend = mi显示发送数据.Checked;
+            cfg.ShowReceive = mi显示接收数据.Checked;
+            cfg.ColorLog = mi日志着色.Checked;
+
+            cfg.Save();
         }
         #endregion
 
@@ -54,6 +81,7 @@ namespace XNet
         private void btnConnect_Click(Object sender, EventArgs e)
         {
             _config.Save();
+            SaveConfig();
 
             var btn = sender as Button;
             if (btn.Text == "开始")
