@@ -129,7 +129,7 @@ namespace XNet
                         unit.Value = data.ToUInt16(i, true);
                     }
 
-                    this.Invoke(() =>
+                    Invoke(() =>
                     {
                         if (len != _data.Count)
                         {
@@ -154,6 +154,16 @@ namespace XNet
 
                 var rs = _modbus.Write(code, host, address, values);
             }
+        }
+        #endregion
+
+        #region 右键菜单
+        private void mi清空_Click(Object sender, EventArgs e) => txtReceive.Clear();
+
+        private void Menu_Click(Object sender, EventArgs e)
+        {
+            var mi = sender as ToolStripMenuItem;
+            mi.Checked = !mi.Checked;
         }
         #endregion
 
@@ -188,10 +198,7 @@ namespace XNet
             }
         }
 
-        private void dataGridView1_CellValueChanged(Object sender, DataGridViewCellEventArgs e)
-        {
-            dgv.Refresh();
-        }
+        private void dataGridView1_CellValueChanged(Object sender, DataGridViewCellEventArgs e) => dgv.Refresh();
 
         private void btnAdd_Click(Object sender, EventArgs e)
         {
