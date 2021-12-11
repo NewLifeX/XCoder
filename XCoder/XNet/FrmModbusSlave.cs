@@ -172,12 +172,36 @@ namespace XNet
             var rs = msg.CreateReply();
             switch (msg.Code)
             {
-                case FunctionCodes.ReadRegister:
-                    var addr = msg.Address - _data[0].Address;
-                    if (addr >= 0 && addr + msg.Count <= _data.Length)
+                case FunctionCodes.ReadCoil:
+                case FunctionCodes.ReadDiscrete:
                     {
-                        rs.Payload = _data.Skip(addr).Take(msg.Count).SelectMany(e => e.Value.GetBytes()).ToArray();
+                        // 连续地址
+                        var count = (Int32)Math.Ceiling(msg.Count / 8.0);
+                        var addr = msg.Address - _data[0].Address;
+                        if (addr >= 0 && addr + count <= _data.Length)
+                        {
+                            rs.Payload = _data.Skip(addr).Take(count).SelectMany(e => e.Value.GetBytes()).ToArray();
+                        }
                     }
+                    break;
+                case FunctionCodes.ReadRegister:
+                case FunctionCodes.ReadInput:
+                    {
+                        // 连续地址
+                        var addr = msg.Address - _data[0].Address;
+                        if (addr >= 0 && addr + msg.Count <= _data.Length)
+                        {
+                            rs.Payload = _data.Skip(addr).Take(msg.Count).SelectMany(e => e.Value.GetBytes()).ToArray();
+                        }
+                    }
+                    break;
+                case FunctionCodes.WriteCoil:
+                    break;
+                case FunctionCodes.WriteRegister:
+                    break;
+                case FunctionCodes.WriteCoils:
+                    break;
+                case FunctionCodes.WriteRegisters:
                     break;
                 default:
                     break;
