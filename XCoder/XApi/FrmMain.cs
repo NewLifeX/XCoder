@@ -42,7 +42,7 @@ namespace XApi
             this.FixDpi();
 
             //Font = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            Icon = IcoHelper.GetIcon("Api");
+            //Icon = IcoHelper.GetIcon("Api");
         }
 
         private void FrmMain_Load(Object sender, EventArgs e)

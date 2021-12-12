@@ -25,14 +25,14 @@ namespace XICO
             //AllowDrop = true;
             picSrc.AllowDrop = true;
 
-            Icon = IcoHelper.GetIcon("图标");
+            //Icon = IcoHelper.GetIcon("图标");
         }
 
         private void FrmMain_Shown(Object sender, EventArgs e)
         {
             //sfd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            var ms = FileSource.GetFileResource(null, "XCoder.XICO.leaf.png");
+            var ms = FileSource.GetFileResource(null, "CrazyCoder.XICO.leaf.png");
             if (ms != null) picSrc.Image = new Bitmap(ms);
 
             var ft = lbFont.Font;

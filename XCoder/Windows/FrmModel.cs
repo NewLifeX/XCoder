@@ -20,7 +20,7 @@ namespace XCoder
         {
             InitializeComponent();
 
-            Icon = Source.GetIcon();
+            //Icon = Source.GetIcon();
         }
 
         public static FrmModel Create(IList<IDataTable> tables)

@@ -12,7 +12,6 @@
     <Deterministic>false</Deterministic>
     <ApplicationIcon>leaf.ico</ApplicationIcon>
     <LangVersion>latest</LangVersion>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <OutputPath>..\Bin\CrazyCoder</OutputPath>
@@ -21,14 +20,6 @@
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System.configuration" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Messaging" />
-    <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Update="XCom\SerialPortList.cs">
       <SubType>UserControl</SubType>
@@ -100,6 +91,7 @@
     <Compile Remove="NewModelForm\NewModel.cs" />
     <Compile Remove="NewModelForm\NewModel.Designer.cs" />
     <Compile Remove="NewModelForm\WinFormHelper.cs" />
+    <Compile Remove="Properties\AssemblyInfo.cs" />
     <Compile Remove="XMessage\FrmMain.cs" />
     <Compile Remove="XMessage\FrmMain.designer.cs" />
     <Compile Remove="XMessage\MessageConfig.cs" />

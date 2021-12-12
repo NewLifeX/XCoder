@@ -23,7 +23,7 @@ namespace XCoder.Tools
             this.FixDpi();
 
             //Font = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
-            Icon = IcoHelper.GetIcon("Backup");
+            //Icon = IcoHelper.GetIcon("Backup");
         }
 
         private void FrmMain_Load(Object sender, EventArgs e)

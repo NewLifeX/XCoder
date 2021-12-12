@@ -27,7 +27,7 @@ namespace XCoder
         {
             InitializeComponent();
 
-            Icon = Source.GetIcon();
+            //Icon = Source.GetIcon();
         }
 
         public static FrmSchema Create(IDatabase db)

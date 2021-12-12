@@ -10,7 +10,7 @@ namespace XCoder
         {
             InitializeComponent();
 
-            Icon = Source.GetIcon();
+            //Icon = Source.GetIcon();
         }
 
         public static FrmText Create(String title, String content)

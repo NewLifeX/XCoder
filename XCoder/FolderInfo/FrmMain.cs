@@ -25,7 +25,7 @@ namespace XCoder.FolderInfo
             // 动态调节宽度高度，兼容高DPI
             this.FixDpi();
 
-            Icon = IcoHelper.GetIcon("文件");
+            //Icon = IcoHelper.GetIcon("文件");
         }
 
         private void Form1_Load(Object sender, EventArgs e)
