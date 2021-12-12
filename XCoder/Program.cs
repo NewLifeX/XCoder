@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Windows.Forms;
 using NewLife;
 using NewLife.Log;
-using NewLife.Net;
 using NewLife.Threading;
-using NewLife.Xml;
-using XCode.DataAccessLayer;
 using System.Threading.Tasks;
 #if !NET4
 using Stardust;
