@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using XCode.DataAccessLayer;
 
 namespace CrazyCoder.Data.Models
 {
@@ -22,5 +23,7 @@ namespace CrazyCoder.Data.Models
 
         [DisplayName("已同步")]
         public Int32 Finish { get; set; } = -1;
+
+        public IDataTable Table { get; set; }
     }
 }

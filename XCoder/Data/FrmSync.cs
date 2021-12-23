@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CrazyCoder.Data.Models;
+using NewLife;
 using NewLife.Configuration;
+using NewLife.Log;
 using XCode.DataAccessLayer;
 using XCoder;
 
@@ -19,7 +21,7 @@ namespace CrazyCoder.Data
     public partial class FrmSync : Form, IXForm
     {
         DAL _source;
-        DAL _target;
+        IList<IDataTable> _tables;
         IList<TableModel> _models;
 
         public FrmSync()
@@ -60,12 +62,13 @@ namespace CrazyCoder.Data
                 cbTarget.DataSource = conns;
 
                 // 获取数据表
-                var tables = _source.Tables;
-                _models = tables.Select(e => new TableModel
+                _tables = _source.Tables;
+                _models = _tables.Select(e => new TableModel
                 {
                     Name = e.TableName,
                     DisplayName = e.DisplayName,
-                    EnableSync = true
+                    EnableSync = true,
+                    Table = e,
                 }).ToList();
                 Task.Run(FetchRows);
 
@@ -73,6 +76,7 @@ namespace CrazyCoder.Data
 
                 gbSource.Enabled = false;
                 gbTarget.Enabled = true;
+                gbSetting.Enabled = true;
                 btn.Text = "断开";
             }
             else
@@ -80,6 +84,7 @@ namespace CrazyCoder.Data
 
                 gbSource.Enabled = true;
                 gbTarget.Enabled = false;
+                gbSetting.Enabled = false;
                 btn.Text = "连接";
             }
         }
@@ -97,7 +102,66 @@ namespace CrazyCoder.Data
 
         private void btnSync_Click(Object sender, EventArgs e)
         {
+            var connName = cbTarget.SelectedItem + "";
+            if (connName.IsNullOrEmpty()) return;
 
+            var ts = _models.Select(e => e.Table).ToArray();
+            if (ts.Length == 0) return;
+
+            var syncSchema = cbSyncSchema.Enabled;
+            var ignoreError = cbIgnoreError.Enabled;
+            //_source.SyncAll(ts, connName, cbSyncSchema.Checked, cbIgnoreError.Checked);
+            var dpk = new DbPackage
+            {
+                Dal = _source,
+                IgnoreError = ignoreError,
+                Log = XTrace.Log
+            };
+            //dpk.OnProgress = (p, dt) =>
+            //{
+            //    var m = _models.FirstOrDefault(e => e.Name == dt);
+            //};
+            Task.Run(() => dpk.SyncAll(ts, connName, syncSchema));
+            //Task.Run(() =>
+            //{
+            //    foreach (var item in ts)
+            //    {
+            //        try
+            //        {
+            //            _source.Sync(item, connName, syncSchema, (p, dt) => { });
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            XTrace.WriteException(ex);
+
+            //            if (!ignoreError) throw;
+            //        }
+            //    }
+            //});
+        }
+
+        private void btnSelectAll_Click(Object sender, EventArgs e)
+        {
+            if (_models == null) return;
+
+            foreach (var model in _models)
+            {
+                model.EnableSync = true;
+            }
+
+            dataGridView1.Refresh();
+        }
+
+        private void btnSelectOther_Click(Object sender, EventArgs e)
+        {
+            if (_models == null) return;
+
+            foreach (var item in _models)
+            {
+                item.EnableSync = !item.EnableSync;
+            }
+
+            dataGridView1.Refresh();
         }
     }
 }
