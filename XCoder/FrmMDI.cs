@@ -1,17 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using NewLife.Reflection;
-using NewLife.Net;
-using System.IO;
-using NewLife.Log;
-using NewLife.Threading;
 using NewLife;
-using System.ComponentModel;
-using System.Collections.Generic;
+using NewLife.Log;
+using NewLife.Net;
+using NewLife.Reflection;
+using NewLife.Threading;
 
 namespace XCoder
 {

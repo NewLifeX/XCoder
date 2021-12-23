@@ -51,7 +51,7 @@ namespace XCoder
 
             //Icon = IcoHelper.GetIcon("模型");
 
-            AutoLoadTables(Config.ConnName);
+            Task.Run(() => AutoLoadTables(Config.ConnName));
         }
 
         private void FrmMain_Shown(Object sender, EventArgs e)
@@ -447,8 +447,8 @@ namespace XCoder
                 {
                     var list = DAL.Create(Config.ConnName).Tables;
                     if (!cbIncludeView.Checked) list = list.Where(t => !t.IsView).ToList();
-                    //if (Config.NeedFix) list = Engine.FixTable(list);
-                    Tables = list;
+                //if (Config.NeedFix) list = Engine.FixTable(list);
+                Tables = list;
                 }
                 catch (Exception ex)
                 {
@@ -458,10 +458,10 @@ namespace XCoder
 
                 this.Invoke(() =>
                 {
-                    //SetTables(null);
-                    SetTables(Tables);    //修复数据建模界面连接数据库不显示数据表问题
-                    //SetTables(Engine.Tables);
-                });
+                //SetTables(null);
+                SetTables(Tables);    //修复数据建模界面连接数据库不显示数据表问题
+                                          //SetTables(Engine.Tables);
+            });
             });
         }
 
