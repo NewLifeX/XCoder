@@ -53,7 +53,6 @@
             // 
             this.gbSource.Controls.Add(this.cbConn);
             this.gbSource.Controls.Add(this.label4);
-            this.gbSource.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.gbSource.ForeColor = System.Drawing.Color.DeepPink;
             this.gbSource.Location = new System.Drawing.Point(13, 13);
             this.gbSource.Margin = new System.Windows.Forms.Padding(4);
@@ -104,7 +103,6 @@
             this.gbTarget.Controls.Add(this.cbTarget);
             this.gbTarget.Controls.Add(this.label1);
             this.gbTarget.Enabled = false;
-            this.gbTarget.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.gbTarget.ForeColor = System.Drawing.Color.DeepPink;
             this.gbTarget.Location = new System.Drawing.Point(558, 13);
             this.gbTarget.Margin = new System.Windows.Forms.Padding(4);
@@ -185,7 +183,6 @@
             this.gbSetting.Controls.Add(this.btnSelectOther);
             this.gbSetting.Controls.Add(this.btnSelectAll);
             this.gbSetting.Enabled = false;
-            this.gbSetting.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.gbSetting.ForeColor = System.Drawing.Color.DeepPink;
             this.gbSetting.Location = new System.Drawing.Point(13, 84);
             this.gbSetting.Margin = new System.Windows.Forms.Padding(4);
@@ -200,7 +197,7 @@
             // 
             this.cbIgnoreError.Location = new System.Drawing.Point(346, 40);
             this.cbIgnoreError.Name = "cbIgnoreError";
-            this.cbIgnoreError.Size = new System.Drawing.Size(91, 23);
+            this.cbIgnoreError.Size = new System.Drawing.Size(115, 23);
             this.cbIgnoreError.TabIndex = 18;
             this.cbIgnoreError.Text = "忽略错误";
             this.cbIgnoreError.UseVisualStyleBackColor = true;
@@ -209,7 +206,7 @@
             // 
             this.cbSyncSchema.Location = new System.Drawing.Point(214, 40);
             this.cbSyncSchema.Name = "cbSyncSchema";
-            this.cbSyncSchema.Size = new System.Drawing.Size(91, 23);
+            this.cbSyncSchema.Size = new System.Drawing.Size(115, 23);
             this.cbSyncSchema.TabIndex = 17;
             this.cbSyncSchema.Text = "同步架构";
             this.cbSyncSchema.UseVisualStyleBackColor = true;
@@ -249,7 +246,7 @@
             this.Controls.Add(this.gbSource);
             this.Controls.Add(this.btnConnection);
             this.Name = "FrmSync";
-            this.Text = "数据同步";
+            this.Text = "跨库数据同步";
             this.Load += new System.EventHandler(this.FrmSync_Load);
             this.gbSource.ResumeLayout(false);
             this.gbSource.PerformLayout();
