@@ -33,6 +33,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnConnection = new System.Windows.Forms.Button();
             this.gbTarget = new System.Windows.Forms.GroupBox();
+            this.btnConnect2 = new System.Windows.Forms.Button();
             this.cbTarget = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSync = new System.Windows.Forms.Button();
@@ -52,6 +53,7 @@
             // 
             this.gbSource.Controls.Add(this.cbConn);
             this.gbSource.Controls.Add(this.label4);
+            this.gbSource.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.gbSource.ForeColor = System.Drawing.Color.DeepPink;
             this.gbSource.Location = new System.Drawing.Point(13, 13);
             this.gbSource.Margin = new System.Windows.Forms.Padding(4);
@@ -65,12 +67,13 @@
             // cbConn
             // 
             this.cbConn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbConn.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.cbConn.ForeColor = System.Drawing.Color.DeepPink;
             this.cbConn.FormattingEnabled = true;
             this.cbConn.Location = new System.Drawing.Point(87, 18);
             this.cbConn.Margin = new System.Windows.Forms.Padding(4);
             this.cbConn.Name = "cbConn";
-            this.cbConn.Size = new System.Drawing.Size(301, 28);
+            this.cbConn.Size = new System.Drawing.Size(301, 32);
             this.cbConn.TabIndex = 13;
             // 
             // label4
@@ -97,9 +100,11 @@
             // 
             // gbTarget
             // 
+            this.gbTarget.Controls.Add(this.btnConnect2);
             this.gbTarget.Controls.Add(this.cbTarget);
             this.gbTarget.Controls.Add(this.label1);
             this.gbTarget.Enabled = false;
+            this.gbTarget.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.gbTarget.ForeColor = System.Drawing.Color.DeepPink;
             this.gbTarget.Location = new System.Drawing.Point(558, 13);
             this.gbTarget.Margin = new System.Windows.Forms.Padding(4);
@@ -110,15 +115,28 @@
             this.gbTarget.TabStop = false;
             this.gbTarget.Text = "目标";
             // 
+            // btnConnect2
+            // 
+            this.btnConnect2.ForeColor = System.Drawing.Color.DeepPink;
+            this.btnConnect2.Location = new System.Drawing.Point(445, 15);
+            this.btnConnect2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnConnect2.Name = "btnConnect2";
+            this.btnConnect2.Size = new System.Drawing.Size(78, 38);
+            this.btnConnect2.TabIndex = 13;
+            this.btnConnect2.Text = "连接";
+            this.btnConnect2.UseVisualStyleBackColor = true;
+            this.btnConnect2.Click += new System.EventHandler(this.btnConnect2_Click);
+            // 
             // cbTarget
             // 
             this.cbTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTarget.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.cbTarget.ForeColor = System.Drawing.Color.DeepPink;
             this.cbTarget.FormattingEnabled = true;
-            this.cbTarget.Location = new System.Drawing.Point(88, 18);
+            this.cbTarget.Location = new System.Drawing.Point(88, 20);
             this.cbTarget.Margin = new System.Windows.Forms.Padding(4);
             this.cbTarget.Name = "cbTarget";
-            this.cbTarget.Size = new System.Drawing.Size(349, 28);
+            this.cbTarget.Size = new System.Drawing.Size(349, 32);
             this.cbTarget.TabIndex = 13;
             // 
             // label1
@@ -134,7 +152,7 @@
             // btnSync
             // 
             this.btnSync.ForeColor = System.Drawing.Color.DeepPink;
-            this.btnSync.Location = new System.Drawing.Point(990, 17);
+            this.btnSync.Location = new System.Drawing.Point(990, 32);
             this.btnSync.Margin = new System.Windows.Forms.Padding(4);
             this.btnSync.Name = "btnSync";
             this.btnSync.Size = new System.Drawing.Size(78, 38);
@@ -167,6 +185,7 @@
             this.gbSetting.Controls.Add(this.btnSelectOther);
             this.gbSetting.Controls.Add(this.btnSelectAll);
             this.gbSetting.Enabled = false;
+            this.gbSetting.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.gbSetting.ForeColor = System.Drawing.Color.DeepPink;
             this.gbSetting.Location = new System.Drawing.Point(13, 84);
             this.gbSetting.Margin = new System.Windows.Forms.Padding(4);
@@ -179,20 +198,18 @@
             // 
             // cbIgnoreError
             // 
-            this.cbIgnoreError.AutoSize = true;
-            this.cbIgnoreError.Location = new System.Drawing.Point(346, 32);
+            this.cbIgnoreError.Location = new System.Drawing.Point(346, 40);
             this.cbIgnoreError.Name = "cbIgnoreError";
-            this.cbIgnoreError.Size = new System.Drawing.Size(91, 24);
+            this.cbIgnoreError.Size = new System.Drawing.Size(91, 23);
             this.cbIgnoreError.TabIndex = 18;
             this.cbIgnoreError.Text = "忽略错误";
             this.cbIgnoreError.UseVisualStyleBackColor = true;
             // 
             // cbSyncSchema
             // 
-            this.cbSyncSchema.AutoSize = true;
-            this.cbSyncSchema.Location = new System.Drawing.Point(214, 32);
+            this.cbSyncSchema.Location = new System.Drawing.Point(214, 40);
             this.cbSyncSchema.Name = "cbSyncSchema";
-            this.cbSyncSchema.Size = new System.Drawing.Size(91, 24);
+            this.cbSyncSchema.Size = new System.Drawing.Size(91, 23);
             this.cbSyncSchema.TabIndex = 17;
             this.cbSyncSchema.Text = "同步架构";
             this.cbSyncSchema.UseVisualStyleBackColor = true;
@@ -200,7 +217,7 @@
             // btnSelectOther
             // 
             this.btnSelectOther.ForeColor = System.Drawing.Color.DeepPink;
-            this.btnSelectOther.Location = new System.Drawing.Point(95, 23);
+            this.btnSelectOther.Location = new System.Drawing.Point(95, 32);
             this.btnSelectOther.Margin = new System.Windows.Forms.Padding(4);
             this.btnSelectOther.Name = "btnSelectOther";
             this.btnSelectOther.Size = new System.Drawing.Size(78, 38);
@@ -212,7 +229,7 @@
             // btnSelectAll
             // 
             this.btnSelectAll.ForeColor = System.Drawing.Color.DeepPink;
-            this.btnSelectAll.Location = new System.Drawing.Point(9, 23);
+            this.btnSelectAll.Location = new System.Drawing.Point(9, 32);
             this.btnSelectAll.Margin = new System.Windows.Forms.Padding(4);
             this.btnSelectAll.Name = "btnSelectAll";
             this.btnSelectAll.Size = new System.Drawing.Size(78, 38);
@@ -240,7 +257,6 @@
             this.gbTarget.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.gbSetting.ResumeLayout(false);
-            this.gbSetting.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -261,5 +277,6 @@
         private Button btnSelectAll;
         private CheckBox cbIgnoreError;
         private CheckBox cbSyncSchema;
+        private Button btnConnect2;
     }
 }

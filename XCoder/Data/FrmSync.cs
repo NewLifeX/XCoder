@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using CrazyCoder.Data.Models;
 using NewLife;
-using NewLife.Configuration;
 using NewLife.Log;
 using XCode.DataAccessLayer;
 using XCoder;
@@ -58,7 +50,7 @@ namespace CrazyCoder.Data
 
             if (btn.Text == "连接")
             {
-                var conns = DAL.ConnStrs.Keys.Where(e => e != connName).ToArray();
+                var conns = DAL.ConnStrs.Keys.Where(e => e != connName).OrderBy(e => e).ToArray();
                 cbTarget.DataSource = conns;
 
                 // 获取数据表
@@ -68,7 +60,6 @@ namespace CrazyCoder.Data
                     Name = e.TableName,
                     DisplayName = e.DisplayName,
                     EnableSync = true,
-                    Table = e,
                 }).ToList();
                 Task.Run(FetchRows);
 
@@ -100,16 +91,43 @@ namespace CrazyCoder.Data
             Invoke(() => dataGridView1.Refresh());
         }
 
-        private void btnSync_Click(Object sender, EventArgs e)
+        private void btnConnect2_Click(Object sender, EventArgs e)
+        {
+            var connName = cbTarget.SelectedItem + "";
+            var dal = DAL.Create(connName);
+
+            Task.Run(() => FetchRows2(dal));
+        }
+
+        void FetchRows2(DAL dal)
+        {
+            var tables = dal.Tables;
+            if (tables == null) return;
+
+            foreach (var item in _models)
+            {
+                if (tables.Any(e => e.TableName.EqualIgnoreCase(item.Name)))
+                {
+                    var sb = new SelectBuilder { Table = item.Name };
+                    item.Total2 = dal.SelectCount(sb);
+                }
+            }
+
+            Invoke(() => dataGridView1.Refresh());
+        }
+
+        private async void btnSync_Click(Object sender, EventArgs e)
         {
             var connName = cbTarget.SelectedItem + "";
             if (connName.IsNullOrEmpty()) return;
 
-            var ts = _models.Select(e => e.Table).ToArray();
-            if (ts.Length == 0) return;
+            //var ts = _models.Select(e => e.Table).ToArray();
+            //if (ts.Length == 0) return;
 
-            var syncSchema = cbSyncSchema.Enabled;
-            var ignoreError = cbIgnoreError.Enabled;
+            gbSetting.Enabled = false;
+
+            var syncSchema = cbSyncSchema.Checked;
+            var ignoreError = cbIgnoreError.Checked;
             //_source.SyncAll(ts, connName, cbSyncSchema.Checked, cbIgnoreError.Checked);
             var dpk = new DbPackage
             {
@@ -121,23 +139,47 @@ namespace CrazyCoder.Data
             //{
             //    var m = _models.FirstOrDefault(e => e.Name == dt);
             //};
-            Task.Run(() => dpk.SyncAll(ts, connName, syncSchema));
-            //Task.Run(() =>
-            //{
-            //    foreach (var item in ts)
-            //    {
-            //        try
-            //        {
-            //            _source.Sync(item, connName, syncSchema, (p, dt) => { });
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            XTrace.WriteException(ex);
+            //Task.Run(() => dpk.SyncAll(ts, connName, syncSchema));
+            await Task.Run(() =>
+            {
+                var dal = DAL.Create(cbTarget.SelectedItem + "");
+                var tables = dal.Tables ?? new List<IDataTable>();
 
-            //            if (!ignoreError) throw;
-            //        }
-            //    }
-            //});
+                _source.Db.ShowSQL = false;
+                _source.Session.ShowSQL = false;
+                foreach (var item in _models)
+                {
+                    if (!item.EnableSync) continue;
+
+                    try
+                    {
+                        if (!syncSchema && !tables.Any(e => e.TableName.EqualIgnoreCase(item.Name)))
+                        {
+                            item.Description = "目标表不存在，跳过！";
+                        }
+                        else
+                        {
+                            var tb = _tables.FirstOrDefault(e => e.TableName == item.Name);
+                            var rs = _source.Sync(tb, connName, syncSchema, (p, dt) => { });
+                            item.Finish = rs;
+                            item.Description = "成功！";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        item.Description = ex.Message;
+                        XTrace.WriteException(ex);
+
+                        if (!ignoreError) throw;
+                    }
+
+                    Invoke(() => dataGridView1.Refresh());
+                }
+                _source.Session.ShowSQL = true;
+                _source.Db.ShowSQL = true;
+            });
+
+            gbSetting.Enabled = true;
         }
 
         private void btnSelectAll_Click(Object sender, EventArgs e)

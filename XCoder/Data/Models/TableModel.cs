@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using XCode.DataAccessLayer;
 
 namespace CrazyCoder.Data.Models
 {
@@ -18,12 +17,16 @@ namespace CrazyCoder.Data.Models
         [DisplayName("同步")]
         public Boolean EnableSync { get; set; }
 
-        [DisplayName("行数")]
+        [DisplayName("源表行数")]
         public Int32 Total { get; set; } = -1;
 
         [DisplayName("已同步")]
         public Int32 Finish { get; set; } = -1;
 
-        public IDataTable Table { get; set; }
+        [DisplayName("目标行数")]
+        public Int32 Total2 { get; set; } = -1;
+
+        [DisplayName("备注")]
+        public String Description{ get; set; }
     }
 }
