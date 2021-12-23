@@ -55,7 +55,7 @@
             this.gbSource.Margin = new System.Windows.Forms.Padding(4);
             this.gbSource.Name = "gbSource";
             this.gbSource.Padding = new System.Windows.Forms.Padding(4);
-            this.gbSource.Size = new System.Drawing.Size(287, 63);
+            this.gbSource.Size = new System.Drawing.Size(396, 63);
             this.gbSource.TabIndex = 9;
             this.gbSource.TabStop = false;
             this.gbSource.Text = "来源";
@@ -69,7 +69,7 @@
             this.cbConn.Location = new System.Drawing.Point(87, 18);
             this.cbConn.Margin = new System.Windows.Forms.Padding(4);
             this.cbConn.Name = "cbConn";
-            this.cbConn.Size = new System.Drawing.Size(186, 32);
+            this.cbConn.Size = new System.Drawing.Size(301, 32);
             this.cbConn.TabIndex = 13;
             // 
             // label4
@@ -86,7 +86,7 @@
             // 
             this.btnConnection.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnConnection.ForeColor = System.Drawing.Color.DeepPink;
-            this.btnConnection.Location = new System.Drawing.Point(323, 27);
+            this.btnConnection.Location = new System.Drawing.Point(417, 27);
             this.btnConnection.Margin = new System.Windows.Forms.Padding(4);
             this.btnConnection.Name = "btnConnection";
             this.btnConnection.Size = new System.Drawing.Size(78, 38);
@@ -103,11 +103,11 @@
             this.gbTarget.Enabled = false;
             this.gbTarget.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.gbTarget.ForeColor = System.Drawing.Color.DeepPink;
-            this.gbTarget.Location = new System.Drawing.Point(439, 13);
+            this.gbTarget.Location = new System.Drawing.Point(558, 13);
             this.gbTarget.Margin = new System.Windows.Forms.Padding(4);
             this.gbTarget.Name = "gbTarget";
             this.gbTarget.Padding = new System.Windows.Forms.Padding(4);
-            this.gbTarget.Size = new System.Drawing.Size(424, 63);
+            this.gbTarget.Size = new System.Drawing.Size(531, 63);
             this.gbTarget.TabIndex = 10;
             this.gbTarget.TabStop = false;
             this.gbTarget.Text = "目标";
@@ -116,7 +116,7 @@
             // 
             this.btnSync.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSync.ForeColor = System.Drawing.Color.DeepPink;
-            this.btnSync.Location = new System.Drawing.Point(311, 14);
+            this.btnSync.Location = new System.Drawing.Point(445, 14);
             this.btnSync.Margin = new System.Windows.Forms.Padding(4);
             this.btnSync.Name = "btnSync";
             this.btnSync.Size = new System.Drawing.Size(78, 38);
@@ -134,7 +134,7 @@
             this.cbTarget.Location = new System.Drawing.Point(88, 18);
             this.cbTarget.Margin = new System.Windows.Forms.Padding(4);
             this.cbTarget.Name = "cbTarget";
-            this.cbTarget.Size = new System.Drawing.Size(186, 32);
+            this.cbTarget.Size = new System.Drawing.Size(349, 32);
             this.cbTarget.TabIndex = 13;
             // 
             // label1
@@ -162,7 +162,7 @@
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(12, 83);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(851, 443);
+            this.listView1.Size = new System.Drawing.Size(1077, 600);
             this.listView1.TabIndex = 11;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -187,7 +187,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(878, 538);
+            this.ClientSize = new System.Drawing.Size(1104, 695);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.gbTarget);
             this.Controls.Add(this.gbSource);

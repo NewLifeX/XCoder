@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Data;
-using System.Data.Common;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using CrazyCoder.Data;
 using NewLife;
 using NewLife.Log;
 using NewLife.Reflection;
@@ -75,7 +68,13 @@ namespace XCoder
 
             //LoadConfig();
 
-            ThreadPoolX.QueueUserWorkItem(AutoDetectDatabase);
+            Task.Run(() => DbHelper.AutoDetectDatabase(() => this.Invoke(SetDatabaseList, DAL.ConnStrs.Keys.OrderBy(e => e).ToList())));
+            //Task.Run(async () =>
+            //{
+            //    await DbHelper.AutoDetectDatabase();
+
+            //    this.Invoke(SetDatabaseList, DAL.ConnStrs.Keys.ToList());
+            //});
         }
 
         private void FrmMain_FormClosing(Object sender, FormClosingEventArgs e)
@@ -136,292 +135,6 @@ namespace XCoder
             if (String.IsNullOrEmpty(txt_NameSpace.Text)) txt_NameSpace.Text = cbConn.Text;
         }
 
-        void AutoDetectDatabase()
-        {
-            // 加上本机MSSQL
-            var localName = "local_MSSQL";
-            var localstr = "Data Source=.;Initial Catalog=master;Integrated Security=True;";
-            if (!ContainConnStr(localstr)) DAL.AddConnStr(localName, localstr, null, "mssql");
-
-            // 检测本地Access和SQLite
-            ThreadPoolX.QueueUserWorkItem(DetectFile);
-
-            //!!! 必须另外实例化一个列表，否则作为数据源绑定时，会因为是同一个对象而被跳过
-            //var list = new List<String>();
-
-            // 探测连接中的其它库
-            ThreadPoolX.QueueUserWorkItem(DetectRemote);
-        }
-
-        void DetectFile()
-        {
-            var sw = Stopwatch.StartNew();
-
-            var n = 0;
-            var ss = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.*", SearchOption.TopDirectoryOnly);
-            foreach (var item in ss)
-            {
-                var ext = Path.GetExtension(item);
-                //if (ext.EqualIC(".exe")) continue;
-                //if (ext.EqualIC(".dll")) continue;
-                //if (ext.EqualIC(".zip")) continue;
-                //if (ext.EqualIC(".rar")) continue;
-                //if (ext.EqualIC(".txt")) continue;
-                //if (ext.EqualIC(".config")) continue;
-                if (ext.EqualIgnoreCase(".exe", ".dll", ".zip", ".rar", ".txt", ".config")) continue;
-
-                try
-                {
-                    if (DetectFileDb(item)) n++;
-                }
-                catch (Exception ex) { XTrace.WriteException(ex); }
-            }
-
-            sw.Stop();
-            XTrace.WriteLine("自动检测文件{0}个，发现数据库{1}个，耗时：{2}！", ss.Length, n, sw.Elapsed);
-
-            var list = new List<String>();
-            foreach (var item in DAL.ConnStrs)
-            {
-                if (!String.IsNullOrEmpty(item.Value)) list.Add(item.Key);
-            }
-
-            // 远程数据库耗时太长，这里先列出来
-            this.Invoke(SetDatabaseList, list);
-        }
-
-        Boolean DetectFileDb(String item)
-        {
-            var access = "Standard Jet DB";
-            var sqlite = "SQLite";
-
-            using (var fs = new FileStream(item, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                if (fs.Length <= 0) return false;
-
-                var reader = new BinaryReader(fs);
-                var bts = reader.ReadBytes(sqlite.Length);
-                if (bts != null && bts.Length > 0)
-                {
-                    if (bts[0] == 'S' && bts[1] == 'Q' && Encoding.ASCII.GetString(bts) == sqlite)
-                    {
-                        var localstr = String.Format("Data Source={0};", item);
-                        if (!ContainConnStr(localstr)) DAL.AddConnStr("SQLite_" + Path.GetFileNameWithoutExtension(item), localstr, null, "SQLite");
-                        return true;
-                    }
-                    else if (bts.Length > 5 && bts[4] == 'S' && bts[5] == 't')
-                    {
-                        fs.Seek(4, SeekOrigin.Begin);
-                        bts = reader.ReadBytes(access.Length);
-                        if (Encoding.ASCII.GetString(bts) == access)
-                        {
-                            var localstr = String.Format("Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0};Persist Security Info=False", item);
-                            if (!ContainConnStr(localstr)) DAL.AddConnStr("Access_" + Path.GetFileNameWithoutExtension(item), localstr, null, "Access");
-                            return true;
-                        }
-                    }
-                }
-
-                if (fs.Length > 20)
-                {
-                    fs.Seek(16, SeekOrigin.Begin);
-                    var ver = reader.ReadInt32();
-                    if (ver == 0x73616261 ||
-                        ver == 0x002dd714 ||
-                        ver == 0x00357b9d ||
-                        ver == 0x003d0900
-                        )
-                    {
-                        var localstr = String.Format("Data Source={0};", item);
-                        if (!ContainConnStr(localstr)) DAL.AddConnStr("SqlCe_" + Path.GetFileNameWithoutExtension(item), localstr, null, "SqlCe");
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        void DetectSqlServer(Object state)
-        {
-            var item = (String)state;
-            try
-            {
-                var dal = DAL.Create(item);
-                if (dal.DbType != DatabaseType.SqlServer) return;
-
-                var sw = Stopwatch.StartNew();
-
-                DataTable dt = null;
-
-                // 列出所有数据库
-                //Boolean old = DAL.ShowSQL;
-                //DAL.ShowSQL = false;
-                //try
-                //{
-                if (dal.Db.CreateMetaData().MetaDataCollections.Contains("Databases"))
-                {
-                    dt = dal.Db.CreateSession().GetSchema(null, "Databases", null);
-                }
-                //}
-                //finally { DAL.ShowSQL = old; }
-
-                if (dt == null) return;
-
-                var dbprovider = dal.DbType.ToString();
-                var builder = new DbConnectionStringBuilder
-                {
-                    ConnectionString = dal.ConnStr
-                };
-
-                // 统计库名
-                var n = 0;
-                var names = new List<String>();
-                var sysdbnames = new String[] { "master", "tempdb", "model", "msdb" };
-                foreach (DataRow dr in dt.Rows)
-                {
-                    var dbname = dr[0].ToString();
-                    if (Array.IndexOf(sysdbnames, dbname) >= 0) continue;
-
-                    var connName = String.Format("{0}_{1}", item, dbname);
-
-                    builder["Database"] = dbname;
-                    DAL.AddConnStr(connName, builder.ToString(), null, dbprovider);
-                    n++;
-
-                    try
-                    {
-                        var ver = dal.Db.ServerVersion;
-                        names.Add(connName);
-                    }
-                    catch
-                    {
-                        if (DAL.ConnStrs.ContainsKey(connName)) DAL.ConnStrs.Remove(connName);
-                    }
-                }
-
-
-                sw.Stop();
-                XTrace.WriteLine("发现远程数据库{0}个，耗时：{1}！", n, sw.Elapsed);
-
-                if (names != null && names.Count > 0)
-                {
-                    var list = new List<String>();
-                    foreach (var elm in DAL.ConnStrs)
-                    {
-                        if (!String.IsNullOrEmpty(elm.Value)) list.Add(elm.Key);
-                    }
-                    list.AddRange(names);
-
-                    this.Invoke(SetDatabaseList, list);
-                }
-            }
-            catch
-            {
-                //if (item == localName) DAL.ConnStrs.Remove(localName);
-            }
-        }
-
-        void DetectMySql(Object state)
-        {
-            var item = (String)state;
-            try
-            {
-                var dal = DAL.Create(item);
-                if (dal.DbType != DatabaseType.MySql) return;
-
-                var sw = Stopwatch.StartNew();
-
-                // 列出所有数据库
-                DataTable dt = null;
-                if (dal.Db.CreateMetaData().MetaDataCollections.Contains("Databases"))
-                {
-                    dt = dal.Db.CreateSession().GetSchema(null, "Databases", null);
-                }
-                if (dt == null) return;
-
-                var dbprovider = dal.DbType.ToString();
-                var builder = new DbConnectionStringBuilder
-                {
-                    ConnectionString = dal.ConnStr
-                };
-
-                // 统计库名
-                var n = 0;
-                var names = new List<String>();
-                var sysdbnames = new String[] { "mysql" };
-                foreach (DataRow dr in dt.Rows)
-                {
-                    var dbname = dr["database_name"].ToString();
-                    if (Array.IndexOf(sysdbnames, dbname) >= 0) continue;
-
-                    var connName = String.Format("{0}_{1}", item, dbname);
-
-                    builder["Database"] = dbname;
-                    DAL.AddConnStr(connName, builder.ToString(), null, dbprovider);
-                    n++;
-
-                    try
-                    {
-                        var ver = dal.Db.ServerVersion;
-                        names.Add(connName);
-                    }
-                    catch
-                    {
-                        if (DAL.ConnStrs.ContainsKey(connName)) DAL.ConnStrs.Remove(connName);
-                    }
-                }
-
-
-                sw.Stop();
-                XTrace.WriteLine("发现远程数据库{0}个，耗时：{1}！", n, sw.Elapsed);
-
-                if (names != null && names.Count > 0)
-                {
-                    var list = new List<String>();
-                    foreach (var elm in DAL.ConnStrs)
-                    {
-                        if (!String.IsNullOrEmpty(elm.Value)) list.Add(elm.Key);
-                    }
-                    list.AddRange(names);
-
-                    this.Invoke(SetDatabaseList, list);
-                }
-            }
-            catch
-            {
-                //if (item == localName) DAL.ConnStrs.Remove(localName);
-            }
-        }
-
-        void DetectRemote()
-        {
-            var list = new List<String>();
-            foreach (var item in DAL.ConnStrs)
-            {
-                if (!String.IsNullOrEmpty(item.Value)) list.Add(item.Key);
-            }
-
-            foreach (var item in list)
-            {
-                Task.Factory.StartNew(DetectSqlServer, item);
-                Task.Factory.StartNew(DetectMySql, item);
-            }
-
-            var localName = "local_MSSQL";
-            if (DAL.ConnStrs.ContainsKey(localName)) DAL.ConnStrs.Remove(localName);
-            //if (list.Contains(localName)) list.Remove(localName);
-        }
-
-        Boolean ContainConnStr(String connstr)
-        {
-            foreach (var item in DAL.ConnStrs)
-            {
-                if (connstr.EqualIgnoreCase(item.Value)) return true;
-            }
-            return false;
-        }
-
         void SetDatabaseList(ICollection<String> list)
         {
             var str = cbConn.Text;
@@ -447,8 +160,8 @@ namespace XCoder
                 {
                     var list = DAL.Create(Config.ConnName).Tables;
                     if (!cbIncludeView.Checked) list = list.Where(t => !t.IsView).ToList();
-                //if (Config.NeedFix) list = Engine.FixTable(list);
-                Tables = list;
+                    //if (Config.NeedFix) list = Engine.FixTable(list);
+                    Tables = list;
                 }
                 catch (Exception ex)
                 {
@@ -458,10 +171,10 @@ namespace XCoder
 
                 this.Invoke(() =>
                 {
-                //SetTables(null);
-                SetTables(Tables);    //修复数据建模界面连接数据库不显示数据表问题
+                    //SetTables(null);
+                    SetTables(Tables);    //修复数据建模界面连接数据库不显示数据表问题
                                           //SetTables(Engine.Tables);
-            });
+                });
             });
         }
 
