@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CrazyCoder.Data.Models;
 using NewLife.Configuration;
 using XCode.DataAccessLayer;
 using XCoder;
@@ -19,6 +20,7 @@ namespace CrazyCoder.Data
     {
         DAL _source;
         DAL _target;
+        IList<TableModel> _models;
 
         public FrmSync()
         {
@@ -57,11 +59,17 @@ namespace CrazyCoder.Data
                 var conns = DAL.ConnStrs.Keys.Where(e => e != connName).ToArray();
                 cbTarget.DataSource = conns;
 
+                // 获取数据表
                 var tables = _source.Tables;
+                _models = tables.Select(e => new TableModel
+                {
+                    Name = e.TableName,
+                    DisplayName = e.DisplayName,
+                    EnableSync = true
+                }).ToList();
+                Task.Run(FetchRows);
 
-                var bs = listView1.DataBindings;
-                bs.Add("Name", tables, "Name");
-                bs.Add("DisplayName", tables, "DisplayName");
+                dataGridView1.DataSource = _models;
 
                 gbSource.Enabled = false;
                 gbTarget.Enabled = true;
@@ -74,6 +82,17 @@ namespace CrazyCoder.Data
                 gbTarget.Enabled = false;
                 btn.Text = "连接";
             }
+        }
+
+        void FetchRows()
+        {
+            foreach (var item in _models)
+            {
+                var sb = new SelectBuilder { Table = item.Name };
+                item.Total = _source.SelectCount(sb);
+            }
+
+            Invoke(() => dataGridView1.Refresh());
         }
 
         private void btnSync_Click(Object sender, EventArgs e)
