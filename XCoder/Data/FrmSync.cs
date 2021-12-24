@@ -60,7 +60,7 @@ namespace CrazyCoder.Data
                     Name = e.TableName,
                     DisplayName = e.DisplayName,
                     EnableSync = true,
-                }).ToList();
+                }).OrderBy(e => e.Name).ToList();
                 Task.Run(FetchRows);
 
                 dataGridView1.DataSource = _models;
@@ -234,7 +234,7 @@ namespace CrazyCoder.Data
 
             foreach (var item in _models)
             {
-                item.EnableSync = item.Total != item.Total2;
+                item.EnableSync = item.Total < item.Total2;
             }
 
             dataGridView1.Refresh();
