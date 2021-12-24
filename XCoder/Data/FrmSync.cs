@@ -147,6 +147,8 @@ namespace CrazyCoder.Data
 
                 _source.Db.ShowSQL = false;
                 _source.Session.ShowSQL = false;
+                dal.Db.ShowSQL = false;
+                dal.Session.ShowSQL = false;
                 foreach (var item in _models)
                 {
                     if (!item.EnableSync) continue;
@@ -177,6 +179,8 @@ namespace CrazyCoder.Data
                 }
                 _source.Session.ShowSQL = true;
                 _source.Db.ShowSQL = true;
+                dal.Session.ShowSQL = true;
+                dal.Db.ShowSQL = true;
             });
 
             gbSetting.Enabled = true;

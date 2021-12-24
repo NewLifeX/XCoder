@@ -45,7 +45,22 @@ namespace CrazyCoder.Data
             var sw = Stopwatch.StartNew();
 
             var n = 0;
-            var ss = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.*", SearchOption.TopDirectoryOnly);
+            var ss = Directory.GetFiles(".".GetFullPath(), "*.*", SearchOption.TopDirectoryOnly);
+            foreach (var item in ss)
+            {
+                var ext = Path.GetExtension(item);
+                if (ext.EqualIgnoreCase(".exe", ".dll", ".zip", ".rar", ".txt", ".config")) continue;
+
+                try
+                {
+                    if (DetectFileDb(item)) n++;
+                }
+                catch (Exception ex)
+                {
+                    XTrace.WriteException(ex);
+                }
+            }
+            ss = Directory.GetFiles(Setting.Current.DataPath.GetFullPath(), "*.*", SearchOption.TopDirectoryOnly);
             foreach (var item in ss)
             {
                 var ext = Path.GetExtension(item);
