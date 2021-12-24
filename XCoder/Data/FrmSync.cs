@@ -67,8 +67,9 @@ namespace CrazyCoder.Data
 
                 gbSource.Enabled = false;
                 gbTarget.Enabled = true;
-                gbSetting.Enabled = true;
+                gbSetting.Enabled = false;
                 btn.Text = "断开";
+                btnConnect2.Text = "连接";
             }
             else
             {
@@ -93,10 +94,27 @@ namespace CrazyCoder.Data
 
         private void btnConnect2_Click(Object sender, EventArgs e)
         {
-            var connName = cbTarget.SelectedItem + "";
-            var dal = DAL.Create(connName);
+            var btn = sender as Button;
+            if (btn == null) return;
 
-            Task.Run(() => FetchRows2(dal));
+            if (btn.Text == "连接")
+            {
+                var connName = cbTarget.SelectedItem + "";
+                var dal = DAL.Create(connName);
+
+                Task.Run(() => FetchRows2(dal));
+
+                //gbTarget.Enabled = false;
+                gbSetting.Enabled = true;
+                btn.Text = "断开";
+            }
+            else
+            {
+
+                //gbTarget.Enabled = true;
+                gbSetting.Enabled = false;
+                btn.Text = "连接";
+            }
         }
 
         void FetchRows2(DAL dal)
@@ -205,6 +223,18 @@ namespace CrazyCoder.Data
             foreach (var item in _models)
             {
                 item.EnableSync = !item.EnableSync;
+            }
+
+            dataGridView1.Refresh();
+        }
+
+        private void btnDifferent_Click(Object sender, EventArgs e)
+        {
+            if (_models == null) return;
+
+            foreach (var item in _models)
+            {
+                item.EnableSync = item.Total != item.Total2;
             }
 
             dataGridView1.Refresh();

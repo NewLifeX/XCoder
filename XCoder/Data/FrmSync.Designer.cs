@@ -43,6 +43,7 @@
             this.cbSyncSchema = new System.Windows.Forms.CheckBox();
             this.btnSelectOther = new System.Windows.Forms.Button();
             this.btnSelectAll = new System.Windows.Forms.Button();
+            this.btnDifferent = new System.Windows.Forms.Button();
             this.gbSource.SuspendLayout();
             this.gbTarget.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -177,6 +178,7 @@
             // 
             // gbSetting
             // 
+            this.gbSetting.Controls.Add(this.btnDifferent);
             this.gbSetting.Controls.Add(this.btnSync);
             this.gbSetting.Controls.Add(this.cbIgnoreError);
             this.gbSetting.Controls.Add(this.cbSyncSchema);
@@ -195,7 +197,7 @@
             // 
             // cbIgnoreError
             // 
-            this.cbIgnoreError.Location = new System.Drawing.Point(346, 40);
+            this.cbIgnoreError.Location = new System.Drawing.Point(435, 41);
             this.cbIgnoreError.Name = "cbIgnoreError";
             this.cbIgnoreError.Size = new System.Drawing.Size(115, 23);
             this.cbIgnoreError.TabIndex = 18;
@@ -204,7 +206,7 @@
             // 
             // cbSyncSchema
             // 
-            this.cbSyncSchema.Location = new System.Drawing.Point(214, 40);
+            this.cbSyncSchema.Location = new System.Drawing.Point(303, 41);
             this.cbSyncSchema.Name = "cbSyncSchema";
             this.cbSyncSchema.Size = new System.Drawing.Size(115, 23);
             this.cbSyncSchema.TabIndex = 17;
@@ -234,6 +236,18 @@
             this.btnSelectAll.Text = "全选";
             this.btnSelectAll.UseVisualStyleBackColor = true;
             this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
+            // 
+            // btnDifferent
+            // 
+            this.btnDifferent.ForeColor = System.Drawing.Color.DeepPink;
+            this.btnDifferent.Location = new System.Drawing.Point(181, 32);
+            this.btnDifferent.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDifferent.Name = "btnDifferent";
+            this.btnDifferent.Size = new System.Drawing.Size(78, 38);
+            this.btnDifferent.TabIndex = 19;
+            this.btnDifferent.Text = "选差异";
+            this.btnDifferent.UseVisualStyleBackColor = true;
+            this.btnDifferent.Click += new System.EventHandler(this.btnDifferent_Click);
             // 
             // FrmSync
             // 
@@ -275,5 +289,6 @@
         private CheckBox cbIgnoreError;
         private CheckBox cbSyncSchema;
         private Button btnConnect2;
+        private Button btnDifferent;
     }
 }
