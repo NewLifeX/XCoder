@@ -5,9 +5,9 @@
     <AssemblyTitle>新生命码神工具</AssemblyTitle>
     <Description>众多开发者工具，网络、串口、加解密、正则表达式、Modbus</Description>
     <Company>新生命开发团队</Company>
-    <Copyright>©2002-2021 NewLife</Copyright>
-    <Version>8.0.2021.1211</Version>
-    <FileVersion>8.0.2021.1211</FileVersion>
+    <Copyright>©2002-2022 NewLife</Copyright>
+    <Version>8.0.2022.0101</Version>
+    <FileVersion>8.0.2022.0101</FileVersion>
     <AssemblyVersion>8.0.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
     <ApplicationIcon>leaf.ico</ApplicationIcon>
@@ -54,23 +54,23 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>8.11.2021.1225</Version>
+      <Version>9.0.2022.101</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
-      <Version>1.0.2021.1204</Version>
+      <Version>1.0.2022.101</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
-      <Version>3.6.2021.1204</Version>
+      <Version>4.0.2022.101</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
       <Version>3.9.2021.1216-beta1</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>1.5.2021.1225</Version>
+      <Version>2.0.2022.101</Version>
     </PackageReference>
-    <PackageReference Include="NewLife.WinCore" Version="8.11.2021.1204" />
+    <PackageReference Include="NewLife.WinCore" Version="9.0.2022.101" />
     <PackageReference Include="NewLife.XCode">
-      <Version>10.3.2021.1225</Version>
+      <Version>11.0.2022.101</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2020.0.1</Version>
