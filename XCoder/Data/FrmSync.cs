@@ -180,7 +180,7 @@ namespace CrazyCoder.Data
                         else
                         {
                             var tb = _tables.FirstOrDefault(e => e.TableName == item.Name);
-                            var rs = _source.Sync(tb, connName, syncSchema, (p, dt) => { });
+                            var rs = _source.Sync(tb, connName, syncSchema);
                             item.Finish = rs;
                             item.Description = "成功！";
                         }
