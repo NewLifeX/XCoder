@@ -60,6 +60,7 @@ namespace XCoder
             {
                 Code = set.Code,
                 Secret = set.Secret,
+                ProductCode = "CrazyCoder",
                 Log = XTrace.Log,
             };
 
