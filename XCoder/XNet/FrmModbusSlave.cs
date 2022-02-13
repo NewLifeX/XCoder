@@ -191,7 +191,8 @@ namespace XNet
                 }
             }
             //dataGridView1.DataSource = _data;
-            dgv.Refresh();
+            //dgv.Refresh();
+            this.Invoke(() => { dgv.Refresh(); });
         }
 
         private void OnReceived(Object sender, ReceivedEventArgs e)

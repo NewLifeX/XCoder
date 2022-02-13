@@ -44,10 +44,10 @@ namespace NewLife.IoT.Protocols
                 if (Payload == null)
                     return $"{Code} ({Address}, {Count})";
                 else
-                    return $"{Code} ({Address}={Payload.ToHex()})";
+                    return $"{Code} ({Address}={Payload?.ToHex()})";
             }
             else
-                return $"{Code} {Payload.ToHex()}";
+                return $"{Code} {Payload?.ToHex()}";
         }
         #endregion
 

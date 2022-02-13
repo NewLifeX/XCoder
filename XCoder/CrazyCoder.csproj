@@ -54,7 +54,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>9.0.2022.202</Version>
+      <Version>9.0.2022.213-beta1</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
       <Version>1.0.2022.101</Version>
@@ -70,7 +70,7 @@
     </PackageReference>
     <PackageReference Include="NewLife.WinCore" Version="9.0.2022.101" />
     <PackageReference Include="NewLife.XCode">
-      <Version>11.0.2022.202</Version>
+      <Version>11.0.2022.213-beta1</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2020.0.1</Version>
