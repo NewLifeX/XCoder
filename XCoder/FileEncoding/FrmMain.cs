@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
+﻿using System.ComponentModel;
 using System.Text;
-using System.Windows.Forms;
 using NewLife;
 using NewLife.IO;
 
@@ -21,6 +18,7 @@ namespace XCoder.FileEncoding
 
         private void FrmEncodeReplace_Load(Object sender, EventArgs e)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             txtSuffix.Text = "*.cs;*.aspx";
             var encs = new String[] { "UTF-8", "UTF-8 NoBOM", "ASNI", "Unicode", "Default" };
             //var encs = new Encoding[] { Encoding.UTF8, new UTF8Encoding(false), Encoding.ASCII, Encoding.UTF8 };
@@ -57,14 +55,7 @@ namespace XCoder.FileEncoding
                 return;
 
 
-            var enc = Encoding.UTF8;
-            switch (ddlEncodes.Text)
-            {
-                case "UTF-8": enc = Encoding.UTF8; break;
-                case "UTF-8 NoBOM": enc = new UTF8Encoding(false); break;
-                case "ASNI": enc = Encoding.ASCII; break;
-                case "Unicode": enc = Encoding.Unicode; break;
-            }
+            var enc = GetEncoding(ddlEncodes.Text);
 
             var count = 0;
             foreach (DataGridViewRow item in gv_data.Rows)
@@ -77,7 +68,9 @@ namespace XCoder.FileEncoding
                 {
                     //ReplaceEncoding(txtPath.Text + item.Cells["名称"].Value.ToString(), fileCharset, enc);
                     var file = txtPath.Text + item.Cells["名称"].Value;
-                    var txt = File.ReadAllText(file);
+
+                    var srcEnc = GetEncoding(fileCharset);
+                    var txt = File.ReadAllText(file, srcEnc);
                     File.WriteAllText(file, txt, enc);
 
                     count++;
@@ -90,6 +83,19 @@ namespace XCoder.FileEncoding
 
             MessageBox.Show("转换{0}个文件完成".F(count));
             gv_data.Rows.Clear();
+        }
+
+        private Encoding GetEncoding(string name)
+        {
+            return name switch
+            {
+                "UTF-8" => Encoding.UTF8,
+                "UTF-8 NoBOM" => new UTF8Encoding(false),
+                "ASNI" => Encoding.ASCII,
+                "Unicode" => Encoding.Unicode,
+                "gb2312" => Encoding.GetEncoding("gb2312"),
+                _ => Encoding.UTF8
+            };
         }
 
         /// <summary>
