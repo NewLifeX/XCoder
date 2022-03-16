@@ -1,0 +1,187 @@
+﻿namespace XNet
+{
+    partial class FrmApiDiscover
+    {
+        /// <summary>
+        /// 必需的设计器变量。
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// 清理所有正在使用的资源。
+        /// </summary>
+        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows 窗体设计器生成的代码
+
+        /// <summary>
+        /// 设计器支持所需的方法 - 不要
+        /// 使用代码编辑器修改此方法的内容。
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.gbReceive = new System.Windows.Forms.GroupBox();
+            this.btnDiscover = new System.Windows.Forms.Button();
+            this.numPort = new System.Windows.Forms.NumericUpDown();
+            this.pnlSetting = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.txtIP = new System.Windows.Forms.TextBox();
+            this.chkUdp = new System.Windows.Forms.CheckBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.gbReceive.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
+            this.pnlSetting.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // gbReceive
+            // 
+            this.gbReceive.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbReceive.Controls.Add(this.dataGridView1);
+            this.gbReceive.Location = new System.Drawing.Point(14, 72);
+            this.gbReceive.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbReceive.Name = "gbReceive";
+            this.gbReceive.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbReceive.Size = new System.Drawing.Size(978, 546);
+            this.gbReceive.TabIndex = 4;
+            this.gbReceive.TabStop = false;
+            this.gbReceive.Text = "信息";
+            // 
+            // btnDiscover
+            // 
+            this.btnDiscover.Location = new System.Drawing.Point(880, 15);
+            this.btnDiscover.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnDiscover.Name = "btnDiscover";
+            this.btnDiscover.Size = new System.Drawing.Size(100, 48);
+            this.btnDiscover.TabIndex = 3;
+            this.btnDiscover.Text = "搜索";
+            this.btnDiscover.UseVisualStyleBackColor = true;
+            this.btnDiscover.Click += new System.EventHandler(this.btnConnect_Click);
+            // 
+            // numPort
+            // 
+            this.numPort.Location = new System.Drawing.Point(295, 13);
+            this.numPort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.numPort.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.numPort.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numPort.Name = "numPort";
+            this.numPort.Size = new System.Drawing.Size(76, 27);
+            this.numPort.TabIndex = 11;
+            this.numPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.toolTip1.SetToolTip(this.numPort, "端口");
+            this.numPort.Value = new decimal(new int[] {
+            5500,
+            0,
+            0,
+            0});
+            // 
+            // pnlSetting
+            // 
+            this.pnlSetting.Controls.Add(this.chkUdp);
+            this.pnlSetting.Controls.Add(this.txtIP);
+            this.pnlSetting.Controls.Add(this.label4);
+            this.pnlSetting.Controls.Add(this.numPort);
+            this.pnlSetting.Location = new System.Drawing.Point(14, 13);
+            this.pnlSetting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pnlSetting.Name = "pnlSetting";
+            this.pnlSetting.Size = new System.Drawing.Size(858, 52);
+            this.pnlSetting.TabIndex = 13;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 16);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(54, 20);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "远程：";
+            // 
+            // txtIP
+            // 
+            this.txtIP.Location = new System.Drawing.Point(74, 13);
+            this.txtIP.Name = "txtIP";
+            this.txtIP.Size = new System.Drawing.Size(214, 27);
+            this.txtIP.TabIndex = 18;
+            this.txtIP.Text = "192.168.1.1/24";
+            this.toolTip1.SetToolTip(this.txtIP, "指定要搜索的远程IP段，将搜索ApiServer");
+            // 
+            // chkUdp
+            // 
+            this.chkUdp.AutoSize = true;
+            this.chkUdp.Checked = true;
+            this.chkUdp.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkUdp.Location = new System.Drawing.Point(443, 14);
+            this.chkUdp.Name = "chkUdp";
+            this.chkUdp.Size = new System.Drawing.Size(122, 24);
+            this.chkUdp.TabIndex = 20;
+            this.chkUdp.Text = "广播UDP探测";
+            this.chkUdp.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(4, 25);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 29;
+            this.dataGridView1.Size = new System.Drawing.Size(970, 516);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // FrmApiDiscover
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1000, 632);
+            this.Controls.Add(this.pnlSetting);
+            this.Controls.Add(this.btnDiscover);
+            this.Controls.Add(this.gbReceive);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Name = "FrmApiDiscover";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "ApiServer搜索";
+            this.Load += new System.EventHandler(this.FrmMain_Load);
+            this.gbReceive.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
+            this.pnlSetting.ResumeLayout(false);
+            this.pnlSetting.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.GroupBox gbReceive;
+        private System.Windows.Forms.Button btnDiscover;
+        private System.Windows.Forms.NumericUpDown numPort;
+        private System.Windows.Forms.Panel pnlSetting;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label4;
+        private TextBox txtIP;
+        private CheckBox chkUdp;
+        private DataGridView dataGridView1;
+    }
+}
+

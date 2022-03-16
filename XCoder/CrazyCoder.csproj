@@ -24,6 +24,9 @@
     <Compile Update="XCom\SerialPortList.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="XNet\FrmApiDiscover.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="leaf.ico" />
