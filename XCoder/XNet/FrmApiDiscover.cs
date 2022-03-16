@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Net.Sockets;
+using System.Runtime.Serialization;
 using NewLife;
 using NewLife.Log;
 using NewLife.Messaging;
@@ -91,7 +92,9 @@ namespace XNet
                             // 解码结果
                             var result = enc.DecodeResult(action, data, msg);
 
-                            XTrace.WriteLine("{0}", result);
+                            var ai = enc.Convert(result, typeof(ApiItem)) as ApiItem;
+                            if (ai != null) this.Invoke(() => ShowItem(ai));
+                            //XTrace.WriteLine("{0}", result);
                         }
                     }
                 }
@@ -100,6 +103,49 @@ namespace XNet
                     break;
                 }
             }
+        }
+        #endregion
+
+        #region 显示
+        private IList<ApiItem> _data;
+        void ShowItem(ApiItem ai)
+        {
+            if (_data == null) _data = new List<ApiItem>();
+
+            var old = _data.FirstOrDefault(e => e.Name == ai.Name && e.IP == ai.IP);
+            if (old != null)
+            {
+                old.Time = ai.Time;
+
+                dgv.Refresh();
+            }
+            else
+            {
+                _data.Add(ai);
+
+                dgv.DataSource = null;
+                dgv.DataSource = _data;
+            }
+        }
+
+        class ApiItem
+        {
+            [DataMember(Name = "Server")]
+            public String Name { get; set; }
+
+            [DataMember(Name = "LocalIP")]
+            public String IP { get; set; }
+
+            public String MachineName { get; set; }
+
+            [DataMember(Name = "ApiVersion")]
+            public String Version { get; set; }
+
+            public String OS { get; set; }
+
+            //public String Server { get; set; }
+
+            public DateTime Time { get; set; }
         }
         #endregion
     }

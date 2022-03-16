@@ -30,18 +30,18 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gbReceive = new System.Windows.Forms.GroupBox();
+            this.dgv = new System.Windows.Forms.DataGridView();
             this.btnDiscover = new System.Windows.Forms.Button();
             this.numPort = new System.Windows.Forms.NumericUpDown();
             this.pnlSetting = new System.Windows.Forms.Panel();
+            this.chkUdp = new System.Windows.Forms.CheckBox();
+            this.txtIP = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.txtIP = new System.Windows.Forms.TextBox();
-            this.chkUdp = new System.Windows.Forms.CheckBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.gbReceive.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).BeginInit();
             this.pnlSetting.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // gbReceive
@@ -49,7 +49,7 @@
             this.gbReceive.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbReceive.Controls.Add(this.dataGridView1);
+            this.gbReceive.Controls.Add(this.dgv);
             this.gbReceive.Location = new System.Drawing.Point(14, 72);
             this.gbReceive.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gbReceive.Name = "gbReceive";
@@ -58,6 +58,21 @@
             this.gbReceive.TabIndex = 4;
             this.gbReceive.TabStop = false;
             this.gbReceive.Text = "信息";
+            // 
+            // dgv
+            // 
+            this.dgv.AllowUserToAddRows = false;
+            this.dgv.AllowUserToDeleteRows = false;
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv.Location = new System.Drawing.Point(4, 25);
+            this.dgv.Name = "dgv";
+            this.dgv.ReadOnly = true;
+            this.dgv.RowHeadersWidth = 51;
+            this.dgv.RowTemplate.Height = 29;
+            this.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv.Size = new System.Drawing.Size(970, 516);
+            this.dgv.TabIndex = 0;
             // 
             // btnDiscover
             // 
@@ -107,25 +122,6 @@
             this.pnlSetting.Size = new System.Drawing.Size(858, 52);
             this.pnlSetting.TabIndex = 13;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 16);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 20);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "远程：";
-            // 
-            // txtIP
-            // 
-            this.txtIP.Location = new System.Drawing.Point(74, 13);
-            this.txtIP.Name = "txtIP";
-            this.txtIP.Size = new System.Drawing.Size(214, 27);
-            this.txtIP.TabIndex = 18;
-            this.txtIP.Text = "192.168.1.1/24";
-            this.toolTip1.SetToolTip(this.txtIP, "指定要搜索的远程IP段，将搜索ApiServer");
-            // 
             // chkUdp
             // 
             this.chkUdp.AutoSize = true;
@@ -138,16 +134,24 @@
             this.chkUdp.Text = "广播UDP探测";
             this.chkUdp.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // txtIP
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(4, 25);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 29;
-            this.dataGridView1.Size = new System.Drawing.Size(970, 516);
-            this.dataGridView1.TabIndex = 0;
+            this.txtIP.Location = new System.Drawing.Point(74, 13);
+            this.txtIP.Name = "txtIP";
+            this.txtIP.Size = new System.Drawing.Size(214, 27);
+            this.txtIP.TabIndex = 18;
+            this.txtIP.Text = "192.168.1.1/24";
+            this.toolTip1.SetToolTip(this.txtIP, "指定要搜索的远程IP段，将搜索ApiServer");
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 16);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(54, 20);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "远程：";
             // 
             // FrmApiDiscover
             // 
@@ -163,10 +167,10 @@
             this.Text = "ApiServer搜索";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.gbReceive.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
             this.pnlSetting.ResumeLayout(false);
             this.pnlSetting.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -181,7 +185,7 @@
         private System.Windows.Forms.Label label4;
         private TextBox txtIP;
         private CheckBox chkUdp;
-        private DataGridView dataGridView1;
+        private DataGridView dgv;
     }
 }
 
