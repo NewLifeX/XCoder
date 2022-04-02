@@ -63,7 +63,7 @@ namespace XCoder
 
             var asm = AssemblyX.Create(Assembly.GetExecutingAssembly());
             if (set.Title.IsNullOrEmpty()) set.Title = asm.Title;
-            _title = Title = String.Format("{2} v{0} {1:HH:mm:ss}", asm.CompileVersion, asm.Compile, set.Title);
+            _title = Title = String.Format("{2} v{0} {1:HH:mm:ss}", asm.FileVersion, asm.Compile, set.Title);
 
             _load.ContinueWith(t => LoadForms(t.Result));
 
