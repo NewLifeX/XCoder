@@ -26,6 +26,9 @@
     <Compile Update="XCom\SerialPortList.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="XNet\FrmApiDiscover.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="leaf.ico" />
@@ -54,6 +57,7 @@
     <Content Include="数据库命名规范.txt" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
       <Version>9.0.2022.401</Version>
