@@ -164,7 +164,7 @@ namespace XCoder.FolderInfo
             var size = FolderSize(node.Tag as DirectoryInfo);
             var str = node.Text.Substring(0, node.Text.Length - 10) + String.Format("{0,10}", FormatSize(size));
             //SetNodeText(node, str, GetColor(size));
-            this.Invoke(() =>
+            Invoke(() =>
             {
                 node.Text = str;
                 node.BackColor = GetColor(size);

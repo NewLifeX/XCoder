@@ -45,12 +45,12 @@ namespace XCoder
             ThreadPoolX.QueueUserWorkItem(() =>
             {
                 var tables = Db.CreateMetaData().GetTables();
-                this.Invoke(SetList, cbTables, tables);
+                Invoke(SetList, cbTables, tables);
             });
             ThreadPoolX.QueueUserWorkItem(() =>
             {
                 var list = Db.CreateMetaData().MetaDataCollections;
-                this.Invoke(SetList, cbSchemas, list);
+                Invoke(SetList, cbSchemas, list);
             });
         }
         #endregion

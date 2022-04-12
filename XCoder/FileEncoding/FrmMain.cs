@@ -81,7 +81,7 @@ namespace XCoder.FileEncoding
                 }
             }
 
-            MessageBox.Show("转换{0}个文件完成".F(count));
+            MessageBox.Show($"转换{count}个文件完成");
             gv_data.Rows.Clear();
         }
 

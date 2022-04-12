@@ -399,9 +399,9 @@ namespace NewLife.Net
                                 //if (sub.GetValue("Class") + "" == "Ports")
                                 {
                                     var FriendlyName = sub.GetValue("FriendlyName") + "";
-                                    if (FriendlyName.Contains("({0})".F(name)))
+                                    if (FriendlyName.Contains($"({name})"))
                                     {
-                                        des = FriendlyName.TrimEnd("({0})".F(name)).Trim();
+                                        des = FriendlyName.TrimEnd($"({name})").Trim();
                                         break;
                                     }
                                 }

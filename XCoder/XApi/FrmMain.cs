@@ -76,10 +76,10 @@ namespace XApi
                 var sp = SpeechRecognition.Current;
                 if (!sp.Enable) return;
 
-                sp.Register("打开", () => this.Invoke(Connect))
-                .Register("关闭", () => this.Invoke(Disconnect))
+                sp.Register("打开", () => Invoke(Connect))
+                .Register("关闭", () => Invoke(Disconnect))
                 .Register("退出", () => Application.Exit())
-                .Register("发送", () => this.Invoke(() => btnSend_Click(null, null)));
+                .Register("发送", () => Invoke(() => btnSend_Click(null, null)));
 
                 BizLog.Info("语音识别前缀：{0} 可用命令：{1}", sp.Name, sp.GetAllKeys().Join());
             });
@@ -164,7 +164,7 @@ namespace XApi
                     svr.Register<MyApiController>();
                     svr.Start();
 
-                    "正在监听{0}".F(port).SpeechTip();
+                    $"正在监听{port}".SpeechTip();
 
                     _Server = svr;
                     break;
@@ -215,7 +215,7 @@ namespace XApi
         async void GetApiAll()
         {
             var apis = await _Client.InvokeAsync<String[]>("Api/All");
-            if (apis != null) this.Invoke(() =>
+            if (apis != null) Invoke(() =>
             {
                 cbAction.Items.Clear();
                 foreach (var item in apis)

@@ -166,7 +166,7 @@ namespace XApi
                     svr.Register<MyApiController>();
                     svr.Start();
 
-                    "正在监听{0}".F(port).SpeechTip();
+                    $"正在监听{port}".SpeechTip();
 
                     _Server = svr;
                     break;

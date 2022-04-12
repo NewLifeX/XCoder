@@ -68,7 +68,7 @@ namespace XCoder
 
             //LoadConfig();
 
-            Task.Run(() => DbHelper.AutoDetectDatabase(() => this.Invoke(SetDatabaseList, DAL.ConnStrs.Keys.OrderBy(e => e).ToList())));
+            Task.Run(() => DbHelper.AutoDetectDatabase(() => Invoke(SetDatabaseList, DAL.ConnStrs.Keys.OrderBy(e => e).ToList())));
             //Task.Run(async () =>
             //{
             //    await DbHelper.AutoDetectDatabase();
@@ -169,7 +169,7 @@ namespace XCoder
                     return;
                 }
 
-                this.Invoke(() =>
+                Invoke(() =>
                 {
                     //SetTables(null);
                     SetTables(Tables);    //修复数据建模界面连接数据库不显示数据表问题

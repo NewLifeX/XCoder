@@ -25,7 +25,7 @@ namespace CrazyCoder.Data
         {
             cbConn.DataSource = DAL.ConnStrs.Keys.ToArray();
 
-            Task.Run(() => DbHelper.AutoDetectDatabase(() => this.Invoke(SetDatabaseList, DAL.ConnStrs.Keys.OrderBy(e => e).ToList())));
+            Task.Run(() => DbHelper.AutoDetectDatabase(() => Invoke(SetDatabaseList, DAL.ConnStrs.Keys.OrderBy(e => e).ToList())));
         }
 
         void SetDatabaseList(ICollection<String> list)

@@ -93,7 +93,7 @@ namespace XNet
                             var result = enc.DecodeResult(action, data, msg);
 
                             var ai = enc.Convert(result, typeof(ApiItem)) as ApiItem;
-                            if (ai != null) this.Invoke(() => ShowItem(ai));
+                            if (ai != null) Invoke(() => ShowItem(ai));
                             //XTrace.WriteLine("{0}", result);
                         }
                     }

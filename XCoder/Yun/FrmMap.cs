@@ -184,7 +184,7 @@ namespace XCoder.Yun
                     return;
                 }
 
-                this.Invoke(() =>
+                Invoke(() =>
                 {
                     pgResult.SelectedObject = result;
 

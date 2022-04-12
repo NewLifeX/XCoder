@@ -476,9 +476,9 @@ namespace NewLife.Windows
             if (cfg.HexShow)
             {
                 if (data.Length > 32)
-                    line = "[{0}]=\r\n{1}".F(data.Length, data.ToHex("-", 32));
+                    line = $"[{data.Length}]=\r\n{data.ToHex("-", 32)}";
                 else
-                    line = "[{0}]={1}".F(data.Length, data.ToHex("-", 32));
+                    line = $"[{data.Length}]={data.ToHex("-", 32)}";
                 if (cfg.HexNewLine) line += Environment.NewLine;
             }
             else

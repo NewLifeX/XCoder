@@ -87,7 +87,7 @@ namespace NewLife.Windows
 
             //cbEncoding.DataSource = new String[] { Encoding.UTF8.WebName, Encoding.ASCII.WebName, Encoding.UTF8.WebName };
             // 添加编码子菜单
-            var encs = new Encoding[] { Encoding.UTF8, Encoding.ASCII, Encoding.UTF7, Encoding.Unicode, Encoding.BigEndianUnicode, Encoding.UTF32,Encoding.GetEncoding("GB2312") };
+            var encs = new Encoding[] { Encoding.UTF8, Encoding.ASCII, Encoding.UTF7, Encoding.Unicode, Encoding.BigEndianUnicode, Encoding.UTF32, Encoding.GetEncoding("GB2312") };
             var list = new List<Encoding>(encs);
             // 暂时不用这么多编码
             //list.AddRange(Encoding.GetEncodings().Select(e => e.GetEncoding()).Where(e => !encs.Contains(e)));
@@ -161,7 +161,7 @@ namespace NewLife.Windows
 
                 _ports = str;
 
-                this.Invoke(() =>
+                Invoke(() =>
                 {
                     var old = cbName.SelectedItem + "";
                     cbName.DataSource = ps;
@@ -474,9 +474,9 @@ namespace NewLife.Windows
             if (cfg.HexShow)
             {
                 if (data.Length > 32)
-                    line = "[{0}]=\r\n{1}".F(data.Length, data.ToHex("-", 32));
+                    line = $"[{data.Length}]=\r\n{data.ToHex("-", 32)}";
                 else
-                    line = "[{0}]={1}".F(data.Length, data.ToHex("-", 32));
+                    line = $"[{data.Length}]={data.ToHex("-", 32)}";
                 if (cfg.HexNewLine) line += Environment.NewLine;
             }
             else

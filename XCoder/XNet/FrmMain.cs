@@ -70,7 +70,7 @@ namespace XNet
                 {
                     list.Add(item.Key);
                 }
-                this.Invoke(() =>
+                Invoke(() =>
                 {
                     cbMode.DataSource = list;
 
@@ -93,10 +93,10 @@ namespace XNet
                 var sp = SpeechRecognition.Current;
                 if (!sp.Enable) return;
 
-                sp.Register("打开", () => this.Invoke(Connect))
-                .Register("关闭", () => this.Invoke(Disconnect))
+                sp.Register("打开", () => Invoke(Connect))
+                .Register("关闭", () => Invoke(Disconnect))
                 .Register("退出", () => Application.Exit())
-                .Register("发送", () => this.Invoke(() => btnSend_Click(null, null)));
+                .Register("发送", () => Invoke(() => btnSend_Click(null, null)));
 
                 BizLog.Info("语音识别前缀：{0} 可用命令：{1}", sp.Name, sp.GetAllKeys().Join());
             });
@@ -238,7 +238,7 @@ namespace XNet
 
                 _Server.Start();
 
-                "正在监听{0}".F(port).SpeechTip();
+                $"正在监听{port}".SpeechTip();
             }
 
             pnlSetting.Enabled = false;
@@ -260,7 +260,7 @@ namespace XNet
             }
             if (_Server != null)
             {
-                "停止监听{0}".F(_Server.Port).SpeechTip();
+                $"停止监听{_Server.Port}".SpeechTip();
                 _Server.Dispose();
                 _Server = null;
             }

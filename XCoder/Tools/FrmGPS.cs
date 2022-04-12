@@ -44,7 +44,7 @@ namespace XCoder.Tools
 
             txt_lat.Text = v_lat + "";
             txt_long.Text = v_long + "";
-            txt_latlong.Text = "{0},{1}".F(v_lat, v_long);
+            txt_latlong.Text = $"{v_lat},{v_long}";
         }
     }
 }

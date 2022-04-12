@@ -71,7 +71,7 @@ namespace XCom
             if (st == null) return;
 
             // 需要考虑UI线程
-            st.Disconnected += (s, e) => this.Invoke(Disconnect);
+            st.Disconnected += (s, e) => Invoke(Disconnect);
 
             // 发现USB2401端口，自动发送设置命令
             if (st.Description.Contains("USB2401") || st.Description.Contains("USBSER"))
@@ -82,7 +82,7 @@ namespace XCom
                 //TextControlLog.WriteLog(txtReceive, cmd);
             }
 
-            "连接串口{0}".F(st.PortName).SpeechTip();
+            $"连接串口{st.PortName}".SpeechTip();
 
             btnConnect.Text = "关闭";
 
@@ -100,7 +100,7 @@ namespace XCom
             if (btnConnect.Text == "打开") return;
 
             var st = spList.Port;
-            if (st != null) st.Disconnected -= (s, e) => this.Invoke(Disconnect);
+            if (st != null) st.Disconnected -= (s, e) => Invoke(Disconnect);
             spList.Disconnect();
 
             "串口已断开".SpeechTip();

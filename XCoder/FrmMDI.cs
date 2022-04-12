@@ -53,7 +53,7 @@ namespace XCoder
             {
                 if (item.FullName.EqualIgnoreCase(name))
                 {
-                    this.Invoke(() => CreateForm(item.CreateInstance() as Form));
+                    Invoke(() => CreateForm(item.CreateInstance() as Form));
 
                     break;
                 }
@@ -61,7 +61,7 @@ namespace XCoder
 
             ts = ts.OrderBy(t => t.FullName).ToArray();
 
-            this.Invoke(() =>
+            Invoke(() =>
             {
                 var ms = new Dictionary<String, ToolStripMenuItem>();
                 foreach (ToolStripMenuItem item in menuStrip.Items)
