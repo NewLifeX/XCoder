@@ -182,7 +182,7 @@ namespace XNet
                     _data[i].Value = (UInt16)Rand.Next(UInt16.MaxValue);
                 else
                 {
-                    var x = (Rand.Next(20) - 10) / 100.0;
+                    var x = (Rand.Next(75) - 30) / 100.0;
                     _data[i].Value = (UInt16)(_data[i].Value * (1 + x));
                 }
             }
