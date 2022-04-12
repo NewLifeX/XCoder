@@ -73,7 +73,7 @@
       <Version>4.0.2022.401</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>2.0.2022.321-beta0910</Version>
+      <Version>2.0.2022.404</Version>
     </PackageReference>
     <PackageReference Include="NewLife.WinCore" Version="9.0.2022.401" />
     <PackageReference Include="NewLife.XCode">

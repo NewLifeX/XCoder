@@ -137,25 +137,25 @@ namespace XNet
                 case "0x0000":
                     for (var i = 0; i < count; i++)
                     {
-                        list.Add(new RegisterUnit { Address = addr + i * 2, Value = 0 });
+                        list.Add(new RegisterUnit { Address = addr + i, Value = 0 });
                     }
                     break;
                 case "0x7777":
                     for (var i = 0; i < count; i++)
                     {
-                        list.Add(new RegisterUnit { Address = addr + i * 2, Value = 0x7777 });
+                        list.Add(new RegisterUnit { Address = addr + i, Value = 0x7777 });
                     }
                     break;
                 case "0xFFFF":
                     for (var i = 0; i < count; i++)
                     {
-                        list.Add(new RegisterUnit { Address = addr + i * 2, Value = 0xFFFF });
+                        list.Add(new RegisterUnit { Address = addr + i, Value = 0xFFFF });
                     }
                     break;
                 case "递增":
                     for (var i = 0; i < count; i++)
                     {
-                        list.Add(new RegisterUnit { Address = addr + i * 2, Value = (UInt16)i });
+                        list.Add(new RegisterUnit { Address = addr + i, Value = (UInt16)i });
                     }
                     break;
                 case "静态随机":
@@ -163,7 +163,7 @@ namespace XNet
                 default:
                     for (var i = 0; i < count; i++)
                     {
-                        list.Add(new RegisterUnit { Address = addr + i * 2, Value = (UInt16)Rand.Next(UInt16.MaxValue) });
+                        list.Add(new RegisterUnit { Address = addr + i, Value = (UInt16)Rand.Next(UInt16.MaxValue) });
                     }
                     break;
             }
@@ -275,7 +275,7 @@ namespace XNet
         private void btnAdd_Click(Object sender, EventArgs e)
         {
             var unit = new RegisterUnit();
-            if (_data.Count > 0) unit.Address = _data[_data.Count - 1].Address + 2;
+            if (_data.Count > 0) unit.Address = _data[^1].Address + 1;
             _data.Add(unit);
 
             dgv.DataSource = null;

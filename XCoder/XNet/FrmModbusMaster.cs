@@ -151,15 +151,16 @@ namespace XNet
                 var data = _modbus.Read(code, host, address, count);
                 if (data != null && data.Length > 0)
                 {
+                    // 按照寄存器遍历，每个寄存器2字节
                     var dt = _data;
                     var len = dt.Count;
-                    for (var i = 0; i < count * 2 && i < data.Length; i += 2)
+                    for (var i = 0; i < count && i < data.Length / 2; i++)
                     {
                         var addr = address + i;
                         var unit = dt.FirstOrDefault(e => e.Address == addr);
                         if (unit == null) dt.Add(unit = new RegisterUnit { Address = addr });
 
-                        unit.Value = data.ToUInt16(i, true);
+                        unit.Value = data.ToUInt16(i * 2, true);
                     }
 
                     Invoke(() =>
@@ -236,7 +237,7 @@ namespace XNet
         private void btnAdd_Click(Object sender, EventArgs e)
         {
             var unit = new RegisterUnit();
-            if (_data.Count > 0) unit.Address = _data[_data.Count - 1].Address + 2;
+            if (_data.Count > 0) unit.Address = _data[^1].Address + 1;
             _data.Add(unit);
 
             dgv.DataSource = null;
