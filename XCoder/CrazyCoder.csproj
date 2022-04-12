@@ -23,6 +23,11 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Protocols\**" />
+    <EmbeddedResource Remove="Protocols\**" />
+    <None Remove="Protocols\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="XCom\SerialPortList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -57,6 +62,7 @@
     <Content Include="数据库命名规范.txt" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="NewLife.ModbusRTU" Version="1.0.2022.402" />
     <PackageReference Include="System.Speech" Version="6.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />

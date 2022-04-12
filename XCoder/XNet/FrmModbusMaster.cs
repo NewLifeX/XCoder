@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.ComponentModel;
 using NewLife;
 using NewLife.IoT.Protocols;
 using NewLife.Log;
@@ -60,7 +56,7 @@ namespace XNet
         #endregion
 
         #region 加载/保存 配置
-        void LoadConfig()
+        private void LoadConfig()
         {
             var cfg = NetConfig.Current;
             mi显示应用日志.Checked = cfg.ShowLog;
@@ -71,7 +67,7 @@ namespace XNet
             mi日志着色.Checked = cfg.ColorLog;
         }
 
-        void SaveConfig()
+        private void SaveConfig()
         {
             var cfg = NetConfig.Current;
             cfg.ShowLog = mi显示应用日志.Checked;

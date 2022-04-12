@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.ComponentModel;
 using NewLife;
 using NewLife.IoT.Protocols;
 using NewLife.Log;
@@ -52,7 +48,7 @@ namespace XNet
         #endregion
 
         #region 加载/保存 配置
-        void LoadConfig()
+        private void LoadConfig()
         {
             var cfg = NetConfig.Current;
             mi显示应用日志.Checked = cfg.ShowLog;
@@ -63,7 +59,7 @@ namespace XNet
             mi日志着色.Checked = cfg.ColorLog;
         }
 
-        void SaveConfig()
+        private void SaveConfig()
         {
             var cfg = NetConfig.Current;
             cfg.ShowLog = mi显示应用日志.Checked;
@@ -200,7 +196,7 @@ namespace XNet
             var session = sender as NetSession;
             if (session == null) return;
 
-            var msg = ModbusMessage.Read(e.Packet);
+            var msg = ModbusTcpMessage.Read(e.Packet);
             if (msg == null) return;
 
             session.Log?.Info("<= {0}", msg);
@@ -212,7 +208,8 @@ namespace XNet
                 case FunctionCodes.ReadDiscrete:
                     {
                         // 连续地址
-                        var count = (Int32)Math.Ceiling(msg.Count / 8.0);
+                        var regCount = msg.Payload.ReadBytes(0, 2).ToUInt16(0, false);
+                        var count = (Int32)Math.Ceiling(regCount / 8.0);
                         var addr = msg.Address - _data[0].Address;
                         if (addr >= 0 && addr + count <= _data.Count)
                         {
@@ -224,10 +221,11 @@ namespace XNet
                 case FunctionCodes.ReadInput:
                     {
                         // 连续地址
+                        var regCount = msg.Payload.ReadBytes(0, 2).ToUInt16(0, false);
                         var addr = msg.Address - _data[0].Address;
-                        if (addr >= 0 && addr + msg.Count <= _data.Count)
+                        if (addr >= 0 && addr + regCount <= _data.Count)
                         {
-                            rs.Payload = _data.Skip(addr).Take(msg.Count).SelectMany(e => e.Value.GetBytes()).ToArray();
+                            rs.Payload = _data.Skip(addr).Take(regCount).SelectMany(e => e.Value.GetBytes()).ToArray();
                         }
                     }
                     break;
@@ -267,10 +265,7 @@ namespace XNet
         }
         #endregion
 
-        private void dataGridView1_CellValueChanged(Object sender, DataGridViewCellEventArgs e)
-        {
-            dgv.Refresh();
-        }
+        private void dataGridView1_CellValueChanged(Object sender, DataGridViewCellEventArgs e) => dgv.Refresh();
 
         private void btnAdd_Click(Object sender, EventArgs e)
         {
