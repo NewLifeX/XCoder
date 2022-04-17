@@ -232,6 +232,26 @@ namespace XNet
                 case FunctionCodes.WriteCoil:
                     break;
                 case FunctionCodes.WriteRegister:
+                    {
+                        // 连续地址
+                        var regCount = 0;
+                        for (var i = 0; i < 256 && i + 1 < msg.Payload.Total; i += 2)
+                        {
+                            var value = msg.Payload.ReadBytes(i, 2).ToUInt16(0, false);
+                            var addr = msg.Address - _data[0].Address;
+                            if (addr >= 0 && addr < _data.Count)
+                            {
+                                var ru = _data[addr];
+                                ru.Value = value;
+                                regCount++;
+                            }
+                        }
+                        Invoke(() => { dgv.Refresh(); });
+                        {
+                            var addr = msg.Address - _data[0].Address;
+                            rs.Payload = _data.Skip(addr).Take(regCount).SelectMany(e => e.Value.GetBytes()).ToArray();
+                        }
+                    }
                     break;
                 case FunctionCodes.WriteCoils:
                     break;
