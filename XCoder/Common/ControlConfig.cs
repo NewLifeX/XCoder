@@ -88,7 +88,7 @@ namespace XCoder.Common
             {
                 switch (item)
                 {
-                    case TextBox txt: dic[item.Name] = txt.Text; break;
+                    case TextBoxBase txt: dic[item.Name] = txt.Text; break;
                     case RadioButton rb: dic[item.Name] = rb.Checked; break;
                     case CheckBox cb: dic[item.Name] = cb.Checked; break;
                     case NumericUpDown nud: dic[item.Name] = nud.Value; break;
