@@ -67,7 +67,7 @@
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>9.0.2022.419-beta0215</Version>
+      <Version>9.0.2022.419-beta1606</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
       <Version>1.0.2022.401</Version>
