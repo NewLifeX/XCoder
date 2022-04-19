@@ -54,7 +54,10 @@ namespace XCoder.Common
                         {
                             if (cbox.DropDownStyle == ComboBoxStyle.DropDownList)
                             {
-                                if (cbox.Items.Count > 0 && cbox.Items[0].GetType().GetTypeCode() == TypeCode.Object)
+                                var type = cbox.Items[0].GetType();
+                                v = v.ChangeType(type);
+
+                                if (cbox.Items.Count > 0 && type.GetTypeCode() == TypeCode.Object)
                                     cbox.SelectedValue = v;
                                 else
                                     cbox.SelectedItem = v;
