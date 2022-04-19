@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
 using NewLife;
@@ -59,8 +60,9 @@ namespace XNet
         async Task DiscoverUdp()
         {
             // 本地网广播，然后找到目标
-            var uri = new NetUri("udp://255.255.255.255");
-            uri.Port = (Int32)numPort.Value;
+            //var uri = new NetUri("udp://255.255.255.255");
+            //uri.Port = (Int32)numPort.Value;
+            var ep = new IPEndPoint(IPAddress.Broadcast, (Int32)numPort.Value);
 
             // 构建请求
             var enc = new JsonEncoder();
@@ -73,7 +75,7 @@ namespace XNet
             };
 
             // 发送
-            udp.Send(req, req.Length, uri.EndPoint);
+            udp.Send(req, req.Length, ep);
 
             // 多次接收
             while (true)

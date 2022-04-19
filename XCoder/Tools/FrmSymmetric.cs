@@ -202,7 +202,7 @@ namespace XCoder.Tools
 
             var mode = (CipherMode)Enum.Parse(typeof(CipherMode), cmbCipher.SelectedItem + "");
             var padding = (PaddingMode)Enum.Parse(typeof(PaddingMode), cmbPadding.SelectedItem + "");
-            var aes = new AesCryptoServiceProvider();
+            var aes = Aes.Create();
             buf = aes.Encrypt(buf, pass, mode, padding);
 
             SetResult(buf);
@@ -215,7 +215,7 @@ namespace XCoder.Tools
 
             var mode = (CipherMode)Enum.Parse(typeof(CipherMode), cmbCipher.SelectedItem + "");
             var padding = (PaddingMode)Enum.Parse(typeof(PaddingMode), cmbPadding.SelectedItem + "");
-            var aes = new AesCryptoServiceProvider();
+            var aes = Aes.Create();
             buf = aes.Decrypt(buf, pass, mode, padding);
 
             SetResult(buf);

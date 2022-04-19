@@ -48,8 +48,8 @@
 
   <ItemGroup>
     <PackageReference Include="GtkSharp" Version="3.24.24.34" />
-    <PackageReference Include="NewLife.Core" Version="9.0.2022.409-beta1553" />
-    <PackageReference Include="NewLife.XCode" Version="11.0.2022.408-beta0119" />
+    <PackageReference Include="NewLife.Core" Version="9.0.2022.419-beta0215" />
+    <PackageReference Include="NewLife.XCode" Version="11.0.2022.415-beta0458" />
     <PackageReference Include="System.IO.Ports" Version="6.0.0" />
     <PackageReference Include="System.Management" Version="6.0.0" />
   </ItemGroup>
