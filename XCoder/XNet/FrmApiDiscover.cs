@@ -140,7 +140,7 @@ namespace XNet
 
             public String MachineName { get; set; }
 
-            [DataMember(Name = "ApiVersion")]
+            [DataMember(Name = "FileVersion")]
             public String Version { get; set; }
 
             public String OS { get; set; }

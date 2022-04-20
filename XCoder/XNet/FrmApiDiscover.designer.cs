@@ -50,11 +50,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbReceive.Controls.Add(this.dgv);
-            this.gbReceive.Location = new System.Drawing.Point(14, 72);
-            this.gbReceive.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gbReceive.Location = new System.Drawing.Point(17, 86);
+            this.gbReceive.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.gbReceive.Name = "gbReceive";
-            this.gbReceive.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.gbReceive.Size = new System.Drawing.Size(978, 546);
+            this.gbReceive.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.gbReceive.Size = new System.Drawing.Size(1195, 655);
             this.gbReceive.TabIndex = 4;
             this.gbReceive.TabStop = false;
             this.gbReceive.Text = "信息";
@@ -65,21 +65,21 @@
             this.dgv.AllowUserToDeleteRows = false;
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv.Location = new System.Drawing.Point(4, 25);
+            this.dgv.Location = new System.Drawing.Point(5, 29);
+            this.dgv.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
             this.dgv.RowHeadersWidth = 51;
             this.dgv.RowTemplate.Height = 29;
-            this.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv.Size = new System.Drawing.Size(970, 516);
+            this.dgv.Size = new System.Drawing.Size(1185, 620);
             this.dgv.TabIndex = 0;
             // 
             // btnDiscover
             // 
-            this.btnDiscover.Location = new System.Drawing.Point(880, 15);
-            this.btnDiscover.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnDiscover.Location = new System.Drawing.Point(1076, 18);
+            this.btnDiscover.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnDiscover.Name = "btnDiscover";
-            this.btnDiscover.Size = new System.Drawing.Size(100, 48);
+            this.btnDiscover.Size = new System.Drawing.Size(122, 58);
             this.btnDiscover.TabIndex = 3;
             this.btnDiscover.Text = "搜索";
             this.btnDiscover.UseVisualStyleBackColor = true;
@@ -87,8 +87,8 @@
             // 
             // numPort
             // 
-            this.numPort.Location = new System.Drawing.Point(295, 13);
-            this.numPort.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.numPort.Location = new System.Drawing.Point(361, 16);
+            this.numPort.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.numPort.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -100,7 +100,7 @@
             0,
             0});
             this.numPort.Name = "numPort";
-            this.numPort.Size = new System.Drawing.Size(76, 27);
+            this.numPort.Size = new System.Drawing.Size(93, 30);
             this.numPort.TabIndex = 11;
             this.numPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.toolTip1.SetToolTip(this.numPort, "端口");
@@ -116,10 +116,10 @@
             this.pnlSetting.Controls.Add(this.txtIP);
             this.pnlSetting.Controls.Add(this.label4);
             this.pnlSetting.Controls.Add(this.numPort);
-            this.pnlSetting.Location = new System.Drawing.Point(14, 13);
-            this.pnlSetting.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pnlSetting.Location = new System.Drawing.Point(17, 16);
+            this.pnlSetting.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.pnlSetting.Name = "pnlSetting";
-            this.pnlSetting.Size = new System.Drawing.Size(858, 52);
+            this.pnlSetting.Size = new System.Drawing.Size(1049, 62);
             this.pnlSetting.TabIndex = 13;
             // 
             // chkUdp
@@ -127,18 +127,20 @@
             this.chkUdp.AutoSize = true;
             this.chkUdp.Checked = true;
             this.chkUdp.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkUdp.Location = new System.Drawing.Point(443, 14);
+            this.chkUdp.Location = new System.Drawing.Point(541, 17);
+            this.chkUdp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.chkUdp.Name = "chkUdp";
-            this.chkUdp.Size = new System.Drawing.Size(122, 24);
+            this.chkUdp.Size = new System.Drawing.Size(146, 28);
             this.chkUdp.TabIndex = 20;
             this.chkUdp.Text = "广播UDP探测";
             this.chkUdp.UseVisualStyleBackColor = true;
             // 
             // txtIP
             // 
-            this.txtIP.Location = new System.Drawing.Point(74, 13);
+            this.txtIP.Location = new System.Drawing.Point(90, 16);
+            this.txtIP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtIP.Name = "txtIP";
-            this.txtIP.Size = new System.Drawing.Size(214, 27);
+            this.txtIP.Size = new System.Drawing.Size(261, 30);
             this.txtIP.TabIndex = 18;
             this.txtIP.Text = "192.168.1.1/24";
             this.toolTip1.SetToolTip(this.txtIP, "指定要搜索的远程IP段，将搜索ApiServer");
@@ -146,22 +148,22 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 16);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(17, 19);
+            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 20);
+            this.label4.Size = new System.Drawing.Size(64, 24);
             this.label4.TabIndex = 16;
             this.label4.Text = "远程：";
             // 
             // FrmApiDiscover
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 632);
+            this.ClientSize = new System.Drawing.Size(1222, 758);
             this.Controls.Add(this.pnlSetting);
             this.Controls.Add(this.btnDiscover);
             this.Controls.Add(this.gbReceive);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.Name = "FrmApiDiscover";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ApiServer搜索";
