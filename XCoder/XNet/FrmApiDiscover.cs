@@ -7,6 +7,8 @@ using NewLife.Log;
 using NewLife.Messaging;
 using NewLife.Net;
 using NewLife.Remoting;
+using NewLife.Security;
+using NewLife.Serialization;
 using XCoder;
 using XCoder.Common;
 
@@ -41,12 +43,22 @@ namespace XNet
 
             var btn = sender as Button;
             btn.Enabled = false;
+            var port = (Int32)numPort.Value;
             try
             {
                 var ts = new List<Task>();
 
-                var task = Task.Run(DiscoverUdp);
-                ts.Add(task);
+                {
+                    var ep = new IPEndPoint(IPAddress.Broadcast, port);
+                    var task = Task.Run(() => DiscoverUdp(null, ep));
+                    ts.Add(task);
+                }
+                foreach (var ip in NetHelper.GetIPs().Where(e => e.IsIPv4()))
+                {
+                    var ep = new IPEndPoint(IPAddress.Broadcast, port);
+                    var task = Task.Run(() => DiscoverUdp(ip, ep));
+                    ts.Add(task);
+                }
 
                 //await Task.WaitAll(ts.ToArray(), 5_000);
                 await Task.WhenAll(ts);
@@ -57,22 +69,21 @@ namespace XNet
             }
         }
 
-        async Task DiscoverUdp()
+        async Task DiscoverUdp(IPAddress local, IPEndPoint ep)
         {
-            // 本地网广播，然后找到目标
-            //var uri = new NetUri("udp://255.255.255.255");
-            //uri.Port = (Int32)numPort.Value;
-            var ep = new IPEndPoint(IPAddress.Broadcast, (Int32)numPort.Value);
+            XTrace.WriteLine("DiscoverUdp: {0} -> {1}", local, ep);
 
             // 构建请求
             var enc = new JsonEncoder();
             var msg = enc.CreateRequest("Api/Info", null);
             var req = msg.ToPacket().ReadBytes();
 
-            var udp = new UdpClient
+            var udp = new UdpClient(ep.AddressFamily)
             {
                 EnableBroadcast = true
             };
+
+            if (local != null) udp.Client.Bind(new IPEndPoint(local, Rand.Next(1000, 60000)));
 
             // 发送
             udp.Send(req, req.Length, ep);
@@ -93,10 +104,10 @@ namespace XNet
                         {
                             // 解码结果
                             var result = enc.DecodeResult(action, data, msg);
+                            XTrace.WriteLine("Receive[{0}] {1}", udp.Client.LocalEndPoint, result.ToJson());
 
                             var ai = enc.Convert(result, typeof(ApiItem)) as ApiItem;
                             if (ai != null) Invoke(() => ShowItem(ai));
-                            //XTrace.WriteLine("{0}", result);
                         }
                     }
                 }
@@ -109,13 +120,14 @@ namespace XNet
         #endregion
 
         #region 显示
-        private IList<ApiItem> _data;
+        private IDictionary<String, ApiItem> _data;
         void ShowItem(ApiItem ai)
         {
-            if (_data == null) _data = new List<ApiItem>();
+            if (_data == null) _data = new Dictionary<String, ApiItem>();
 
-            var old = _data.FirstOrDefault(e => e.Name == ai.Name && e.IP == ai.IP);
-            if (old != null)
+            var key = $"{ai.Name}-{ai.IP}-{ai.Id}";
+
+            if (_data.TryGetValue(key, out var old))
             {
                 old.Time = ai.Time;
 
@@ -123,15 +135,17 @@ namespace XNet
             }
             else
             {
-                _data.Add(ai);
+                _data.Add(key, ai);
 
                 dgv.DataSource = null;
-                dgv.DataSource = _data;
+                dgv.DataSource = _data.Values.ToArray();
             }
         }
 
         class ApiItem
         {
+            public Int32 Id { get; set; }
+
             [DataMember(Name = "Server")]
             public String Name { get; set; }
 
