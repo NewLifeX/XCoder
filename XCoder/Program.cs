@@ -24,7 +24,7 @@ namespace XCoder
         static void Main()
         {
 #if NET5_0_OR_GREATER
-            XTrace2.UseWinForm();
+            XTrace.UseWinForm();
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
 #else
             XTrace.UseWinForm();
