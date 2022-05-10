@@ -156,7 +156,7 @@ namespace XNet
                         var unit = dt.FirstOrDefault(e => e.Address == addr);
                         if (unit == null) dt.Add(unit = new RegisterUnit { Address = addr });
 
-                        unit.Value = data.ToUInt16(i * 2, true);
+                        unit.Value = data.ToUInt16(i * 2, false);
                     }
 
                     Invoke(() =>

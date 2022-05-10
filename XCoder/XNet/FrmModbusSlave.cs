@@ -213,7 +213,7 @@ namespace XNet
                         var addr = msg.Address - _data[0].Address;
                         if (addr >= 0 && addr + count <= _data.Count)
                         {
-                            rs.Payload = _data.Skip(addr).Take(count).SelectMany(e => e.Value.GetBytes()).ToArray();
+                            rs.Payload = _data.Skip(addr).Take(count).SelectMany(e => e.GetData()).ToArray();
                         }
                     }
                     break;
@@ -225,7 +225,7 @@ namespace XNet
                         var addr = msg.Address - _data[0].Address;
                         if (addr >= 0 && addr + regCount <= _data.Count)
                         {
-                            rs.Payload = _data.Skip(addr).Take(regCount).SelectMany(e => e.Value.GetBytes()).ToArray();
+                            rs.Payload = _data.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
                         }
                     }
                     break;
@@ -249,7 +249,7 @@ namespace XNet
                         Invoke(() => { dgv.Refresh(); });
                         {
                             var addr = msg.Address - _data[0].Address;
-                            rs.Payload = _data.Skip(addr).Take(regCount).SelectMany(e => e.Value.GetBytes()).ToArray();
+                            rs.Payload = _data.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
                         }
                     }
                     break;
