@@ -20,6 +20,7 @@ namespace XNet
         private ILog _log;
         private NetServer _Server;
         private List<RegisterUnit> _data;
+        private Boolean _coil;
 
         #region 窗体
         public FrmModbusSlave()
@@ -79,6 +80,7 @@ namespace XNet
             _config.Save();
             SaveConfig();
 
+            _coil = cbStorage.SelectedItem + "" == "线圈";
             var btn = sender as Button;
             if (btn.Text == "开始")
             {
@@ -127,41 +129,81 @@ namespace XNet
             var mode = cbMode.SelectedItem + "";
 
             var list = new List<RegisterUnit>(count);
-
-            switch (mode)
+            if (_coil)
             {
-                case "0x0000":
-                    for (var i = 0; i < count; i++)
-                    {
-                        list.Add(new RegisterUnit { Address = addr + i, Value = 0 });
-                    }
-                    break;
-                case "0x7777":
-                    for (var i = 0; i < count; i++)
-                    {
-                        list.Add(new RegisterUnit { Address = addr + i, Value = 0x7777 });
-                    }
-                    break;
-                case "0xFFFF":
-                    for (var i = 0; i < count; i++)
-                    {
-                        list.Add(new RegisterUnit { Address = addr + i, Value = 0xFFFF });
-                    }
-                    break;
-                case "递增":
-                    for (var i = 0; i < count; i++)
-                    {
-                        list.Add(new RegisterUnit { Address = addr + i, Value = (UInt16)i });
-                    }
-                    break;
-                case "静态随机":
-                case "动态随机":
-                default:
-                    for (var i = 0; i < count; i++)
-                    {
-                        list.Add(new RegisterUnit { Address = addr + i, Value = (UInt16)Rand.Next(UInt16.MaxValue) });
-                    }
-                    break;
+                switch (mode)
+                {
+                    case "0x0000":
+                        for (var i = 0; i < count; i += 8)
+                        {
+                            list.Add(new RegisterUnit { Address = addr + i, Value = 0 });
+                        }
+                        break;
+                    case "0x7777":
+                        for (var i = 0; i < count; i += 8)
+                        {
+                            list.Add(new RegisterUnit { Address = addr + i, Value = 0x77 });
+                        }
+                        break;
+                    case "0xFFFF":
+                        for (var i = 0; i < count; i += 8)
+                        {
+                            list.Add(new RegisterUnit { Address = addr + i, Value = 0xFF });
+                        }
+                        break;
+                    case "递增":
+                        for (var i = 0; i < count; i += 8)
+                        {
+                            list.Add(new RegisterUnit { Address = addr + i, Value = (Byte)(i & 0xFF) });
+                        }
+                        break;
+                    case "静态随机":
+                    case "动态随机":
+                    default:
+                        for (var i = 0; i < count; i += 8)
+                        {
+                            list.Add(new RegisterUnit { Address = addr + i, Value = (Byte)(Rand.Next(256) & 0xFF) });
+                        }
+                        break;
+                }
+            }
+            else
+            {
+                switch (mode)
+                {
+                    case "0x0000":
+                        for (var i = 0; i < count; i++)
+                        {
+                            list.Add(new RegisterUnit { Address = addr + i, Value = 0 });
+                        }
+                        break;
+                    case "0x7777":
+                        for (var i = 0; i < count; i++)
+                        {
+                            list.Add(new RegisterUnit { Address = addr + i, Value = 0x7777 });
+                        }
+                        break;
+                    case "0xFFFF":
+                        for (var i = 0; i < count; i++)
+                        {
+                            list.Add(new RegisterUnit { Address = addr + i, Value = 0xFFFF });
+                        }
+                        break;
+                    case "递增":
+                        for (var i = 0; i < count; i++)
+                        {
+                            list.Add(new RegisterUnit { Address = addr + i, Value = (UInt16)i });
+                        }
+                        break;
+                    case "静态随机":
+                    case "动态随机":
+                    default:
+                        for (var i = 0; i < count; i++)
+                        {
+                            list.Add(new RegisterUnit { Address = addr + i, Value = (UInt16)Rand.Next(UInt16.MaxValue) });
+                        }
+                        break;
+                }
             }
 
             if (mode == "动态随机") _timer = new TimerX(DoRefreshData, null, 1_000, 1_000);
@@ -178,13 +220,18 @@ namespace XNet
 
             for (var i = 0; i < _data.Count; i++)
             {
-                if (_data[i].Value == 0)
-                    _data[i].Value = (UInt16)Rand.Next(UInt16.MaxValue);
+                var val = _data[i].Value;
+                if (val == 0)
+                    val = (UInt16)Rand.Next(UInt16.MaxValue);
                 else
                 {
                     var x = (Rand.Next(75) - 30) / 100.0;
-                    _data[i].Value = (UInt16)(_data[i].Value * (1 + x));
+                    val = (UInt16)(val * (1 + x));
                 }
+
+                if (_coil) val = (UInt16)(val & 0xFF);
+
+                _data[i].Value = val;
             }
             //dataGridView1.DataSource = _data;
             //dgv.Refresh();

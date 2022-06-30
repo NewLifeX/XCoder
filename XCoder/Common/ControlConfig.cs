@@ -55,6 +55,8 @@ namespace XCoder.Common
                             if (cbox.DropDownStyle == ComboBoxStyle.DropDownList)
                             {
                                 var type = cbox.Items[0].GetType();
+                                if (type.As(typeof(KeyValuePair<,>))) type = type.GetGenericArguments()[0];
+
                                 v = v.ChangeType(type);
 
                                 if (cbox.Items.Count > 0 && type.GetTypeCode() == TypeCode.Object)
