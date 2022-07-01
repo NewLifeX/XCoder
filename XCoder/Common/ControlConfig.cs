@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using NewLife;
+﻿using NewLife;
 using NewLife.Reflection;
 using NewLife.Serialization;
 
@@ -15,6 +10,8 @@ namespace XCoder.Common
         public Control Control { get; set; }
 
         public String FileName { get; set; }
+
+        public ICollection<String> Ignores { get; } = new HashSet<String>();
 
         public IDictionary<String, Object> Items { get; set; } = new Dictionary<String, Object>();
 
@@ -35,6 +32,8 @@ namespace XCoder.Common
         {
             foreach (Control item in control.Controls)
             {
+                if (Ignores.Contains(item.Name)) continue;
+
                 switch (item)
                 {
                     case TextBoxBase txt:
@@ -91,6 +90,8 @@ namespace XCoder.Common
         {
             foreach (Control item in control.Controls)
             {
+                if (Ignores.Contains(item.Name)) continue;
+
                 switch (item)
                 {
                     case TextBoxBase txt: dic[item.Name] = txt.Text; break;

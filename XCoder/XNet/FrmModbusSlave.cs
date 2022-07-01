@@ -19,7 +19,8 @@ namespace XNet
         private ControlConfig _config;
         private ILog _log;
         private NetServer _Server;
-        private List<RegisterUnit> _data;
+        private List<RegisterUnit> _regs;
+        private List<CoilUnit> _coils;
         private Boolean _coil;
 
         #region 窗体
@@ -43,6 +44,7 @@ namespace XNet
             UIConfig.Apply(txtReceive);
 
             _config = new ControlConfig { Control = this, FileName = "ModbusSlave.json" };
+            _config.Ignores.Add(nameof(txtReceive));
             _config.Load();
             LoadConfig();
         }
@@ -105,6 +107,8 @@ namespace XNet
                 svr.Start();
 
                 _Server = svr;
+                _regs = null;
+                _coils = null;
 
                 ShowData();
 
@@ -128,47 +132,51 @@ namespace XNet
             var count = (Int32)numCount.Value;
             var mode = cbMode.SelectedItem + "";
 
-            var list = new List<RegisterUnit>(count);
             if (_coil)
             {
+                var list = new List<CoilUnit>(count);
                 switch (mode)
                 {
                     case "0x0000":
-                        for (var i = 0; i < count; i += 8)
+                        for (var i = 0; i < count; i++)
                         {
-                            list.Add(new RegisterUnit { Address = addr + i, Value = 0 });
+                            list.Add(new CoilUnit { Address = addr + i, Value = 0 });
                         }
                         break;
                     case "0x7777":
-                        for (var i = 0; i < count; i += 8)
+                        for (var i = 0; i < count; i++)
                         {
-                            list.Add(new RegisterUnit { Address = addr + i, Value = 0x77 });
+                            list.Add(new CoilUnit { Address = addr + i, Value = (Byte)(i % 2) });
                         }
                         break;
                     case "0xFFFF":
-                        for (var i = 0; i < count; i += 8)
+                        for (var i = 0; i < count; i++)
                         {
-                            list.Add(new RegisterUnit { Address = addr + i, Value = 0xFF });
+                            list.Add(new CoilUnit { Address = addr + i, Value = 1 });
                         }
                         break;
                     case "递增":
-                        for (var i = 0; i < count; i += 8)
+                        for (var i = 0; i < count; i++)
                         {
-                            list.Add(new RegisterUnit { Address = addr + i, Value = (Byte)(i & 0xFF) });
+                            list.Add(new CoilUnit { Address = addr + i, Value = (Byte)(i % 2) });
                         }
                         break;
                     case "静态随机":
                     case "动态随机":
                     default:
-                        for (var i = 0; i < count; i += 8)
+                        for (var i = 0; i < count; i++)
                         {
-                            list.Add(new RegisterUnit { Address = addr + i, Value = (Byte)(Rand.Next(256) & 0xFF) });
+                            list.Add(new CoilUnit { Address = addr + i, Value = (Byte)Rand.Next(2) });
                         }
                         break;
                 }
+                _coils = list;
+
+                dgv.DataSource = _coils;
             }
             else
             {
+                var list = new List<RegisterUnit>(count);
                 switch (mode)
                 {
                     case "0x0000":
@@ -204,37 +212,51 @@ namespace XNet
                         }
                         break;
                 }
+
+                _regs = list;
+
+                dgv.DataSource = _regs;
             }
 
             if (mode == "动态随机") _timer = new TimerX(DoRefreshData, null, 1_000, 1_000);
-
-            _data = list;
-
-            dgv.DataSource = _data;
         }
 
         private TimerX _timer;
         private void DoRefreshData(Object state)
         {
-            if (_data == null) return;
-
-            for (var i = 0; i < _data.Count; i++)
+            if (_regs != null)
             {
-                var val = _data[i].Value;
-                if (val == 0)
-                    val = (UInt16)Rand.Next(UInt16.MaxValue);
-                else
+                for (var i = 0; i < _regs.Count; i++)
                 {
-                    var x = (Rand.Next(75) - 30) / 100.0;
-                    val = (UInt16)(val * (1 + x));
+                    var val = _regs[i].Value;
+                    if (val == 0)
+                        val = (UInt16)Rand.Next(UInt16.MaxValue);
+                    else
+                    {
+                        var x = (Rand.Next(75) - 30) / 100.0;
+                        val = (UInt16)(val * (1 + x));
+                    }
+
+                    _regs[i].Value = val;
                 }
-
-                if (_coil) val = (UInt16)(val & 0xFF);
-
-                _data[i].Value = val;
             }
-            //dataGridView1.DataSource = _data;
-            //dgv.Refresh();
+            if (_coils != null)
+            {
+                for (var i = 0; i < _coils.Count; i++)
+                {
+                    var val = _coils[i].Value;
+                    if (val == 0)
+                        val = (Byte)Rand.Next(UInt16.MaxValue);
+                    else
+                    {
+                        var x = (Rand.Next(75) - 30) / 100.0;
+                        val = (Byte)(val * (1 + x));
+                    }
+
+                    _coils[i].Value = (Byte)(val & 0x01);
+                }
+            }
+
             Invoke(() => { dgv.Refresh(); });
         }
 
@@ -253,50 +275,71 @@ namespace XNet
             {
                 case FunctionCodes.ReadCoil:
                 case FunctionCodes.ReadDiscrete:
+                    if (_coils != null)
                     {
-                        // 连续地址
+                        // 连续地址，其实地址有可能不是8的倍数
                         var regCount = msg.Payload.ReadBytes(0, 2).ToUInt16(0, false);
-                        var count = (Int32)Math.Ceiling(regCount / 8.0);
-                        var addr = msg.Address - _data[0].Address;
-                        if (addr >= 0 && addr + count <= _data.Count)
+                        var addr = msg.Address - _coils[0].Address;
+                        if (addr >= 0 && addr + regCount <= _coils.Count)
                         {
-                            rs.Payload = _data.Skip(addr).Take(count).SelectMany(e => e.GetData()).ToArray();
+                            // 取出该段存储单元
+                            var cs = _coils.Skip(addr).Take(regCount).ToList();
+                            var count = (Int32)Math.Ceiling(regCount / 8.0);
+                            // 遍历存储单元，把数据聚合成为字节数组返回
+                            var bits = new Byte[count];
+                            for (var i = 0; i < count; i++)
+                            {
+                                var b = 0;
+                                // 每个字节最大可存储8位数据，最后一个字节可能不足8位
+                                var max = regCount - i * 8;
+                                if (max > 8) max = 8;
+                                for (var j = 0; j < max; j++)
+                                {
+                                    if (cs[i * 8 + j].Value > 0)
+                                        b |= 1 << j;
+                                }
+                                bits[i] = (Byte)b;
+                            }
+
+                            rs.Payload = bits;
                         }
                     }
                     break;
                 case FunctionCodes.ReadRegister:
                 case FunctionCodes.ReadInput:
+                    if (_regs != null)
                     {
                         // 连续地址
                         var regCount = msg.Payload.ReadBytes(0, 2).ToUInt16(0, false);
-                        var addr = msg.Address - _data[0].Address;
-                        if (addr >= 0 && addr + regCount <= _data.Count)
+                        var addr = msg.Address - _regs[0].Address;
+                        if (addr >= 0 && addr + regCount <= _regs.Count)
                         {
-                            rs.Payload = _data.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
+                            rs.Payload = _regs.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
                         }
                     }
                     break;
                 case FunctionCodes.WriteCoil:
                     break;
                 case FunctionCodes.WriteRegister:
+                    if (_regs != null)
                     {
                         // 连续地址
                         var regCount = 0;
                         for (var i = 0; i < 256 && i + 1 < msg.Payload.Total; i += 2)
                         {
                             var value = msg.Payload.ReadBytes(i, 2).ToUInt16(0, false);
-                            var addr = msg.Address - _data[0].Address;
-                            if (addr >= 0 && addr < _data.Count)
+                            var addr = msg.Address - _regs[0].Address;
+                            if (addr >= 0 && addr < _regs.Count)
                             {
-                                var ru = _data[addr];
+                                var ru = _regs[addr];
                                 ru.Value = value;
                                 regCount++;
                             }
                         }
                         Invoke(() => { dgv.Refresh(); });
                         {
-                            var addr = msg.Address - _data[0].Address;
-                            rs.Payload = _data.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
+                            var addr = msg.Address - _regs[0].Address;
+                            rs.Payload = _regs.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
                         }
                     }
                     break;
@@ -337,11 +380,11 @@ namespace XNet
         private void btnAdd_Click(Object sender, EventArgs e)
         {
             var unit = new RegisterUnit();
-            if (_data.Count > 0) unit.Address = _data[^1].Address + 1;
-            _data.Add(unit);
+            if (_regs.Count > 0) unit.Address = _regs[^1].Address + 1;
+            _regs.Add(unit);
 
             dgv.DataSource = null;
-            dgv.DataSource = _data;
+            dgv.DataSource = _regs;
             dgv.Refresh();
         }
     }

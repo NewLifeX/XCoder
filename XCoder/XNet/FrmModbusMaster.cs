@@ -15,7 +15,8 @@ namespace XNet
         private ControlConfig _config;
         private ILog _log;
         private ModbusTcp _modbus;
-        private List<RegisterUnit> _data = new();
+        private List<RegisterUnit> _regs = new();
+        private List<CoilUnit> _coils = new();
 
         #region 窗体
         public FrmModbusMaster()
@@ -33,12 +34,6 @@ namespace XNet
             txtReceive.SetDefaultStyle(12);
 
             var dic = EnumHelper.GetDescriptions(typeof(FunctionCodes));
-            //var dic = EnumHelper.GetDescriptions<FunctionCodes>();
-            //var list = new List<FunctionCodes>();
-            //foreach (FunctionCodes item in Enum.GetValues(typeof(FunctionCodes)))
-            //{
-            //    if (item.ToString().StartsWith("Read")) list.Add(item);
-            //}
             cbFunctionCode.ValueMember = "key";
             cbFunctionCode.DisplayMember = "value";
             cbFunctionCode.DataSource = new BindingSource { DataSource = dic };
@@ -47,9 +42,8 @@ namespace XNet
             // 加载保存的颜色
             UIConfig.Apply(txtReceive);
 
-            //dgv.DataSource = _data;
-
             _config = new ControlConfig { Control = this, FileName = "ModbusMaster.json" };
+            _config.Ignores.Add(nameof(txtReceive));
             _config.Load();
             LoadConfig();
         }
@@ -99,7 +93,11 @@ namespace XNet
                     //Log = _log
                 };
 
-                if (set.ShowLog) mb.Log = _log;
+                if (set.ShowLog)
+                {
+                    mb.Log = _log;
+                    _log.Level = LogLevel.Debug;
+                }
 
                 mb.Open();
 
@@ -114,7 +112,8 @@ namespace XNet
                 _modbus.TryDispose();
                 _modbus = null;
 
-                _data.Clear();
+                _regs.Clear();
+                _coils.Clear();
                 dgv.DataSource = null;
 
                 pnlSetting.Enabled = true;
@@ -141,31 +140,68 @@ namespace XNet
             _config.Save();
             SaveConfig();
 
-            // 读取
-            if (code <= FunctionCodes.ReadInput)
+            // 读取线圈
+            if (code <= FunctionCodes.ReadDiscrete)
+            {
+                var data = _modbus.Read(code, host, address, count);
+                if (data != null && data.Length > 0)
+                {
+                    // 按照寄存器遍历，每个8个线圈占1个字节
+                    var dt = _coils;
+                    var len = dt.Count;
+                    for (var i = 0; i < count; i++)
+                    {
+                        var k = i / 8;
+                        if (k >= data.Length) break;
+
+                        var addr = address + i;
+                        var unit = dt.FirstOrDefault(e => e.Address == addr);
+                        if (unit == null) dt.Add(unit = new CoilUnit { Address = addr });
+
+                        var bit = i % 8;
+                        unit.Value = (Byte)((Byte)(data[k] >> bit) & 0x01);
+                    }
+
+                    Invoke(() =>
+                    {
+                        if (len != _coils.Count || dgv.DataSource != _coils)
+                        {
+                            _coils = _coils.OrderBy(e => e.Address).ToList();
+                            dgv.DataSource = null;
+                            dgv.DataSource = _coils;
+                        }
+                        dgv.Refresh();
+                    });
+                }
+            }
+            // 读取寄存器
+            else if (code <= FunctionCodes.ReadInput)
             {
                 var data = _modbus.Read(code, host, address, count);
                 if (data != null && data.Length > 0)
                 {
                     // 按照寄存器遍历，每个寄存器2字节
-                    var dt = _data;
+                    var dt = _regs;
                     var len = dt.Count;
                     for (var i = 0; i < count && i < data.Length / 2; i++)
                     {
                         var addr = address + i;
                         var unit = dt.FirstOrDefault(e => e.Address == addr);
-                        if (unit == null) dt.Add(unit = new RegisterUnit { Address = addr });
+                        if (unit == null) dt.Add(unit = new RegisterUnit
+                        {
+                            Address = addr
+                        });
 
                         unit.Value = data.ToUInt16(i * 2, false);
                     }
 
                     Invoke(() =>
                     {
-                        if (len != _data.Count)
+                        if (len != _regs.Count || dgv.DataSource != _regs)
                         {
-                            _data = _data.OrderBy(e => e.Address).ToList();
+                            _regs = _regs.OrderBy(e => e.Address).ToList();
                             dgv.DataSource = null;
-                            dgv.DataSource = _data;
+                            dgv.DataSource = _regs;
                         }
                         dgv.Refresh();
                     });
@@ -178,7 +214,7 @@ namespace XNet
                 for (var i = 0; i < count; i++)
                 {
                     var addr = address + i * 2;
-                    var unit = _data.FirstOrDefault(e => e.Address == addr);
+                    var unit = _regs.FirstOrDefault(e => e.Address == addr);
                     if (unit != null) values[i] = unit.Value;
                 }
 
@@ -233,11 +269,11 @@ namespace XNet
         private void btnAdd_Click(Object sender, EventArgs e)
         {
             var unit = new RegisterUnit();
-            if (_data.Count > 0) unit.Address = _data[^1].Address + 1;
-            _data.Add(unit);
+            if (_regs.Count > 0) unit.Address = _regs[^1].Address + 1;
+            _regs.Add(unit);
 
             dgv.DataSource = null;
-            dgv.DataSource = _data;
+            dgv.DataSource = _regs;
             dgv.Refresh();
         }
     }
