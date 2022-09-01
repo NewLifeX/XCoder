@@ -71,7 +71,7 @@ namespace XApi
             LoadConfig();
 
             // 语音识别
-            ThreadPoolX.QueueUserWorkItem(() =>
+            ThreadPool.QueueUserWorkItem(s =>
             {
                 var sp = SpeechRecognition.Current;
                 if (!sp.Enable) return;

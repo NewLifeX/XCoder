@@ -222,7 +222,7 @@ namespace XCoder
             if (!DAL.ConnStrs.TryGetValue(name, out var connstr) || connstr.IsNullOrWhiteSpace()) return;
 
             // 异步加载
-            ThreadPoolX.QueueUserWorkItem(() => { var tables = DAL.Create(name).Tables; });
+            ThreadPool.QueueUserWorkItem(s => { var tables = DAL.Create(name).Tables; });
         }
 
         private void btnRefreshTable_Click(Object sender, EventArgs e)
@@ -399,7 +399,7 @@ namespace XCoder
 
         private void oracle客户端运行时检查ToolStripMenuItem1_Click(Object sender, EventArgs e)
         {
-            ThreadPoolX.QueueUserWorkItem(CheckOracle);
+            ThreadPool.QueueUserWorkItem(s => CheckOracle());
         }
         void CheckOracle()
         {

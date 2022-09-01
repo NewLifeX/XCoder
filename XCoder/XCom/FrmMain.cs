@@ -184,7 +184,7 @@ namespace XCom
                 return;
             }
 
-            ThreadPoolX.QueueUserWorkItem(() =>
+            ThreadPool.QueueUserWorkItem(s =>
             {
                 for (var i = 0; i < count; i++)
                 {

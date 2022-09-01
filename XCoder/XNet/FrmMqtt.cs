@@ -68,7 +68,7 @@ namespace XNet
                 Password = txtPass.Text,
 
                 Log = _log,
-                LogMessage = true,
+                //LogMessage = true,
             };
             client.Received += Client_Received;
             client.Connected += (s, e) => XTrace.WriteLine("连接成功");

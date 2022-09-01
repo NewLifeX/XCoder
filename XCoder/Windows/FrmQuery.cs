@@ -46,7 +46,7 @@ namespace XCoder
             var sql = txtSQL.Text;
             if (sql.IsNullOrWhiteSpace()) return;
 
-            ThreadPoolX.QueueUserWorkItem(() =>
+            ThreadPool.QueueUserWorkItem(s =>
             {
                 var sw = Stopwatch.StartNew();
 
@@ -80,7 +80,7 @@ namespace XCoder
             var sql = txtSQL.Text;
             if (sql.IsNullOrWhiteSpace()) return;
 
-            ThreadPoolX.QueueUserWorkItem(() =>
+            ThreadPool.QueueUserWorkItem(s =>
             {
                 var sw = Stopwatch.StartNew();
 

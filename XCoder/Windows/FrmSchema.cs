@@ -42,12 +42,12 @@ namespace XCoder
 
         private void FrmSchema_Load(Object sender, EventArgs e)
         {
-            ThreadPoolX.QueueUserWorkItem(() =>
+            ThreadPool.QueueUserWorkItem(s =>
             {
                 var tables = Db.CreateMetaData().GetTables();
                 Invoke(SetList, cbTables, tables);
             });
-            ThreadPoolX.QueueUserWorkItem(() =>
+            ThreadPool.QueueUserWorkItem(s =>
             {
                 var list = Db.CreateMetaData().MetaDataCollections;
                 Invoke(SetList, cbSchemas, list);

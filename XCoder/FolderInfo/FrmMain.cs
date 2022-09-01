@@ -94,7 +94,7 @@ namespace XCoder.FolderInfo
                 {
                     tn.Nodes.Add("no");
                     //使用后台线程统计大小信息
-                    ThreadPoolX.QueueUserWorkItem(() => TongJi(tn));
+                    ThreadPool.QueueUserWorkItem(s => TongJi(tn));
                 }
             }
         }

@@ -43,7 +43,7 @@ namespace XCoder
 
             _load.ContinueWith(t => LoadForms(t.Result));
 
-            ThreadPoolX.QueueUserWorkItem(() => CheckUpdate(true));
+            ThreadPool.QueueUserWorkItem(s => CheckUpdate(true));
         }
 
         void LoadForms(Type[] ts)
@@ -170,7 +170,7 @@ namespace XCoder
         #region 自动更新
         private void 检查更新ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            ThreadPoolX.QueueUserWorkItem(() => CheckUpdate(false));
+            ThreadPool.QueueUserWorkItem(s => CheckUpdate(false));
         }
 
         private void CheckUpdate(Boolean auto)
