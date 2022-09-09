@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using NewLife;
 using NewLife.Data;
 using NewLife.Log;
@@ -15,9 +10,6 @@ using NewLife.Threading;
 using NewLife.Windows;
 using XCoder;
 using XCoder.XNet;
-#if !NET4
-using TaskEx = System.Threading.Tasks.Task;
-#endif
 
 namespace XNet
 {
@@ -406,13 +398,12 @@ namespace XNet
                         ts.Add(task);
                     }
 
-                    _Send = TaskEx.WhenAll(ts);
+                    _Send = Task.WhenAll(ts);
                 }
             }
-#if !NET4
             else if (_Server != null)
             {
-                TaskEx.Run(async () =>
+                Task.Run(async () =>
                 {
                     BizLog.Info("准备向[{0}]个客户端发送[{1}]次[{2}]的数据", _Server.SessionCount, count, buf.Length);
                     for (var i = 0; i < count && _Server != null; i++)
@@ -421,11 +412,10 @@ namespace XNet
                         var cs = await _Server.SendAllAsync(buf);
                         sw.Stop();
                         BizLog.Info("{3}/{4} 已向[{0}]个客户端发送[{1}]数据 {2:n0}ms", cs, buf.Length, sw.ElapsedMilliseconds, i + 1, count);
-                        if (sleep > 0) await TaskEx.Delay(sleep);
+                        if (sleep > 0) await Task.Delay(sleep);
                     }
                 });
             }
-#endif
         }
         #endregion
 

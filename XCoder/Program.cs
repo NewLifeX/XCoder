@@ -3,9 +3,7 @@ using System.Text;
 using NewLife;
 using NewLife.Log;
 using NewLife.Threading;
-#if !NET4
 using Stardust;
-#endif
 
 namespace XCoder;
 
@@ -26,9 +24,7 @@ static class Program
 #endif
         MachineInfo.RegisterAsync();
 
-#if !NET4
         StartClient();
-#endif
 
         StringHelper.EnableSpeechTip = XConfig.Current.SpeechTip;
 
@@ -39,7 +35,6 @@ static class Program
         Application.Run(new FrmMDI());
     }
 
-#if !NET4
     static TimerX _timer;
     static StarClient _Client;
     //static ServiceManager _Manager;
@@ -135,5 +130,4 @@ static class Program
             }
         }
     }
-#endif
 }

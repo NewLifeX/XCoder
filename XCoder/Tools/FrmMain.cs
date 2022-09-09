@@ -24,10 +24,8 @@ namespace XCoder.Tools
         }
         private void btn_Include_Click(Object sender, EventArgs e)
         {
-#if !NET4
             var frm = new FrmInclude();
             ShowForm(frm);
-#endif
         }
         private void btn_gps_Click(Object sender, EventArgs e)
         {

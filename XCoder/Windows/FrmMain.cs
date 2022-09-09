@@ -6,12 +6,8 @@ using CrazyCoder.Data;
 using NewLife;
 using NewLife.Log;
 using NewLife.Reflection;
-using NewLife.Threading;
 using XCode.Code;
 using XCode.DataAccessLayer;
-#if !NET4
-using TaskEx = System.Threading.Tasks.Task;
-#endif
 
 namespace XCoder
 {
@@ -121,7 +117,7 @@ namespace XCoder
                 //Engine = null;
 
                 // 断开的时候再取一次，确保下次能及时得到新的
-                TaskEx.Run(() => DAL.Create(Config.ConnName).Tables);
+                Task.Run(() => DAL.Create(Config.ConnName).Tables);
             }
         }
 
@@ -154,7 +150,7 @@ namespace XCoder
 
         void LoadTables()
         {
-            TaskEx.Run(() =>
+            Task.Run(() =>
             {
                 try
                 {

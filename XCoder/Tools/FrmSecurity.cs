@@ -573,7 +573,6 @@ namespace XCoder.Tools
                 sb.AppendFormat("MachineGuid:\t{0}\t(SOFTWARE\\Microsoft\\Cryptography)\r\n", guid);
             }
 
-#if !NET4 && !__CORE__
             sb.AppendLine();
             var ci = new Microsoft.VisualBasic.Devices.ComputerInfo();
             foreach (var pi in ci.GetType().GetProperties())
@@ -581,7 +580,6 @@ namespace XCoder.Tools
                 //if (sb.Length > 0) sb.AppendLine();
                 sb.AppendFormat("{0}:\t{1:n0}\r\n", pi.Name, ci.GetValue(pi));
             }
-#endif
 
             rtResult.Text = sb.Put(true);
         }
