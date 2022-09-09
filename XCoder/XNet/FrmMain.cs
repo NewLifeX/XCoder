@@ -381,11 +381,11 @@ namespace XNet
 
             if (_Client != null)
             {
-                //if (ths <= 1)
-                //{
-                //    _Client.SendMulti(pk, count, sleep);
-                //}
-                //else
+                if (ths <= 1)
+                {
+                    _Client.SendConcurrency(pk, count, sleep);
+                }
+                else
                 {
                     var any = _Client.Local.Address.IsAny();
                     var list = new List<ISocketClient>();
