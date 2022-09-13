@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
+using NewLife.Caching;
 using NewLife.Log;
 
 namespace XCoder.FolderInfo;
@@ -112,12 +113,12 @@ public partial class FrmMain : Form, IXForm
     #endregion
 
     #region 统计文件夹大小
-    private readonly ConcurrentDictionary<String, Int64> cache = new();
+    private readonly ICache cache = new MemoryCache();
 
     private Int64 FolderSize(DirectoryInfo di)
     {
         Int64 size = 0;
-        if (cache.TryGetValue(di.FullName, out var v)) return v;
+        if (cache.TryGetValue<Int64>(di.FullName, out var v)) return v;
 
         try
         {
@@ -132,7 +133,7 @@ public partial class FrmMain : Form, IXForm
         }
         catch { }
 
-        cache.TryAdd(di.FullName, size);
+        cache.Set(di.FullName, size, 30);
 
         return size;
     }
@@ -175,7 +176,7 @@ public partial class FrmMain : Form, IXForm
     private void treeView1_BeforeExpand(Object sender, TreeViewCancelEventArgs e)
     {
         var node = e.Node;
-        if (node.Nodes != null && node.Nodes.Count > 0 && node.Nodes[0].Text == "no")
+        if (node.Nodes != null && node.Nodes.Count > 0 /*&& node.Nodes[0].Text == "no"*/)
         {
             try
             {
