@@ -402,16 +402,21 @@ namespace XCoder.Tools
 
             var sb = Pool.StringBuilder.Get();
 
+            DateTime.TryParse(rtPass.Text, out var baseTime);
+            var utc = new DateTime(1970, 1, 1);
+
+            if (baseTime > DateTime.MinValue) sb.AppendFormat("基准：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", baseTime);
+
             var dt = v.ToDateTime();
             if (dt.Year > 1 && dt.Year < 3000)
             {
                 var s = dt.ToInt();
                 var m = dt.ToLong();
 
-                if (DateTime.TryParse(rtPass.Text, out var dt2))
+                if (baseTime > DateTime.MinValue)
                 {
-                    s -= dt2.ToInt();
-                    m -= dt2.ToLong();
+                    s -= baseTime.ToInt();
+                    m -= baseTime.ToLong();
                 }
 
                 sb.AppendLine("Unix秒：" + s);
@@ -423,6 +428,7 @@ namespace XCoder.Tools
             if (n >= Int32.MaxValue)
             {
                 dt = n.ToDateTime();
+                if (baseTime > DateTime.MinValue) dt = dt.Add(baseTime - utc);
                 if (dt.Year > 1000 && dt.Year < 3000)
                 {
                     sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff} (Unix毫秒)\r\n", dt);
@@ -435,6 +441,7 @@ namespace XCoder.Tools
             else if (n > 0)
             {
                 dt = v.ToInt().ToDateTime();
+                if (baseTime > DateTime.MinValue) dt = dt.Add(baseTime - utc);
                 if (dt.Year > 1000 && dt.Year < 3000)
                 {
                     sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss} (Unix秒)\r\n", dt);

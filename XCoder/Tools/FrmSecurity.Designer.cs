@@ -103,21 +103,21 @@
             this.gbFunc.Controls.Add(this.btnB64);
             this.gbFunc.Controls.Add(this.btnHex2);
             this.gbFunc.Controls.Add(this.btnHex);
-            this.gbFunc.Location = new System.Drawing.Point(18, 18);
-            this.gbFunc.Margin = new System.Windows.Forms.Padding(4);
+            this.gbFunc.Location = new System.Drawing.Point(22, 24);
+            this.gbFunc.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.gbFunc.Name = "gbFunc";
-            this.gbFunc.Padding = new System.Windows.Forms.Padding(4);
-            this.gbFunc.Size = new System.Drawing.Size(258, 908);
+            this.gbFunc.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gbFunc.Size = new System.Drawing.Size(315, 1211);
             this.gbFunc.TabIndex = 0;
             this.gbFunc.TabStop = false;
             this.gbFunc.Text = "加密解密";
             // 
             // btnJWT
             // 
-            this.btnJWT.Location = new System.Drawing.Point(129, 610);
-            this.btnJWT.Margin = new System.Windows.Forms.Padding(4);
+            this.btnJWT.Location = new System.Drawing.Point(158, 813);
+            this.btnJWT.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnJWT.Name = "btnJWT";
-            this.btnJWT.Size = new System.Drawing.Size(112, 45);
+            this.btnJWT.Size = new System.Drawing.Size(137, 60);
             this.btnJWT.TabIndex = 29;
             this.btnJWT.Text = "JWT令牌";
             this.btnJWT.UseVisualStyleBackColor = true;
@@ -125,10 +125,10 @@
             // 
             // btnSnowflake
             // 
-            this.btnSnowflake.Location = new System.Drawing.Point(9, 610);
-            this.btnSnowflake.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSnowflake.Location = new System.Drawing.Point(11, 813);
+            this.btnSnowflake.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnSnowflake.Name = "btnSnowflake";
-            this.btnSnowflake.Size = new System.Drawing.Size(112, 45);
+            this.btnSnowflake.Size = new System.Drawing.Size(137, 60);
             this.btnSnowflake.TabIndex = 28;
             this.btnSnowflake.Text = "雪花Id";
             this.btnSnowflake.UseVisualStyleBackColor = true;
@@ -136,10 +136,10 @@
             // 
             // btnComputerInfo
             // 
-            this.btnComputerInfo.Location = new System.Drawing.Point(130, 557);
-            this.btnComputerInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.btnComputerInfo.Location = new System.Drawing.Point(159, 743);
+            this.btnComputerInfo.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnComputerInfo.Name = "btnComputerInfo";
-            this.btnComputerInfo.Size = new System.Drawing.Size(112, 45);
+            this.btnComputerInfo.Size = new System.Drawing.Size(137, 60);
             this.btnComputerInfo.TabIndex = 27;
             this.btnComputerInfo.Text = "机器信息";
             this.btnComputerInfo.UseVisualStyleBackColor = true;
@@ -147,10 +147,10 @@
             // 
             // btnTime
             // 
-            this.btnTime.Location = new System.Drawing.Point(9, 557);
-            this.btnTime.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTime.Location = new System.Drawing.Point(11, 743);
+            this.btnTime.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnTime.Name = "btnTime";
-            this.btnTime.Size = new System.Drawing.Size(112, 45);
+            this.btnTime.Size = new System.Drawing.Size(137, 60);
             this.btnTime.TabIndex = 26;
             this.btnTime.Text = "时间戳";
             this.btnTime.UseVisualStyleBackColor = true;
@@ -158,10 +158,10 @@
             // 
             // btnSHA512
             // 
-            this.btnSHA512.Location = new System.Drawing.Point(130, 240);
-            this.btnSHA512.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSHA512.Location = new System.Drawing.Point(159, 320);
+            this.btnSHA512.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnSHA512.Name = "btnSHA512";
-            this.btnSHA512.Size = new System.Drawing.Size(112, 45);
+            this.btnSHA512.Size = new System.Drawing.Size(137, 60);
             this.btnSHA512.TabIndex = 25;
             this.btnSHA512.Text = "SHA512";
             this.btnSHA512.UseVisualStyleBackColor = true;
@@ -169,10 +169,10 @@
             // 
             // btnSHA384
             // 
-            this.btnSHA384.Location = new System.Drawing.Point(9, 240);
-            this.btnSHA384.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSHA384.Location = new System.Drawing.Point(11, 320);
+            this.btnSHA384.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnSHA384.Name = "btnSHA384";
-            this.btnSHA384.Size = new System.Drawing.Size(112, 45);
+            this.btnSHA384.Size = new System.Drawing.Size(137, 60);
             this.btnSHA384.TabIndex = 24;
             this.btnSHA384.Text = "SHA384";
             this.btnSHA384.UseVisualStyleBackColor = true;
@@ -180,10 +180,10 @@
             // 
             // btnSHA256
             // 
-            this.btnSHA256.Location = new System.Drawing.Point(130, 188);
-            this.btnSHA256.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSHA256.Location = new System.Drawing.Point(159, 251);
+            this.btnSHA256.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnSHA256.Name = "btnSHA256";
-            this.btnSHA256.Size = new System.Drawing.Size(112, 45);
+            this.btnSHA256.Size = new System.Drawing.Size(137, 60);
             this.btnSHA256.TabIndex = 23;
             this.btnSHA256.Text = "SHA256";
             this.btnSHA256.UseVisualStyleBackColor = true;
@@ -191,10 +191,10 @@
             // 
             // btnSHA1
             // 
-            this.btnSHA1.Location = new System.Drawing.Point(9, 188);
-            this.btnSHA1.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSHA1.Location = new System.Drawing.Point(11, 251);
+            this.btnSHA1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnSHA1.Name = "btnSHA1";
-            this.btnSHA1.Size = new System.Drawing.Size(112, 45);
+            this.btnSHA1.Size = new System.Drawing.Size(137, 60);
             this.btnSHA1.TabIndex = 22;
             this.btnSHA1.Text = "SHA1";
             this.btnSHA1.UseVisualStyleBackColor = true;
@@ -202,10 +202,10 @@
             // 
             // btnHtml2
             // 
-            this.btnHtml2.Location = new System.Drawing.Point(130, 503);
-            this.btnHtml2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnHtml2.Location = new System.Drawing.Point(159, 671);
+            this.btnHtml2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnHtml2.Name = "btnHtml2";
-            this.btnHtml2.Size = new System.Drawing.Size(112, 45);
+            this.btnHtml2.Size = new System.Drawing.Size(137, 60);
             this.btnHtml2.TabIndex = 21;
             this.btnHtml2.Text = "Html解码";
             this.btnHtml2.UseVisualStyleBackColor = true;
@@ -213,10 +213,10 @@
             // 
             // btnHtml
             // 
-            this.btnHtml.Location = new System.Drawing.Point(9, 503);
-            this.btnHtml.Margin = new System.Windows.Forms.Padding(4);
+            this.btnHtml.Location = new System.Drawing.Point(11, 671);
+            this.btnHtml.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnHtml.Name = "btnHtml";
-            this.btnHtml.Size = new System.Drawing.Size(112, 45);
+            this.btnHtml.Size = new System.Drawing.Size(137, 60);
             this.btnHtml.TabIndex = 20;
             this.btnHtml.Text = "Html编码";
             this.btnHtml.UseVisualStyleBackColor = true;
@@ -224,10 +224,10 @@
             // 
             // btnUrl2
             // 
-            this.btnUrl2.Location = new System.Drawing.Point(130, 451);
-            this.btnUrl2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnUrl2.Location = new System.Drawing.Point(159, 601);
+            this.btnUrl2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnUrl2.Name = "btnUrl2";
-            this.btnUrl2.Size = new System.Drawing.Size(112, 45);
+            this.btnUrl2.Size = new System.Drawing.Size(137, 60);
             this.btnUrl2.TabIndex = 19;
             this.btnUrl2.Text = "Url解码";
             this.btnUrl2.UseVisualStyleBackColor = true;
@@ -235,10 +235,10 @@
             // 
             // btnUrl
             // 
-            this.btnUrl.Location = new System.Drawing.Point(9, 451);
-            this.btnUrl.Margin = new System.Windows.Forms.Padding(4);
+            this.btnUrl.Location = new System.Drawing.Point(11, 601);
+            this.btnUrl.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnUrl.Name = "btnUrl";
-            this.btnUrl.Size = new System.Drawing.Size(112, 45);
+            this.btnUrl.Size = new System.Drawing.Size(137, 60);
             this.btnUrl.TabIndex = 18;
             this.btnUrl.Text = "Url编码";
             this.btnUrl.UseVisualStyleBackColor = true;
@@ -246,10 +246,10 @@
             // 
             // btnDSA2
             // 
-            this.btnDSA2.Location = new System.Drawing.Point(130, 398);
-            this.btnDSA2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDSA2.Location = new System.Drawing.Point(159, 531);
+            this.btnDSA2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnDSA2.Name = "btnDSA2";
-            this.btnDSA2.Size = new System.Drawing.Size(112, 45);
+            this.btnDSA2.Size = new System.Drawing.Size(137, 60);
             this.btnDSA2.TabIndex = 17;
             this.btnDSA2.Text = "DSA验证";
             this.btnDSA2.UseVisualStyleBackColor = true;
@@ -257,10 +257,10 @@
             // 
             // btnDSA
             // 
-            this.btnDSA.Location = new System.Drawing.Point(9, 398);
-            this.btnDSA.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDSA.Location = new System.Drawing.Point(11, 531);
+            this.btnDSA.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnDSA.Name = "btnDSA";
-            this.btnDSA.Size = new System.Drawing.Size(112, 45);
+            this.btnDSA.Size = new System.Drawing.Size(137, 60);
             this.btnDSA.TabIndex = 16;
             this.btnDSA.Text = "DSA签名";
             this.btnDSA.UseVisualStyleBackColor = true;
@@ -268,10 +268,10 @@
             // 
             // btnRSA2
             // 
-            this.btnRSA2.Location = new System.Drawing.Point(130, 345);
-            this.btnRSA2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRSA2.Location = new System.Drawing.Point(159, 460);
+            this.btnRSA2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnRSA2.Name = "btnRSA2";
-            this.btnRSA2.Size = new System.Drawing.Size(112, 45);
+            this.btnRSA2.Size = new System.Drawing.Size(137, 60);
             this.btnRSA2.TabIndex = 15;
             this.btnRSA2.Text = "RSA解密";
             this.btnRSA2.UseVisualStyleBackColor = true;
@@ -279,10 +279,10 @@
             // 
             // btnRSA
             // 
-            this.btnRSA.Location = new System.Drawing.Point(9, 345);
-            this.btnRSA.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRSA.Location = new System.Drawing.Point(11, 460);
+            this.btnRSA.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnRSA.Name = "btnRSA";
-            this.btnRSA.Size = new System.Drawing.Size(112, 45);
+            this.btnRSA.Size = new System.Drawing.Size(137, 60);
             this.btnRSA.TabIndex = 14;
             this.btnRSA.Text = "RSA加密";
             this.btnRSA.UseVisualStyleBackColor = true;
@@ -290,10 +290,10 @@
             // 
             // btnCRC2
             // 
-            this.btnCRC2.Location = new System.Drawing.Point(130, 292);
-            this.btnCRC2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCRC2.Location = new System.Drawing.Point(159, 389);
+            this.btnCRC2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnCRC2.Name = "btnCRC2";
-            this.btnCRC2.Size = new System.Drawing.Size(112, 45);
+            this.btnCRC2.Size = new System.Drawing.Size(137, 60);
             this.btnCRC2.TabIndex = 7;
             this.btnCRC2.Text = "CRC_16";
             this.btnCRC2.UseVisualStyleBackColor = true;
@@ -301,10 +301,10 @@
             // 
             // btnCRC
             // 
-            this.btnCRC.Location = new System.Drawing.Point(9, 292);
-            this.btnCRC.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCRC.Location = new System.Drawing.Point(11, 389);
+            this.btnCRC.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnCRC.Name = "btnCRC";
-            this.btnCRC.Size = new System.Drawing.Size(112, 45);
+            this.btnCRC.Size = new System.Drawing.Size(137, 60);
             this.btnCRC.TabIndex = 6;
             this.btnCRC.Text = "CRC_32";
             this.btnCRC.UseVisualStyleBackColor = true;
@@ -312,10 +312,10 @@
             // 
             // btnMD52
             // 
-            this.btnMD52.Location = new System.Drawing.Point(130, 135);
-            this.btnMD52.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMD52.Location = new System.Drawing.Point(159, 180);
+            this.btnMD52.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnMD52.Name = "btnMD52";
-            this.btnMD52.Size = new System.Drawing.Size(112, 45);
+            this.btnMD52.Size = new System.Drawing.Size(137, 60);
             this.btnMD52.TabIndex = 5;
             this.btnMD52.Text = "MD5_16";
             this.btnMD52.UseVisualStyleBackColor = true;
@@ -323,10 +323,10 @@
             // 
             // btnMD5
             // 
-            this.btnMD5.Location = new System.Drawing.Point(9, 135);
-            this.btnMD5.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMD5.Location = new System.Drawing.Point(11, 180);
+            this.btnMD5.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnMD5.Name = "btnMD5";
-            this.btnMD5.Size = new System.Drawing.Size(112, 45);
+            this.btnMD5.Size = new System.Drawing.Size(137, 60);
             this.btnMD5.TabIndex = 4;
             this.btnMD5.Text = "MD5_32";
             this.btnMD5.UseVisualStyleBackColor = true;
@@ -334,10 +334,10 @@
             // 
             // btnB642
             // 
-            this.btnB642.Location = new System.Drawing.Point(130, 82);
-            this.btnB642.Margin = new System.Windows.Forms.Padding(4);
+            this.btnB642.Location = new System.Drawing.Point(159, 109);
+            this.btnB642.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnB642.Name = "btnB642";
-            this.btnB642.Size = new System.Drawing.Size(112, 45);
+            this.btnB642.Size = new System.Drawing.Size(137, 60);
             this.btnB642.TabIndex = 3;
             this.btnB642.Text = "Base64解码";
             this.btnB642.UseVisualStyleBackColor = true;
@@ -345,10 +345,10 @@
             // 
             // btnB64
             // 
-            this.btnB64.Location = new System.Drawing.Point(9, 82);
-            this.btnB64.Margin = new System.Windows.Forms.Padding(4);
+            this.btnB64.Location = new System.Drawing.Point(11, 109);
+            this.btnB64.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnB64.Name = "btnB64";
-            this.btnB64.Size = new System.Drawing.Size(112, 45);
+            this.btnB64.Size = new System.Drawing.Size(137, 60);
             this.btnB64.TabIndex = 2;
             this.btnB64.Text = "Base64编码";
             this.btnB64.UseVisualStyleBackColor = true;
@@ -356,10 +356,10 @@
             // 
             // btnHex2
             // 
-            this.btnHex2.Location = new System.Drawing.Point(130, 30);
-            this.btnHex2.Margin = new System.Windows.Forms.Padding(4);
+            this.btnHex2.Location = new System.Drawing.Point(159, 40);
+            this.btnHex2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnHex2.Name = "btnHex2";
-            this.btnHex2.Size = new System.Drawing.Size(112, 45);
+            this.btnHex2.Size = new System.Drawing.Size(137, 60);
             this.btnHex2.TabIndex = 1;
             this.btnHex2.Text = "HEX解码";
             this.btnHex2.UseVisualStyleBackColor = true;
@@ -367,10 +367,10 @@
             // 
             // btnHex
             // 
-            this.btnHex.Location = new System.Drawing.Point(9, 30);
-            this.btnHex.Margin = new System.Windows.Forms.Padding(4);
+            this.btnHex.Location = new System.Drawing.Point(11, 40);
+            this.btnHex.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnHex.Name = "btnHex";
-            this.btnHex.Size = new System.Drawing.Size(112, 45);
+            this.btnHex.Size = new System.Drawing.Size(137, 60);
             this.btnHex.TabIndex = 0;
             this.btnHex.Text = "HEX编码";
             this.btnHex.UseVisualStyleBackColor = true;
@@ -385,11 +385,11 @@
             this.gbSource.Controls.Add(this.rbHex);
             this.gbSource.Controls.Add(this.rbString);
             this.gbSource.Controls.Add(this.rtSource);
-            this.gbSource.Location = new System.Drawing.Point(285, 18);
-            this.gbSource.Margin = new System.Windows.Forms.Padding(4);
+            this.gbSource.Location = new System.Drawing.Point(348, 24);
+            this.gbSource.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.gbSource.Name = "gbSource";
-            this.gbSource.Padding = new System.Windows.Forms.Padding(4);
-            this.gbSource.Size = new System.Drawing.Size(1006, 375);
+            this.gbSource.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gbSource.Size = new System.Drawing.Size(1230, 500);
             this.gbSource.TabIndex = 3;
             this.gbSource.TabStop = false;
             this.gbSource.Text = "原文";
@@ -397,10 +397,10 @@
             // btnExchange
             // 
             this.btnExchange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExchange.Location = new System.Drawing.Point(894, 13);
-            this.btnExchange.Margin = new System.Windows.Forms.Padding(4);
+            this.btnExchange.Location = new System.Drawing.Point(1093, 17);
+            this.btnExchange.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnExchange.Name = "btnExchange";
-            this.btnExchange.Size = new System.Drawing.Size(104, 51);
+            this.btnExchange.Size = new System.Drawing.Size(127, 68);
             this.btnExchange.TabIndex = 6;
             this.btnExchange.Text = "上下互换";
             this.btnExchange.UseVisualStyleBackColor = true;
@@ -409,10 +409,10 @@
             // rbBase64
             // 
             this.rbBase64.AutoSize = true;
-            this.rbBase64.Location = new System.Drawing.Point(299, 28);
-            this.rbBase64.Margin = new System.Windows.Forms.Padding(2);
+            this.rbBase64.Location = new System.Drawing.Point(365, 37);
+            this.rbBase64.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rbBase64.Name = "rbBase64";
-            this.rbBase64.Size = new System.Drawing.Size(123, 22);
+            this.rbBase64.Size = new System.Drawing.Size(137, 28);
             this.rbBase64.TabIndex = 5;
             this.rbBase64.Text = "BASE64编码";
             this.rbBase64.UseVisualStyleBackColor = true;
@@ -420,10 +420,10 @@
             // rbHex
             // 
             this.rbHex.AutoSize = true;
-            this.rbHex.Location = new System.Drawing.Point(154, 28);
-            this.rbHex.Margin = new System.Windows.Forms.Padding(2);
+            this.rbHex.Location = new System.Drawing.Point(188, 37);
+            this.rbHex.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rbHex.Name = "rbHex";
-            this.rbHex.Size = new System.Drawing.Size(96, 22);
+            this.rbHex.Size = new System.Drawing.Size(107, 28);
             this.rbHex.TabIndex = 4;
             this.rbHex.Text = "HEX编码";
             this.rbHex.UseVisualStyleBackColor = true;
@@ -432,10 +432,10 @@
             // 
             this.rbString.AutoSize = true;
             this.rbString.Checked = true;
-            this.rbString.Location = new System.Drawing.Point(19, 28);
-            this.rbString.Margin = new System.Windows.Forms.Padding(2);
+            this.rbString.Location = new System.Drawing.Point(23, 37);
+            this.rbString.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rbString.Name = "rbString";
-            this.rbString.Size = new System.Drawing.Size(87, 22);
+            this.rbString.Size = new System.Drawing.Size(89, 28);
             this.rbString.TabIndex = 3;
             this.rbString.TabStop = true;
             this.rbString.Text = "字符串";
@@ -446,11 +446,11 @@
             this.rtSource.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtSource.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rtSource.Location = new System.Drawing.Point(4, 65);
-            this.rtSource.Margin = new System.Windows.Forms.Padding(4);
+            this.rtSource.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.rtSource.Location = new System.Drawing.Point(5, 87);
+            this.rtSource.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.rtSource.Name = "rtSource";
-            this.rtSource.Size = new System.Drawing.Size(998, 306);
+            this.rtSource.Size = new System.Drawing.Size(1219, 407);
             this.rtSource.TabIndex = 2;
             this.rtSource.Text = "学无先后达者为师";
             this.rtSource.TextChanged += new System.EventHandler(this.rtSource_TextChanged);
@@ -464,11 +464,11 @@
             this.gbResult.Controls.Add(this.cbHex);
             this.gbResult.Controls.Add(this.cbString);
             this.gbResult.Controls.Add(this.rtResult);
-            this.gbResult.Location = new System.Drawing.Point(285, 552);
-            this.gbResult.Margin = new System.Windows.Forms.Padding(4);
+            this.gbResult.Location = new System.Drawing.Point(348, 736);
+            this.gbResult.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.gbResult.Name = "gbResult";
-            this.gbResult.Padding = new System.Windows.Forms.Padding(4);
-            this.gbResult.Size = new System.Drawing.Size(1006, 375);
+            this.gbResult.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gbResult.Size = new System.Drawing.Size(1230, 500);
             this.gbResult.TabIndex = 4;
             this.gbResult.TabStop = false;
             this.gbResult.Text = "结果";
@@ -478,10 +478,10 @@
             this.cbBase64.AutoSize = true;
             this.cbBase64.Checked = true;
             this.cbBase64.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbBase64.Location = new System.Drawing.Point(299, 28);
-            this.cbBase64.Margin = new System.Windows.Forms.Padding(2);
+            this.cbBase64.Location = new System.Drawing.Point(365, 37);
+            this.cbBase64.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbBase64.Name = "cbBase64";
-            this.cbBase64.Size = new System.Drawing.Size(124, 22);
+            this.cbBase64.Size = new System.Drawing.Size(138, 28);
             this.cbBase64.TabIndex = 8;
             this.cbBase64.Text = "BASE64编码";
             this.cbBase64.UseVisualStyleBackColor = true;
@@ -491,10 +491,10 @@
             this.cbHex.AutoSize = true;
             this.cbHex.Checked = true;
             this.cbHex.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbHex.Location = new System.Drawing.Point(154, 28);
-            this.cbHex.Margin = new System.Windows.Forms.Padding(2);
+            this.cbHex.Location = new System.Drawing.Point(188, 37);
+            this.cbHex.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbHex.Name = "cbHex";
-            this.cbHex.Size = new System.Drawing.Size(97, 22);
+            this.cbHex.Size = new System.Drawing.Size(108, 28);
             this.cbHex.TabIndex = 7;
             this.cbHex.Text = "HEX编码";
             this.cbHex.UseVisualStyleBackColor = true;
@@ -504,10 +504,10 @@
             this.cbString.AutoSize = true;
             this.cbString.Checked = true;
             this.cbString.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbString.Location = new System.Drawing.Point(19, 28);
-            this.cbString.Margin = new System.Windows.Forms.Padding(2);
+            this.cbString.Location = new System.Drawing.Point(23, 37);
+            this.cbString.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.cbString.Name = "cbString";
-            this.cbString.Size = new System.Drawing.Size(88, 22);
+            this.cbString.Size = new System.Drawing.Size(90, 28);
             this.cbString.TabIndex = 6;
             this.cbString.Text = "字符串";
             this.cbString.UseVisualStyleBackColor = true;
@@ -517,11 +517,11 @@
             this.rtResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtResult.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rtResult.Location = new System.Drawing.Point(4, 57);
-            this.rtResult.Margin = new System.Windows.Forms.Padding(4);
+            this.rtResult.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.rtResult.Location = new System.Drawing.Point(5, 76);
+            this.rtResult.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.rtResult.Name = "rtResult";
-            this.rtResult.Size = new System.Drawing.Size(998, 314);
+            this.rtResult.Size = new System.Drawing.Size(1219, 417);
             this.rtResult.TabIndex = 2;
             this.rtResult.Text = "";
             // 
@@ -533,22 +533,22 @@
             this.gbPass.Controls.Add(this.rbHex2);
             this.gbPass.Controls.Add(this.rbString2);
             this.gbPass.Controls.Add(this.rtPass);
-            this.gbPass.Location = new System.Drawing.Point(285, 398);
-            this.gbPass.Margin = new System.Windows.Forms.Padding(4);
+            this.gbPass.Location = new System.Drawing.Point(348, 531);
+            this.gbPass.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.gbPass.Name = "gbPass";
-            this.gbPass.Padding = new System.Windows.Forms.Padding(4);
-            this.gbPass.Size = new System.Drawing.Size(1006, 150);
+            this.gbPass.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gbPass.Size = new System.Drawing.Size(1230, 200);
             this.gbPass.TabIndex = 5;
             this.gbPass.TabStop = false;
-            this.gbPass.Text = "密码";
+            this.gbPass.Text = "密码 / 时间基准";
             // 
             // rbBase642
             // 
             this.rbBase642.AutoSize = true;
-            this.rbBase642.Location = new System.Drawing.Point(299, 30);
-            this.rbBase642.Margin = new System.Windows.Forms.Padding(2);
+            this.rbBase642.Location = new System.Drawing.Point(365, 40);
+            this.rbBase642.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rbBase642.Name = "rbBase642";
-            this.rbBase642.Size = new System.Drawing.Size(123, 22);
+            this.rbBase642.Size = new System.Drawing.Size(137, 28);
             this.rbBase642.TabIndex = 8;
             this.rbBase642.Text = "BASE64编码";
             this.rbBase642.UseVisualStyleBackColor = true;
@@ -556,10 +556,10 @@
             // rbHex2
             // 
             this.rbHex2.AutoSize = true;
-            this.rbHex2.Location = new System.Drawing.Point(155, 30);
-            this.rbHex2.Margin = new System.Windows.Forms.Padding(2);
+            this.rbHex2.Location = new System.Drawing.Point(189, 40);
+            this.rbHex2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rbHex2.Name = "rbHex2";
-            this.rbHex2.Size = new System.Drawing.Size(96, 22);
+            this.rbHex2.Size = new System.Drawing.Size(107, 28);
             this.rbHex2.TabIndex = 7;
             this.rbHex2.Text = "HEX编码";
             this.rbHex2.UseVisualStyleBackColor = true;
@@ -568,10 +568,10 @@
             // 
             this.rbString2.AutoSize = true;
             this.rbString2.Checked = true;
-            this.rbString2.Location = new System.Drawing.Point(19, 30);
-            this.rbString2.Margin = new System.Windows.Forms.Padding(2);
+            this.rbString2.Location = new System.Drawing.Point(23, 40);
+            this.rbString2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.rbString2.Name = "rbString2";
-            this.rbString2.Size = new System.Drawing.Size(87, 22);
+            this.rbString2.Size = new System.Drawing.Size(89, 28);
             this.rbString2.TabIndex = 6;
             this.rbString2.TabStop = true;
             this.rbString2.Text = "字符串";
@@ -582,24 +582,24 @@
             this.rtPass.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtPass.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rtPass.Location = new System.Drawing.Point(4, 64);
-            this.rtPass.Margin = new System.Windows.Forms.Padding(4);
+            this.rtPass.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.rtPass.Location = new System.Drawing.Point(5, 85);
+            this.rtPass.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.rtPass.Name = "rtPass";
-            this.rtPass.Size = new System.Drawing.Size(998, 82);
+            this.rtPass.Size = new System.Drawing.Size(1219, 108);
             this.rtPass.TabIndex = 2;
             this.rtPass.Text = "NewLife";
             // 
             // FrmSecurity
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1304, 944);
+            this.ClientSize = new System.Drawing.Size(1594, 1259);
             this.Controls.Add(this.gbPass);
             this.Controls.Add(this.gbResult);
             this.Controls.Add(this.gbSource);
             this.Controls.Add(this.gbFunc);
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.Name = "FrmSecurity";
             this.Text = "加密解密";
             this.Load += new System.EventHandler(this.FrmSecurity_Load);
