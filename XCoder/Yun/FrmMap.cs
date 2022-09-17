@@ -138,17 +138,17 @@ namespace XCoder.Yun
                     {
                         result = await im.GetGeocoderAsync(addr,city);
                     }
-                    else if (method.Name == nameof(im.GetGeocoderAsync) && mps.Length == 1)
+                    else if (method.Name == nameof(im.GetReverseGeocoderAsync) && mps.Length == 1)
                     {
-                        result = await im.GetGeocoderAsync(point);
+                        result = await im.GetReverseGeocoderAsync(point);
                     }
                     else if (method.Name == nameof(im.GetGeoAsync) && mps.Length == 3)
                     {
                         result = await im.GetGeoAsync(addr, city, cfg.FormatAddress);
                     }
-                    else if (method.Name == nameof(im.GetGeoAsync) && mps.Length == 1)
+                    else if (method.Name == nameof(im.GetReverseGeoAsync) && mps.Length == 1)
                     {
-                        result = await im.GetGeoAsync(point);
+                        result = await im.GetReverseGeoAsync(point);
                     }
                     else if (method.Name == nameof(im.GetDistanceAsync))
                     {
