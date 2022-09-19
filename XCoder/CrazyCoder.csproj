@@ -66,7 +66,7 @@
     <Content Include="数据库命名规范.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NewLife.Map" Version="2.1.2022.917-beta0733" />
+    <PackageReference Include="NewLife.Map" Version="2.1.2022.919-beta1129" />
     <PackageReference Include="NewLife.ModbusRTU" Version="1.2.2022.901" />
     <PackageReference Include="System.Speech" Version="6.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
@@ -84,7 +84,7 @@
       <Version>5.0.2022.901</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>2.3.2022.901</Version>
+      <Version>2.3.2022.917-beta1649</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
       <Version>11.3.2022.917-beta0640</Version>
