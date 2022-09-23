@@ -38,7 +38,7 @@ namespace XCom
 
             txtReceive.SetDefaultStyle(12);
             txtSend.SetDefaultStyle(12);
-            numMutilSend.SetDefaultStyle(12);
+            //numMutilSend.SetDefaultStyle(12);
 
             gbReceive.Tag = gbReceive.Text;
             gbSend.Tag = gbSend.Text;
