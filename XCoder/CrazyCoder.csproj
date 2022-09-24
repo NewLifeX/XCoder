@@ -66,13 +66,13 @@
     <Content Include="数据库命名规范.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NewLife.Map" Version="2.1.2022.919-beta1129" />
+    <PackageReference Include="NewLife.Map" Version="2.1.2022.920-beta0143" />
     <PackageReference Include="NewLife.ModbusRTU" Version="1.2.2022.901" />
     <PackageReference Include="System.Speech" Version="6.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>10.0.2022.916-beta0818</Version>
+      <Version>10.0.2022.923-beta0329</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
       <Version>1.1.2022.901</Version>
