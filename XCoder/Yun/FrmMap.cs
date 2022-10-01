@@ -110,6 +110,13 @@ public partial class FrmMap : Form, IXForm
         map.Log = XTrace.Log;
         map.CoordType = cfg.Coordtype;
 
+        if (map is BaiduMap bmap)
+            bmap.AppKey = "C73357a276668f8b0563d3f936475007";
+        else if (map is AMap amap)
+            amap.AppKey = "038a84bf20e8306fdd2203110739110c";
+        else if (map is WeMap wmap)
+            wmap.AppKey = "YGEBZ-BDCCX-AJG4X-ZUH6W-MESMV-P2BFF";
+
         // 准备参数
         var addr = txtAddress.Text;
         var city = txtCity.Text;
