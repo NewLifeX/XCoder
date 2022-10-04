@@ -164,9 +164,9 @@ public partial class FrmApiDiscover : Form, IXForm
 
         //public String Server { get; set; }
 
-        public DateTime Time { get; set; }
-
         public String RemoteIP { get; set; }
+
+        public DateTime Time { get; set; }
     }
     #endregion
 }
