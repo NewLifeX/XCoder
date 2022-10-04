@@ -63,10 +63,11 @@
             // 
             this.dgv.AllowUserToAddRows = false;
             this.dgv.AllowUserToDeleteRows = false;
+            this.dgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv.Location = new System.Drawing.Point(5, 29);
-            this.dgv.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgv.Margin = new System.Windows.Forms.Padding(4);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
             this.dgv.RowHeadersWidth = 51;
@@ -128,7 +129,7 @@
             this.chkUdp.Checked = true;
             this.chkUdp.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkUdp.Location = new System.Drawing.Point(541, 17);
-            this.chkUdp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkUdp.Margin = new System.Windows.Forms.Padding(4);
             this.chkUdp.Name = "chkUdp";
             this.chkUdp.Size = new System.Drawing.Size(146, 28);
             this.chkUdp.TabIndex = 20;
@@ -138,7 +139,7 @@
             // txtIP
             // 
             this.txtIP.Location = new System.Drawing.Point(90, 16);
-            this.txtIP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtIP.Margin = new System.Windows.Forms.Padding(4);
             this.txtIP.Name = "txtIP";
             this.txtIP.Size = new System.Drawing.Size(261, 30);
             this.txtIP.TabIndex = 18;
