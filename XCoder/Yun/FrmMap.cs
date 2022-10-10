@@ -145,9 +145,16 @@ public partial class FrmMap : Form, IXForm
                 {
                     result = await im.GetDistanceAsync(point, point2);
                 }
-                else if (map is BaiduMap bd && method.Name == nameof(bd.PlaceSearchAsync))
+                else if (map is BaiduMap bd)
                 {
-                    result = await bd.PlaceSearchAsync(addr, null, city, cfg.FormatAddress);
+                    if (method.Name == nameof(bd.PlaceSearchAsync))
+                    {
+                        result = await bd.PlaceSearchAsync(addr, null, city, cfg.FormatAddress);
+                    }
+                    else if (method.Name == nameof(bd.ConvertAsync))
+                    {
+                        result = await bd.ConvertAsync(new[] { point }, bd.CoordType, "bd09ll");
+                    }
                 }
                 else if (map is AMap am && method.Name == nameof(am.GetAreaAsync))
                 {
