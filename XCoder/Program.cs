@@ -118,7 +118,7 @@ static class Program
                     //StopWork("Upgrade");
 
                     // 重新拉起进程
-                    var star = "XCoder.exe";
+                    var star = "CrazyCoder.exe";
                     XTrace.WriteLine("强制升级，拉起进程 {0} -upgrade", star.GetFullPath());
                     Process.Start(star.GetFullPath(), "-upgrade");
 
