@@ -194,7 +194,7 @@ namespace XCoder.Tools
         private void btnHex2_Click(Object sender, EventArgs e)
         {
             var v = rtSource.Text;
-            rtResult.Text = v.ToHex().ToStr();
+            rtResult.Text = v?.Trim().ToHex().ToStr();
         }
 
         private void btnB64_Click(Object sender, EventArgs e)
@@ -211,12 +211,12 @@ namespace XCoder.Tools
             var vs = v.Split(".");
             if (vs.Length <= 1)
             {
-                var buf = v.ToBase64();
+                var buf = v.Trim().ToBase64();
                 SetResult(buf);
             }
             else
             {
-                SetResult(vs.Select(e2 => e2.ToBase64().ToStr()).ToArray());
+                SetResult(vs.Select(e2 => e2.Trim().ToBase64().ToStr()).ToArray());
             }
         }
 
