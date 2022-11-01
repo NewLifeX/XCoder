@@ -143,7 +143,8 @@ namespace XNet
             // 读取线圈
             if (code <= FunctionCodes.ReadDiscrete)
             {
-                var data = _modbus.Read(code, host, address, count);
+                var rs = _modbus.Read(code, host, address, count);
+                var data = rs?.ReadBytes(1);
                 if (data != null && data.Length > 0)
                 {
                     // 按照寄存器遍历，每个8个线圈占1个字节
@@ -177,7 +178,8 @@ namespace XNet
             // 读取寄存器
             else if (code <= FunctionCodes.ReadInput)
             {
-                var data = _modbus.Read(code, host, address, count);
+                var rs = _modbus.Read(code, host, address, count);
+                var data = rs?.ReadBytes(1);
                 if (data != null && data.Length > 0)
                 {
                     // 按照寄存器遍历，每个寄存器2字节

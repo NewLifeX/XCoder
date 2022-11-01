@@ -265,11 +265,12 @@ namespace XNet
             var session = sender as NetSession;
             if (session == null) return;
 
-            var msg = ModbusTcpMessage.Read(e.Packet);
+            var msg = ModbusIpMessage.Read(e.Packet);
             if (msg == null) return;
 
             session.Log?.Info("<= {0}", msg);
 
+            var addrMsg = msg.GetAddress();
             var rs = msg.CreateReply();
             switch (msg.Code)
             {
@@ -278,15 +279,16 @@ namespace XNet
                     if (_coils != null)
                     {
                         // 连续地址，其实地址有可能不是8的倍数
-                        var regCount = msg.Payload.ReadBytes(0, 2).ToUInt16(0, false);
-                        var addr = msg.Address - _coils[0].Address;
+                        var regCount = msg.Payload.ReadBytes(2, 2).ToUInt16(0, false);
+                        var addr = addrMsg - _coils[0].Address;
                         if (addr >= 0 && addr + regCount <= _coils.Count)
                         {
                             // 取出该段存储单元
                             var cs = _coils.Skip(addr).Take(regCount).ToList();
                             var count = (Int32)Math.Ceiling(regCount / 8.0);
                             // 遍历存储单元，把数据聚合成为字节数组返回
-                            var bits = new Byte[count];
+                            var bits = new Byte[1 + count];
+                            bits[0] = (Byte)count;
                             for (var i = 0; i < count; i++)
                             {
                                 var b = 0;
@@ -298,7 +300,7 @@ namespace XNet
                                     if (cs[i * 8 + j].Value > 0)
                                         b |= 1 << j;
                                 }
-                                bits[i] = (Byte)b;
+                                bits[1 + i] = (Byte)b;
                             }
 
                             rs.Payload = bits;
@@ -310,11 +312,13 @@ namespace XNet
                     if (_regs != null)
                     {
                         // 连续地址
-                        var regCount = msg.Payload.ReadBytes(0, 2).ToUInt16(0, false);
-                        var addr = msg.Address - _regs[0].Address;
+                        var regCount = msg.Payload.ReadBytes(2, 2).ToUInt16(0, false);
+                        var addr = addrMsg - _regs[0].Address;
                         if (addr >= 0 && addr + regCount <= _regs.Count)
                         {
-                            rs.Payload = _regs.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
+                            var buf = _regs.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
+                            rs.Payload = new Byte[] { (Byte)buf.Length };
+                            rs.Payload.Append(buf);
                         }
                     }
                     break;
@@ -327,8 +331,8 @@ namespace XNet
                         var regCount = 0;
                         for (var i = 0; i < 256 && i + 1 < msg.Payload.Total; i += 2)
                         {
-                            var value = msg.Payload.ReadBytes(i, 2).ToUInt16(0, false);
-                            var addr = msg.Address - _regs[0].Address;
+                            var value = msg.Payload.ReadBytes(2 + i, 2).ToUInt16(0, false);
+                            var addr = addrMsg - _regs[0].Address;
                             if (addr >= 0 && addr < _regs.Count)
                             {
                                 var ru = _regs[addr];
@@ -338,7 +342,7 @@ namespace XNet
                         }
                         Invoke(() => { dgv.Refresh(); });
                         {
-                            var addr = msg.Address - _regs[0].Address;
+                            var addr = addrMsg - _regs[0].Address;
                             rs.Payload = _regs.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
                         }
                     }
