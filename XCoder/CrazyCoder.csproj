@@ -66,28 +66,28 @@
     <Content Include="数据库命名规范.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NewLife.Map" Version="2.2.2022.1101" />
+    <PackageReference Include="NewLife.Map" Version="2.2.2022.1126-beta0214" />
     <PackageReference Include="NewLife.ModbusRTU" Version="1.5.2022.1110-beta0043" />
     <PackageReference Include="System.Speech" Version="7.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>10.0.2022.1110-beta1402</Version>
+      <Version>10.0.2022.1126-beta0837</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
-      <Version>1.1.2022.1101</Version>
+      <Version>1.1.2022.1126-beta0203</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
-      <Version>4.2.2022.1001-beta1553</Version>
+      <Version>4.2.2022.1126-beta0203</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
       <Version>5.0.2022.1101</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>2.4.2022.1112-beta0002</Version>
+      <Version>2.5.2022.1126-beta0200</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>11.3.2022.1112-beta0001</Version>
+      <Version>11.4.2022.1119-beta0026</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2020.0.2</Version>
