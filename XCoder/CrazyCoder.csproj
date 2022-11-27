@@ -75,7 +75,7 @@
       <Version>10.0.2022.1126-beta0837</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
-      <Version>1.1.2022.1126-beta0203</Version>
+      <Version>1.1.2022.1126-beta1201</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
       <Version>4.2.2022.1126-beta0203</Version>
