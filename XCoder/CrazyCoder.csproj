@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <AssemblyTitle>新生命码神工具</AssemblyTitle>
     <Description>众多开发者工具，网络、串口、加解密、正则表达式、Modbus</Description>
