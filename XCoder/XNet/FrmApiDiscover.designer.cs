@@ -77,6 +77,7 @@
             // 
             // btnDiscover
             // 
+            this.btnDiscover.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDiscover.Location = new System.Drawing.Point(1076, 18);
             this.btnDiscover.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.btnDiscover.Name = "btnDiscover";
@@ -120,7 +121,7 @@
             this.pnlSetting.Location = new System.Drawing.Point(17, 16);
             this.pnlSetting.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.pnlSetting.Name = "pnlSetting";
-            this.pnlSetting.Size = new System.Drawing.Size(1049, 62);
+            this.pnlSetting.Size = new System.Drawing.Size(713, 62);
             this.pnlSetting.TabIndex = 13;
             // 
             // chkUdp
