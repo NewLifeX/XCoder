@@ -67,24 +67,24 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NewLife.Map" Version="2.2.2022.1201" />
-    <PackageReference Include="NewLife.ModbusRTU" Version="1.6.2022.1201" />
+    <PackageReference Include="NewLife.ModbusRTU" Version="1.6.2022.1209-beta0513" />
     <PackageReference Include="System.Speech" Version="7.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>10.1.2022.1201</Version>
+      <Version>10.1.2022.1210-beta0436</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
       <Version>1.2.2022.1201</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
-      <Version>4.2.2022.1126-beta0203</Version>
+      <Version>4.2.2022.1202</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
       <Version>5.0.2022.1201</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>2.5.2022.1201</Version>
+      <Version>2.5.2022.1206-beta0251</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
       <Version>11.5.2022.1201</Version>

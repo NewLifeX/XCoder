@@ -155,6 +155,10 @@ public partial class FrmMap : Form, IXForm
                     {
                         result = await bd.ConvertAsync(new[] { point }, bd.CoordType, "bd09ll");
                     }
+                    else if (method.Name == nameof(bd.IpLocationAsync))
+                    {
+                        result = await bd.IpLocationAsync(addr);
+                    }
                 }
                 else if (map is AMap am && method.Name == nameof(am.GetAreaAsync))
                 {
