@@ -3,6 +3,7 @@ using System.Reflection;
 using NewLife;
 using NewLife.Data;
 using NewLife.Log;
+using NewLife.Model;
 using NewLife.Reflection;
 using NewLife.Serialization;
 using NewLife.Yun;
@@ -15,6 +16,7 @@ public partial class FrmMap : Form, IXForm
 {
     /// <summary>业务日志输出</summary>
     ILog BizLog;
+    Dictionary<String, Map> _cache = new();
 
     #region 窗体
     public FrmMap()
@@ -105,10 +107,19 @@ public partial class FrmMap : Form, IXForm
 
         SaveConfig();
         var cfg = Setting;
+        var provider = ObjectContainer.Provider;
 
-        var map = type.CreateInstance() as NewLife.Yun.Map;
-        map.Log = XTrace.Log;
-        map.CoordType = cfg.Coordtype;
+        if (!_cache.TryGetValue(type.Name, out var map))
+        {
+            //var map = Map.Create(type.Name) as Map;
+            map = type.GetConstructor(new[] { typeof(IServiceProvider) }) != null ?
+               type.CreateInstance(provider) as Map :
+               type.CreateInstance() as Map;
+            map.Log = XTrace.Log;
+            map.CoordType = cfg.Coordtype;
+
+            _cache.Add(type.Name, map);
+        }
 
         if (map is BaiduMap bmap)
             bmap.AppKey = "C73357a276668f8b0563d3f936475007";
@@ -169,6 +180,7 @@ public partial class FrmMap : Form, IXForm
                     var ps = new Dictionary<String, Object>();
                     if (mps.Any(k => k.Name.EqualIgnoreCase("address"))) ps["address"] = addr;
                     if (mps.Any(k => k.Name.EqualIgnoreCase("city"))) ps["city"] = cfg.City;
+                    if (mps.Any(k => k.Name.EqualIgnoreCase("point"))) ps["point"] = point;
 
                     var task = map.InvokeWithParams(method, ps) as Task;
                     await task;

@@ -2,6 +2,7 @@
 using System.Text;
 using NewLife;
 using NewLife.Log;
+using NewLife.Model;
 using NewLife.Threading;
 using Stardust;
 
@@ -45,6 +46,8 @@ static class Program
         if (server.IsNullOrEmpty()) return;
 
         XTrace.WriteLine("初始化服务端地址：{0}", server);
+
+        var star = new StarFactory();
 
         var client = new StarClient(server)
         {
