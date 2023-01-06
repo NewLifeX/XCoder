@@ -5,6 +5,7 @@ using NewLife.Log;
 using NewLife.Model;
 using NewLife.Threading;
 using Stardust;
+using Stardust.Services;
 
 namespace XCoder;
 
@@ -101,35 +102,69 @@ static class Program
         var ur = await client.Upgrade(channel);
         if (ur != null && ur.Version != _lastVersion)
         {
-            ug.Url = ur.Source;
-            await ug.Download();
-
-            // 检查文件完整性
-            if (ur.FileHash.IsNullOrEmpty() || ug.CheckFileHash(ur.FileHash))
+            client.WriteInfoEvent("Upgrade", $"准备从[{_lastVersion}]更新到[{ur.Version}]，开始下载 {ur.Source}");
+            try
             {
-                // 执行更新，解压缩覆盖文件
-                var rs = ug.Update();
-                if (rs && !ur.Executor.IsNullOrEmpty()) ug.Run(ur.Executor);
-                _lastVersion = ur.Version;
+                ug.Url = client.BuildUrl(ur.Source);
+                await ug.Download();
 
-                // 去除多余入口文件
-                ug.Trim("StarAgent");
-
-                // 强制更新时，马上重启
-                if (rs && ur.Force)
+                // 检查文件完整性
+                var checkHash = ug.CheckFileHash(ur.FileHash);
+                if (!ur.FileHash.IsNullOrEmpty() && !checkHash)
                 {
-                    //StopWork("Upgrade");
-
-                    // 重新拉起进程
-                    var star = "CrazyCoder.exe";
-                    XTrace.WriteLine("强制升级，拉起进程 {0} -upgrade", star.GetFullPath());
-                    Process.Start(star.GetFullPath(), "-upgrade");
-
-                    //var p = Process.GetCurrentProcess();
-                    //p.Close();
-                    //p.Kill();
-                    Application.Exit();
+                    client.WriteInfoEvent("Upgrade", "下载完成，哈希校验失败");
                 }
+                else
+                {
+                    client.WriteInfoEvent("Upgrade", "下载完成，准备解压文件");
+                    if (!ug.Extract())
+                    {
+                        client.WriteInfoEvent("Upgrade", "解压失败");
+                    }
+                    else
+                    {
+                        if (!ur.Preinstall.IsNullOrEmpty())
+                        {
+                            client.WriteInfoEvent("Upgrade", "执行预安装脚本");
+
+                            ug.Run(ur.Preinstall);
+                        }
+
+                        client.WriteInfoEvent("Upgrade", "解压完成，准备覆盖文件");
+
+                        // 执行更新，解压缩覆盖文件
+                        var rs = ug.Update();
+                        if (rs && !ur.Executor.IsNullOrEmpty()) ug.Run(ur.Executor);
+                        _lastVersion = ur.Version;
+
+                        // 强制更新时，马上重启
+                        if (rs && ur.Force)
+                        {
+                            // 重新拉起进程
+                            var star = "CrazyCoder.exe";
+                            XTrace.WriteLine("强制升级，拉起进程 {0} -upgrade", star.GetFullPath());
+                            var p = Process.Start(star.GetFullPath(), "-upgrade");
+
+                            if (p.WaitForExit(5_000) && p.ExitCode != 0)
+                            {
+                                client.WriteInfoEvent("Upgrade", "强制更新完成，但拉起新进程失败");
+                            }
+                            else
+                            {
+                                client.WriteInfoEvent("Upgrade", "强制更新完成，新进程已拉起，准备退出当前进程");
+
+                                ug.KillSelf();
+                            }
+
+                            Application.Exit();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                XTrace.WriteException(ex);
+                client.WriteErrorEvent("Upgrade", ex.ToString());
             }
         }
     }

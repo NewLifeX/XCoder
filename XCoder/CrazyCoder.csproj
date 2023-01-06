@@ -66,13 +66,13 @@
     <Content Include="数据库命名规范.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NewLife.Map" Version="2.3.2022.1213-beta1540" />
+    <PackageReference Include="NewLife.Map" Version="2.3.2023.101" />
     <PackageReference Include="NewLife.ModbusRTU" Version="1.6.2022.1213-beta0753" />
     <PackageReference Include="System.Speech" Version="7.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>10.1.2022.1213-beta0750</Version>
+      <Version>10.1.2023.101</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
       <Version>1.2.2022.1201</Version>
@@ -81,13 +81,13 @@
       <Version>4.2.2022.1202</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
-      <Version>5.0.2022.1201</Version>
+      <Version>5.1.2023.101</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>2.5.2022.1213-beta0750</Version>
+      <Version>2.6.2023.106-beta1502</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>11.5.2022.1212-beta1503</Version>
+      <Version>11.5.2023.101</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2020.0.2</Version>
