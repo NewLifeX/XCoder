@@ -188,7 +188,7 @@ namespace XCoder
 
                 var root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 up.Log = XTrace.Log;
-                up.Name = "XCoder";
+                up.Name = "CrazyCoder";
                 up.Server = cfg.UpdateServer;
                 up.UpdatePath = root.CombinePath(up.UpdatePath);
                 if (up.Check())
