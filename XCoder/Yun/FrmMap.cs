@@ -116,7 +116,7 @@ public partial class FrmMap : Form, IXForm
                type.CreateInstance(provider) as Map :
                type.CreateInstance() as Map;
             map.Log = XTrace.Log;
-            map.CoordType = cfg.Coordtype;
+            //map.CoordType = cfg.Coordtype;
 
             _cache.Add(type.Name, map);
         }
@@ -146,29 +146,29 @@ public partial class FrmMap : Form, IXForm
             {
                 if (method.Name == nameof(im.GetGeoAsync))
                 {
-                    result = await im.GetGeoAsync(addr, city, cfg.FormatAddress);
+                    result = await im.GetGeoAsync(addr, city, cfg.Coordtype, cfg.FormatAddress);
                 }
                 else if (method.Name == nameof(im.GetReverseGeoAsync))
                 {
-                    result = await im.GetReverseGeoAsync(point);
+                    result = await im.GetReverseGeoAsync(point, cfg.Coordtype);
                 }
                 else if (method.Name == nameof(im.GetDistanceAsync))
                 {
-                    result = await im.GetDistanceAsync(point, point2);
+                    result = await im.GetDistanceAsync(point, point2, cfg.Coordtype);
                 }
                 else if (map is BaiduMap bd)
                 {
                     if (method.Name == nameof(bd.PlaceSearchAsync))
                     {
-                        result = await bd.PlaceSearchAsync(addr, null, city, cfg.FormatAddress);
+                        result = await bd.PlaceSearchAsync(addr, null, city, cfg.Coordtype, cfg.FormatAddress);
                     }
                     else if (method.Name == nameof(bd.ConvertAsync))
                     {
-                        result = await bd.ConvertAsync(new[] { point }, bd.CoordType, "bd09ll");
+                        result = await bd.ConvertAsync(new[] { point }, cfg.Coordtype, "bd09ll");
                     }
                     else if (method.Name == nameof(bd.IpLocationAsync))
                     {
-                        result = await bd.IpLocationAsync(addr);
+                        result = await bd.IpLocationAsync(addr, cfg.Coordtype);
                     }
                 }
                 else if (map is AMap am && method.Name == nameof(am.GetAreaAsync))
