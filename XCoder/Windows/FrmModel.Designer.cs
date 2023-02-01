@@ -55,17 +55,20 @@
             this.groupBox1.Controls.Add(this.btnAddTable);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.cbTables);
-            this.groupBox1.Location = new System.Drawing.Point(6, 2);
+            this.groupBox1.Location = new System.Drawing.Point(9, 3);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(536, 44);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(804, 73);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
             // btnAddIndex
             // 
-            this.btnAddIndex.Location = new System.Drawing.Point(387, 11);
+            this.btnAddIndex.Location = new System.Drawing.Point(580, 18);
+            this.btnAddIndex.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddIndex.Name = "btnAddIndex";
-            this.btnAddIndex.Size = new System.Drawing.Size(68, 27);
+            this.btnAddIndex.Size = new System.Drawing.Size(102, 45);
             this.btnAddIndex.TabIndex = 4;
             this.btnAddIndex.Text = "添加索引";
             this.btnAddIndex.UseVisualStyleBackColor = true;
@@ -73,9 +76,10 @@
             // 
             // btnAddColumn
             // 
-            this.btnAddColumn.Location = new System.Drawing.Point(313, 11);
+            this.btnAddColumn.Location = new System.Drawing.Point(470, 18);
+            this.btnAddColumn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddColumn.Name = "btnAddColumn";
-            this.btnAddColumn.Size = new System.Drawing.Size(68, 27);
+            this.btnAddColumn.Size = new System.Drawing.Size(102, 45);
             this.btnAddColumn.TabIndex = 3;
             this.btnAddColumn.Text = "添加字段";
             this.btnAddColumn.UseVisualStyleBackColor = true;
@@ -83,9 +87,10 @@
             // 
             // btnAddTable
             // 
-            this.btnAddTable.Location = new System.Drawing.Point(239, 11);
+            this.btnAddTable.Location = new System.Drawing.Point(358, 18);
+            this.btnAddTable.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddTable.Name = "btnAddTable";
-            this.btnAddTable.Size = new System.Drawing.Size(68, 27);
+            this.btnAddTable.Size = new System.Drawing.Size(102, 45);
             this.btnAddTable.TabIndex = 2;
             this.btnAddTable.Text = "添加表";
             this.btnAddTable.UseVisualStyleBackColor = true;
@@ -94,9 +99,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 18);
+            this.label1.Location = new System.Drawing.Point(15, 30);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.Size = new System.Drawing.Size(69, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "数据表：";
             // 
@@ -104,9 +110,10 @@
             // 
             this.cbTables.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTables.FormattingEnabled = true;
-            this.cbTables.Location = new System.Drawing.Point(65, 14);
+            this.cbTables.Location = new System.Drawing.Point(98, 23);
+            this.cbTables.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbTables.Name = "cbTables";
-            this.cbTables.Size = new System.Drawing.Size(168, 20);
+            this.cbTables.Size = new System.Drawing.Size(250, 28);
             this.cbTables.TabIndex = 0;
             this.cbTables.SelectedIndexChanged += new System.EventHandler(this.cbTables_SelectedIndexChanged);
             // 
@@ -116,10 +123,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gv.Location = new System.Drawing.Point(194, 52);
+            this.gv.Location = new System.Drawing.Point(291, 87);
+            this.gv.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gv.Name = "gv";
+            this.gv.RowHeadersWidth = 51;
             this.gv.RowTemplate.Height = 23;
-            this.gv.Size = new System.Drawing.Size(629, 286);
+            this.gv.Size = new System.Drawing.Size(944, 477);
             this.gv.TabIndex = 3;
             this.gv.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gv_RowEnter);
             // 
@@ -127,20 +136,22 @@
             // 
             this.pgTable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.pgTable.Location = new System.Drawing.Point(6, 53);
+            this.pgTable.Location = new System.Drawing.Point(9, 88);
+            this.pgTable.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pgTable.Name = "pgTable";
             this.pgTable.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgTable.Size = new System.Drawing.Size(182, 412);
+            this.pgTable.Size = new System.Drawing.Size(273, 687);
             this.pgTable.TabIndex = 4;
             // 
             // pgColumn
             // 
             this.pgColumn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pgColumn.Location = new System.Drawing.Point(830, 53);
+            this.pgColumn.Location = new System.Drawing.Point(1245, 88);
+            this.pgColumn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pgColumn.Name = "pgColumn";
             this.pgColumn.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgColumn.Size = new System.Drawing.Size(182, 412);
+            this.pgColumn.Size = new System.Drawing.Size(273, 687);
             this.pgColumn.TabIndex = 5;
             // 
             // dgvIndex
@@ -148,18 +159,21 @@
             this.dgvIndex.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvIndex.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvIndex.Location = new System.Drawing.Point(194, 344);
+            this.dgvIndex.Location = new System.Drawing.Point(291, 573);
+            this.dgvIndex.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dgvIndex.Name = "dgvIndex";
+            this.dgvIndex.RowHeadersWidth = 51;
             this.dgvIndex.RowTemplate.Height = 23;
-            this.dgvIndex.Size = new System.Drawing.Size(629, 112);
+            this.dgvIndex.Size = new System.Drawing.Size(944, 187);
             this.dgvIndex.TabIndex = 6;
             this.dgvIndex.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gv_RowEnter);
             // 
             // btnCreateTableSQL
             // 
-            this.btnCreateTableSQL.Location = new System.Drawing.Point(207, 11);
+            this.btnCreateTableSQL.Location = new System.Drawing.Point(310, 18);
+            this.btnCreateTableSQL.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCreateTableSQL.Name = "btnCreateTableSQL";
-            this.btnCreateTableSQL.Size = new System.Drawing.Size(68, 27);
+            this.btnCreateTableSQL.Size = new System.Drawing.Size(102, 45);
             this.btnCreateTableSQL.TabIndex = 6;
             this.btnCreateTableSQL.Text = "建表语句";
             this.btnCreateTableSQL.UseVisualStyleBackColor = true;
@@ -168,9 +182,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 18);
+            this.label2.Location = new System.Drawing.Point(14, 30);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.Size = new System.Drawing.Size(54, 20);
             this.label2.TabIndex = 8;
             this.label2.Text = "连接：";
             // 
@@ -178,9 +193,10 @@
             // 
             this.cbConn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbConn.FormattingEnabled = true;
-            this.cbConn.Location = new System.Drawing.Point(44, 14);
+            this.cbConn.Location = new System.Drawing.Point(66, 23);
+            this.cbConn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbConn.Name = "cbConn";
-            this.cbConn.Size = new System.Drawing.Size(143, 20);
+            this.cbConn.Size = new System.Drawing.Size(212, 28);
             this.cbConn.TabIndex = 7;
             // 
             // groupBox2
@@ -190,17 +206,20 @@
             this.groupBox2.Controls.Add(this.btnCreateDbSQL);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.btnCreateTableSQL);
-            this.groupBox2.Location = new System.Drawing.Point(548, 2);
+            this.groupBox2.Location = new System.Drawing.Point(822, 3);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(464, 44);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Size = new System.Drawing.Size(696, 73);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             // 
             // btnCreateDb
             // 
-            this.btnCreateDb.Location = new System.Drawing.Point(375, 11);
+            this.btnCreateDb.Location = new System.Drawing.Point(562, 18);
+            this.btnCreateDb.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCreateDb.Name = "btnCreateDb";
-            this.btnCreateDb.Size = new System.Drawing.Size(68, 27);
+            this.btnCreateDb.Size = new System.Drawing.Size(102, 45);
             this.btnCreateDb.TabIndex = 10;
             this.btnCreateDb.Text = "建数据库";
             this.btnCreateDb.UseVisualStyleBackColor = true;
@@ -208,9 +227,10 @@
             // 
             // btnCreateDbSQL
             // 
-            this.btnCreateDbSQL.Location = new System.Drawing.Point(281, 11);
+            this.btnCreateDbSQL.Location = new System.Drawing.Point(422, 18);
+            this.btnCreateDbSQL.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCreateDbSQL.Name = "btnCreateDbSQL";
-            this.btnCreateDbSQL.Size = new System.Drawing.Size(88, 27);
+            this.btnCreateDbSQL.Size = new System.Drawing.Size(132, 45);
             this.btnCreateDbSQL.TabIndex = 9;
             this.btnCreateDbSQL.Text = "建所有表语句";
             this.btnCreateDbSQL.UseVisualStyleBackColor = true;
@@ -218,15 +238,15 @@
             // 
             // FrmModel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1020, 468);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(1530, 780);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dgvIndex);
             this.Controls.Add(this.pgColumn);
             this.Controls.Add(this.pgTable);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gv);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FrmModel";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "数据架构管理";

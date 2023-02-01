@@ -43,17 +43,20 @@
             this.groupBox1.Controls.Add(this.btnExecute);
             this.groupBox1.Controls.Add(this.btnQuery);
             this.groupBox1.Controls.Add(this.txtSQL);
-            this.groupBox1.Location = new System.Drawing.Point(6, 2);
+            this.groupBox1.Location = new System.Drawing.Point(9, 3);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(770, 129);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(1155, 215);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
             // btnExecute
             // 
-            this.btnExecute.Location = new System.Drawing.Point(679, 75);
+            this.btnExecute.Location = new System.Drawing.Point(1018, 125);
+            this.btnExecute.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnExecute.Name = "btnExecute";
-            this.btnExecute.Size = new System.Drawing.Size(78, 38);
+            this.btnExecute.Size = new System.Drawing.Size(117, 63);
             this.btnExecute.TabIndex = 5;
             this.btnExecute.Text = "执行";
             this.btnExecute.UseVisualStyleBackColor = true;
@@ -61,9 +64,10 @@
             // 
             // btnQuery
             // 
-            this.btnQuery.Location = new System.Drawing.Point(679, 20);
+            this.btnQuery.Location = new System.Drawing.Point(1018, 33);
+            this.btnQuery.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnQuery.Name = "btnQuery";
-            this.btnQuery.Size = new System.Drawing.Size(78, 38);
+            this.btnQuery.Size = new System.Drawing.Size(117, 63);
             this.btnQuery.TabIndex = 4;
             this.btnQuery.Text = "查询";
             this.btnQuery.UseVisualStyleBackColor = true;
@@ -71,10 +75,11 @@
             // 
             // txtSQL
             // 
-            this.txtSQL.Location = new System.Drawing.Point(6, 10);
+            this.txtSQL.Location = new System.Drawing.Point(9, 17);
+            this.txtSQL.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtSQL.Multiline = true;
             this.txtSQL.Name = "txtSQL";
-            this.txtSQL.Size = new System.Drawing.Size(664, 113);
+            this.txtSQL.Size = new System.Drawing.Size(994, 186);
             this.txtSQL.TabIndex = 3;
             // 
             // gv
@@ -85,36 +90,40 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gv.Location = new System.Drawing.Point(0, 137);
+            this.gv.Location = new System.Drawing.Point(0, 228);
+            this.gv.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gv.Name = "gv";
             this.gv.ReadOnly = true;
+            this.gv.RowHeadersWidth = 51;
             this.gv.RowTemplate.Height = 23;
-            this.gv.Size = new System.Drawing.Size(784, 271);
+            this.gv.Size = new System.Drawing.Size(1176, 452);
             this.gv.TabIndex = 3;
             // 
             // statusStrip1
             // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lbStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 411);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 700);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1176, 22);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // lbStatus
             // 
             this.lbStatus.Name = "lbStatus";
-            this.lbStatus.Size = new System.Drawing.Size(0, 17);
+            this.lbStatus.Size = new System.Drawing.Size(0, 16);
             // 
             // FrmQuery
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 433);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(1176, 722);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gv);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FrmQuery";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "查询分析器";
