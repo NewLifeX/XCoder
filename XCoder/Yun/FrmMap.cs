@@ -210,8 +210,19 @@ public partial class FrmMap : Form, IXForm
 
             XTrace.WriteLine(map.LastUrl);
 
-            var js = new JsonParser(map.LastString).Decode();
-            XTrace.WriteLine(js.ToJson(true));
+            var last = map.LastString?.Trim();
+            if (!last.IsNullOrWhiteSpace())
+            {
+                try
+                {
+                    var js = new JsonParser(last).Decode();
+                    XTrace.WriteLine(js.ToJson(true));
+                }
+                catch
+                {
+                    XTrace.WriteLine(last);
+                }
+            }
         });
     }
     #endregion

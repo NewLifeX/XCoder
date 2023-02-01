@@ -53,19 +53,19 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.lvMatch = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader8 = new System.Windows.Forms.ColumnHeader();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.lvGroup = new System.Windows.Forms.ListView();
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
             this.lvCapture = new System.Windows.Forms.ListView();
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader10 = new System.Windows.Forms.ColumnHeader();
             this.rtReplace = new System.Windows.Forms.RichTextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lbStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -108,10 +108,10 @@
             this.groupBox1.Controls.Add(this.chkIgnoreCase);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox1.Size = new System.Drawing.Size(1013, 186);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(1150, 255);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "正则表达式";
@@ -124,12 +124,12 @@
             this.txtPattern.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.txtPattern.ContextMenuStrip = this.ptMenu;
             this.txtPattern.DetectUrls = false;
-            this.txtPattern.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtPattern.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtPattern.HideSelection = false;
-            this.txtPattern.Location = new System.Drawing.Point(8, 56);
-            this.txtPattern.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPattern.Location = new System.Drawing.Point(9, 75);
+            this.txtPattern.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtPattern.Name = "txtPattern";
-            this.txtPattern.Size = new System.Drawing.Size(996, 116);
+            this.txtPattern.Size = new System.Drawing.Size(1117, 160);
             this.txtPattern.TabIndex = 15;
             this.txtPattern.Text = "";
             // 
@@ -153,11 +153,11 @@
             // 
             this.txtOption.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOption.Location = new System.Drawing.Point(561, 22);
-            this.txtOption.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtOption.Location = new System.Drawing.Point(631, 29);
+            this.txtOption.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtOption.Name = "txtOption";
             this.txtOption.ReadOnly = true;
-            this.txtOption.Size = new System.Drawing.Size(443, 25);
+            this.txtOption.Size = new System.Drawing.Size(495, 27);
             this.txtOption.TabIndex = 14;
             // 
             // chkSingleline
@@ -165,10 +165,10 @@
             this.chkSingleline.AutoSize = true;
             this.chkSingleline.Checked = true;
             this.chkSingleline.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkSingleline.Location = new System.Drawing.Point(141, 25);
-            this.chkSingleline.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkSingleline.Location = new System.Drawing.Point(159, 33);
+            this.chkSingleline.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkSingleline.Name = "chkSingleline";
-            this.chkSingleline.Size = new System.Drawing.Size(89, 19);
+            this.chkSingleline.Size = new System.Drawing.Size(91, 24);
             this.chkSingleline.TabIndex = 6;
             this.chkSingleline.Text = "单行模式";
             this.toolTip1.SetToolTip(this.chkSingleline, "使用单行模式，其中句点 (.)匹配每个字符（而不是与除 \\n 之外的每个字符匹配）。 ");
@@ -180,10 +180,10 @@
             this.chkIgnorePatternWhitespace.AutoSize = true;
             this.chkIgnorePatternWhitespace.Checked = true;
             this.chkIgnorePatternWhitespace.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkIgnorePatternWhitespace.Location = new System.Drawing.Point(373, 25);
-            this.chkIgnorePatternWhitespace.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkIgnorePatternWhitespace.Location = new System.Drawing.Point(420, 33);
+            this.chkIgnorePatternWhitespace.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkIgnorePatternWhitespace.Name = "chkIgnorePatternWhitespace";
-            this.chkIgnorePatternWhitespace.Size = new System.Drawing.Size(149, 19);
+            this.chkIgnorePatternWhitespace.Size = new System.Drawing.Size(151, 24);
             this.chkIgnorePatternWhitespace.TabIndex = 4;
             this.chkIgnorePatternWhitespace.Text = "忽略正则中的空白";
             this.toolTip1.SetToolTip(this.chkIgnorePatternWhitespace, "从模式中排除保留的空白并启用数字符号 ( #) 后的注释。");
@@ -195,10 +195,10 @@
             this.chkMultiline.AutoSize = true;
             this.chkMultiline.Checked = true;
             this.chkMultiline.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMultiline.Location = new System.Drawing.Point(257, 25);
-            this.chkMultiline.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkMultiline.Location = new System.Drawing.Point(289, 33);
+            this.chkMultiline.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkMultiline.Name = "chkMultiline";
-            this.chkMultiline.Size = new System.Drawing.Size(89, 19);
+            this.chkMultiline.Size = new System.Drawing.Size(91, 24);
             this.chkMultiline.TabIndex = 3;
             this.chkMultiline.Text = "多线模式";
             this.toolTip1.SetToolTip(this.chkMultiline, "使用多线模式，其中 ^ 和 $ 匹配每行的开头和末尾（不是输入字符串的开头和末尾）。 ");
@@ -210,10 +210,10 @@
             this.chkIgnoreCase.AutoSize = true;
             this.chkIgnoreCase.Checked = true;
             this.chkIgnoreCase.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkIgnoreCase.Location = new System.Drawing.Point(9, 25);
-            this.chkIgnoreCase.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkIgnoreCase.Location = new System.Drawing.Point(10, 33);
+            this.chkIgnoreCase.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkIgnoreCase.Name = "chkIgnoreCase";
-            this.chkIgnoreCase.Size = new System.Drawing.Size(104, 19);
+            this.chkIgnoreCase.Size = new System.Drawing.Size(106, 24);
             this.chkIgnoreCase.TabIndex = 2;
             this.chkIgnoreCase.Text = "忽略大小写";
             this.toolTip1.SetToolTip(this.chkIgnoreCase, "使用不区分大小写的匹配");
@@ -230,10 +230,10 @@
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox2.Size = new System.Drawing.Size(1013, 238);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Size = new System.Drawing.Size(1150, 324);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "数据源";
@@ -245,12 +245,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtContent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.txtContent.ContextMenuStrip = this.txtMenu;
-            this.txtContent.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtContent.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtContent.HideSelection = false;
-            this.txtContent.Location = new System.Drawing.Point(8, 54);
-            this.txtContent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtContent.Location = new System.Drawing.Point(9, 72);
+            this.txtContent.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtContent.Name = "txtContent";
-            this.txtContent.Size = new System.Drawing.Size(996, 177);
+            this.txtContent.Size = new System.Drawing.Size(1117, 246);
             this.txtContent.TabIndex = 16;
             this.txtContent.Text = "";
             // 
@@ -273,10 +273,10 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(84, 20);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton2.Location = new System.Drawing.Point(94, 27);
+            this.radioButton2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(58, 19);
+            this.radioButton2.Size = new System.Drawing.Size(60, 24);
             this.radioButton2.TabIndex = 12;
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "替换";
@@ -286,10 +286,10 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(12, 20);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton1.Location = new System.Drawing.Point(14, 27);
+            this.radioButton1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(58, 19);
+            this.radioButton1.Size = new System.Drawing.Size(60, 24);
             this.radioButton1.TabIndex = 11;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "匹配";
@@ -302,27 +302,27 @@
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.button5);
-            this.panel1.Location = new System.Drawing.Point(473, 16);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Location = new System.Drawing.Point(532, 21);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(379, 35);
+            this.panel1.Size = new System.Drawing.Size(426, 47);
             this.panel1.TabIndex = 10;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(185, 4);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox2.Location = new System.Drawing.Point(208, 5);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(73, 25);
+            this.textBox2.Size = new System.Drawing.Size(82, 27);
             this.textBox2.TabIndex = 5;
             this.textBox2.Text = "*.*";
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(9, 2);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button4.Location = new System.Drawing.Point(10, 3);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(100, 29);
+            this.button4.Size = new System.Drawing.Size(112, 39);
             this.button4.TabIndex = 4;
             this.button4.Text = "打开目录";
             this.button4.UseVisualStyleBackColor = true;
@@ -331,19 +331,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(131, 9);
+            this.label1.Location = new System.Drawing.Point(147, 12);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 15);
+            this.label1.Size = new System.Drawing.Size(43, 20);
             this.label1.TabIndex = 6;
             this.label1.Text = "过滤:";
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(271, 2);
-            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button5.Location = new System.Drawing.Point(305, 3);
+            this.button5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(100, 29);
+            this.button5.Size = new System.Drawing.Size(112, 39);
             this.button5.TabIndex = 7;
             this.button5.Text = "全部替换";
             this.button5.UseVisualStyleBackColor = true;
@@ -351,10 +351,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(176, 16);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Location = new System.Drawing.Point(198, 21);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 29);
+            this.button2.Size = new System.Drawing.Size(112, 39);
             this.button2.TabIndex = 1;
             this.button2.Text = "正则匹配";
             this.toolTip1.SetToolTip(this.button2, "如果正则中选中部分文本，则以选中部分文本作为匹配用正则。");
@@ -367,10 +367,10 @@
             this.groupBox3.Controls.Add(this.rtReplace);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox3.Size = new System.Drawing.Size(1013, 212);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox3.Size = new System.Drawing.Size(1150, 298);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "匹配结果(Match|Group|Capture)";
@@ -378,8 +378,8 @@
             // splitContainer3
             // 
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.Location = new System.Drawing.Point(4, 22);
-            this.splitContainer3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer3.Location = new System.Drawing.Point(4, 25);
+            this.splitContainer3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.splitContainer3.Name = "splitContainer3";
             // 
             // splitContainer3.Panel1
@@ -389,9 +389,9 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(1005, 186);
-            this.splitContainer3.SplitterDistance = 294;
-            this.splitContainer3.SplitterWidth = 5;
+            this.splitContainer3.Size = new System.Drawing.Size(1142, 268);
+            this.splitContainer3.SplitterDistance = 333;
+            this.splitContainer3.SplitterWidth = 6;
             this.splitContainer3.TabIndex = 0;
             // 
             // lvMatch
@@ -404,12 +404,11 @@
             this.lvMatch.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvMatch.FullRowSelect = true;
             this.lvMatch.GridLines = true;
-            this.lvMatch.HideSelection = false;
             this.lvMatch.Location = new System.Drawing.Point(0, 0);
-            this.lvMatch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lvMatch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lvMatch.MultiSelect = false;
             this.lvMatch.Name = "lvMatch";
-            this.lvMatch.Size = new System.Drawing.Size(294, 186);
+            this.lvMatch.Size = new System.Drawing.Size(333, 268);
             this.lvMatch.TabIndex = 0;
             this.lvMatch.UseCompatibleStateImageBehavior = false;
             this.lvMatch.View = System.Windows.Forms.View.Details;
@@ -433,7 +432,7 @@
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer4.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.splitContainer4.Name = "splitContainer4";
             // 
             // splitContainer4.Panel1
@@ -443,9 +442,9 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.lvCapture);
-            this.splitContainer4.Size = new System.Drawing.Size(706, 186);
-            this.splitContainer4.SplitterDistance = 419;
-            this.splitContainer4.SplitterWidth = 5;
+            this.splitContainer4.Size = new System.Drawing.Size(803, 268);
+            this.splitContainer4.SplitterDistance = 475;
+            this.splitContainer4.SplitterWidth = 6;
             this.splitContainer4.TabIndex = 0;
             // 
             // lvGroup
@@ -459,12 +458,11 @@
             this.lvGroup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvGroup.FullRowSelect = true;
             this.lvGroup.GridLines = true;
-            this.lvGroup.HideSelection = false;
             this.lvGroup.Location = new System.Drawing.Point(0, 0);
-            this.lvGroup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lvGroup.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lvGroup.MultiSelect = false;
             this.lvGroup.Name = "lvGroup";
-            this.lvGroup.Size = new System.Drawing.Size(419, 186);
+            this.lvGroup.Size = new System.Drawing.Size(475, 268);
             this.lvGroup.TabIndex = 0;
             this.lvGroup.UseCompatibleStateImageBehavior = false;
             this.lvGroup.View = System.Windows.Forms.View.Details;
@@ -498,12 +496,11 @@
             this.lvCapture.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvCapture.FullRowSelect = true;
             this.lvCapture.GridLines = true;
-            this.lvCapture.HideSelection = false;
             this.lvCapture.Location = new System.Drawing.Point(0, 0);
-            this.lvCapture.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lvCapture.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lvCapture.MultiSelect = false;
             this.lvCapture.Name = "lvCapture";
-            this.lvCapture.Size = new System.Drawing.Size(282, 186);
+            this.lvCapture.Size = new System.Drawing.Size(322, 268);
             this.lvCapture.TabIndex = 0;
             this.lvCapture.UseCompatibleStateImageBehavior = false;
             this.lvCapture.View = System.Windows.Forms.View.Details;
@@ -528,12 +525,12 @@
             this.rtReplace.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.rtReplace.DetectUrls = false;
             this.rtReplace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtReplace.Font = new System.Drawing.Font("新宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.rtReplace.Font = new System.Drawing.Font("新宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.rtReplace.HideSelection = false;
-            this.rtReplace.Location = new System.Drawing.Point(4, 22);
-            this.rtReplace.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rtReplace.Location = new System.Drawing.Point(4, 25);
+            this.rtReplace.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rtReplace.Name = "rtReplace";
-            this.rtReplace.Size = new System.Drawing.Size(1005, 186);
+            this.rtReplace.Size = new System.Drawing.Size(1142, 268);
             this.rtReplace.TabIndex = 1;
             this.rtReplace.Text = "";
             this.rtReplace.Visible = false;
@@ -543,10 +540,10 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lbStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 676);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 910);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1045, 26);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 21, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1176, 26);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -561,8 +558,8 @@
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(16, 15);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer1.Location = new System.Drawing.Point(13, 14);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -573,16 +570,16 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1013, 646);
-            this.splitContainer1.SplitterDistance = 186;
-            this.splitContainer1.SplitterWidth = 5;
+            this.splitContainer1.Size = new System.Drawing.Size(1150, 891);
+            this.splitContainer1.SplitterDistance = 255;
+            this.splitContainer1.SplitterWidth = 7;
             this.splitContainer1.TabIndex = 4;
             // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -593,9 +590,9 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer2.Size = new System.Drawing.Size(1013, 455);
-            this.splitContainer2.SplitterDistance = 238;
-            this.splitContainer2.SplitterWidth = 5;
+            this.splitContainer2.Size = new System.Drawing.Size(1150, 629);
+            this.splitContainer2.SplitterDistance = 324;
+            this.splitContainer2.SplitterWidth = 7;
             this.splitContainer2.TabIndex = 0;
             // 
             // folderBrowserDialog1
@@ -604,12 +601,11 @@
             // 
             // FrmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1045, 702);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(1176, 936);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "正则表达式";

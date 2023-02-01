@@ -66,10 +66,10 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(284, 32);
-            this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label6.Location = new System.Drawing.Point(232, 27);
+            this.label6.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(82, 24);
+            this.label6.Size = new System.Drawing.Size(69, 20);
             this.label6.TabIndex = 35;
             this.label6.Text = "坐标系：";
             // 
@@ -77,49 +77,49 @@
             // 
             this.cbCoordtype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCoordtype.FormattingEnabled = true;
-            this.cbCoordtype.Location = new System.Drawing.Point(392, 24);
-            this.cbCoordtype.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.cbCoordtype.Location = new System.Drawing.Point(321, 23);
+            this.cbCoordtype.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cbCoordtype.Name = "cbCoordtype";
-            this.cbCoordtype.Size = new System.Drawing.Size(138, 32);
+            this.cbCoordtype.Size = new System.Drawing.Size(114, 28);
             this.cbCoordtype.TabIndex = 34;
             // 
             // cbMethod
             // 
             this.cbMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMethod.FormattingEnabled = true;
-            this.cbMethod.Location = new System.Drawing.Point(631, 24);
-            this.cbMethod.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.cbMethod.Location = new System.Drawing.Point(516, 23);
+            this.cbMethod.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cbMethod.Name = "cbMethod";
-            this.cbMethod.Size = new System.Drawing.Size(231, 32);
+            this.cbMethod.Size = new System.Drawing.Size(190, 28);
             this.cbMethod.TabIndex = 33;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(544, 32);
-            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label5.Location = new System.Drawing.Point(445, 27);
+            this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 24);
+            this.label5.Size = new System.Drawing.Size(54, 20);
             this.label5.TabIndex = 32;
             this.label5.Text = "接口：";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(29, 32);
-            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label4.Location = new System.Drawing.Point(24, 27);
+            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 24);
+            this.label4.Size = new System.Drawing.Size(54, 20);
             this.label4.TabIndex = 31;
             this.label4.Text = "地图：";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(627, 96);
-            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label2.Location = new System.Drawing.Point(513, 80);
+            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 24);
+            this.label2.Size = new System.Drawing.Size(54, 20);
             this.label2.TabIndex = 30;
             this.label2.Text = "城市：";
             // 
@@ -128,10 +128,10 @@
             this.chkFormatAddress.AutoSize = true;
             this.chkFormatAddress.Checked = true;
             this.chkFormatAddress.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkFormatAddress.Location = new System.Drawing.Point(884, 92);
-            this.chkFormatAddress.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.chkFormatAddress.Location = new System.Drawing.Point(723, 78);
+            this.chkFormatAddress.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.chkFormatAddress.Name = "chkFormatAddress";
-            this.chkFormatAddress.Size = new System.Drawing.Size(126, 28);
+            this.chkFormatAddress.Size = new System.Drawing.Size(106, 24);
             this.chkFormatAddress.TabIndex = 38;
             this.chkFormatAddress.Text = "格式化地址";
             this.chkFormatAddress.UseVisualStyleBackColor = true;
@@ -139,19 +139,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 96);
-            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label1.Location = new System.Drawing.Point(24, 80);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 24);
+            this.label1.Size = new System.Drawing.Size(54, 20);
             this.label1.TabIndex = 29;
             this.label1.Text = "地址：";
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(116, 88);
-            this.txtAddress.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtAddress.Location = new System.Drawing.Point(95, 77);
+            this.txtAddress.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(466, 30);
+            this.txtAddress.Size = new System.Drawing.Size(382, 27);
             this.txtAddress.TabIndex = 27;
             this.txtAddress.Text = "陆家嘴银城中路501号";
             // 
@@ -159,10 +159,10 @@
             // 
             this.cbMap.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbMap.FormattingEnabled = true;
-            this.cbMap.Location = new System.Drawing.Point(116, 24);
-            this.cbMap.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.cbMap.Location = new System.Drawing.Point(95, 23);
+            this.cbMap.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.cbMap.Name = "cbMap";
-            this.cbMap.Size = new System.Drawing.Size(160, 32);
+            this.cbMap.Size = new System.Drawing.Size(132, 28);
             this.cbMap.TabIndex = 26;
             this.cbMap.SelectedIndexChanged += new System.EventHandler(this.cbMap_SelectedIndexChanged);
             // 
@@ -171,19 +171,19 @@
             this.pgResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pgResult.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.pgResult.Location = new System.Drawing.Point(708, 216);
-            this.pgResult.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.pgResult.Location = new System.Drawing.Point(579, 180);
+            this.pgResult.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.pgResult.Name = "pgResult";
             this.pgResult.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgResult.Size = new System.Drawing.Size(515, 750);
+            this.pgResult.Size = new System.Drawing.Size(421, 625);
             this.pgResult.TabIndex = 25;
             // 
             // btnInvoke
             // 
-            this.btnInvoke.Location = new System.Drawing.Point(1025, 16);
-            this.btnInvoke.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnInvoke.Location = new System.Drawing.Point(839, 13);
+            this.btnInvoke.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.btnInvoke.Name = "btnInvoke";
-            this.btnInvoke.Size = new System.Drawing.Size(123, 58);
+            this.btnInvoke.Size = new System.Drawing.Size(101, 48);
             this.btnInvoke.TabIndex = 23;
             this.btnInvoke.Text = "调用";
             this.btnInvoke.UseVisualStyleBackColor = true;
@@ -193,19 +193,19 @@
             // 
             this.txtReceive.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtReceive.HideSelection = false;
-            this.txtReceive.Location = new System.Drawing.Point(6, 29);
-            this.txtReceive.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtReceive.Location = new System.Drawing.Point(5, 25);
+            this.txtReceive.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtReceive.Name = "txtReceive";
-            this.txtReceive.Size = new System.Drawing.Size(686, 721);
+            this.txtReceive.Size = new System.Drawing.Size(561, 600);
             this.txtReceive.TabIndex = 22;
             this.txtReceive.Text = "";
             // 
             // txtCity
             // 
-            this.txtCity.Location = new System.Drawing.Point(719, 88);
-            this.txtCity.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtCity.Location = new System.Drawing.Point(588, 77);
+            this.txtCity.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtCity.Name = "txtCity";
-            this.txtCity.Size = new System.Drawing.Size(134, 30);
+            this.txtCity.Size = new System.Drawing.Size(110, 27);
             this.txtCity.TabIndex = 28;
             this.txtCity.Text = "上海";
             // 
@@ -215,30 +215,30 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbReceive.Controls.Add(this.txtReceive);
-            this.gbReceive.Location = new System.Drawing.Point(4, 216);
-            this.gbReceive.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.gbReceive.Location = new System.Drawing.Point(3, 180);
+            this.gbReceive.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.gbReceive.Name = "gbReceive";
-            this.gbReceive.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.gbReceive.Size = new System.Drawing.Size(698, 756);
+            this.gbReceive.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gbReceive.Size = new System.Drawing.Size(571, 630);
             this.gbReceive.TabIndex = 24;
             this.gbReceive.TabStop = false;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(29, 154);
-            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label3.Location = new System.Drawing.Point(24, 128);
+            this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 24);
+            this.label3.Size = new System.Drawing.Size(54, 20);
             this.label3.TabIndex = 36;
             this.label3.Text = "坐标：";
             // 
             // txtLocation
             // 
-            this.txtLocation.Location = new System.Drawing.Point(116, 146);
-            this.txtLocation.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtLocation.Location = new System.Drawing.Point(95, 125);
+            this.txtLocation.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtLocation.Name = "txtLocation";
-            this.txtLocation.Size = new System.Drawing.Size(384, 30);
+            this.txtLocation.Size = new System.Drawing.Size(315, 27);
             this.txtLocation.TabIndex = 37;
             // 
             // button1
@@ -251,26 +251,25 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(548, 154);
-            this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label7.Location = new System.Drawing.Point(448, 128);
+            this.label7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(100, 24);
+            this.label7.Size = new System.Drawing.Size(84, 20);
             this.label7.TabIndex = 39;
             this.label7.Text = "第二坐标：";
             // 
             // txtLocation2
             // 
-            this.txtLocation2.Location = new System.Drawing.Point(678, 146);
-            this.txtLocation2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtLocation2.Location = new System.Drawing.Point(555, 125);
+            this.txtLocation2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtLocation2.Name = "txtLocation2";
-            this.txtLocation2.Size = new System.Drawing.Size(384, 30);
+            this.txtLocation2.Size = new System.Drawing.Size(315, 27);
             this.txtLocation2.TabIndex = 40;
             // 
             // FrmMap
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1228, 976);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(1005, 813);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtLocation2);
             this.Controls.Add(this.label6);
@@ -289,7 +288,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtLocation);
             this.Controls.Add(this.chkFormatAddress);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.Name = "FrmMap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "地图接口";
