@@ -68,7 +68,7 @@
             // btnConnect
             // 
             this.btnConnect.Location = new System.Drawing.Point(881, 15);
-            this.btnConnect.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnConnect.Margin = new System.Windows.Forms.Padding(5);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(100, 48);
             this.btnConnect.TabIndex = 3;
@@ -89,7 +89,7 @@
             this.pnlSetting.Controls.Add(this.label4);
             this.pnlSetting.Controls.Add(this.numHost);
             this.pnlSetting.Location = new System.Drawing.Point(13, 13);
-            this.pnlSetting.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.pnlSetting.Margin = new System.Windows.Forms.Padding(5);
             this.pnlSetting.Name = "pnlSetting";
             this.pnlSetting.Size = new System.Drawing.Size(858, 52);
             this.pnlSetting.TabIndex = 13;
@@ -126,7 +126,7 @@
             // numHost
             // 
             this.numHost.Location = new System.Drawing.Point(407, 9);
-            this.numHost.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.numHost.Margin = new System.Windows.Forms.Padding(5);
             this.numHost.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -160,9 +160,9 @@
             this.gbSend.Controls.Add(this.label7);
             this.gbSend.Enabled = false;
             this.gbSend.Location = new System.Drawing.Point(13, 472);
-            this.gbSend.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gbSend.Margin = new System.Windows.Forms.Padding(5);
             this.gbSend.Name = "gbSend";
-            this.gbSend.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.gbSend.Padding = new System.Windows.Forms.Padding(5);
             this.gbSend.Size = new System.Drawing.Size(978, 140);
             this.gbSend.TabIndex = 15;
             this.gbSend.TabStop = false;
@@ -201,7 +201,7 @@
             // numCount
             // 
             this.numCount.Location = new System.Drawing.Point(575, 49);
-            this.numCount.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.numCount.Margin = new System.Windows.Forms.Padding(5);
             this.numCount.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -225,7 +225,7 @@
             // btnSend
             // 
             this.btnSend.Location = new System.Drawing.Point(697, 40);
-            this.btnSend.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.btnSend.Margin = new System.Windows.Forms.Padding(5);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(75, 51);
             this.btnSend.TabIndex = 1;
@@ -236,7 +236,7 @@
             // numAddress
             // 
             this.numAddress.Location = new System.Drawing.Point(389, 49);
-            this.numAddress.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.numAddress.Margin = new System.Windows.Forms.Padding(5);
             this.numAddress.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -280,7 +280,7 @@
             this.txtReceive.ContextMenuStrip = this.menuReceive;
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(401, 76);
-            this.txtReceive.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.txtReceive.Margin = new System.Windows.Forms.Padding(5);
             this.txtReceive.Name = "txtReceive";
             this.txtReceive.Size = new System.Drawing.Size(590, 386);
             this.txtReceive.TabIndex = 1;
@@ -384,8 +384,7 @@
             // 
             // FrmModbusMaster
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1000, 632);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.dgv);
@@ -393,7 +392,7 @@
             this.Controls.Add(this.gbSend);
             this.Controls.Add(this.pnlSetting);
             this.Controls.Add(this.btnConnect);
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "FrmModbusMaster";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ModbusMaster";

@@ -63,11 +63,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbReceive.Controls.Add(this.txtReceive);
-            this.gbReceive.Location = new System.Drawing.Point(14, 64);
+            this.gbReceive.Location = new System.Drawing.Point(14, 71);
             this.gbReceive.Margin = new System.Windows.Forms.Padding(4);
             this.gbReceive.Name = "gbReceive";
             this.gbReceive.Padding = new System.Windows.Forms.Padding(4);
-            this.gbReceive.Size = new System.Drawing.Size(978, 351);
+            this.gbReceive.Size = new System.Drawing.Size(978, 390);
             this.gbReceive.TabIndex = 4;
             this.gbReceive.TabStop = false;
             this.gbReceive.Text = "接收区：已接收0字节";
@@ -77,10 +77,10 @@
             this.txtReceive.ContextMenuStrip = this.menuReceive;
             this.txtReceive.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtReceive.HideSelection = false;
-            this.txtReceive.Location = new System.Drawing.Point(4, 25);
+            this.txtReceive.Location = new System.Drawing.Point(4, 24);
             this.txtReceive.Margin = new System.Windows.Forms.Padding(4);
             this.txtReceive.Name = "txtReceive";
-            this.txtReceive.Size = new System.Drawing.Size(970, 322);
+            this.txtReceive.Size = new System.Drawing.Size(970, 362);
             this.txtReceive.TabIndex = 1;
             this.txtReceive.Text = "";
             // 
@@ -92,26 +92,26 @@
             this.mi日志着色,
             this.toolStripMenuItem3});
             this.menuReceive.Name = "menuSend";
-            this.menuReceive.Size = new System.Drawing.Size(241, 103);
+            this.menuReceive.Size = new System.Drawing.Size(139, 58);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(206, 30);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(138, 24);
             this.toolStripMenuItem1.Text = "清空";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.mi清空_Click);
             // 
             // mi日志着色
             // 
             this.mi日志着色.Name = "mi日志着色";
-            this.mi日志着色.Size = new System.Drawing.Size(206, 30);
+            this.mi日志着色.Size = new System.Drawing.Size(138, 24);
             this.mi日志着色.Text = "日志着色";
             this.mi日志着色.Click += new System.EventHandler(this.mi日志着色_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(203, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(135, 6);
             // 
             // menuSend
             // 
@@ -119,21 +119,21 @@
             this.menuSend.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mi清空2});
             this.menuSend.Name = "menuSend";
-            this.menuSend.Size = new System.Drawing.Size(117, 34);
+            this.menuSend.Size = new System.Drawing.Size(109, 28);
             // 
             // mi清空2
             // 
             this.mi清空2.Name = "mi清空2";
-            this.mi清空2.Size = new System.Drawing.Size(149, 30);
+            this.mi清空2.Size = new System.Drawing.Size(108, 24);
             this.mi清空2.Text = "清空";
             this.mi清空2.Click += new System.EventHandler(this.mi清空2_Click);
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(880, 14);
+            this.btnConnect.Location = new System.Drawing.Point(880, 16);
             this.btnConnect.Margin = new System.Windows.Forms.Padding(4);
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(100, 44);
+            this.btnConnect.Size = new System.Drawing.Size(100, 49);
             this.btnConnect.TabIndex = 3;
             this.btnConnect.Text = "打开";
             this.btnConnect.UseVisualStyleBackColor = true;
@@ -153,63 +153,63 @@
             this.pnlSetting.Controls.Add(this.label1);
             this.pnlSetting.Controls.Add(this.cbRemote);
             this.pnlSetting.Controls.Add(this.label4);
-            this.pnlSetting.Location = new System.Drawing.Point(14, 12);
+            this.pnlSetting.Location = new System.Drawing.Point(14, 13);
             this.pnlSetting.Margin = new System.Windows.Forms.Padding(4);
             this.pnlSetting.Name = "pnlSetting";
-            this.pnlSetting.Size = new System.Drawing.Size(858, 46);
+            this.pnlSetting.Size = new System.Drawing.Size(858, 51);
             this.pnlSetting.TabIndex = 13;
             // 
             // txtPass
             // 
-            this.txtPass.Location = new System.Drawing.Point(644, 13);
+            this.txtPass.Location = new System.Drawing.Point(644, 14);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
-            this.txtPass.Size = new System.Drawing.Size(100, 28);
+            this.txtPass.Size = new System.Drawing.Size(100, 27);
             this.txtPass.TabIndex = 21;
             this.txtPass.Text = "root";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(587, 18);
+            this.label3.Location = new System.Drawing.Point(587, 20);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 18);
+            this.label3.Size = new System.Drawing.Size(54, 20);
             this.label3.TabIndex = 20;
             this.label3.Text = "密码：";
             // 
             // txtUser
             // 
-            this.txtUser.Location = new System.Drawing.Point(441, 13);
+            this.txtUser.Location = new System.Drawing.Point(441, 14);
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(100, 28);
+            this.txtUser.Size = new System.Drawing.Size(100, 27);
             this.txtUser.TabIndex = 19;
             this.txtUser.Text = "root";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(357, 18);
+            this.label1.Location = new System.Drawing.Point(357, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 18);
+            this.label1.Size = new System.Drawing.Size(69, 20);
             this.label1.TabIndex = 18;
             this.label1.Text = "用户名：";
             // 
             // cbRemote
             // 
             this.cbRemote.FormattingEnabled = true;
-            this.cbRemote.Location = new System.Drawing.Point(77, 14);
+            this.cbRemote.Location = new System.Drawing.Point(77, 16);
             this.cbRemote.Margin = new System.Windows.Forms.Padding(4);
             this.cbRemote.Name = "cbRemote";
-            this.cbRemote.Size = new System.Drawing.Size(252, 26);
+            this.cbRemote.Size = new System.Drawing.Size(252, 28);
             this.cbRemote.TabIndex = 17;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(23, 18);
+            this.label4.Location = new System.Drawing.Point(23, 20);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(44, 18);
+            this.label4.Size = new System.Drawing.Size(39, 20);
             this.label4.TabIndex = 16;
             this.label4.Text = "远程";
             // 
@@ -219,11 +219,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbSend.Controls.Add(this.txtSend);
             this.gbSend.Controls.Add(this.btnSend);
-            this.gbSend.Location = new System.Drawing.Point(14, 424);
+            this.gbSend.Location = new System.Drawing.Point(14, 471);
             this.gbSend.Margin = new System.Windows.Forms.Padding(4);
             this.gbSend.Name = "gbSend";
             this.gbSend.Padding = new System.Windows.Forms.Padding(4);
-            this.gbSend.Size = new System.Drawing.Size(978, 126);
+            this.gbSend.Size = new System.Drawing.Size(978, 140);
             this.gbSend.TabIndex = 15;
             this.gbSend.TabStop = false;
             this.gbSend.Text = "发送区：已发送0字节";
@@ -235,20 +235,20 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSend.ContextMenuStrip = this.menuSend;
             this.txtSend.HideSelection = false;
-            this.txtSend.Location = new System.Drawing.Point(0, 28);
+            this.txtSend.Location = new System.Drawing.Point(0, 31);
             this.txtSend.Margin = new System.Windows.Forms.Padding(4);
             this.txtSend.Name = "txtSend";
-            this.txtSend.Size = new System.Drawing.Size(886, 86);
+            this.txtSend.Size = new System.Drawing.Size(886, 95);
             this.txtSend.TabIndex = 2;
             this.txtSend.Text = "";
             // 
             // btnSend
             // 
             this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSend.Location = new System.Drawing.Point(894, 74);
+            this.btnSend.Location = new System.Drawing.Point(894, 82);
             this.btnSend.Margin = new System.Windows.Forms.Padding(4);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(75, 45);
+            this.btnSend.Size = new System.Drawing.Size(75, 50);
             this.btnSend.TabIndex = 1;
             this.btnSend.Text = "发送";
             this.btnSend.UseVisualStyleBackColor = true;
@@ -256,9 +256,8 @@
             // 
             // FrmSsh
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 568);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(1000, 631);
             this.Controls.Add(this.gbSend);
             this.Controls.Add(this.pnlSetting);
             this.Controls.Add(this.btnConnect);
