@@ -2,7 +2,6 @@
 using System.Text;
 using NewLife;
 using NewLife.Log;
-using NewLife.Model;
 using NewLife.Threading;
 using Stardust;
 using Stardust.Services;
@@ -18,12 +17,7 @@ static class Program
         // 支持GB2312编码
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-#if NET5_0_OR_GREATER
         XTrace.UseWinForm();
-        Application.SetHighDpiMode(HighDpiMode.SystemAware);
-#else
-        XTrace.UseWinForm();
-#endif
         MachineInfo.RegisterAsync();
 
         StartClient();
@@ -34,6 +28,9 @@ static class Program
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
+#if NET5_0_OR_GREATER
+        Application.SetHighDpiMode(HighDpiMode.SystemAware);
+#endif
         Application.Run(new FrmMDI());
     }
 
