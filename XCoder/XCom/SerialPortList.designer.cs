@@ -54,17 +54,19 @@
             // cbBaudrate
             // 
             this.cbBaudrate.FormattingEnabled = true;
-            this.cbBaudrate.Location = new System.Drawing.Point(325, 3);
+            this.cbBaudrate.Location = new System.Drawing.Point(488, 8);
+            this.cbBaudrate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbBaudrate.Name = "cbBaudrate";
-            this.cbBaudrate.Size = new System.Drawing.Size(72, 20);
+            this.cbBaudrate.Size = new System.Drawing.Size(106, 28);
             this.cbBaudrate.TabIndex = 7;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(277, 7);
+            this.label2.Location = new System.Drawing.Point(416, 12);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.Size = new System.Drawing.Size(69, 20);
             this.label2.TabIndex = 6;
             this.label2.Text = "波特率：";
             // 
@@ -72,22 +74,25 @@
             // 
             this.cbName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbName.FormattingEnabled = true;
-            this.cbName.Location = new System.Drawing.Point(41, 3);
+            this.cbName.Location = new System.Drawing.Point(62, 8);
+            this.cbName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbName.Name = "cbName";
-            this.cbName.Size = new System.Drawing.Size(230, 20);
+            this.cbName.Size = new System.Drawing.Size(343, 28);
             this.cbName.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 7);
+            this.label3.Location = new System.Drawing.Point(4, 12);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 12);
+            this.label3.Size = new System.Drawing.Size(54, 20);
             this.label3.TabIndex = 4;
             this.label3.Text = "端口：";
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mi数据位,
             this.mi停止位,
@@ -99,24 +104,24 @@
             this.miHEX编码发送,
             this.toolStripMenuItem2});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(149, 170);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(169, 184);
             // 
             // mi数据位
             // 
             this.mi数据位.Name = "mi数据位";
-            this.mi数据位.Size = new System.Drawing.Size(148, 22);
+            this.mi数据位.Size = new System.Drawing.Size(168, 24);
             this.mi数据位.Text = "数据位";
             // 
             // mi停止位
             // 
             this.mi停止位.Name = "mi停止位";
-            this.mi停止位.Size = new System.Drawing.Size(148, 22);
+            this.mi停止位.Size = new System.Drawing.Size(168, 24);
             this.mi停止位.Text = "停止位";
             // 
             // mi校验
             // 
             this.mi校验.Name = "mi校验";
-            this.mi校验.Size = new System.Drawing.Size(148, 22);
+            this.mi校验.Size = new System.Drawing.Size(168, 24);
             this.mi校验.Text = "校验";
             // 
             // mi高级
@@ -126,39 +131,39 @@
             this.miRTS,
             this.miBreak});
             this.mi高级.Name = "mi高级";
-            this.mi高级.Size = new System.Drawing.Size(148, 22);
+            this.mi高级.Size = new System.Drawing.Size(168, 24);
             this.mi高级.Text = "高级";
             // 
             // miDTR
             // 
             this.miDTR.Name = "miDTR";
-            this.miDTR.Size = new System.Drawing.Size(110, 22);
+            this.miDTR.Size = new System.Drawing.Size(132, 26);
             this.miDTR.Text = "DTR";
             this.miDTR.Click += new System.EventHandler(this.miDTR_Click);
             // 
             // miRTS
             // 
             this.miRTS.Name = "miRTS";
-            this.miRTS.Size = new System.Drawing.Size(110, 22);
+            this.miRTS.Size = new System.Drawing.Size(132, 26);
             this.miRTS.Text = "RTS";
             this.miRTS.Click += new System.EventHandler(this.miDTR_Click);
             // 
             // miBreak
             // 
             this.miBreak.Name = "miBreak";
-            this.miBreak.Size = new System.Drawing.Size(110, 22);
+            this.miBreak.Size = new System.Drawing.Size(132, 26);
             this.miBreak.Text = "Break";
             this.miBreak.Click += new System.EventHandler(this.miDTR_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(145, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(165, 6);
             // 
             // mi字符串编码
             // 
             this.mi字符串编码.Name = "mi字符串编码";
-            this.mi字符串编码.Size = new System.Drawing.Size(148, 22);
+            this.mi字符串编码.Size = new System.Drawing.Size(168, 24);
             this.mi字符串编码.Text = "字符串编码";
             this.mi字符串编码.Click += new System.EventHandler(this.mi字符串编码_Click);
             // 
@@ -168,14 +173,14 @@
             this.miHex不换行,
             this.miHex自动换行});
             this.miHEX编码接收.Name = "miHEX编码接收";
-            this.miHEX编码接收.Size = new System.Drawing.Size(148, 22);
+            this.miHEX编码接收.Size = new System.Drawing.Size(168, 24);
             this.miHEX编码接收.Text = "HEX编码接收";
             this.miHEX编码接收.Click += new System.EventHandler(this.mi字符串编码_Click);
             // 
             // miHex不换行
             // 
             this.miHex不换行.Name = "miHex不换行";
-            this.miHex不换行.Size = new System.Drawing.Size(124, 22);
+            this.miHex不换行.Size = new System.Drawing.Size(152, 26);
             this.miHex不换行.Tag = "false";
             this.miHex不换行.Text = "不换行";
             this.miHex不换行.Click += new System.EventHandler(this.miHex自动换行_Click);
@@ -183,7 +188,7 @@
             // miHex自动换行
             // 
             this.miHex自动换行.Name = "miHex自动换行";
-            this.miHex自动换行.Size = new System.Drawing.Size(124, 22);
+            this.miHex自动换行.Size = new System.Drawing.Size(152, 26);
             this.miHex自动换行.Tag = "true";
             this.miHex自动换行.Text = "自动换行";
             this.miHex自动换行.Click += new System.EventHandler(this.miHex自动换行_Click);
@@ -191,26 +196,26 @@
             // miHEX编码发送
             // 
             this.miHEX编码发送.Name = "miHEX编码发送";
-            this.miHEX编码发送.Size = new System.Drawing.Size(148, 22);
+            this.miHEX编码发送.Size = new System.Drawing.Size(168, 24);
             this.miHEX编码发送.Text = "HEX编码发送";
             this.miHEX编码发送.Click += new System.EventHandler(this.miHEX编码发送_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(145, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(165, 6);
             // 
             // SerialPortList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.cbBaudrate);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cbName);
             this.Controls.Add(this.label3);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SerialPortList";
-            this.Size = new System.Drawing.Size(400, 29);
+            this.Size = new System.Drawing.Size(600, 48);
             this.Load += new System.EventHandler(this.SerialPortList_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
