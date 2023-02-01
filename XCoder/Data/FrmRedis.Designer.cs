@@ -45,11 +45,11 @@
             this.gbFunc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.gbFunc.Controls.Add(this.treeNodes);
-            this.gbFunc.Location = new System.Drawing.Point(22, 24);
-            this.gbFunc.Margin = new System.Windows.Forms.Padding(5);
+            this.gbFunc.Location = new System.Drawing.Point(13, 9);
+            this.gbFunc.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gbFunc.Name = "gbFunc";
-            this.gbFunc.Padding = new System.Windows.Forms.Padding(5);
-            this.gbFunc.Size = new System.Drawing.Size(315, 649);
+            this.gbFunc.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbFunc.Size = new System.Drawing.Size(258, 559);
             this.gbFunc.TabIndex = 0;
             this.gbFunc.TabStop = false;
             // 
@@ -57,10 +57,9 @@
             // 
             this.treeNodes.ContextMenuStrip = this.menuNodes;
             this.treeNodes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeNodes.Location = new System.Drawing.Point(5, 28);
-            this.treeNodes.Margin = new System.Windows.Forms.Padding(4);
+            this.treeNodes.Location = new System.Drawing.Point(4, 24);
             this.treeNodes.Name = "treeNodes";
-            this.treeNodes.Size = new System.Drawing.Size(305, 616);
+            this.treeNodes.Size = new System.Drawing.Size(250, 531);
             this.treeNodes.TabIndex = 0;
             this.treeNodes.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeNodes_MouseDoubleClick);
             // 
@@ -70,13 +69,13 @@
             this.menuNodes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuEditNode});
             this.menuNodes.Name = "menuNodes";
-            this.menuNodes.Size = new System.Drawing.Size(171, 34);
+            this.menuNodes.Size = new System.Drawing.Size(154, 28);
             this.menuNodes.Opening += new System.ComponentModel.CancelEventHandler(this.menuNodes_Opening);
             // 
             // menuEditNode
             // 
             this.menuEditNode.Name = "menuEditNode";
-            this.menuEditNode.Size = new System.Drawing.Size(170, 30);
+            this.menuEditNode.Size = new System.Drawing.Size(153, 24);
             this.menuEditNode.Text = "添加服务器";
             this.menuEditNode.Click += new System.EventHandler(this.menuEditNode_Click);
             // 
@@ -86,9 +85,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbContent.Controls.Add(this.richTextBox1);
-            this.gbContent.Location = new System.Drawing.Point(345, 24);
+            this.gbContent.Location = new System.Drawing.Point(277, 9);
+            this.gbContent.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.gbContent.Name = "gbContent";
-            this.gbContent.Size = new System.Drawing.Size(906, 644);
+            this.gbContent.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gbContent.Size = new System.Drawing.Size(741, 555);
             this.gbContent.TabIndex = 1;
             this.gbContent.TabStop = false;
             this.gbContent.Text = "内容";
@@ -97,20 +98,20 @@
             // 
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(6, 28);
+            this.richTextBox1.Location = new System.Drawing.Point(5, 23);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(894, 147);
+            this.richTextBox1.Size = new System.Drawing.Size(732, 123);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
             // FrmRedis
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1263, 697);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(1033, 581);
             this.Controls.Add(this.gbContent);
             this.Controls.Add(this.gbFunc);
-            this.Margin = new System.Windows.Forms.Padding(5);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FrmRedis";
             this.Text = "Redis管理";
             this.Load += new System.EventHandler(this.FrmRedis_Load);
