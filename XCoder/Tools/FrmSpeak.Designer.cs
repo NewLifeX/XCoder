@@ -37,18 +37,18 @@
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(12, 12);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 13);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(719, 426);
+            this.richTextBox1.Size = new System.Drawing.Size(719, 473);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "学无先后达者为师！";
             // 
             // btnSpeak
             // 
             this.btnSpeak.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSpeak.Location = new System.Drawing.Point(737, 12);
+            this.btnSpeak.Location = new System.Drawing.Point(737, 13);
             this.btnSpeak.Name = "btnSpeak";
-            this.btnSpeak.Size = new System.Drawing.Size(51, 133);
+            this.btnSpeak.Size = new System.Drawing.Size(51, 148);
             this.btnSpeak.TabIndex = 1;
             this.btnSpeak.Text = "文字转语音";
             this.btnSpeak.UseVisualStyleBackColor = true;
@@ -56,9 +56,8 @@
             // 
             // FrmSpeak
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.ClientSize = new System.Drawing.Size(800, 500);
             this.Controls.Add(this.btnSpeak);
             this.Controls.Add(this.richTextBox1);
             this.Name = "FrmSpeak";
