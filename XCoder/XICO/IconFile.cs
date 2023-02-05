@@ -141,7 +141,7 @@ namespace XICO
             var item = new IconItem();
             // bmp要跳过14字节，还要修改高度，png不用
             ms.Position = 14;
-            item.Data = ms.ReadBytes();
+            item.Data = ms.ReadBytes(-1);
             item.Size = (UInt32)item.Data.Length;
             item.BitCount = (UInt16)bit;
 
