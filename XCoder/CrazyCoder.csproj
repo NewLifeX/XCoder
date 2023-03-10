@@ -72,22 +72,22 @@
     <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>10.1.2023.203</Version>
+      <Version>10.2.2023.307-beta1032</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
-      <Version>1.2.2023.203</Version>
+      <Version>1.3.2023.301</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
       <Version>4.2.2023.205</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
-      <Version>5.1.2023.203</Version>
+      <Version>5.2.2023.307-beta1030</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>2.6.2023.203</Version>
+      <Version>2.7.2023.301</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>11.5.2023.203</Version>
+      <Version>11.6.2023.307-beta1032</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2020.0.2</Version>

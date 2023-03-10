@@ -468,6 +468,18 @@ namespace XCoder.Tools
             rtResult.Text = sb.Put(true);
         }
 
+        private void btnVersion_Click(Object sender, EventArgs e)
+        {
+            var v = rtSource.Text;
+            if (v.IsNullOrEmpty()) return;
+
+            //if (!Version.TryParse(v, out var version)) return;
+
+            var dt = AssemblyX.GetCompileTime(v);
+
+            rtResult.Text = dt.ToFullString();
+        }
+
         private void btnSnowflake_Click(Object sender, EventArgs e)
         {
             var v = rtSource.Text.ToLong();
