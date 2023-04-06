@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             gbFunc = new GroupBox();
+            btnVersion = new Button();
             btnJWT = new Button();
             btnSnowflake = new Button();
             btnComputerInfo = new Button();
@@ -69,7 +70,7 @@
             rbHex2 = new RadioButton();
             rbString2 = new RadioButton();
             rtPass = new RichTextBox();
-            btnVersion = new Button();
+            btnTrace = new Button();
             gbFunc.SuspendLayout();
             gbSource.SuspendLayout();
             gbResult.SuspendLayout();
@@ -79,6 +80,7 @@
             // gbFunc
             // 
             gbFunc.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            gbFunc.Controls.Add(btnTrace);
             gbFunc.Controls.Add(btnVersion);
             gbFunc.Controls.Add(btnJWT);
             gbFunc.Controls.Add(btnSnowflake);
@@ -112,6 +114,17 @@
             gbFunc.TabIndex = 0;
             gbFunc.TabStop = false;
             gbFunc.Text = "加密解密";
+            // 
+            // btnVersion
+            // 
+            btnVersion.Location = new Point(9, 736);
+            btnVersion.Margin = new Padding(4);
+            btnVersion.Name = "btnVersion";
+            btnVersion.Size = new Size(112, 50);
+            btnVersion.TabIndex = 30;
+            btnVersion.Text = "版本号";
+            btnVersion.UseVisualStyleBackColor = true;
+            btnVersion.Click += btnVersion_Click;
             // 
             // btnJWT
             // 
@@ -581,16 +594,16 @@
             rtPass.TabIndex = 2;
             rtPass.Text = "NewLife";
             // 
-            // btnVersion
+            // btnTrace
             // 
-            btnVersion.Location = new Point(9, 736);
-            btnVersion.Margin = new Padding(4);
-            btnVersion.Name = "btnVersion";
-            btnVersion.Size = new Size(112, 50);
-            btnVersion.TabIndex = 30;
-            btnVersion.Text = "版本号";
-            btnVersion.UseVisualStyleBackColor = true;
-            btnVersion.Click += btnVersion_Click;
+            btnTrace.Location = new Point(129, 736);
+            btnTrace.Margin = new Padding(4);
+            btnTrace.Name = "btnTrace";
+            btnTrace.Size = new Size(112, 50);
+            btnTrace.TabIndex = 31;
+            btnTrace.Text = "链路追踪";
+            btnTrace.UseVisualStyleBackColor = true;
+            btnTrace.Click += btnTrace_Click;
             // 
             // FrmSecurity
             // 
@@ -658,5 +671,6 @@
         private System.Windows.Forms.Button btnJWT;
         private System.Windows.Forms.Button btnSnowflake;
         private Button btnVersion;
+        private Button btnTrace;
     }
 }
