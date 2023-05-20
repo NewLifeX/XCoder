@@ -248,7 +248,7 @@ namespace XCoder
                 //var builder = new EntityBuilder();
 
                 var cfg = Config;
-                var option = new BuilderOption
+                var option = new EntityBuilderOption
                 {
                     BaseClass = cfg.BaseClass,
                     ConnName = cfg.EntityConnName,
@@ -290,7 +290,7 @@ namespace XCoder
             //}
 
             var cfg = Config;
-            var option = new BuilderOption
+            var option = new EntityBuilderOption
             {
                 BaseClass = cfg.BaseClass,
                 ConnName = cfg.EntityConnName,
