@@ -200,7 +200,7 @@ namespace NewLife.XRegex
             var count = 0;
 
             // 异步执行，防止超时
-            var isSuccess = ProcessAsync(delegate(Regex reg)
+            var isSuccess = ProcessAsync(delegate (Regex reg)
             {
                 r = reg;
                 ms = reg.Matches(content);
@@ -244,7 +244,7 @@ namespace NewLife.XRegex
             var count = 0;
 
             // 异步执行，防止超时
-            var isSuccess = ProcessAsync(delegate(Regex reg)
+            var isSuccess = ProcessAsync(delegate (Regex reg)
             {
                 foreach (var item in files)
                 {
