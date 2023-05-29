@@ -375,7 +375,11 @@ namespace XCoder
 
         private void 在线帮助文档ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            Process.Start("http://www.NewLifeX.com?r=XCoder_v" + AssemblyX.Create(Assembly.GetExecutingAssembly()).Version);
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://NewLifeX.com/xcode?r=XCoder_v" + AssemblyX.Create(Assembly.GetExecutingAssembly()).Version,
+                UseShellExecute = true
+            });
         }
 
         private void 关于ToolStripMenuItem1_Click(Object sender, EventArgs e)
@@ -385,12 +389,20 @@ namespace XCoder
 
         private void 博客ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            Process.Start("https://nnhy.cnblogs.com");
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://nnhy.cnblogs.com",
+                UseShellExecute = true
+            });
         }
 
         private void qQ群1600800ToolStripMenuItem_Click(Object sender, EventArgs e)
         {
-            Process.Start("http://www.NewLifeX.com/?r=XCoder_v" + AssemblyX.Create(Assembly.GetExecutingAssembly()).Version);
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://NewLifeX.com?r=XCoder_v" + AssemblyX.Create(Assembly.GetExecutingAssembly()).Version,
+                UseShellExecute = true
+            });
         }
 
         private void oracle客户端运行时检查ToolStripMenuItem1_Click(Object sender, EventArgs e)
