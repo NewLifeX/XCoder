@@ -2,22 +2,23 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>XCoder</AssemblyName>
     <RootNamespace>XCoder</RootNamespace>
     <AssemblyTitle>新生命码神工具</AssemblyTitle>
     <Description>众多开发者工具</Description>
     <Company>新生命开发团队</Company>
-    <Copyright>©2002-2019 新生命开发团队</Copyright>
-    <Version>8.0.2019.1212</Version>
-    <FileVersion>8.0.2019.1212</FileVersion>
-    <AssemblyVersion>8.0.*</AssemblyVersion>
+    <Copyright>©2002-2023 NewLife</Copyright>
+    <VersionPrefix>8.0</VersionPrefix>
+    <VersionSuffix>$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</VersionSuffix>
+    <Version>$(VersionPrefix).$(VersionSuffix)</Version>
+    <FileVersion>$(Version)</FileVersion>
+    <AssemblyVersion>$(VersionPrefix).*</AssemblyVersion>
     <Deterministic>false</Deterministic>
     <ApplicationIcon>..\XCoder\leaf.ico</ApplicationIcon>
-    <OutputPath>..\..\XCoderLinux\</OutputPath>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;NC30;__CORE__</DefineConstants>
+    <OutputPath>..\Bin\XCoderLinux\</OutputPath>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
@@ -47,11 +48,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GtkSharp" Version="3.24.24.38" />
-    <PackageReference Include="NewLife.Core" Version="9.1.2022.501" />
-    <PackageReference Include="NewLife.XCode" Version="11.1.2022.501" />
-    <PackageReference Include="System.IO.Ports" Version="6.0.0" />
-    <PackageReference Include="System.Management" Version="6.0.0" />
+    <PackageReference Include="GtkSharp" Version="3.24.24.95" />
+    <PackageReference Include="NewLife.Core" Version="10.3.2023.527-beta0038" />
+    <PackageReference Include="NewLife.Remoting" Version="2.1.2023.516-beta0658" />
+    <PackageReference Include="NewLife.XCode" Version="11.8.2023.528-beta1511" />
+    <PackageReference Include="System.IO.Ports" Version="7.0.0" />
+    <PackageReference Include="System.Management" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>

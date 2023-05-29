@@ -592,13 +592,13 @@ namespace XCoder.Tools
             //}
 
 #if !NET4 && !__CORE__
-            sb.AppendLine();
-            var ci = new Microsoft.VisualBasic.Devices.ComputerInfo();
-            foreach (var pi in ci.GetType().GetProperties())
-            {
-                //if (sb.Length > 0) sb.AppendLine();
-                sb.AppendFormat("{0}:\t{1:n0}\r\n", pi.Name, ci.GetValue(pi));
-            }
+            //sb.AppendLine();
+            //var ci = new Microsoft.VisualBasic.Devices.ComputerInfo();
+            //foreach (var pi in ci.GetType().GetProperties())
+            //{
+            //    //if (sb.Length > 0) sb.AppendLine();
+            //    sb.AppendFormat("{0}:\t{1:n0}\r\n", pi.Name, ci.GetValue(pi));
+            //}
 #endif
 
             rtResult.Buffer.Text = sb.Put(true);

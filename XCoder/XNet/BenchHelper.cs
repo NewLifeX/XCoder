@@ -1,4 +1,6 @@
-﻿using NewLife.Data;
+﻿using System;
+using System.Threading.Tasks;
+using NewLife.Data;
 using NewLife.Net;
 
 namespace XCoder.XNet;
