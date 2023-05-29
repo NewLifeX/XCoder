@@ -119,6 +119,11 @@
     <EmbeddedResource Remove="NewModelForm\NewModel.resx" />
     <EmbeddedResource Remove="XMessage\FrmMain.resx" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>del "$(TargetDir)*.xml" /q</PostBuildEvent>
     <ImplicitUsings>enable</ImplicitUsings>
