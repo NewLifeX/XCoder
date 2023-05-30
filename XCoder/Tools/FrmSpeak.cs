@@ -28,13 +28,8 @@ public partial class FrmSpeak : Form, IXForm
         cbVoices.DataSource = _voices.Select(e => $"{e.Name}[{e.Culture}]").ToList();
     }
 
-    private void btnSpeak_Click(Object sender, EventArgs e)
+    SpeechSynthesizer GetSynthesizer()
     {
-        var txt = richTextBox1.Text;
-        if (txt.IsNullOrEmpty()) return;
-
-        //txt.SpeakAsync();
-
         var sync = new SpeechSynthesizer
         {
             Volume = (Int32)numVolume.Value,
@@ -45,8 +40,38 @@ public partial class FrmSpeak : Form, IXForm
         var p = name.IndexOf('[');
         if (p > 0) name = name[..p];
         sync.SelectVoice(name);
-        //sync.Voice = _voices.FirstOrDefault(e => e.Name == name);
+
+        return sync;
+    }
+
+    private void btnSpeak_Click(Object sender, EventArgs e)
+    {
+        var txt = richTextBox1.Text;
+        if (txt.IsNullOrEmpty()) return;
+
+        //txt.SpeakAsync();
+
+        var sync = GetSynthesizer();
 
         sync.SpeakAsync(txt);
+    }
+
+    private void btnSave_Click(Object sender, EventArgs e)
+    {
+        var txt = richTextBox1.Text;
+        if (txt.IsNullOrEmpty()) return;
+
+        var sync = GetSynthesizer();
+
+        var flg = new SaveFileDialog();
+        flg.Filter = "音频文件(*.wav)|*.wav";
+        if (flg.ShowDialog() == DialogResult.OK)
+        {
+            sync.SetOutputToWaveFile(flg.FileName);
+
+            sync.SpeakAsync(txt);
+
+            MessageBox.Show("保存成功！");
+        }
     }
 }

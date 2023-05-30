@@ -37,6 +37,7 @@
             label2 = new Label();
             numVolume = new NumericUpDown();
             label1 = new Label();
+            btnSave = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numVolume).BeginInit();
@@ -55,11 +56,11 @@
             // btnSpeak
             // 
             btnSpeak.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSpeak.Location = new Point(911, 21);
+            btnSpeak.Location = new Point(824, 19);
             btnSpeak.Name = "btnSpeak";
-            btnSpeak.Size = new Size(98, 51);
+            btnSpeak.Size = new Size(82, 54);
             btnSpeak.TabIndex = 1;
-            btnSpeak.Text = "文字转语音";
+            btnSpeak.Text = "播放";
             btnSpeak.UseVisualStyleBackColor = true;
             btnSpeak.Click += btnSpeak_Click;
             // 
@@ -133,10 +134,22 @@
             label1.TabIndex = 0;
             label1.Text = "音量：";
             // 
+            // btnSave
+            // 
+            btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSave.Location = new Point(927, 19);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(82, 54);
+            btnSave.TabIndex = 3;
+            btnSave.Text = "保存";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
+            // 
             // FrmSpeak
             // 
             AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(1021, 583);
+            Controls.Add(btnSave);
             Controls.Add(groupBox1);
             Controls.Add(btnSpeak);
             Controls.Add(richTextBox1);
@@ -161,5 +174,6 @@
         private Label label2;
         private ComboBox cbVoices;
         private Label label3;
+        private Button btnSave;
     }
 }
