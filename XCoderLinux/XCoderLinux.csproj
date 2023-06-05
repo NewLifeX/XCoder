@@ -49,9 +49,9 @@
 
   <ItemGroup>
     <PackageReference Include="GtkSharp" Version="3.24.24.95" />
-    <PackageReference Include="NewLife.Core" Version="10.3.2023.527-beta0038" />
-    <PackageReference Include="NewLife.Remoting" Version="2.1.2023.516-beta0658" />
-    <PackageReference Include="NewLife.XCode" Version="11.8.2023.528-beta1511" />
+    <PackageReference Include="NewLife.Core" Version="10.3.2023.601" />
+    <PackageReference Include="NewLife.Remoting" Version="2.1.2023.601" />
+    <PackageReference Include="NewLife.XCode" Version="11.8.2023.601" />
     <PackageReference Include="System.IO.Ports" Version="7.0.0" />
     <PackageReference Include="System.Management" Version="7.0.1" />
   </ItemGroup>
