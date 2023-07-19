@@ -6,7 +6,7 @@
     <Description>众多开发者工具，网络、串口、加解密、正则表达式、Modbus</Description>
     <Company>新生命开发团队</Company>
     <Copyright>©2002-2023 NewLife</Copyright>
-    <VersionPrefix>8.0</VersionPrefix>
+    <VersionPrefix>8.1</VersionPrefix>
     <VersionSuffix>$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</VersionSuffix>
     <Version>$(VersionPrefix).$(VersionSuffix)</Version>
     <FileVersion>$(Version)</FileVersion>
