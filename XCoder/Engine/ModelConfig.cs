@@ -121,9 +121,9 @@ namespace XCoder
         [DisplayName("调试")]
         public Boolean Debug { get; set; }
 
-        /// <summary> 字典属性</summary>
-        [DisplayName("数据字典")]
-        public SerializableDictionary<String, String> Items { get; set; } = new SerializableDictionary<String, String>();
+        ///// <summary> 字典属性</summary>
+        //[DisplayName("数据字典")]
+        //public SerializableDictionary<String, String> Items { get; set; } = new SerializableDictionary<String, String>();
         #endregion
 
         #region 加载/保存

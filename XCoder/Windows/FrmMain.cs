@@ -539,6 +539,7 @@ namespace XCoder
                 //var builder = new EntityBuilder();
 
                 var cfg = Config;
+#if NET4
                 var option = new BuilderOption
                 {
                     BaseClass = cfg.BaseClass,
@@ -546,6 +547,15 @@ namespace XCoder
                     Namespace = cfg.NameSpace,
                     Output = cfg.OutputPath,
                 };
+#else
+                var option = new EntityBuilderOption
+                {
+                    BaseClass = cfg.BaseClass,
+                    ConnName = cfg.EntityConnName,
+                    Namespace = cfg.NameSpace,
+                    Output = cfg.OutputPath,
+                };
+#endif
                 var rs = EntityBuilder.BuildTables(new[] { table }, option);
 
                 MessageBox.Show("生成" + table + "成功！", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -581,6 +591,7 @@ namespace XCoder
             //}
 
             var cfg = Config;
+#if NET4
             var option = new BuilderOption
             {
                 BaseClass = cfg.BaseClass,
@@ -588,6 +599,15 @@ namespace XCoder
                 Namespace = cfg.NameSpace,
                 Output = cfg.OutputPath,
             };
+#else
+            var option = new EntityBuilderOption
+            {
+                BaseClass = cfg.BaseClass,
+                ConnName = cfg.EntityConnName,
+                Namespace = cfg.NameSpace,
+                Output = cfg.OutputPath,
+            };
+#endif
             var rs = EntityBuilder.BuildTables(tables, option);
 
             sw.Stop();

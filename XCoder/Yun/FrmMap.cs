@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using NewLife;
 using NewLife.Data;
 using NewLife.Log;
+using NewLife.Map;
 using NewLife.Reflection;
 using NewLife.Serialization;
 using NewLife.Yun;
@@ -114,7 +115,7 @@ namespace XCoder.Yun
             SaveConfig();
             var cfg = Setting;
 
-            var map = type.CreateInstance() as NewLife.Yun.Map;
+            var map = type.CreateInstance() as Map;
             map.Log = XTrace.Log;
             map.CoordType = cfg.Coordtype;
 

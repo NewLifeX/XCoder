@@ -149,7 +149,7 @@ namespace NewLife.IoT.Protocols
             if (rs == null || rs.Length <= 0) return null;
 
             // 去掉2字节地址
-            return rs.ReadBytes(2);
+            return rs.ReadBytes(2, -1);
         }
 
         /// <summary>写入保持寄存器，0x06</summary>

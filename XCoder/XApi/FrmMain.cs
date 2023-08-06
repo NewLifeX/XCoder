@@ -70,19 +70,19 @@ namespace XApi
 
             LoadConfig();
 
-            // 语音识别
-            ThreadPoolX.QueueUserWorkItem(() =>
-            {
-                var sp = SpeechRecognition.Current;
-                if (!sp.Enable) return;
+            //// 语音识别
+            //ThreadPoolX.QueueUserWorkItem(() =>
+            //{
+            //    var sp = SpeechRecognition.Current;
+            //    if (!sp.Enable) return;
 
-                sp.Register("打开", () => this.Invoke(Connect))
-                .Register("关闭", () => this.Invoke(Disconnect))
-                .Register("退出", () => Application.Exit())
-                .Register("发送", () => this.Invoke(() => btnSend_Click(null, null)));
+            //    sp.Register("打开", () => this.Invoke(Connect))
+            //    .Register("关闭", () => this.Invoke(Disconnect))
+            //    .Register("退出", () => Application.Exit())
+            //    .Register("发送", () => this.Invoke(() => btnSend_Click(null, null)));
 
-                BizLog.Info("语音识别前缀：{0} 可用命令：{1}", sp.Name, sp.GetAllKeys().Join());
-            });
+            //    BizLog.Info("语音识别前缀：{0} 可用命令：{1}", sp.Name, sp.GetAllKeys().Join());
+            //});
         }
         #endregion
 

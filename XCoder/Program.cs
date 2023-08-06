@@ -6,134 +6,199 @@ using NewLife;
 using NewLife.Log;
 using NewLife.Threading;
 using System.Threading.Tasks;
+using NewLife.Model;
+using Stardust.Services;
+using Stardust.Models;
+using System.Net.NetworkInformation;
 #if !NET4
 using Stardust;
 #endif
 
-namespace XCoder
+namespace XCoder;
+
+static class Program
 {
-    static class Program
+    /// <summary>应用程序的主入口点。</summary>
+    [STAThread]
+    static void Main()
     {
-        /// <summary>应用程序的主入口点。</summary>
-        [STAThread]
-        static void Main()
-        {
 #if NC30
-            XTrace2.UseWinForm();
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+        XTrace2.UseWinForm();
+        Application.SetHighDpiMode(HighDpiMode.SystemAware);
 #else
-            XTrace.UseWinForm();
+        XTrace.UseWinForm();
 #endif
-            MachineInfo.RegisterAsync();
+        MachineInfo.RegisterAsync();
 
 #if !NET4
-            StartClient();
+        StartClient();
 #endif
 
-            StringHelper.EnableSpeechTip = XConfig.Current.SpeechTip;
+        StringHelper.EnableSpeechTip = XConfig.Current.SpeechTip;
 
-            if (XConfig.Current.IsNew) "学无先后达者为师，欢迎使用新生命码神工具！".SpeechTip();
+        if (XConfig.Current.IsNew) "学无先后达者为师，欢迎使用新生命码神工具！".SpeechTip();
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMDI());
-        }
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.Run(new FrmMDI());
+    }
 
 #if !NET4
-        static TimerX _timer;
-        static StarClient _Client;
-        //static ServiceManager _Manager;
-        private static void StartClient()
+    static TimerX _timer;
+    static StarClient _Client;
+    //static ServiceManager _Manager;
+    private static void StartClient()
+    {
+        var set = XConfig.Current;
+        var server = set.Server;
+        if (server.IsNullOrEmpty()) return;
+
+        XTrace.WriteLine("初始化服务端地址：{0}", server);
+
+        var client = new StarClient(server)
         {
-            var set = XConfig.Current;
-            var server = set.Server;
-            if (server.IsNullOrEmpty()) return;
+            Code = set.Code,
+            Secret = set.Secret,
+            ProductCode = "XCoder",
+            Log = XTrace.Log,
+        };
 
-            XTrace.WriteLine("初始化服务端地址：{0}", server);
-
-            var client = new StarClient(server)
+        // 登录后保存证书
+        client.OnLogined += (s, e) =>
+        {
+            var inf = client.Info;
+            if (inf != null && !inf.Code.IsNullOrEmpty())
             {
-                Code = set.Code,
-                Secret = set.Secret,
-                Log = XTrace.Log,
-            };
+                set.Code = inf.Code;
+                set.Secret = inf.Secret;
+                set.Save();
+            }
+        };
 
-            // 登录后保存证书
-            client.OnLogined += (s, e) =>
-            {
-                var inf = client.Info;
-                if (inf != null && !inf.Code.IsNullOrEmpty())
-                {
-                    set.Code = inf.Code;
-                    set.Secret = inf.Secret;
-                    set.Save();
-                }
-            };
+        // 使用跟踪
+        client.UseTrace();
 
-            client.UseTrace();
+        Application.ApplicationExit += (s, e) => client.Logout("ApplicationExit");
 
-            Application.ApplicationExit += (s, e) => client.Logout("ApplicationExit");
+        // 可能需要多次尝试
+        _timer = new TimerX(TryConnectServer, client, 0, 5_000) { Async = true };
 
-            // 可能需要多次尝试
-            _timer = new TimerX(TryConnectServer, client, 0, 5_000) { Async = true };
+        _Client = client;
+    }
 
-            _Client = client;
+    private static async Task TryConnectServer(Object state)
+    {
+        if (!NetworkInterface.GetIsNetworkAvailable() || AgentInfo.GetIps().IsNullOrEmpty())
+        {
+            return;
         }
 
-        private static async Task TryConnectServer(Object state)
+        var client = state as StarClient;
+
+        try
         {
-            var client = state as StarClient;
-            var set = XConfig.Current;
             await client.Login();
-            await CheckUpgrade(client, set.Channel);
+            //await CheckUpgrade(client);
+        }
+        catch (Exception ex)
+        {
+            // 登录报错后，加大定时间隔，输出简单日志
+            //_timer.Period = 30_000;
+            if (_timer.Period < 30_000) _timer.Period += 5_000;
 
-            // 登录成功，销毁定时器
-            //TimerX.Current.Period = 0;
-            _timer.TryDispose();
-            _timer = null;
+            XTrace.Log?.Error(ex.Message);
+
+            return;
         }
 
-        private static String _lastVersion;
-        private static async Task CheckUpgrade(StarClient client, String channel)
-        {
-            var ug = new Stardust.Web.Upgrade { Log = XTrace.Log };
+        _timer.TryDispose();
+        _timer = new TimerX(CheckUpgrade, null, 5_000, 600_000) { Async = true };
 
-            // 检查更新
-            var ur = await client.Upgrade(channel);
-            if (ur != null && ur.Version != _lastVersion)
+        client.RegisterCommand("node/upgrade", s => _timer.SetNext(-1));
+    }
+
+    private static String _lastVersion;
+    private static async Task CheckUpgrade(Object data)
+    {
+        var client = _Client;
+        using var span = client.Tracer?.NewSpan("CheckUpgrade", new { _lastVersion });
+
+        // 运行过程中可能改变配置文件的通道
+        var set = XConfig.Current;
+        var ug = new Stardust.Web.Upgrade { Log = XTrace.Log };
+
+        // 去除多余入口文件
+        ug.Trim("XCoder");
+
+        // 检查更新
+        var ur = await client.Upgrade(set.Channel);
+        if (ur != null && ur.Version != _lastVersion)
+        {
+            client.WriteInfoEvent("Upgrade", $"准备从[{_lastVersion}]更新到[{ur.Version}]，开始下载 {ur.Source}");
+            try
             {
-                ug.Url = ur.Source;
+                ug.Url = client.BuildUrl(ur.Source);
                 await ug.Download();
 
                 // 检查文件完整性
-                if (ur.FileHash.IsNullOrEmpty() || ug.CheckFileHash(ur.FileHash))
+                var checkHash = ug.CheckFileHash(ur.FileHash);
+                if (!ur.FileHash.IsNullOrEmpty() && !checkHash)
                 {
-                    // 执行更新，解压缩覆盖文件
-                    var rs = ug.Update();
-                    if (rs && !ur.Executor.IsNullOrEmpty()) ug.Run(ur.Executor);
-                    _lastVersion = ur.Version;
-
-                    // 去除多余入口文件
-                    ug.Trim("StarAgent");
-
-                    // 强制更新时，马上重启
-                    if (rs && ur.Force)
+                    client.WriteInfoEvent("Upgrade", "下载完成，哈希校验失败");
+                }
+                else
+                {
+                    client.WriteInfoEvent("Upgrade", "下载完成，准备解压文件");
+                    if (!ug.Extract())
                     {
-                        //StopWork("Upgrade");
+                        client.WriteInfoEvent("Upgrade", "解压失败");
+                    }
+                    else
+                    {
+                        if (!ur.Preinstall.IsNullOrEmpty())
+                        {
+                            client.WriteInfoEvent("Upgrade", "执行预安装脚本");
 
-                        // 重新拉起进程
-                        var star = "XCoder.exe";
-                        XTrace.WriteLine("强制升级，拉起进程 {0} -upgrade", star.GetFullPath());
-                        Process.Start(star.GetFullPath(), "-upgrade");
+                            ug.Run(ur.Preinstall);
+                        }
 
-                        //var p = Process.GetCurrentProcess();
-                        //p.Close();
-                        //p.Kill();
-                        Application.Exit();
+                        client.WriteInfoEvent("Upgrade", "解压完成，准备覆盖文件");
+
+                        // 执行更新，解压缩覆盖文件
+                        var rs = ug.Update();
+                        if (rs && !ur.Executor.IsNullOrEmpty()) ug.Run(ur.Executor);
+                        _lastVersion = ur.Version;
+
+                        // 去除多余入口文件
+                        ug.Trim("XCoder");
+
+                        // 强制更新时，马上重启
+                        if (rs && ur.Force)
+                        {
+                            // 重新拉起进程
+                            rs = ug.Run("XCoder.exe", "-run -upgrade");
+
+                            if (rs)
+                            {
+                                var pid = Process.GetCurrentProcess().Id;
+                                client.WriteInfoEvent("Upgrade", "强制更新完成，新进程已拉起，准备退出当前进程！PID=" + pid);
+
+                                ug.KillSelf();
+                            }
+                            else
+                            {
+                                client.WriteInfoEvent("Upgrade", "强制更新完成，但拉起新进程失败");
+                            }
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                XTrace.WriteException(ex);
+                client.WriteErrorEvent("Upgrade", ex.ToString());
+            }
         }
-#endif
     }
+#endif
 }

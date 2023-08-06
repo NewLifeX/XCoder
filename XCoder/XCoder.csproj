@@ -15,7 +15,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\..\XCoder\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
@@ -73,12 +73,6 @@
     <Compile Include="Data\RedisConfig.cs" />
     <Compile Include="Engine\IcoHelper.cs" />
     <Compile Include="Engine\ModelConfig.cs" />
-    <Compile Include="FileEncoding\FrmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FileEncoding\FrmMain.Designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </Compile>
     <Compile Include="FolderInfo\FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +141,7 @@
       <DependentUpon>SerialPortList.cs</DependentUpon>
     </Compile>
     <Compile Include="XCom\SerialTransport.cs" />
+    <Compile Include="XICO\FileSource.cs" />
     <Compile Include="XNet\BenchHelper.cs" />
     <Compile Include="XNet\FrmIp.cs">
       <SubType>Form</SubType>
@@ -186,12 +181,6 @@
     <Compile Include="XNet\RawSocket.cs" />
     <Compile Include="XNet\RegisterUnit.cs" />
     <Compile Include="XNet\TcpPacket.cs" />
-    <Compile Include="Yun\FrmMap.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Yun\FrmMap.Designer.cs">
-      <DependentUpon>FrmMap.cs</DependentUpon>
-    </Compile>
     <Compile Include="Engine\FileSource.cs" />
     <Compile Include="Engine\XConfig.cs" />
     <Compile Include="Tools\FrmGPS.cs">
@@ -241,15 +230,11 @@
     <Compile Include="XNet\FrmMain.designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Yun\MapSetting.cs" />
     <EmbeddedResource Include="Data\FrmRedis.resx">
       <DependentUpon>FrmRedis.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Data\FrmRedisConfig.resx">
       <DependentUpon>FrmRedisConfig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FileEncoding\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FolderInfo\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
@@ -292,9 +277,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="XNet\FrmSsh.resx">
       <DependentUpon>FrmSsh.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Yun\FrmMap.resx">
-      <DependentUpon>FrmMap.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Windows\FrmMain.cs">
       <SubType>Form</SubType>
@@ -402,25 +384,28 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NewLife.Core">
-      <Version>8.11.2021.1204</Version>
+      <Version>10.5.2023.801</Version>
+    </PackageReference>
+    <PackageReference Include="NewLife.Map">
+      <Version>2.3.2023.806</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
-      <Version>1.0.2021.1204</Version>
+      <Version>1.4.2023.806</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
-      <Version>3.6.2021.1204</Version>
+      <Version>4.3.2023.806</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
-      <Version>3.9.2021.1204</Version>
+      <Version>5.5.2023.803</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>1.5.2021.1204</Version>
+      <Version>2.9.2023.801</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>10.3.2021.1204</Version>
+      <Version>11.9.2023.801</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
-      <Version>2020.0.1</Version>
+      <Version>2020.0.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
