@@ -38,7 +38,6 @@ static class Program
 
     static TimerX _timer;
     static StarClient _Client;
-    //static ServiceManager _Manager;
     private static void StartClient()
     {
         var set = XConfig.Current;
@@ -168,7 +167,7 @@ static class Program
                         if (rs && ur.Force)
                         {
                             // 重新拉起进程
-                            rs = ug.Run("CrazyCoder.exe", "-run -upgrade");
+                            rs = ug.Run("CrazyCoder", "-run -upgrade");
 
                             if (rs)
                             {
