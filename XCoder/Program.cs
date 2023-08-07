@@ -46,7 +46,6 @@ static class Program
 #if !NET4
     static TimerX _timer;
     static StarClient _Client;
-    //static ServiceManager _Manager;
     private static void StartClient()
     {
         var set = XConfig.Current;
@@ -176,7 +175,7 @@ static class Program
                         if (rs && ur.Force)
                         {
                             // 重新拉起进程
-                            rs = ug.Run("XCoder.exe", "-run -upgrade");
+                            rs = ug.Run("XCoder", "-run -upgrade");
 
                             if (rs)
                             {

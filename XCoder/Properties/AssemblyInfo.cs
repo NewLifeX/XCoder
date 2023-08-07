@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 //      修订号
 //
 [assembly: AssemblyVersion("7.5.*")]
-[assembly: AssemblyFileVersion("7.5.2021.1211")]
+[assembly: AssemblyFileVersion("7.5.2023.0807")]
 
 /*
  * v7.5.2021.1211   新增ModbusMaster/ModbusSlave
