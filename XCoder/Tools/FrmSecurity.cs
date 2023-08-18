@@ -606,6 +606,12 @@ public partial class FrmSecurity : Form, IXForm
         sb.AppendLine(mi.ToJson(true));
         sb.AppendLine();
 
+        var osName = GetInfo("Win32_OperatingSystem", "Caption");
+        sb.AppendFormat("OSName:\t{0}\t(Win32_OperatingSystem.Caption)\r\n", osName);
+
+        var osVersion = GetInfo("Win32_OperatingSystem", "Version");
+        sb.AppendFormat("OSVersion:\t{0}\t(Win32_OperatingSystem.Version)\r\n", osVersion);
+
         var macs = GetMacs().ToList();
         if (macs.Count > 0) sb.AppendFormat("MAC:\t{0}\r\n", macs.Join(",", x => x.ToHex("-")));
 
