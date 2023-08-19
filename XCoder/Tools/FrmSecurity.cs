@@ -523,9 +523,12 @@ public partial class FrmSecurity : Form, IXForm
         var vs = v.Split('.');
         if (vs.Length == 3)
         {
+            var ss = pass.Split(':');
+
             var jwt = new JwtBuilder
             {
-                Secret = pass
+                Algorithm = ss[0],
+                Secret = ss[1],
             };
 
             var rs = jwt.TryDecode(v, out var message);
