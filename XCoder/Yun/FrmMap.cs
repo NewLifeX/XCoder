@@ -3,10 +3,10 @@ using System.Reflection;
 using NewLife;
 using NewLife.Data;
 using NewLife.Log;
+using NewLife.Map;
 using NewLife.Model;
 using NewLife.Reflection;
 using NewLife.Serialization;
-using NewLife.Yun;
 
 namespace XCoder.Yun;
 

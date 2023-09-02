@@ -122,7 +122,7 @@ static class Program
         ug.Trim("CrazyCoder");
 
         // 检查更新
-        var ur = await client.Upgrade(set.Channel);
+        var ur = await client.Upgrade(set.Channel, _lastVersion);
         if (ur != null && ur.Version != _lastVersion)
         {
             client.WriteInfoEvent("Upgrade", $"准备从[{_lastVersion}]更新到[{ur.Version}]，开始下载 {ur.Source}");
