@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>XCoder</AssemblyName>
     <RootNamespace>XCoder</RootNamespace>
     <AssemblyTitle>新生命码神工具</AssemblyTitle>
