@@ -1,13 +1,12 @@
-﻿using System;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 using NewLife;
-using NewLife.Xml;
+using NewLife.Configuration;
 
 namespace XCoder
 {
-    [XmlConfigFile("Config\\XCoder.config")]
-    public class XConfig : XmlConfig<XConfig>
+    //[XmlConfigFile("Config\\XCoder.config")]
+    [Config("XCoder")]
+    public class XConfig : Config<XConfig>
     {
         #region 属性
         /// <summary>标题</summary>
