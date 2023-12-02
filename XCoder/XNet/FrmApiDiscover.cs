@@ -145,7 +145,7 @@ public partial class FrmApiDiscover : Form, IXForm
         var enc = client.Encoder;
 
         // 解码结果
-        var result = enc.DecodeResult(msg.Action, msg.Data, e.Message);
+        var result = enc.DecodeResult(msg.Action, msg.Data, e.Message, typeof(ApiItem));
         //XTrace.WriteLine("Receive[{0}] {1}", udp.Client.LocalEndPoint, result.ToJson());
         var remote = (e.UserState as ReceivedEventArgs)?.Remote;
 
