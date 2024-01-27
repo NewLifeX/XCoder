@@ -105,7 +105,8 @@ internal class DbHelper
                 if (bts[0] == 'S' && bts[1] == 'Q' && Encoding.ASCII.GetString(bts) == sqlite)
                 {
                     var localstr = String.Format("Data Source={0};", item);
-                    if (!ContainConnStr(localstr)) DAL.AddConnStr("SQLite_" + Path.GetFileNameWithoutExtension(item), localstr, null, "SQLite");
+                    if (!ContainConnStr(localstr))
+                        DAL.AddConnStr("SQLite_" + Path.GetFileNameWithoutExtension(item), localstr, null, "SQLite");
                     return true;
                 }
             }
@@ -181,7 +182,9 @@ internal class DbHelper
                 var connName = String.Format("{0}_{1}", item, dbname);
 
                 builder["Database"] = dbname;
-                DAL.AddConnStr(connName, builder.ToString(), null, dbprovider);
+                var connstr = builder.ToString();
+                if (!ContainConnStr(connstr))
+                    DAL.AddConnStr(connName, connstr, null, dbprovider);
                 n++;
 
                 try
@@ -252,7 +255,9 @@ internal class DbHelper
                 var connName = String.Format("{0}_{1}", item, dbname);
 
                 builder["Database"] = dbname;
-                DAL.AddConnStr(connName, builder.ToString(), null, dbprovider);
+                var connstr = builder.ToString();
+                if (!ContainConnStr(connstr))
+                    DAL.AddConnStr(connName, connstr, null, dbprovider);
                 n++;
 
                 try
