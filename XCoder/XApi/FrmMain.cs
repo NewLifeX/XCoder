@@ -61,7 +61,7 @@ public partial class FrmMain : Form, IXForm
         LoadConfig();
 
         // 语音识别
-        ThreadPool.QueueUserWorkItem(s =>
+        ThreadPoolX.QueueUserWorkItem(() =>
         {
             var sp = SpeechRecognition.Current;
             if (!sp.Enable) return;

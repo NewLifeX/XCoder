@@ -11,560 +11,559 @@ using NewLife.Windows;
 using XCoder;
 using XCoder.XNet;
 
-namespace XNet
+namespace XNet;
+
+[Category("网络通信")]
+[DisplayName("网络调试工具")]
+public partial class FrmMain : Form, IXForm
 {
-    [Category("网络通信")]
-    [DisplayName("网络调试工具")]
-    public partial class FrmMain : Form, IXForm
+    NetServer _Server;
+    ISocketClient _Client;
+    static Task<Dictionary<String, Type>> _task;
+
+    /// <summary>业务日志输出</summary>
+    ILog BizLog;
+
+    #region 窗体
+    static FrmMain()
     {
-        NetServer _Server;
-        ISocketClient _Client;
-        static Task<Dictionary<String, Type>> _task;
+        _task = Task.Factory.StartNew(() => GetNetServers());
+    }
 
-        /// <summary>业务日志输出</summary>
-        ILog BizLog;
+    public FrmMain()
+    {
+        InitializeComponent();
 
-        #region 窗体
-        static FrmMain()
+        // 动态调节宽度高度，兼容高DPI
+        this.FixDpi();
+
+        //Icon = IcoHelper.GetIcon("网络");
+    }
+
+    private void FrmMain_Load(Object sender, EventArgs e)
+    {
+        var log = TextFileLog.Create(null, "Net_{0:yyyy_MM_dd}.log");
+        BizLog = txtReceive.Combine(log);
+        txtReceive.UseWinFormControl();
+
+        txtReceive.SetDefaultStyle(12);
+        txtSend.SetDefaultStyle(12);
+        //numMutilSend.SetDefaultStyle(12);
+
+        gbReceive.Tag = gbReceive.Text;
+        gbSend.Tag = gbSend.Text;
+
+        _task.ContinueWith(t =>
         {
-            _task = Task.Factory.StartNew(() => GetNetServers());
-        }
-
-        public FrmMain()
-        {
-            InitializeComponent();
-
-            // 动态调节宽度高度，兼容高DPI
-            this.FixDpi();
-
-            //Icon = IcoHelper.GetIcon("网络");
-        }
-
-        private void FrmMain_Load(Object sender, EventArgs e)
-        {
-            var log = TextFileLog.Create(null, "Net_{0:yyyy_MM_dd}.log");
-            BizLog = txtReceive.Combine(log);
-            txtReceive.UseWinFormControl();
-
-            txtReceive.SetDefaultStyle(12);
-            txtSend.SetDefaultStyle(12);
-            //numMutilSend.SetDefaultStyle(12);
-
-            gbReceive.Tag = gbReceive.Text;
-            gbSend.Tag = gbSend.Text;
-
-            _task.ContinueWith(t =>
+            var dic = EnumHelper.GetDescriptions<WorkModes>();
+            var list = dic.Select(kv => kv.Value).ToList();
+            //var ds = dic.ToDictionary(s => s.Value, s => s.Value);
+            foreach (var item in t.Result)
             {
-                var dic = EnumHelper.GetDescriptions<WorkModes>();
-                var list = dic.Select(kv => kv.Value).ToList();
-                //var ds = dic.ToDictionary(s => s.Value, s => s.Value);
-                foreach (var item in t.Result)
-                {
-                    list.Add(item.Key);
-                }
-                Invoke(() =>
-                {
-                    cbMode.DataSource = list;
-
-                    var cfg = NetConfig.Current;
-                    if (cfg.Mode > 0 && dic.ContainsKey((WorkModes)cfg.Mode))
-                        cbMode.SelectedItem = dic[(WorkModes)cfg.Mode];
-                    else
-                        cbMode.SelectedIndex = 0;
-                });
-            });
-
-            // 加载保存的颜色
-            UIConfig.Apply(txtReceive);
-
-            LoadConfig();
-
-            // 语音识别
-            ThreadPool.QueueUserWorkItem(s =>
-            {
-                var sp = SpeechRecognition.Current;
-                if (!sp.Enable) return;
-
-                sp.Register("打开", () => Invoke(Connect))
-                .Register("关闭", () => Invoke(Disconnect))
-                .Register("退出", () => Application.Exit())
-                .Register("发送", () => Invoke(() => btnSend_Click(null, null)));
-
-                BizLog.Info("语音识别前缀：{0} 可用命令：{1}", sp.Name, sp.GetAllKeys().Join());
-            });
-        }
-        #endregion
-
-        #region 加载/保存 配置
-        void LoadConfig()
-        {
-            var cfg = NetConfig.Current;
-            mi显示应用日志.Checked = cfg.ShowLog;
-            mi显示网络日志.Checked = cfg.ShowSocketLog;
-            mi显示接收字符串.Checked = cfg.ShowReceiveString;
-            mi显示发送数据.Checked = cfg.ShowSend;
-            mi显示接收数据.Checked = cfg.ShowReceive;
-            mi显示统计信息.Checked = cfg.ShowStat;
-            miHexSend.Checked = cfg.HexSend;
-
-            txtSend.Text = cfg.SendContent;
-            numMutilSend.Value = cfg.SendTimes;
-            numSleep.Value = cfg.SendSleep;
-            numThreads.Value = cfg.SendUsers;
-            mi日志着色.Checked = cfg.ColorLog;
-
-            cbLocal.DataSource = GetIPs();
-            if (!cfg.Local.IsNullOrEmpty())
-                cbLocal.SelectedItem = cfg.Local;
-            else
-                cbLocal.SelectedIndex = 0;
-
-            // 历史地址列表
-            if (!cfg.Address.IsNullOrEmpty()) cbRemote.DataSource = cfg.Address.Split(";");
-            if (cfg.Port > 0) numPort.Value = cfg.Port;
-        }
-
-        void SaveConfig()
-        {
-            var cfg = NetConfig.Current;
-            cfg.ShowLog = mi显示应用日志.Checked;
-            cfg.ShowSocketLog = mi显示网络日志.Checked;
-            cfg.ShowReceiveString = mi显示接收字符串.Checked;
-            cfg.ShowSend = mi显示发送数据.Checked;
-            cfg.ShowReceive = mi显示接收数据.Checked;
-            cfg.ShowStat = mi显示统计信息.Checked;
-            cfg.HexSend = miHexSend.Checked;
-
-            cfg.SendContent = txtSend.Text;
-            cfg.SendTimes = (Int32)numMutilSend.Value;
-            cfg.SendSleep = (Int32)numSleep.Value;
-            cfg.SendUsers = (Int32)numThreads.Value;
-            cfg.ColorLog = mi日志着色.Checked;
-
-            cfg.Local = cbLocal.Text;
-            cfg.AddAddress(cbRemote.Text);
-
-            cfg.Port = (Int32)numPort.Value;
-
-            cfg.Save();
-        }
-        #endregion
-
-        #region 收发数据
-        void Connect()
-        {
-            _Server = null;
-            _Client = null;
-
-            var mode = GetMode();
-            var local = cbLocal.Text;
-            var remote = cbRemote.Text;
-            var port = (Int32)numPort.Value;
-
-            var cfg = NetConfig.Current;
-            cfg.Mode = (Byte)mode;
-
-            switch (mode)
-            {
-                case WorkModes.UDP_TCP:
-                    _Server = new NetServer();
-                    break;
-                case WorkModes.UDP_Server:
-                    _Server = new NetServer
-                    {
-                        ProtocolType = NetType.Udp
-                    };
-                    break;
-                case WorkModes.TCP_Server:
-                    _Server = new NetServer
-                    {
-                        ProtocolType = NetType.Tcp
-                    };
-                    break;
-                case WorkModes.TCP_Client:
-                    _Client = new TcpSession();
-                    break;
-                case WorkModes.UDP_Client:
-                    _Client = new UdpServer();
-                    break;
-                default:
-                    if (mode > 0)
-                    {
-                        var ns = GetServer(cbMode.Text);
-                        if (ns == null) throw new XException("未识别服务[{0}]", mode);
-
-                        _Server = ns.GetType().CreateInstance() as NetServer;
-                    }
-                    break;
+                list.Add(item.Key);
             }
-
-            if (_Client != null)
+            Invoke(() =>
             {
-                _Client.Log = cfg.ShowLog ? BizLog : Logger.Null;
-                if (!local.Contains("所有本地")) _Client.Local.Host = local;
-                _Client.Received += OnReceived;
-                _Client.Remote.Port = port;
-                _Client.Remote.Host = remote;
-
-                _Client.LogSend = cfg.ShowSend;
-                _Client.LogReceive = cfg.ShowReceive;
-
-                if (!_Client.Open()) return;
-
-                "已连接服务器".SpeechTip();
-            }
-            else if (_Server != null)
-            {
-                if (_Server == null) _Server = new NetServer();
-                _Server.Log = cfg.ShowLog ? BizLog : Logger.Null;
-                _Server.SocketLog = cfg.ShowSocketLog ? BizLog : Logger.Null;
-                _Server.Port = port;
-                if (!local.Contains("所有本地")) _Server.Local.Host = local;
-                _Server.Received += OnReceived;
-
-                _Server.LogSend = cfg.ShowSend;
-                _Server.LogReceive = cfg.ShowReceive;
-
-                //// 加大会话超时时间到1天
-                //_Server.SessionTimeout = 24 * 3600;
-
-                _Server.Start();
-
-                $"正在监听{port}".SpeechTip();
-            }
-
-            pnlSetting.Enabled = false;
-            btnConnect.Text = "关闭";
-
-            cfg.Save();
-
-            _timer = new TimerX(ShowStat, null, 5000, 5000) { Async = true };
-        }
-
-        void Disconnect()
-        {
-            if (_Client != null)
-            {
-                _Client.Dispose();
-                _Client = null;
-
-                "关闭连接".SpeechTip();
-            }
-            if (_Server != null)
-            {
-                $"停止监听{_Server.Port}".SpeechTip();
-                _Server.Dispose();
-                _Server = null;
-            }
-            if (_timer != null)
-            {
-                _timer.Dispose();
-                _timer = null;
-            }
-
-            pnlSetting.Enabled = true;
-            btnConnect.Text = "打开";
-        }
-
-        TimerX _timer;
-        String _lastStat;
-        void ShowStat(Object state)
-        {
-            if (!NetConfig.Current.ShowStat) return;
-
-            var msg = "";
-            //if (_Client != null)
-            //    msg = _Client.GetStat();
-            //else 
-            if (_Server != null)
-                msg = _Server.GetStat();
-
-            if (!msg.IsNullOrEmpty() && msg != _lastStat)
-            {
-                _lastStat = msg;
-                BizLog.Info(msg);
-            }
-        }
-
-        private void btnConnect_Click(Object sender, EventArgs e)
-        {
-            SaveConfig();
-
-            var btn = sender as Button;
-            if (btn.Text == "打开")
-                Connect();
-            else
-                Disconnect();
-        }
-
-        void OnReceived(Object sender, ReceivedEventArgs e)
-        {
-            var session = sender as ISocketSession;
-            if (session == null)
-            {
-                var ns = sender as INetSession;
-                if (ns == null) return;
-                session = ns.Session;
-            }
-
-            if (NetConfig.Current.ShowReceiveString)
-            {
-                var line = e.Packet.ToStr();
-                //XTrace.WriteLine(line);
-
-                BizLog.Info(line);
-            }
-        }
-
-        Int32 _pColor = 0;
-        Int32 BytesOfReceived = 0;
-        Int32 BytesOfSent = 0;
-        Int32 lastReceive = 0;
-        Int32 lastSend = 0;
-        private void timer1_Tick(Object sender, EventArgs e)
-        {
-            //if (!pnlSetting.Enabled)
-            {
-                var rcount = BytesOfReceived;
-                var tcount = BytesOfSent;
-                if (rcount != lastReceive)
-                {
-                    gbReceive.Text = (gbReceive.Tag + "").Replace("0", rcount + "");
-                    lastReceive = rcount;
-                }
-                if (tcount != lastSend)
-                {
-                    gbSend.Text = (gbSend.Tag + "").Replace("0", tcount + "");
-                    lastSend = tcount;
-                }
+                cbMode.DataSource = list;
 
                 var cfg = NetConfig.Current;
-                if (cfg.ColorLog) txtReceive.ColourDefault(_pColor);
-                _pColor = txtReceive.TextLength;
-            }
+                if (cfg.Mode > 0 && dic.ContainsKey((WorkModes)cfg.Mode))
+                    cbMode.SelectedItem = dic[(WorkModes)cfg.Mode];
+                else
+                    cbMode.SelectedIndex = 0;
+            });
+        });
+
+        // 加载保存的颜色
+        UIConfig.Apply(txtReceive);
+
+        LoadConfig();
+
+        // 语音识别
+        ThreadPoolX.QueueUserWorkItem(() =>
+        {
+            var sp = SpeechRecognition.Current;
+            if (!sp.Enable) return;
+
+            sp.Register("打开", () => Invoke(Connect))
+            .Register("关闭", () => Invoke(Disconnect))
+            .Register("退出", () => Application.Exit())
+            .Register("发送", () => Invoke(() => btnSend_Click(null, null)));
+
+            BizLog.Info("语音识别前缀：{0} 可用命令：{1}", sp.Name, sp.GetAllKeys().Join());
+        });
+    }
+    #endregion
+
+    #region 加载/保存 配置
+    void LoadConfig()
+    {
+        var cfg = NetConfig.Current;
+        mi显示应用日志.Checked = cfg.ShowLog;
+        mi显示网络日志.Checked = cfg.ShowSocketLog;
+        mi显示接收字符串.Checked = cfg.ShowReceiveString;
+        mi显示发送数据.Checked = cfg.ShowSend;
+        mi显示接收数据.Checked = cfg.ShowReceive;
+        mi显示统计信息.Checked = cfg.ShowStat;
+        miHexSend.Checked = cfg.HexSend;
+
+        txtSend.Text = cfg.SendContent;
+        numMutilSend.Value = cfg.SendTimes;
+        numSleep.Value = cfg.SendSleep;
+        numThreads.Value = cfg.SendUsers;
+        mi日志着色.Checked = cfg.ColorLog;
+
+        cbLocal.DataSource = GetIPs();
+        if (!cfg.Local.IsNullOrEmpty())
+            cbLocal.SelectedItem = cfg.Local;
+        else
+            cbLocal.SelectedIndex = 0;
+
+        // 历史地址列表
+        if (!cfg.Address.IsNullOrEmpty()) cbRemote.DataSource = cfg.Address.Split(";");
+        if (cfg.Port > 0) numPort.Value = cfg.Port;
+    }
+
+    void SaveConfig()
+    {
+        var cfg = NetConfig.Current;
+        cfg.ShowLog = mi显示应用日志.Checked;
+        cfg.ShowSocketLog = mi显示网络日志.Checked;
+        cfg.ShowReceiveString = mi显示接收字符串.Checked;
+        cfg.ShowSend = mi显示发送数据.Checked;
+        cfg.ShowReceive = mi显示接收数据.Checked;
+        cfg.ShowStat = mi显示统计信息.Checked;
+        cfg.HexSend = miHexSend.Checked;
+
+        cfg.SendContent = txtSend.Text;
+        cfg.SendTimes = (Int32)numMutilSend.Value;
+        cfg.SendSleep = (Int32)numSleep.Value;
+        cfg.SendUsers = (Int32)numThreads.Value;
+        cfg.ColorLog = mi日志着色.Checked;
+
+        cfg.Local = cbLocal.Text;
+        cfg.AddAddress(cbRemote.Text);
+
+        cfg.Port = (Int32)numPort.Value;
+
+        cfg.Save();
+    }
+    #endregion
+
+    #region 收发数据
+    void Connect()
+    {
+        _Server = null;
+        _Client = null;
+
+        var mode = GetMode();
+        var local = cbLocal.Text;
+        var remote = cbRemote.Text;
+        var port = (Int32)numPort.Value;
+
+        var cfg = NetConfig.Current;
+        cfg.Mode = (Byte)mode;
+
+        switch (mode)
+        {
+            case WorkModes.UDP_TCP:
+                _Server = new NetServer();
+                break;
+            case WorkModes.UDP_Server:
+                _Server = new NetServer
+                {
+                    ProtocolType = NetType.Udp
+                };
+                break;
+            case WorkModes.TCP_Server:
+                _Server = new NetServer
+                {
+                    ProtocolType = NetType.Tcp
+                };
+                break;
+            case WorkModes.TCP_Client:
+                _Client = new TcpSession();
+                break;
+            case WorkModes.UDP_Client:
+                _Client = new UdpServer();
+                break;
+            default:
+                if (mode > 0)
+                {
+                    var ns = GetServer(cbMode.Text);
+                    if (ns == null) throw new XException("未识别服务[{0}]", mode);
+
+                    _Server = ns.GetType().CreateInstance() as NetServer;
+                }
+                break;
         }
 
-        private Task _Send;
-        private void btnSend_Click(Object sender, EventArgs e)
+        if (_Client != null)
         {
-            var str = txtSend.Text;
-            if (String.IsNullOrEmpty(str))
+            _Client.Log = cfg.ShowLog ? BizLog : Logger.Null;
+            if (!local.Contains("所有本地")) _Client.Local.Host = local;
+            _Client.Received += OnReceived;
+            _Client.Remote.Port = port;
+            _Client.Remote.Host = remote;
+
+            _Client.LogSend = cfg.ShowSend;
+            _Client.LogReceive = cfg.ShowReceive;
+
+            if (!_Client.Open()) return;
+
+            "已连接服务器".SpeechTip();
+        }
+        else if (_Server != null)
+        {
+            if (_Server == null) _Server = new NetServer();
+            _Server.Log = cfg.ShowLog ? BizLog : Logger.Null;
+            _Server.SocketLog = cfg.ShowSocketLog ? BizLog : Logger.Null;
+            _Server.Port = port;
+            if (!local.Contains("所有本地")) _Server.Local.Host = local;
+            _Server.Received += OnReceived;
+
+            _Server.LogSend = cfg.ShowSend;
+            _Server.LogReceive = cfg.ShowReceive;
+
+            //// 加大会话超时时间到1天
+            //_Server.SessionTimeout = 24 * 3600;
+
+            _Server.Start();
+
+            $"正在监听{port}".SpeechTip();
+        }
+
+        pnlSetting.Enabled = false;
+        btnConnect.Text = "关闭";
+
+        cfg.Save();
+
+        _timer = new TimerX(ShowStat, null, 5000, 5000) { Async = true };
+    }
+
+    void Disconnect()
+    {
+        if (_Client != null)
+        {
+            _Client.Dispose();
+            _Client = null;
+
+            "关闭连接".SpeechTip();
+        }
+        if (_Server != null)
+        {
+            $"停止监听{_Server.Port}".SpeechTip();
+            _Server.Dispose();
+            _Server = null;
+        }
+        if (_timer != null)
+        {
+            _timer.Dispose();
+            _timer = null;
+        }
+
+        pnlSetting.Enabled = true;
+        btnConnect.Text = "打开";
+    }
+
+    TimerX _timer;
+    String _lastStat;
+    void ShowStat(Object state)
+    {
+        if (!NetConfig.Current.ShowStat) return;
+
+        var msg = "";
+        //if (_Client != null)
+        //    msg = _Client.GetStat();
+        //else 
+        if (_Server != null)
+            msg = _Server.GetStat();
+
+        if (!msg.IsNullOrEmpty() && msg != _lastStat)
+        {
+            _lastStat = msg;
+            BizLog.Info(msg);
+        }
+    }
+
+    private void btnConnect_Click(Object sender, EventArgs e)
+    {
+        SaveConfig();
+
+        var btn = sender as Button;
+        if (btn.Text == "打开")
+            Connect();
+        else
+            Disconnect();
+    }
+
+    void OnReceived(Object sender, ReceivedEventArgs e)
+    {
+        var session = sender as ISocketSession;
+        if (session == null)
+        {
+            var ns = sender as INetSession;
+            if (ns == null) return;
+            session = ns.Session;
+        }
+
+        if (NetConfig.Current.ShowReceiveString)
+        {
+            var line = e.Packet.ToStr();
+            //XTrace.WriteLine(line);
+
+            BizLog.Info(line);
+        }
+    }
+
+    Int32 _pColor = 0;
+    Int32 BytesOfReceived = 0;
+    Int32 BytesOfSent = 0;
+    Int32 lastReceive = 0;
+    Int32 lastSend = 0;
+    private void timer1_Tick(Object sender, EventArgs e)
+    {
+        //if (!pnlSetting.Enabled)
+        {
+            var rcount = BytesOfReceived;
+            var tcount = BytesOfSent;
+            if (rcount != lastReceive)
             {
-                MessageBox.Show("发送内容不能为空！", Text);
-                txtSend.Focus();
-                return;
+                gbReceive.Text = (gbReceive.Tag + "").Replace("0", rcount + "");
+                lastReceive = rcount;
             }
-
-            // 多次发送
-            var count = (Int32)numMutilSend.Value;
-            var sleep = (Int32)numSleep.Value;
-            var ths = (Int32)numThreads.Value;
-            if (count <= 0) count = 1;
-            if (sleep <= 0) sleep = 1;
-
-            SaveConfig();
+            if (tcount != lastSend)
+            {
+                gbSend.Text = (gbSend.Tag + "").Replace("0", tcount + "");
+                lastSend = tcount;
+            }
 
             var cfg = NetConfig.Current;
+            if (cfg.ColorLog) txtReceive.ColourDefault(_pColor);
+            _pColor = txtReceive.TextLength;
+        }
+    }
 
-            // 处理换行
-            str = str.Replace("\n", "\r\n");
-            var buf = cfg.HexSend ? str.ToHex() : str.GetBytes();
-            var pk = new Packet(buf);
+    private Task _Send;
+    private void btnSend_Click(Object sender, EventArgs e)
+    {
+        var str = txtSend.Text;
+        if (String.IsNullOrEmpty(str))
+        {
+            MessageBox.Show("发送内容不能为空！", Text);
+            txtSend.Focus();
+            return;
+        }
 
-            if (_Client != null)
+        // 多次发送
+        var count = (Int32)numMutilSend.Value;
+        var sleep = (Int32)numSleep.Value;
+        var ths = (Int32)numThreads.Value;
+        if (count <= 0) count = 1;
+        if (sleep <= 0) sleep = 1;
+
+        SaveConfig();
+
+        var cfg = NetConfig.Current;
+
+        // 处理换行
+        str = str.Replace("\n", "\r\n");
+        var buf = cfg.HexSend ? str.ToHex() : str.GetBytes();
+        var pk = new Packet(buf);
+
+        if (_Client != null)
+        {
+            if (ths <= 1)
             {
-                if (ths <= 1)
+                _Client.SendConcurrency(pk, count, sleep);
+            }
+            else
+            {
+                var any = _Client.Local.Address.IsAny();
+                var list = new List<ISocketClient>();
+                for (var i = 0; i < ths; i++)
                 {
-                    _Client.SendConcurrency(pk, count, sleep);
+                    var client = _Client.Remote.CreateRemote();
+                    if (!any) client.Local.EndPoint = new IPEndPoint(_Client.Local.Address, 2000 + i);
+                    //client.StatSend = _Client.StatSend;
+                    //client.StatReceive = _Client.StatReceive;
+                    //client.SendMulti(buf, count, sleep);
+
+                    list.Add(client);
                 }
-                else
+                var ts = new List<Task>();
+                for (var i = 0; i < ths; i++)
                 {
-                    var any = _Client.Local.Address.IsAny();
-                    var list = new List<ISocketClient>();
-                    for (var i = 0; i < ths; i++)
-                    {
-                        var client = _Client.Remote.CreateRemote();
-                        if (!any) client.Local.EndPoint = new IPEndPoint(_Client.Local.Address, 2000 + i);
-                        //client.StatSend = _Client.StatSend;
-                        //client.StatReceive = _Client.StatReceive;
-                        //client.SendMulti(buf, count, sleep);
-
-                        list.Add(client);
-                    }
-                    var ts = new List<Task>();
-                    for (var i = 0; i < ths; i++)
-                    {
-                        var task = list[i].SendConcurrency(pk, count, sleep);
-                        ts.Add(task);
-                    }
-
-                    _Send = Task.WhenAll(ts);
+                    var task = list[i].SendConcurrency(pk, count, sleep);
+                    ts.Add(task);
                 }
+
+                _Send = Task.WhenAll(ts);
             }
-            else if (_Server != null)
+        }
+        else if (_Server != null)
+        {
+            Task.Run(async () =>
             {
-                Task.Run(async () =>
+                BizLog.Info("准备向[{0}]个客户端发送[{1}]次[{2}]的数据", _Server.SessionCount, count, buf.Length);
+                for (var i = 0; i < count && _Server != null; i++)
                 {
-                    BizLog.Info("准备向[{0}]个客户端发送[{1}]次[{2}]的数据", _Server.SessionCount, count, buf.Length);
-                    for (var i = 0; i < count && _Server != null; i++)
-                    {
-                        var sw = Stopwatch.StartNew();
-                        var cs = await _Server.SendAllAsync(buf);
-                        sw.Stop();
-                        BizLog.Info("{3}/{4} 已向[{0}]个客户端发送[{1}]数据 {2:n0}ms", cs, buf.Length, sw.ElapsedMilliseconds, i + 1, count);
-                        if (sleep > 0) await Task.Delay(sleep);
-                    }
-                });
-            }
+                    var sw = Stopwatch.StartNew();
+                    var cs = await _Server.SendAllAsync(buf);
+                    sw.Stop();
+                    BizLog.Info("{3}/{4} 已向[{0}]个客户端发送[{1}]数据 {2:n0}ms", cs, buf.Length, sw.ElapsedMilliseconds, i + 1, count);
+                    if (sleep > 0) await Task.Delay(sleep);
+                }
+            });
         }
-        #endregion
+    }
+    #endregion
 
-        #region 右键菜单
-        private void mi清空_Click(Object sender, EventArgs e)
+    #region 右键菜单
+    private void mi清空_Click(Object sender, EventArgs e)
+    {
+        txtReceive.Clear();
+        BytesOfReceived = 0;
+    }
+
+    private void mi清空2_Click(Object sender, EventArgs e)
+    {
+        txtSend.Clear();
+        BytesOfSent = 0;
+    }
+
+    private void mi显示应用日志_Click(Object sender, EventArgs e)
+    {
+        var mi = sender as ToolStripMenuItem;
+        mi.Checked = !mi.Checked;
+    }
+
+    private void mi显示网络日志_Click(Object sender, EventArgs e)
+    {
+        var mi = sender as ToolStripMenuItem;
+        mi.Checked = !mi.Checked;
+    }
+
+    private void mi显示发送数据_Click(Object sender, EventArgs e)
+    {
+        var mi = sender as ToolStripMenuItem;
+        mi.Checked = !mi.Checked;
+    }
+
+    private void mi显示接收数据_Click(Object sender, EventArgs e)
+    {
+        var mi = sender as ToolStripMenuItem;
+        mi.Checked = !mi.Checked;
+    }
+
+    private void mi显示统计信息_Click(Object sender, EventArgs e)
+    {
+        var mi = sender as ToolStripMenuItem;
+        NetConfig.Current.ShowStat = mi.Checked = !mi.Checked;
+    }
+
+    private void mi显示接收字符串_Click(Object sender, EventArgs e)
+    {
+        var mi = sender as ToolStripMenuItem;
+        NetConfig.Current.ShowReceiveString = mi.Checked = !mi.Checked;
+    }
+
+    private void miHex发送_Click(Object sender, EventArgs e)
+    {
+        var mi = sender as ToolStripMenuItem;
+        NetConfig.Current.HexSend = mi.Checked = !mi.Checked;
+    }
+
+    private void 查看Tcp参数ToolStripMenuItem_Click(Object sender, EventArgs e)
+    {
+        NetHelper2.ShowTcpParameters();
+    }
+
+    private void 设置最大TcpToolStripMenuItem_Click(Object sender, EventArgs e)
+    {
+        NetHelper2.SetTcpMax();
+    }
+
+    private void mi日志着色_Click(Object sender, EventArgs e)
+    {
+        var mi = sender as ToolStripMenuItem;
+        mi.Checked = !mi.Checked;
+    }
+    #endregion
+
+    private void cbMode_SelectedIndexChanged(Object sender, EventArgs e)
+    {
+        var mode = GetMode();
+        if (mode == 0) return;
+
+        switch (mode)
         {
-            txtReceive.Clear();
-            BytesOfReceived = 0;
+            case WorkModes.TCP_Client:
+            case WorkModes.UDP_Client:
+                break;
+            default:
+            case WorkModes.UDP_TCP:
+            case WorkModes.UDP_Server:
+            case WorkModes.TCP_Server:
+                break;
+            case (WorkModes)0xFF:
+                // 端口
+                var ns = GetServer(cbMode.Text);
+                if (ns != null && ns.Port > 0) numPort.Value = ns.Port;
+
+                break;
         }
+    }
 
-        private void mi清空2_Click(Object sender, EventArgs e)
-        {
-            txtSend.Clear();
-            BytesOfSent = 0;
-        }
+    WorkModes GetMode()
+    {
+        var mode = cbMode.Text;
+        if (String.IsNullOrEmpty(mode)) return 0;
 
-        private void mi显示应用日志_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
+        var list = EnumHelper.GetDescriptions<WorkModes>().Where(kv => kv.Value == mode).ToList();
+        if (list.Count == 0) return (WorkModes)0xFF;
 
-        private void mi显示网络日志_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
+        return list[0].Key;
+    }
 
-        private void mi显示发送数据_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
+    static String[] GetIPs()
+    {
+        var list = NetHelper.GetIPs().Select(e => e.ToString()).ToList();
+        list.Insert(0, "所有本地IPv4/IPv6");
+        list.Insert(1, IPAddress.Any.ToString());
+        list.Insert(2, IPAddress.IPv6Any.ToString());
 
-        private void mi显示接收数据_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
+        return list.ToArray();
+    }
 
-        private void mi显示统计信息_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            NetConfig.Current.ShowStat = mi.Checked = !mi.Checked;
-        }
+    static Dictionary<String, Type> _ns;
+    static Dictionary<String, Type> GetNetServers()
+    {
+        if (_ns != null) return _ns;
 
-        private void mi显示接收字符串_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            NetConfig.Current.ShowReceiveString = mi.Checked = !mi.Checked;
-        }
-
-        private void miHex发送_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            NetConfig.Current.HexSend = mi.Checked = !mi.Checked;
-        }
-
-        private void 查看Tcp参数ToolStripMenuItem_Click(Object sender, EventArgs e)
-        {
-            NetHelper2.ShowTcpParameters();
-        }
-
-        private void 设置最大TcpToolStripMenuItem_Click(Object sender, EventArgs e)
-        {
-            NetHelper2.SetTcpMax();
-        }
-
-        private void mi日志着色_Click(Object sender, EventArgs e)
-        {
-            var mi = sender as ToolStripMenuItem;
-            mi.Checked = !mi.Checked;
-        }
-        #endregion
-
-        private void cbMode_SelectedIndexChanged(Object sender, EventArgs e)
-        {
-            var mode = GetMode();
-            if (mode == 0) return;
-
-            switch (mode)
-            {
-                case WorkModes.TCP_Client:
-                case WorkModes.UDP_Client:
-                    break;
-                default:
-                case WorkModes.UDP_TCP:
-                case WorkModes.UDP_Server:
-                case WorkModes.TCP_Server:
-                    break;
-                case (WorkModes)0xFF:
-                    // 端口
-                    var ns = GetServer(cbMode.Text);
-                    if (ns != null && ns.Port > 0) numPort.Value = ns.Port;
-
-                    break;
-            }
-        }
-
-        WorkModes GetMode()
-        {
-            var mode = cbMode.Text;
-            if (String.IsNullOrEmpty(mode)) return 0;
-
-            var list = EnumHelper.GetDescriptions<WorkModes>().Where(kv => kv.Value == mode).ToList();
-            if (list.Count == 0) return (WorkModes)0xFF;
-
-            return list[0].Key;
-        }
-
-        static String[] GetIPs()
-        {
-            var list = NetHelper.GetIPs().Select(e => e.ToString()).ToList();
-            list.Insert(0, "所有本地IPv4/IPv6");
-            list.Insert(1, IPAddress.Any.ToString());
-            list.Insert(2, IPAddress.IPv6Any.ToString());
-
-            return list.ToArray();
-        }
-
-        static Dictionary<String, Type> _ns;
-        static Dictionary<String, Type> GetNetServers()
+        lock (typeof(FrmMain))
         {
             if (_ns != null) return _ns;
 
-            lock (typeof(FrmMain))
+            var dic = new Dictionary<String, Type>();
+            foreach (var item in typeof(NetServer).GetAllSubclasses())
             {
-                if (_ns != null) return _ns;
-
-                var dic = new Dictionary<String, Type>();
-                foreach (var item in typeof(NetServer).GetAllSubclasses())
+                try
                 {
-                    try
-                    {
-                        var ns = item.CreateInstance() as NetServer;
-                        if (ns != null) dic.Add(item.GetDisplayName() ?? ns.Name, item);
-                    }
-                    catch { }
+                    var ns = item.CreateInstance() as NetServer;
+                    if (ns != null) dic.Add(item.GetDisplayName() ?? ns.Name, item);
                 }
-
-                return _ns = dic;
+                catch { }
             }
-        }
 
-        static NetServer GetServer(String name)
-        {
-            if (!GetNetServers().TryGetValue(name, out var t)) return null;
-
-            return t.CreateInstance() as NetServer;
+            return _ns = dic;
         }
+    }
+
+    static NetServer GetServer(String name)
+    {
+        if (!GetNetServers().TryGetValue(name, out var t)) return null;
+
+        return t.CreateInstance() as NetServer;
     }
 }
