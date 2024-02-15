@@ -505,8 +505,8 @@ public partial class FrmSecurity : Form, IXForm
             SetResult(
                 $"十六：{v:X16}",
                 $"编码：{(t << 2):X8} {workerId:X2} {sequence:X3}",
-                $"基准：{snow.StartTimestamp:yyyy-MM-dd}",
-                $"时间：{time.ToFullString()} ({t} / {(t << 22):X8})",
+                $"基准：{snow.StartTimestamp.ToFullString()} {snow.StartTimestamp.Kind}",
+                $"时间：{time.ToFullString()} {time.Kind} ({t} / {(t << 22):X8})",
                 $"节点：{workerId} ({workerId:X4})",
                 $"序号：{sequence} ({sequence:X4})",
                 $"本机：{snow.WorkerId} ({snow.WorkerId:X4})");
