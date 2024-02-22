@@ -403,9 +403,9 @@ public partial class FrmSecurity : Form, IXForm
         var sb = Pool.StringBuilder.Get();
 
         DateTime.TryParse(rtPass.Text, out var baseTime);
-        var utc = new DateTime(1970, 1, 1);
+        var utc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-        if (baseTime > DateTime.MinValue) sb.AppendFormat("基准：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", baseTime);
+        if (baseTime > DateTime.MinValue) sb.AppendFormat("基准：{0:yyyy-MM-dd HH:mm:ss.fff} {1}\r\n", baseTime, baseTime.Kind);
 
         var dt = v.ToDateTime();
         if (dt.Year > 1 && dt.Year < 3000)
@@ -428,11 +428,14 @@ public partial class FrmSecurity : Form, IXForm
         if (n >= Int32.MaxValue)
         {
             dt = n.ToDateTime();
+            // 当前未指定时区，为指定为UTC，需要先转为本地时间
+            dt = dt.ToLocalTime().ToUniversalTime();
             if (baseTime > DateTime.MinValue) dt = dt.Add(baseTime - utc);
             if (dt.Year > 1000 && dt.Year < 3000)
             {
-                sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff} (Unix毫秒)\r\n", dt);
-                sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff} (现在)\r\n", dt.ToLocalTime());
+                sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff} (Unix毫秒) {1}\r\n", dt, dt.Kind);
+                dt = dt.ToLocalTime();
+                sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss.fff} (现在) {1}\r\n", dt, dt.Kind);
             }
 
             //sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss.fff}\r\n", now.AddMilliseconds(-n));
@@ -441,11 +444,14 @@ public partial class FrmSecurity : Form, IXForm
         else if (n > 0)
         {
             dt = v.ToInt().ToDateTime();
+            // 当前未指定时区，为指定为UTC，需要先转为本地时间
+            dt = dt.ToLocalTime().ToUniversalTime();
             if (baseTime > DateTime.MinValue) dt = dt.Add(baseTime - utc);
             if (dt.Year > 1000 && dt.Year < 3000)
             {
-                sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss} (Unix秒)\r\n", dt);
-                sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss} (现在)\r\n", dt.ToLocalTime());
+                sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss} (Unix秒) {1}\r\n", dt, dt.Kind);
+                dt = dt.ToLocalTime();
+                sb.AppendFormat("时间：{0:yyyy-MM-dd HH:mm:ss} (现在) {1}\r\n", dt, dt.Kind);
             }
 
             //sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss}\r\n", now.AddSeconds(-n));
