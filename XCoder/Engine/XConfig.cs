@@ -79,7 +79,7 @@ namespace XCoder
         {
             if (UpdateServer.IsNullOrEmpty() || UpdateServer.EqualIgnoreCase("http://x.newlifex.com/")) UpdateServer = NewLife.Setting.Current.PluginServer;
 
-            if (Server.IsNullOrEmpty()) Server = "http://star.newlifex.com:6600";
+            if (Server.IsNullOrEmpty()) Server = "http://s.newlifex.com:6600";
 
             base.OnLoaded();
         }
