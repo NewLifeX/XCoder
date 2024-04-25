@@ -1,14 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Net;
-using System.Net.Sockets;
 using System.Runtime.Serialization;
 using NewLife;
 using NewLife.Log;
-using NewLife.Messaging;
 using NewLife.Net;
 using NewLife.Remoting;
 using NewLife.Security;
-using NewLife.Serialization;
 using Stardust.Models;
 using XCoder;
 using XCoder.Common;
@@ -54,7 +51,7 @@ public partial class FrmApiDiscover : Form, IXForm
                 var task = Task.Run(() => DiscoverUdp(null, ep));
                 ts.Add(task);
             }
-            foreach (var ip in NetHelper.GetIPs().Where(e => e.IsIPv4()))
+            foreach (var ip in NetHelper.GetIPs())
             {
                 var ep = new IPEndPoint(IPAddress.Broadcast, port);
                 var task = Task.Run(() => DiscoverUdp(ip, ep));
@@ -70,68 +67,94 @@ public partial class FrmApiDiscover : Form, IXForm
         }
     }
 
+    class MyClient : ApiClient
+    {
+        public IPAddress Local { get; set; }
+
+        public MyClient(String uri) : base(uri) { }
+
+        protected override ISocketClient OnCreate(String svr)
+        {
+            var client = base.OnCreate(svr);
+            if (Local != null)
+                client.Local = new NetUri { Address = Local };
+
+            return client;
+        }
+    }
+
     async Task DiscoverUdp(IPAddress local, IPEndPoint ep)
     {
         XTrace.WriteLine("DiscoverUdp: {0} -> {1}", local, ep);
 
-        //var uri = new NetUri("udp://255.255.255.255:5500");
-        var client = new ApiClient($"udp://{ep.Address}:{ep.Port}");
-        client.Received += Client_Received;
+        try
+        {
+            //var uri = new NetUri("udp://255.255.255.255:5500");
+            var client = new MyClient($"udp://{ep.Address}:{ep.Port}");
+            if (local != null) client.Local = local;
+            client.Received += Client_Received;
 
-        // 异步发送，但是不等待返回，因为可能会有多个返回，在事件里处理
-        _ = client.InvokeAsync<Object>("Api/Info");
+            // 异步发送，但是不等待返回，因为可能会有多个返回，在事件里处理
+            await client.InvokeAsync<Object>("Api/Info");
 
-        await Task.Delay(1_000);
+            await Task.Delay(1_000);
 
-        //client.InvokeOneWay("Info");
+            //client.InvokeOneWay("Info");
 
-        //// 构建请求
-        //var enc = new JsonEncoder();
-        //var msg = enc.CreateRequest("Api/Info", null);
-        //var req = msg.ToPacket().ReadBytes();
+            //// 构建请求
+            //var enc = new JsonEncoder();
+            //var msg = enc.CreateRequest("Api/Info", null);
+            //var req = msg.ToPacket().ReadBytes();
 
-        //var udp = new UdpClient(ep.AddressFamily)
-        //{
-        //    EnableBroadcast = true
-        //};
+            //var udp = new UdpClient(ep.AddressFamily)
+            //{
+            //    EnableBroadcast = true
+            //};
 
-        //if (local != null) udp.Client.Bind(new IPEndPoint(local, Rand.Next(1000, 60000)));
+            //if (local != null) udp.Client.Bind(new IPEndPoint(local, Rand.Next(1000, 60000)));
 
-        //// 发送
-        //udp.Send(req, req.Length, ep);
+            //// 发送
+            //udp.Send(req, req.Length, ep);
 
-        //// 多次接收
-        //while (true)
-        //{
-        //    try
-        //    {
-        //        var source = new CancellationTokenSource(3_000);
-        //        var rs = await udp.ReceiveAsync(source.Token);
-        //        if (rs.Buffer != null)
-        //        {
-        //            msg = new DefaultMessage();
-        //            msg.Read(rs.Buffer);
+            //// 多次接收
+            //while (true)
+            //{
+            //    try
+            //    {
+            //        var source = new CancellationTokenSource(3_000);
+            //        var rs = await udp.ReceiveAsync(source.Token);
+            //        if (rs.Buffer != null)
+            //        {
+            //            msg = new DefaultMessage();
+            //            msg.Read(rs.Buffer);
 
-        //            if (enc.Decode(msg, out var action, out var code, out var data) && code == 0)
-        //            {
-        //                // 解码结果
-        //                var result = enc.DecodeResult(action, data, msg);
-        //                XTrace.WriteLine("Receive[{0}] {1}", udp.Client.LocalEndPoint, result.ToJson());
+            //            if (enc.Decode(msg, out var action, out var code, out var data) && code == 0)
+            //            {
+            //                // 解码结果
+            //                var result = enc.DecodeResult(action, data, msg);
+            //                XTrace.WriteLine("Receive[{0}] {1}", udp.Client.LocalEndPoint, result.ToJson());
 
-        //                if (enc.Convert(result, typeof(ApiItem)) is ApiItem ai)
-        //                {
-        //                    ai.RemoteIP = rs.RemoteEndPoint.Address + "";
+            //                if (enc.Convert(result, typeof(ApiItem)) is ApiItem ai)
+            //                {
+            //                    ai.RemoteIP = rs.RemoteEndPoint.Address + "";
 
-        //                    Invoke(() => ShowItem(ai));
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (OperationCanceledException)
-        //    {
-        //        break;
-        //    }
-        //}
+            //                    Invoke(() => ShowItem(ai));
+            //                }
+            //            }
+            //        }
+            //    }
+            //    catch (OperationCanceledException)
+            //    {
+            //        break;
+            //    }
+            //}
+        }
+        catch (Exception ex)
+        {
+            XTrace.WriteException(ex);
+
+            MessageBox.Show(ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     private void Client_Received(Object sender, ApiReceivedEventArgs e)
