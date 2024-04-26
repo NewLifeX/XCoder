@@ -67,22 +67,6 @@ public partial class FrmApiDiscover : Form, IXForm
         }
     }
 
-    class MyClient : ApiClient
-    {
-        public IPAddress Local { get; set; }
-
-        public MyClient(String uri) : base(uri) { }
-
-        protected override ISocketClient OnCreate(String svr)
-        {
-            var client = base.OnCreate(svr);
-            if (Local != null)
-                client.Local = new NetUri { Address = Local };
-
-            return client;
-        }
-    }
-
     async Task DiscoverUdp(IPAddress local, IPEndPoint ep)
     {
         XTrace.WriteLine("DiscoverUdp: {0} -> {1}", local, ep);
@@ -90,8 +74,8 @@ public partial class FrmApiDiscover : Form, IXForm
         try
         {
             //var uri = new NetUri("udp://255.255.255.255:5500");
-            var client = new MyClient($"udp://{ep.Address}:{ep.Port}");
-            if (local != null) client.Local = local;
+            var client = new ApiClient($"udp://{ep.Address}:{ep.Port}");
+            if (local != null) client.Local = new NetUri { Address = local };
             client.Received += Client_Received;
 
             // 异步发送，但是不等待返回，因为可能会有多个返回，在事件里处理

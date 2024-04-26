@@ -67,13 +67,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NewLife.Map" Version="2.5.2024.410-beta1241" />
-    <PackageReference Include="NewLife.ModbusRTU" Version="1.8.2024.217" />
-    <PackageReference Include="NewLife.Remoting" Version="2.8.2024.419-beta0703" />
+    <PackageReference Include="NewLife.ModbusRTU" Version="1.8.2024.426-beta1011" />
+    <PackageReference Include="NewLife.Remoting" Version="2.8.2024.426-beta1006" />
     <PackageReference Include="System.Speech" Version="8.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>10.10.2024.424-beta1020</Version>
+      <Version>10.10.2024.426-beta1001</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
       <Version>2.0.2024.407</Version>
@@ -85,7 +85,7 @@
       <Version>5.6.2024.420-beta0005</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>2.9.2024.425-beta0447</Version>
+      <Version>2.9.2024.426-beta1008</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
       <Version>11.11.2024.424-beta1026</Version>
