@@ -73,7 +73,7 @@
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>10.10.2024.426-beta1001</Version>
+      <Version>10.10.2024.501</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
       <Version>2.0.2024.407</Version>
@@ -88,7 +88,7 @@
       <Version>2.9.2024.426-beta1008</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>11.11.2024.424-beta1026</Version>
+      <Version>11.12.2024.503</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2024.0.0</Version>
