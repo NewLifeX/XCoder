@@ -1,14 +1,10 @@
-﻿using System.Diagnostics;
-using System.Net.NetworkInformation;
+﻿using System.Net.NetworkInformation;
 using System.Text;
 using NewLife;
 using NewLife.Log;
-using NewLife.Remoting.Clients;
-using NewLife.Remoting.Models;
 using NewLife.Threading;
 using Stardust;
 using Stardust.Models;
-using Stardust.Services;
 
 namespace XCoder;
 
@@ -26,9 +22,10 @@ static class Program
 
         StartClient();
 
-        StringHelper.EnableSpeechTip = XConfig.Current.SpeechTip;
+        var set = XConfig.Current;
+        StringHelper.EnableSpeechTip = set.SpeechTip;
 
-        if (XConfig.Current.IsNew) "学无先后达者为师，欢迎使用新生命码神工具！".SpeechTip();
+        if (set.IsNew) "学无先后达者为师，欢迎使用新生命码神工具！".SpeechTip();
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
@@ -39,6 +36,7 @@ static class Program
     }
 
     static TimerX _timer;
+    static StarFactory _factory;
     static StarClient _Client;
     private static void StartClient()
     {
@@ -48,11 +46,18 @@ static class Program
 
         XTrace.WriteLine("初始化服务端地址：{0}", server);
 
+        _factory = new StarFactory(server, "CrazyCoder", null)
+        {
+            Log = XTrace.Log,
+        };
+
         var client = new StarClient(server)
         {
             Code = set.Code,
             Secret = set.Secret,
             ProductCode = "CrazyCoder",
+
+            Tracer = _factory.Tracer,
             Log = XTrace.Log,
         };
 
@@ -104,92 +109,5 @@ static class Program
         }
 
         _timer.TryDispose();
-        _timer = new TimerX(CheckUpgrade, null, 5_000, 600_000) { Async = true };
-
-        client.RegisterCommand("node/upgrade", s => _timer.SetNext(-1));
-    }
-
-    private static String _lastVersion;
-    private static async Task CheckUpgrade(Object data)
-    {
-        var client = _Client;
-        using var span = client.Tracer?.NewSpan("CheckUpgrade", new { _lastVersion });
-
-        // 运行过程中可能改变配置文件的通道
-        var set = XConfig.Current;
-        var ug = new Upgrade { Log = XTrace.Log };
-
-        // 去除多余入口文件
-        ug.Trim("CrazyCoder");
-
-        // 检查更新
-        var ur = await client.Upgrade(set.Channel);
-        if (ur != null && ur.Version != _lastVersion)
-        {
-            client.WriteInfoEvent("Upgrade", $"准备从[{_lastVersion}]更新到[{ur.Version}]，开始下载 {ur.Source}");
-            try
-            {
-                ug.Url = client.BuildUrl(ur.Source);
-                await ug.Download();
-
-                // 检查文件完整性
-                var checkHash = ug.CheckFileHash(ur.FileHash);
-                if (!ur.FileHash.IsNullOrEmpty() && !checkHash)
-                {
-                    client.WriteInfoEvent("Upgrade", "下载完成，哈希校验失败");
-                }
-                else
-                {
-                    client.WriteInfoEvent("Upgrade", "下载完成，准备解压文件");
-                    if (!ug.Extract())
-                    {
-                        client.WriteInfoEvent("Upgrade", "解压失败");
-                    }
-                    else
-                    {
-                        if (ur is UpgradeInfo ur2 && !ur2.Preinstall.IsNullOrEmpty())
-                        {
-                            client.WriteInfoEvent("Upgrade", "执行预安装脚本");
-
-                            ug.Run(ur2.Preinstall);
-                        }
-
-                        client.WriteInfoEvent("Upgrade", "解压完成，准备覆盖文件");
-
-                        // 执行更新，解压缩覆盖文件
-                        var rs = ug.Update();
-                        if (rs && !ur.Executor.IsNullOrEmpty()) ug.Run(ur.Executor);
-                        _lastVersion = ur.Version;
-
-                        // 去除多余入口文件
-                        ug.Trim("CrazyCoder");
-
-                        // 强制更新时，马上重启
-                        if (rs && ur.Force)
-                        {
-                            // 重新拉起进程
-                            rs = ug.Run("CrazyCoder", "-run -upgrade");
-
-                            if (rs)
-                            {
-                                var pid = Process.GetCurrentProcess().Id;
-                                client.WriteInfoEvent("Upgrade", "强制更新完成，新进程已拉起，准备退出当前进程！PID=" + pid);
-
-                                ug.KillSelf();
-                            }
-                            else
-                            {
-                                client.WriteInfoEvent("Upgrade", "强制更新完成，但拉起新进程失败");
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                XTrace.WriteException(ex);
-                client.WriteErrorEvent("Upgrade", ex.ToString());
-            }
-        }
     }
 }
