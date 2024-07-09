@@ -3,6 +3,8 @@ using System.Net.NetworkInformation;
 using System.Text;
 using NewLife;
 using NewLife.Log;
+using NewLife.Remoting.Clients;
+using NewLife.Remoting.Models;
 using NewLife.Threading;
 using Stardust;
 using Stardust.Models;
@@ -57,17 +59,16 @@ static class Program
         // 登录后保存证书
         client.OnLogined += (s, e) =>
         {
-            var inf = client.Info;
-            if (inf != null && !inf.Code.IsNullOrEmpty())
+            if (client.Logined && !client.Code.IsNullOrEmpty())
             {
-                set.Code = inf.Code;
-                set.Secret = inf.Secret;
+                set.Code = client.Code;
+                set.Secret = client.Secret;
                 set.Save();
             }
         };
 
         // 使用跟踪
-        client.UseTrace();
+        //client.UseTrace();
 
         Application.ApplicationExit += (s, e) => client.Logout("ApplicationExit");
 
@@ -116,13 +117,13 @@ static class Program
 
         // 运行过程中可能改变配置文件的通道
         var set = XConfig.Current;
-        var ug = new Stardust.Web.Upgrade { Log = XTrace.Log };
+        var ug = new Upgrade { Log = XTrace.Log };
 
         // 去除多余入口文件
         ug.Trim("CrazyCoder");
 
         // 检查更新
-        var ur = await client.Upgrade(set.Channel, _lastVersion);
+        var ur = await client.Upgrade(set.Channel);
         if (ur != null && ur.Version != _lastVersion)
         {
             client.WriteInfoEvent("Upgrade", $"准备从[{_lastVersion}]更新到[{ur.Version}]，开始下载 {ur.Source}");
@@ -146,11 +147,11 @@ static class Program
                     }
                     else
                     {
-                        if (!ur.Preinstall.IsNullOrEmpty())
+                        if (ur is UpgradeInfo ur2 && !ur2.Preinstall.IsNullOrEmpty())
                         {
                             client.WriteInfoEvent("Upgrade", "执行预安装脚本");
 
-                            ug.Run(ur.Preinstall);
+                            ug.Run(ur2.Preinstall);
                         }
 
                         client.WriteInfoEvent("Upgrade", "解压完成，准备覆盖文件");
