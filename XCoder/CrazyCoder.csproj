@@ -32,12 +32,8 @@
     <None Remove="Protocols\**" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="XCom\SerialPortList.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="XNet\FrmApiDiscover.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="XCom\SerialPortList.cs" />
+    <Compile Update="XNet\FrmApiDiscover.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="leaf.ico" />
@@ -66,14 +62,14 @@
     <Content Include="数据库命名规范.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NewLife.Map" Version="2.5.2024.410-beta1241" />
+    <PackageReference Include="NewLife.Map" Version="2.6.2024.801" />
     <PackageReference Include="NewLife.ModbusRTU" Version="1.8.2024.426-beta1011" />
-    <PackageReference Include="NewLife.Remoting" Version="3.0.2024.708" />
+    <PackageReference Include="NewLife.Remoting" Version="3.0.2024.801" />
     <PackageReference Include="System.Speech" Version="8.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>10.10.2024.723-beta1414</Version>
+      <Version>10.10.2024.801</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
       <Version>2.0.2024.708</Version>
@@ -82,13 +78,13 @@
       <Version>4.3.2024.408-beta0604</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
-      <Version>5.7.2024.709</Version>
+      <Version>5.7.2024.801</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>3.0.2024.708</Version>
+      <Version>3.0.2024.802</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>11.13.2024.701</Version>
+      <Version>11.15.2024.801</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2024.1.0</Version>

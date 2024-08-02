@@ -459,7 +459,7 @@ public partial class FrmSecurity : Form, IXForm
         }
 
         // 有可能是过去时间或者未来时间戳
-        if (n > 0)
+        if (n > 0 && n < 1000L * 365 * 24 * 3600 * 1000)
         {
             sb.AppendFormat("过去：{0:yyyy-MM-dd HH:mm:ss.fff} (now.AddMilliseconds(-n))\r\n", now.AddMilliseconds(-n));
             sb.AppendFormat("未来：{0:yyyy-MM-dd HH:mm:ss.fff} (now.AddMilliseconds(n))\r\n", now.AddMilliseconds(n));
