@@ -100,9 +100,6 @@
     <Compile Include="..\XCoder\IXForm.cs">
       <Link>IXForm.cs</Link>
     </Compile>
-    <Compile Include="..\XCoder\Program.cs">
-      <Link>Program.cs</Link>
-    </Compile>
     <Compile Include="..\XCoder\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
@@ -270,6 +267,7 @@
     <Compile Include="..\XCoder\Yun\MapSetting.cs">
       <Link>Yun\MapSetting.cs</Link>
     </Compile>
+    <Compile Include="Program.cs" />
     <EmbeddedResource Include="..\XCoder\FileEncoding\FrmMain.resx">
       <Link>FileEncoding\FrmMain.resx</Link>
     </EmbeddedResource>

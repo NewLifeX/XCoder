@@ -17,7 +17,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\XCoder\</OutputPath>
+    <OutputPath>..\Bin\XCoder\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -25,7 +25,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <OutputPath>..\..\XCoder\</OutputPath>
+    <OutputPath>..\Bin\XCoder\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -384,25 +384,25 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NewLife.Core">
-      <Version>10.5.2023.801</Version>
+      <Version>10.10.2024.803</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Map">
-      <Version>2.3.2023.806</Version>
+      <Version>2.6.2024.801</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
-      <Version>1.4.2023.806</Version>
+      <Version>2.0.2024.708</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
       <Version>4.3.2023.806</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
-      <Version>5.5.2023.803</Version>
+      <Version>5.7.2024.801</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>2.9.2023.801</Version>
+      <Version>3.0.2024.806</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>11.9.2023.801</Version>
+      <Version>11.15.2024.806</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2020.0.2</Version>
