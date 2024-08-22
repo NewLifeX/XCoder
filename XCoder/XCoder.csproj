@@ -390,10 +390,10 @@
       <Version>2.6.2024.801</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
-      <Version>2.0.2024.708</Version>
+      <Version>2.0.2024.822-beta1012</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
-      <Version>4.3.2023.806</Version>
+      <Version>4.3.2024.822-beta1011</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
       <Version>5.7.2024.801</Version>

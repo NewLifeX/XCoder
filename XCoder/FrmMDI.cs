@@ -54,6 +54,8 @@ namespace XCoder
 
         void LoadForms(Type[] ts)
         {
+            if (ts.Length == 0) ts = typeof(IXForm).GetAllSubclasses().ToArray();
+
             var name = XConfig.Current.LastTool + "";
             foreach (var item in ts)
             {
