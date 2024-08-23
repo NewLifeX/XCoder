@@ -35,7 +35,7 @@ namespace XNet
         #region 窗体
         static FrmMain()
         {
-            _task = Task.Factory.StartNew(() => GetNetServers());
+            _task = TaskEx.Factory.StartNew(() => GetNetServers());
         }
 
         public FrmMain() : base(Orientation.Horizontal, 2)
@@ -355,7 +355,7 @@ namespace XNet
         //    }
         //}
 
-        private Task _Send;
+        private TaskEx _Send;
         private void btnSend_Click(Object sender, EventArgs e)
         {
             var str = txtSend.Buffer.Text;
@@ -407,7 +407,7 @@ namespace XNet
 
                         list.Add(client);
                     }
-                    var ts = new List<Task>();
+                    var ts = new List<TaskEx>();
                     for (var i = 0; i < ths; i++)
                     {
                         var task = list[i].SendConcurrency(pk, count, sleep);

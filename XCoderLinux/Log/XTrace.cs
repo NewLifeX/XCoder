@@ -15,7 +15,7 @@ namespace NewLife.Log
     /// <remarks>
     /// 该静态类包括写日志、写调用栈和Dump进程内存等调试功能。
     /// 
-    /// 默认写日志到文本文件，可通过修改<see cref="NewLife.Log"/>属性来增加日志输出方式。
+    /// 默认写日志到文本文件，可通过修改<see cref="Log"/>属性来增加日志输出方式。
     /// 对于控制台工程，可以直接通过UseConsole方法，把日志输出重定向为控制台输出，并且可以为不同线程使用不同颜色。
     /// </remarks>
     public static partial class XTrace2
