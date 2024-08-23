@@ -1,10 +1,8 @@
-﻿using System.Net.NetworkInformation;
-using System.Text;
+﻿using System.Text;
 using NewLife;
 using NewLife.Log;
-using NewLife.Threading;
+using NewLife.Model;
 using Stardust;
-using Stardust.Models;
 
 namespace XCoder;
 
@@ -35,7 +33,6 @@ static class Program
         Application.Run(new FrmMDI());
     }
 
-    static TimerX _timer;
     static StarFactory _factory;
     static StarClient _Client;
     private static void StartClient()
@@ -72,42 +69,11 @@ static class Program
             }
         };
 
-        // 使用跟踪
-        //client.UseTrace();
+        client.Open();
 
-        Application.ApplicationExit += (s, e) => client.Logout("ApplicationExit");
-
-        // 可能需要多次尝试
-        _timer = new TimerX(TryConnectServer, client, 0, 5_000) { Async = true };
+        //Application.ApplicationExit += (s, e) => client.Logout("ApplicationExit");
+        Host.RegisterExit(() => client.Logout("ApplicationExit"));
 
         _Client = client;
-    }
-
-    private static async Task TryConnectServer(Object state)
-    {
-        if (!NetworkInterface.GetIsNetworkAvailable() || AgentInfo.GetIps().IsNullOrEmpty())
-        {
-            return;
-        }
-
-        var client = state as StarClient;
-
-        try
-        {
-            await client.Login();
-            //await CheckUpgrade(client);
-        }
-        catch (Exception ex)
-        {
-            // 登录报错后，加大定时间隔，输出简单日志
-            //_timer.Period = 30_000;
-            if (_timer.Period < 30_000) _timer.Period += 5_000;
-
-            XTrace.Log?.Error(ex.Message);
-
-            return;
-        }
-
-        _timer.TryDispose();
     }
 }
