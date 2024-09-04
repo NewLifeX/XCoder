@@ -75,7 +75,7 @@
       <Version>2.0.2024.708</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
-      <Version>4.3.2024.902-beta0813</Version>
+      <Version>4.3.2024.903-beta0724</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
       <Version>5.7.2024.801</Version>
