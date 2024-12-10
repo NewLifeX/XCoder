@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using NewLife;
+using NewLife.Data;
 using NewLife.IoT.Protocols;
 using NewLife.Log;
 using NewLife.Net;
@@ -265,7 +266,9 @@ namespace XNet
             var session = sender as NetSession;
             if (session == null) return;
 
-            var msg = ModbusIpMessage.Read(e.Packet);
+            var pk = e.Packet as Packet;
+            if (pk == null) pk = new Packet(e.Packet.ReadBytes());
+            var msg = ModbusIpMessage.Read(pk);
             if (msg == null) return;
 
             session.Log?.Info("<= {0}", msg);

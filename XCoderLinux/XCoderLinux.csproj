@@ -49,9 +49,9 @@
 
   <ItemGroup>
     <PackageReference Include="GtkSharp" Version="3.24.24.95" />
-    <PackageReference Include="NewLife.Core" Version="10.10.2024.902" />
-    <PackageReference Include="NewLife.Stardust" Version="3.0.2024.902" />
-    <PackageReference Include="NewLife.XCode" Version="11.15.2024.902" />
+    <PackageReference Include="NewLife.Core" Version="11.1.2024.1206" />
+    <PackageReference Include="NewLife.Stardust" Version="3.2.2024.1203" />
+    <PackageReference Include="NewLife.XCode" Version="11.16.2024.1202" />
     <PackageReference Include="System.IO.Ports" Version="8.0.0" />
     <PackageReference Include="System.Management" Version="8.0.0" />
   </ItemGroup>

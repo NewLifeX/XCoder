@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using NewLife.Data;
+﻿using NewLife.Data;
 using NewLife.Net;
 
 namespace XCoder.XNet;
@@ -13,7 +11,7 @@ static class BenchHelper
     /// <param name="times">次数</param>
     /// <param name="msInterval">间隔</param>
     /// <returns></returns>
-    public static Task SendConcurrency(this ISocketRemote session, Packet pk, Int32 times, Int32 msInterval)
+    public static Task SendConcurrency(this ISocketRemote session, IPacket pk, Int32 times, Int32 msInterval)
     {
         var task = Task.Run(async () =>
         {

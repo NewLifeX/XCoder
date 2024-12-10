@@ -165,7 +165,7 @@ public class SerialTransport : DisposeBase, ITransport
     #region 发送
     /// <summary>写入数据</summary>
     /// <param name="pk">数据包</param>
-    public virtual Int32 Send(Packet pk)
+    public virtual Int32 Send(IPacket pk)
     {
         if (!Open()) return -1;
 
@@ -174,16 +174,24 @@ public class SerialTransport : DisposeBase, ITransport
         var sp = Serial;
         lock (sp)
         {
-            sp.Write(pk.Data, pk.Offset, pk.Count);
+            if (pk.TryGetArray(out var seg))
+                sp.Write(seg.Array, seg.Offset, seg.Count);
+            else
+            {
+                var buf = pk.ReadBytes();
+                sp.Write(buf, 0, buf.Length);
+            }
         }
 
         return pk.Total;
     }
 
+    public Int32 Send(Byte[] buf) => Send((ArrayPacket)buf);
+
     /// <summary>异步发送数据并等待响应</summary>
     /// <param name="pk"></param>
     /// <returns></returns>
-    public virtual async Task<Packet> SendAsync(Packet pk)
+    public virtual async Task<IOwnerPacket> SendAsync(IPacket pk)
     {
         if (!Open()) return null;
 
@@ -191,14 +199,22 @@ public class SerialTransport : DisposeBase, ITransport
 
         //var task = Packet.Add(pk, null, Timeout);
 
-        _Source = new TaskCompletionSource<Packet>();
+        _Source = new TaskCompletionSource<IOwnerPacket>();
 
         if (pk != null)
         {
             WriteLog("SendAsync:{0}", pk.ToHex());
 
             // 发送数据
-            Serial.Write(pk.Data, pk.Offset, pk.Count);
+            //Serial.Write(pk.Data, pk.Offset, pk.Count);
+            var sp = Serial;
+            if (pk.TryGetArray(out var seg))
+                sp.Write(seg.Array, seg.Offset, seg.Count);
+            else
+            {
+                var buf = pk.ReadBytes();
+                sp.Write(buf, 0, buf.Length);
+            }
         }
 
         return await _Source.Task;
@@ -206,14 +222,18 @@ public class SerialTransport : DisposeBase, ITransport
 
     /// <summary>接收数据</summary>
     /// <returns></returns>
-    public virtual Packet Receive()
+    public virtual IOwnerPacket Receive()
     {
         if (!Open()) return null;
 
         var task = SendAsync(null);
         if (Timeout > 0 && !task.Wait(Timeout)) return null;
 
-        return task.Result;
+        //return task.Result;
+        var rs = task.ConfigureAwait(false).GetAwaiter().GetResult();
+        if (rs is OwnerPacket op) return op;
+
+        return rs;
     }
     #endregion
 
@@ -227,12 +247,14 @@ public class SerialTransport : DisposeBase, ITransport
             WaitMore();
             if (sp.BytesToRead > 0)
             {
-                var buf = new Byte[sp.BytesToRead];
+                //var buf = new Byte[sp.BytesToRead];
+                var pk = new OwnerPacket(sp.BytesToRead);
 
-                var count = sp.Read(buf, 0, buf.Length);
+                var count = sp.Read(pk.Buffer, 0, pk.Length);
                 //if (count != buf.Length) buf = buf.ReadBytes(0, count);
                 //var ms = new MemoryStream(buf, 0, count, false);
-                var pk = new Packet(buf, 0, count);
+                //var pk = new ArrayPacket(buf, 0, count);
+                pk.Resize(count);
 
                 ProcessReceive(pk);
             }
@@ -263,7 +285,7 @@ public class SerialTransport : DisposeBase, ITransport
         }
     }
 
-    void ProcessReceive(Packet pk)
+    void ProcessReceive(IOwnerPacket pk)
     {
         try
         {
@@ -284,10 +306,10 @@ public class SerialTransport : DisposeBase, ITransport
         }
     }
 
-    private TaskCompletionSource<Packet> _Source;
+    private TaskCompletionSource<IOwnerPacket> _Source;
     /// <summary>处理收到的数据。默认匹配同步接收委托</summary>
     /// <param name="pk"></param>
-    internal virtual void OnReceive(Packet pk)
+    internal virtual void OnReceive(IOwnerPacket pk)
     {
         //// 同步匹配
         //if (Packet != null && Packet.Match(pk, null)) return;

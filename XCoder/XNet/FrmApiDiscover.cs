@@ -2,6 +2,7 @@
 using System.Net;
 using System.Runtime.Serialization;
 using NewLife;
+using NewLife.Data;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Remoting;

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Text;
+using NewLife.Data;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Threading;
