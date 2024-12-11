@@ -65,8 +65,8 @@
     <PackageReference Include="NewLife.Map" Version="2.6.2024.1102" />
     <PackageReference Include="NewLife.ModbusRTU" Version="1.8.2024.426-beta1011" />
     <PackageReference Include="NewLife.Remoting" Version="3.2.2024.1206" />
-    <PackageReference Include="System.Speech" Version="8.0.0" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+    <PackageReference Include="System.Speech" Version="9.0.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
       <Version>11.1.2024.1206</Version>
@@ -81,7 +81,7 @@
       <Version>6.0.2024.1205</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>3.2.2024.1203</Version>
+      <Version>3.2.2024.1211</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
       <Version>11.16.2024.1202</Version>
