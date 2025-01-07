@@ -8,7 +8,7 @@
     <AssemblyTitle>新生命码神工具</AssemblyTitle>
     <Description>众多开发者工具</Description>
     <Company>新生命开发团队</Company>
-    <Copyright>©2002-2024 NewLife</Copyright>
+    <Copyright>©2002-2025 NewLife</Copyright>
     <VersionPrefix>8.0</VersionPrefix>
     <VersionSuffix>$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</VersionSuffix>
     <Version>$(VersionPrefix).$(VersionSuffix)</Version>
@@ -49,9 +49,9 @@
 
   <ItemGroup>
     <PackageReference Include="GtkSharp" Version="3.24.24.95" />
-    <PackageReference Include="NewLife.Core" Version="11.1.2024.1206" />
-    <PackageReference Include="NewLife.Stardust" Version="3.2.2024.1211" />
-    <PackageReference Include="NewLife.XCode" Version="11.16.2024.1202" />
+    <PackageReference Include="NewLife.Core" Version="11.3.2025.101" />
+    <PackageReference Include="NewLife.Stardust" Version="3.2.2025.101" />
+    <PackageReference Include="NewLife.XCode" Version="11.17.2025.101" />
     <PackageReference Include="System.IO.Ports" Version="9.0.0" />
     <PackageReference Include="System.Management" Version="9.0.0" />
   </ItemGroup>
