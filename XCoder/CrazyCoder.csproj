@@ -66,7 +66,7 @@
     <PackageReference Include="NewLife.ModbusRTU" Version="1.8.2024.426-beta1011" />
     <PackageReference Include="NewLife.Remoting" Version="3.2.2025.101" />
     <PackageReference Include="System.Speech" Version="9.0.1" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.1" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
       <Version>11.3.2025.101</Version>
