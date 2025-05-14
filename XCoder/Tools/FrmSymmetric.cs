@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using NewLife;
+using NewLife.Security;
 using XCoder.Common;
 
 namespace XCoder.Tools;
