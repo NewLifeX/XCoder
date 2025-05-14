@@ -377,7 +377,7 @@ namespace XNet
             // 处理换行
             str = str.Replace("\n", "\r\n");
             var buf = cfg.HexSend ? str.ToHex() : str.GetBytes();
-            var pk = new Packet(buf);
+            var pk = new ArrayPacket(buf);
 
             if (_Client != null)
             {
@@ -418,7 +418,7 @@ namespace XNet
                     for (var i = 0; i < count && _Server != null; i++)
                     {
                         var sw = Stopwatch.StartNew();
-                        var cs = await _Server.SendAllAsync(buf);
+                        var cs = await _Server.SendAllAsync(pk);
                         sw.Stop();
                         BizLog.Info("{3}/{4} 已向[{0}]个客户端发送[{1}]数据 {2:n0}ms", cs, buf.Length, sw.ElapsedMilliseconds, i + 1, count);
                         if (sleep > 0) await TaskEx.Delay(sleep);

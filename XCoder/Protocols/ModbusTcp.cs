@@ -108,7 +108,7 @@ namespace NewLife.IoT.Protocols
 
                 if (span2 != null) span2.Tag = buf.ToHex();
 
-                var rs = ModbusMessage.Read(buf, true);
+                var rs = ModbusMessage.Read((ArrayPacket)buf, true);
                 if (rs == null) return null;
 
                 WriteLog("<= {0}", rs);

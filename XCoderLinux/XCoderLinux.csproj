@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <AssemblyName>XCoder</AssemblyName>
     <RootNamespace>XCoder</RootNamespace>
     <AssemblyTitle>新生命码神工具</AssemblyTitle>
@@ -14,7 +14,9 @@
     <AssemblyVersion>8.0.*</AssemblyVersion>
     <Deterministic>false</Deterministic>
     <ApplicationIcon>..\XCoder\leaf.ico</ApplicationIcon>
-    <OutputPath>..\..\XCoderLinux\</OutputPath>
+    <OutputPath>..\Bin\XCoderLinux\</OutputPath>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>TRACE;NC30;__CORE__</DefineConstants>
@@ -48,8 +50,9 @@
 
   <ItemGroup>
     <PackageReference Include="GtkSharp" Version="3.24.24.34" />
-    <PackageReference Include="NewLife.Core" Version="10.10.2024.803" />
-    <PackageReference Include="NewLife.XCode" Version="11.15.2024.806" />
+    <PackageReference Include="NewLife.Core" Version="11.5.2025.501" />
+    <PackageReference Include="NewLife.Stardust" Version="3.3.2025.506" />
+    <PackageReference Include="NewLife.XCode" Version="11.19.2025.501" />
     <PackageReference Include="System.IO.Ports" Version="6.0.0" />
     <PackageReference Include="System.Management" Version="6.0.0" />
   </ItemGroup>

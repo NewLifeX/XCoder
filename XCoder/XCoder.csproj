@@ -13,6 +13,8 @@
     <ApplicationIcon>leaf.ico</ApplicationIcon>
     <LangVersion>latest</LangVersion>
     <TargetFrameworkProfile />
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -384,25 +386,25 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NewLife.Core">
-      <Version>10.10.2024.803</Version>
+      <Version>11.5.2025.501</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Map">
-      <Version>2.6.2024.801</Version>
+      <Version>2.6.2025.305</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
-      <Version>2.0.2024.822-beta1012</Version>
+      <Version>2.0.2025.415</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
-      <Version>4.3.2024.822-beta1011</Version>
+      <Version>4.4.2025.305</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
-      <Version>5.7.2024.801</Version>
+      <Version>6.2.2025.503</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>3.0.2024.806</Version>
+      <Version>3.3.2025.506</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>11.15.2024.806</Version>
+      <Version>11.19.2025.501</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2020.0.2</Version>

@@ -6,6 +6,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Text;
 using System.Windows.Forms;
+using NewLife.Data;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Threading;
@@ -87,7 +88,7 @@ namespace NewLife.Windows
 
             //cbEncoding.DataSource = new String[] { Encoding.UTF8.WebName, Encoding.ASCII.WebName, Encoding.UTF8.WebName };
             // 添加编码子菜单
-            var encs = new Encoding[] { Encoding.UTF8, Encoding.ASCII, Encoding.UTF7, Encoding.Unicode, Encoding.BigEndianUnicode, Encoding.UTF32,Encoding.GetEncoding("GB2312") };
+            var encs = new Encoding[] { Encoding.UTF8, Encoding.ASCII, Encoding.UTF7, Encoding.Unicode, Encoding.BigEndianUnicode, Encoding.UTF32, Encoding.GetEncoding("GB2312") };
             var list = new List<Encoding>(encs);
             // 暂时不用这么多编码
             //list.AddRange(Encoding.GetEncodings().Select(e => e.GetEncoding()).Where(e => !encs.Contains(e)));
@@ -449,7 +450,7 @@ namespace NewLife.Windows
         StreamReader _reader;
         void OnReceived(Object sender, ReceivedEventArgs e)
         {
-            var data = e.Packet.ReadBytes();
+            var data = e.Packet.ReadBytes(0, -1);
             if (data == null || data.Length < 1) return;
 
             BytesOfReceived += data.Length;

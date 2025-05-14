@@ -7,6 +7,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using Gtk;
+using NewLife.Data;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Threading;
@@ -451,7 +452,7 @@ namespace NewLife.Windows
         StreamReader _reader;
         void OnReceived(Object sender, ReceivedEventArgs e)
         {
-            var data = e.Packet.ReadBytes();
+            var data = e.Packet.ReadBytes(0, -1);
             if (data == null || data.Length < 1) return;
 
             BytesOfReceived += data.Length;
