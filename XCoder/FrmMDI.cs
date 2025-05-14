@@ -182,7 +182,11 @@ public partial class FrmMDI : Form
     {
         if (auto) XTrace.WriteLine("自动更新！");
 
-        var up = new Upgrade();
+        var up = new Upgrade
+        {
+            Log = XTrace.Log,
+            Name = "CrazyCoder"
+        };
         up.DeleteBackup(".");
 
         var cfg = XConfig.Current;
@@ -191,18 +195,28 @@ public partial class FrmMDI : Form
             cfg.LastUpdate = DateTime.Now;
             cfg.Save();
 
+            // 搜索下载站的/CrazyCoder/目录
+            var uri = new Uri(cfg.UpdateServer);
+            if (uri.AbsolutePath.IsNullOrEmpty() || uri.AbsolutePath == "/")
+                up.Server = cfg.UpdateServer + "CrazyCoder";
+            else
+                up.Server = cfg.UpdateServer;
+
             var root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            up.Log = XTrace.Log;
-            up.Name = "CrazyCoder";
-            up.Server = cfg.UpdateServer;
             up.UpdatePath = root.CombinePath(up.UpdatePath);
             if (up.Check())
             {
                 up.Download();
-                if (!auto || MessageBox.Show($"发现新版本{up.Link.Time}，是否更新？", "自动更新", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (!auto || MessageBox.Show($"发现新版本v{up.Link.Version}，是否更新？", "自动更新", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     var rs = up.Update();
                     MessageBox.Show("更新" + (rs ? "成功" : "失败"), "自动更新");
+
+                    if (rs)
+                    {
+                        Process.Start("CrazyCoder.exe");
+                        Application.Exit();
+                    }
                 }
             }
             else if (!auto)
