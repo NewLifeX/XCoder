@@ -1,366 +1,49 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3EB3A5F1-F785-4672-A21D-A3117FC12129}</ProjectGuid>
+    <TargetFramework>net45</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XCoder</RootNamespace>
-    <AssemblyName>XCoder</AssemblyName>
+    <AssemblyTitle>新生命码神工具</AssemblyTitle>
+    <Description>众多开发者工具</Description>
+    <Company>新生命开发团队</Company>
+    <Copyright>©2002-2025 NewLife</Copyright>
+    <VersionPrefix>8.0</VersionPrefix>
+    <VersionSuffix>$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</VersionSuffix>
+    <Version>$(VersionPrefix).$(VersionSuffix)</Version>
+    <FileVersion>$(Version)</FileVersion>
+    <AssemblyVersion>$(VersionPrefix).$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</AssemblyVersion>
+    <OutputPath>..\Bin\XCoder\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ApplicationIcon>leaf.ico</ApplicationIcon>
     <LangVersion>latest</LangVersion>
-    <TargetFrameworkProfile />
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Bin\XCoder\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <OutputPath>..\Bin\XCoder\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <WarningLevel>3</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="System" />
     <Reference Include="System.configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Management" />
     <Reference Include="System.Messaging" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.XML" />
-    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\ControlConfig.cs" />
-    <Compile Include="Data\FrmRedis.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Data\FrmRedis.Designer.cs">
-      <DependentUpon>FrmRedis.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Data\FrmRedisConfig.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Data\FrmRedisConfig.Designer.cs">
-      <DependentUpon>FrmRedisConfig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Data\RedisConfig.cs" />
-    <Compile Include="Engine\IcoHelper.cs" />
-    <Compile Include="Engine\ModelConfig.cs" />
-    <Compile Include="FolderInfo\FrmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FolderInfo\FrmMain.Designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FolderInfo\FrmSplitFile.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FolderInfo\FrmSplitFile.Designer.cs">
-      <DependentUpon>FrmSplitFile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmMDI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmMDI.Designer.cs">
-      <DependentUpon>FrmMDI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IXForm.cs" />
-    <Compile Include="Protocols\FunctionCodes.cs" />
-    <Compile Include="Protocols\ModbusMessage.cs" />
-    <Compile Include="Tools\BackupConfig.cs" />
-    <Compile Include="Tools\FrmBackup.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\FrmBackup.designer.cs">
-      <DependentUpon>FrmBackup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\FrmMD5.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\FrmMD5.Designer.cs">
-      <DependentUpon>FrmMD5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\FrmSymmetric.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\FrmSymmetric.Designer.cs">
-      <DependentUpon>FrmSymmetric.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\FrmSecurity.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\FrmSecurity.Designer.cs">
-      <DependentUpon>FrmSecurity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\FrmSpeak.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\FrmSpeak.Designer.cs">
-      <DependentUpon>FrmSpeak.cs</DependentUpon>
-    </Compile>
-    <Compile Include="XApi\ApiConfig.cs" />
-    <Compile Include="XApi\MyApiController.cs" />
-    <Compile Include="XApi\FrmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="XApi\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="XCom\SerialPortConfig.cs" />
-    <Compile Include="XCom\SerialPortList.cs">
+    <Compile Update="XCom\SerialPortList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="XCom\SerialPortList.designer.cs">
-      <DependentUpon>SerialPortList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="XCom\SerialTransport.cs" />
-    <Compile Include="XICO\FileSource.cs" />
-    <Compile Include="XNet\BenchHelper.cs" />
-    <Compile Include="XNet\FrmIp.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="XNet\FrmIp.designer.cs">
-      <DependentUpon>FrmIp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="XNet\FrmModbusMaster.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="XNet\FrmModbusMaster.designer.cs">
-      <DependentUpon>FrmModbusMaster.cs</DependentUpon>
-    </Compile>
-    <Compile Include="XNet\FrmModbusSlave.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="XNet\FrmModbusSlave.designer.cs">
-      <DependentUpon>FrmModbusSlave.cs</DependentUpon>
-    </Compile>
-    <Compile Include="XNet\FrmMqtt.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="XNet\FrmMqtt.designer.cs">
-      <DependentUpon>FrmMqtt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="XNet\FrmSsh.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="XNet\FrmSsh.designer.cs">
-      <DependentUpon>FrmSsh.cs</DependentUpon>
-    </Compile>
-    <Compile Include="XNet\IPPacket.cs" />
-    <Compile Include="Protocols\Modbus.cs" />
-    <Compile Include="Protocols\ModbusRtu.cs" />
-    <Compile Include="Protocols\ModbusTcp.cs" />
-    <Compile Include="XNet\NetHelper2.cs" />
-    <Compile Include="XNet\RawSocket.cs" />
-    <Compile Include="XNet\RegisterUnit.cs" />
-    <Compile Include="XNet\TcpPacket.cs" />
-    <Compile Include="Engine\FileSource.cs" />
-    <Compile Include="Engine\XConfig.cs" />
-    <Compile Include="Tools\FrmGPS.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\FrmGPS.Designer.cs">
-      <DependentUpon>FrmGPS.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\FrmInclude.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\FrmInclude.Designer.cs">
-      <DependentUpon>FrmInclude.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\FrmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\FrmMain.Designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="XCom\FrmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="XCom\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Engine\UIConfig.cs" />
-    <Compile Include="XICO\FrmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="XICO\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="XICO\IconFile.cs" />
-    <Compile Include="XNet\NetConfig.cs" />
-    <Compile Include="XNet\WorkModes.cs" />
-    <Compile Include="XRegex\FileResource.cs" />
-    <Compile Include="XRegex\FrmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="XRegex\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="XNet\FrmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="XNet\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Data\FrmRedis.resx">
-      <DependentUpon>FrmRedis.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\FrmRedisConfig.resx">
-      <DependentUpon>FrmRedisConfig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FolderInfo\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmMDI.resx">
-      <DependentUpon>FrmMDI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmBackup.resx">
-      <DependentUpon>FrmBackup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmMD5.resx">
-      <DependentUpon>FrmMD5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmSymmetric.resx">
-      <DependentUpon>FrmSymmetric.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmSecurity.resx">
-      <DependentUpon>FrmSecurity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmSpeak.resx">
-      <DependentUpon>FrmSpeak.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XApi\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XCom\SerialPortList.resx">
-      <DependentUpon>SerialPortList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XNet\FrmIp.resx">
-      <DependentUpon>FrmIp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XNet\FrmModbusMaster.resx">
-      <DependentUpon>FrmModbusMaster.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XNet\FrmModbusSlave.resx">
-      <DependentUpon>FrmModbusSlave.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XNet\FrmMqtt.resx">
-      <DependentUpon>FrmMqtt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XNet\FrmSsh.resx">
-      <DependentUpon>FrmSsh.cs</DependentUpon>
-    </EmbeddedResource>
-    <Compile Include="Windows\FrmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\FrmModel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\FrmModel.Designer.cs">
-      <DependentUpon>FrmModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\FrmQuery.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\FrmQuery.Designer.cs">
-      <DependentUpon>FrmQuery.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\FrmSchema.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\FrmSchema.Designer.cs">
-      <DependentUpon>FrmSchema.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\FrmText.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\FrmText.Designer.cs">
-      <DependentUpon>FrmText.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Tools\FrmGPS.resx">
-      <DependentUpon>FrmGPS.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmInclude.resx">
-      <DependentUpon>FrmInclude.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\FrmModel.resx">
-      <DependentUpon>FrmModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\FrmQuery.resx">
-      <DependentUpon>FrmQuery.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\FrmSchema.resx">
-      <DependentUpon>FrmSchema.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\FrmText.resx">
-      <DependentUpon>FrmText.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="leaf.ico" />
     <EmbeddedResource Include="UpdateInfo.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\app.manifest" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="XCom\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XICO\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XRegex\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XNet\FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="XICO\leaf.png" />
@@ -413,15 +96,7 @@
   <ItemGroup>
     <Folder Include="Star\" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>del "$(TargetDir)*.xml" /q</PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
