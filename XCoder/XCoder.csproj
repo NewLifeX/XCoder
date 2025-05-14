@@ -93,10 +93,4 @@
       <Version>2020.0.2</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Star\" />
-  </ItemGroup>
-  <PropertyGroup>
-    <PostBuildEvent>del "$(TargetDir)*.xml" /q</PostBuildEvent>
-  </PropertyGroup>
 </Project>

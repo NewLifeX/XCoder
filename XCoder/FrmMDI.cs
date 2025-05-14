@@ -204,7 +204,7 @@ public partial class FrmMDI : Form
             if (up.Check())
             {
                 up.Download();
-                if (!auto || MessageBox.Show($"发现新版本{up.Link.Time}，是否更新？", "自动更新", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (!auto || MessageBox.Show($"发现新版本v{up.Link.Version}，是否更新？", "自动更新", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     var rs = up.Update();
                     MessageBox.Show("更新" + (rs ? "成功" : "失败"), "自动更新");
