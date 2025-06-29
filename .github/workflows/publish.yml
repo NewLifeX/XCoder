@@ -11,11 +11,15 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
+    - uses: actions/checkout@v4
+    - name: Setup dotNET
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: |
+          6.x
+          7.x
+          8.x
+          9.x
     - name: Build
       run: |
         dotnet build --version-suffix $(date "+%Y.%m%d") -c Release -o out XCoder/CrazyCoder.csproj
