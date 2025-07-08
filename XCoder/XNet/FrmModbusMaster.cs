@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using NewLife;
+using NewLife.Data;
 using NewLife.IoT.Protocols;
 using NewLife.Log;
 using XCoder;
@@ -144,7 +145,7 @@ namespace XNet
             if (code <= FunctionCodes.ReadDiscrete)
             {
                 var rs = _modbus.Read(code, host, address, count);
-                var data = rs?.ReadBytes(1);
+                var data = rs.ReadBytes();
                 if (data != null && data.Length > 0)
                 {
                     // 按照寄存器遍历，每个8个线圈占1个字节
@@ -179,7 +180,7 @@ namespace XNet
             else if (code <= FunctionCodes.ReadInput)
             {
                 var rs = _modbus.Read(code, host, address, count);
-                var data = rs?.ReadBytes(1);
+                var data = rs.ReadBytes();
                 if (data != null && data.Length > 0)
                 {
                     // 按照寄存器遍历，每个寄存器2字节
@@ -272,6 +273,10 @@ namespace XNet
         {
             var unit = new RegisterUnit();
             if (_regs.Count > 0) unit.Address = _regs[^1].Address + 1;
+            else
+            {
+                unit.Address = (int)numAddress.Value;
+            }
             _regs.Add(unit);
 
             dgv.DataSource = null;

@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using NewLife;
+using NewLife.Buffers;
 using NewLife.Data;
 using NewLife.IoT.Protocols;
 using NewLife.Log;
@@ -268,7 +270,8 @@ namespace XNet
 
             var pk = e.Packet as Packet;
             if (pk == null) pk = new Packet(e.Packet.ReadBytes());
-            var msg = ModbusIpMessage.Read(pk);
+            var spanReader = pk.AsSpan();
+            var msg = ModbusIpMessage.Read(spanReader);
             if (msg == null) return;
 
             session.Log?.Info("<= {0}", msg);
@@ -306,7 +309,7 @@ namespace XNet
                                 bits[1 + i] = (Byte)b;
                             }
 
-                            rs.Payload = bits;
+                            rs.Payload =new Packet( bits);
                         }
                     }
                     break;
@@ -320,8 +323,8 @@ namespace XNet
                         if (addr >= 0 && addr + regCount <= _regs.Count)
                         {
                             var buf = _regs.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
-                            rs.Payload = new Byte[] { (Byte)buf.Length };
-                            rs.Payload.Append(buf);
+                            rs.Payload = new Packet(new Byte[] { (Byte)buf.Length }.Concat(buf).ToArray());
+                           // rs.Payload.Append(new Packet(buf));
                         }
                     }
                     break;
@@ -346,7 +349,7 @@ namespace XNet
                         Invoke(() => { dgv.Refresh(); });
                         {
                             var addr = addrMsg - _regs[0].Address;
-                            rs.Payload = _regs.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
+                            rs.Payload = new Packet(_regs.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray());
                         }
                     }
                     break;

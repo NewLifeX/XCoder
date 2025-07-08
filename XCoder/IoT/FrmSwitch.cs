@@ -1,4 +1,5 @@
 ﻿using NewLife;
+using NewLife.Data;
 using NewLife.IoT.Protocols;
 using NewLife.Log;
 
@@ -69,7 +70,7 @@ public partial class FrmSwitch : Form
 
     private void btnReadAddr_Click(Object sender, EventArgs e)
     {
-        var rs = _modbus.ReadRegister(_host, 0, 1);
+        var rs = _modbus.Read(FunctionCodes.ReadRegister, _host, 0, 1);
         if (rs == null || rs.Total < 3) return;
 
         var addr = rs.ReadBytes(1).ToUInt16(0, false);
