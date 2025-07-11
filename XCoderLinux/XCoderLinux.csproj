@@ -52,7 +52,7 @@
     <PackageReference Include="NewLife.Core" Version="11.5.2025.701" />
     <PackageReference Include="NewLife.Stardust" Version="3.4.2025.701" />
     <PackageReference Include="NewLife.XCode" Version="11.19.2025.701" />
-    <PackageReference Include="System.IO.Ports" Version="9.0.6" />
+    <PackageReference Include="System.IO.Ports" Version="9.0.7" />
     <PackageReference Include="System.Management" Version="9.0.6" />
   </ItemGroup>
 
