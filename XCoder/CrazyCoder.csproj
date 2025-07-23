@@ -32,6 +32,11 @@
     <None Remove="Protocols\**" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="XCom\SerialPortList.cs" />
     <Compile Update="XNet\FrmApiDiscover.cs" />
   </ItemGroup>
@@ -62,6 +67,8 @@
     <Content Include="数据库命名规范.txt" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="NewLife.Map" Version="2.6.2025.601" />
     <PackageReference Include="NewLife.ModbusRTU" Version="2.0.2025.701" />
     <PackageReference Include="NewLife.Remoting" Version="3.3.2025.701" />
@@ -115,6 +122,12 @@
     <EmbeddedResource Remove="NewModelForm\BaseForm.resx" />
     <EmbeddedResource Remove="NewModelForm\NewModel.resx" />
     <EmbeddedResource Remove="XMessage\FrmMain.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">
