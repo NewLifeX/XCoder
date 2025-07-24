@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
+using System.Text;
 using NewLife;
 using NewLife.Data;
 using NewLife.Log;
@@ -314,6 +315,30 @@ public partial class FrmMain : Form, IXForm
 
             BizLog.Info(line);
         }
+
+        if (iplogfile)
+        {
+            var path = "Log/Net_" + e.Remote.Address + ".log";
+            if (!File.Exists(path))
+            {
+                var f = File.Create(path);
+                f.Flush();
+                f.Close();
+            }
+
+            var now = DateTime.Now;
+            var ms = now.Ticks % (TimeSpan.TicksPerMillisecond * 1000) / TimeSpan.TicksPerMillisecond;
+            var stamp = "\r\n" + now.ToString("HH:mm:ss") + " " + ms + "\r\n";
+
+            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Write))
+            {
+                fs.Seek(0, SeekOrigin.End);
+                fs.Write(stamp.GetBytes());
+                fs.Write(e.GetBytes());
+                fs.Flush();
+                fs.Close();
+            }
+        }
     }
 
     Int32 _pColor = 0;
@@ -321,6 +346,9 @@ public partial class FrmMain : Form, IXForm
     Int32 BytesOfSent = 0;
     Int32 lastReceive = 0;
     Int32 lastSend = 0;
+
+    bool iplogfile = false;
+
     private void timer1_Tick(Object sender, EventArgs e)
     {
         //if (!pnlSetting.Enabled)
@@ -489,6 +517,12 @@ public partial class FrmMain : Form, IXForm
         var mi = sender as ToolStripMenuItem;
         mi.Checked = !mi.Checked;
     }
+
+    private void 分IP记录文本日志ToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        iplogfile = !iplogfile;
+    }
+
     #endregion
 
     private void cbMode_SelectedIndexChanged(Object sender, EventArgs e)
