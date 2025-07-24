@@ -33,6 +33,7 @@
             bt_Comf = new Button();
             bt_Canel = new Button();
             label1 = new Label();
+            bt_flash = new Button();
             SuspendLayout();
             // 
             // cb_Hub
@@ -83,11 +84,22 @@
             label1.TabIndex = 4;
             label1.Text = "HUB";
             // 
+            // bt_flash
+            // 
+            bt_flash.Location = new Point(413, 11);
+            bt_flash.Name = "bt_flash";
+            bt_flash.Size = new Size(75, 25);
+            bt_flash.TabIndex = 5;
+            bt_flash.Text = "刷新";
+            bt_flash.UseVisualStyleBackColor = true;
+            bt_flash.Click += bt_flash_Click;
+            // 
             // UsbHubSelect
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(913, 382);
+            Controls.Add(bt_flash);
             Controls.Add(label1);
             Controls.Add(bt_Canel);
             Controls.Add(bt_Comf);
@@ -107,5 +119,6 @@
         private Button bt_Comf;
         private Button bt_Canel;
         private Label label1;
+        private Button bt_flash;
     }
 }

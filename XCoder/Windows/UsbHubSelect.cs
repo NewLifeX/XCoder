@@ -44,6 +44,9 @@ namespace XCoder
 
             cb_Hub.SelectedValueChanged += Cb_Hub_SelectedValueChanged;
             if (cb_Hub.Items.Count > 0) cb_Hub.SelectedIndex = 0;
+
+            bt_Canel.Hide();
+            bt_Comf.Hide();
         }
 
         private void Rtb_Show_MouseWheel(object sender, MouseEventArgs e)
@@ -104,7 +107,7 @@ namespace XCoder
             {
                 // 在这里处理你的全局滚轮事件
                 short delta = 0;
-                if(IntPtr.Size == 8)
+                if (IntPtr.Size == 8)
                 {
                     // 64位系统
                     delta = (short)(m.WParam.ToInt64() >> 16);
@@ -140,6 +143,22 @@ namespace XCoder
             }
 
             base.WndProc(ref m);
+        }
+
+        private void bt_flash_Click(object sender, EventArgs e)
+        {
+            Hubs = UsbHelper.GetAllUsbInfo();
+
+            foreach (var kv in Hubs)
+            {
+                var hub = kv.Key;
+                var devs = kv.Value;
+
+                cb_Hub.Items.Add($"{hub}");
+            }
+
+            cb_Hub.SelectedValueChanged += Cb_Hub_SelectedValueChanged;
+            if (cb_Hub.Items.Count > 0) cb_Hub.SelectedIndex = 0;
         }
     }
 }
