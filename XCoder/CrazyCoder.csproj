@@ -71,12 +71,12 @@
     <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="NewLife.Map" Version="2.6.2025.601" />
     <PackageReference Include="NewLife.ModbusRTU" Version="2.0.2025.701" />
-    <PackageReference Include="NewLife.Remoting" Version="3.3.2025.701" />
+    <PackageReference Include="NewLife.Remoting" Version="3.4.2025.801" />
     <PackageReference Include="NewLife.Security" Version="11.5.2025.701" />
     <PackageReference Include="System.Speech" Version="9.0.7" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>11.5.2025.701</Version>
+      <Version>11.6.2025.801</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
       <Version>2.1.2025.601</Version>
@@ -85,7 +85,7 @@
       <Version>4.4.2025.705</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
-      <Version>6.3.2025.701</Version>
+      <Version>6.3.2025.801</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
       <Version>3.4.2025.701</Version>
