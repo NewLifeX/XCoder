@@ -147,6 +147,7 @@ namespace XCoder
 
         private void bt_flash_Click(object sender, EventArgs e)
         {
+            cb_Hub.Items.Clear();
             Hubs = UsbHelper.GetAllUsbInfo();
 
             foreach (var kv in Hubs)
