@@ -19,6 +19,7 @@ jobs:
           7.x
           8.x
           9.x
+          10.x
     - name: Restore
       run: |
         dotnet restore XCoder/CrazyCoder.csproj
