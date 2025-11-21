@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net6.0;net8.0;net9.0;net10.0</TargetFrameworks>
+    <RootNamespace>XCoder_CLI</RootNamespace>
+    <RootNamespace>XCoder</RootNamespace>
+    <AssemblyTitle>XCoder命令行工具</AssemblyTitle>
+    <Description>数据中间件，代码生成，MacOS辅助</Description>
+    <Company>新生命开发团队</Company>
+    <Copyright>©2002-2025 NewLife</Copyright>
+    <VersionPrefix>1.0</VersionPrefix>
+    <VersionSuffix>$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</VersionSuffix>
+    <Version>$(VersionPrefix).$(VersionSuffix)</Version>
+    <FileVersion>$(Version)</FileVersion>
+    <AssemblyVersion>$(VersionPrefix).$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</AssemblyVersion>
+    <OutputPath>..\Bin</OutputPath>
+    <LangVersion>latest</LangVersion>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>xcoder-cli</ToolCommandName>
+    <NoWarn>1701;1702;NU5104;NETSDK1138;CS7035</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NewLife.Core" Version="11.9.2025.1112"/>
+    <PackageReference Include="NewLife.XCode" Version="11.22.2025.1112"/>
+  </ItemGroup>
+
+</Project>
