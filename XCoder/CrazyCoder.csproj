@@ -76,7 +76,7 @@
     <PackageReference Include="System.Speech" Version="10.0.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>11.8.2025.1112</Version>
+      <Version>11.9.2025.1112</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
       <Version>2.2.2025.1001</Version>
