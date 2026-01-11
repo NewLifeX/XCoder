@@ -85,7 +85,7 @@
       <Version>4.4.2025.1001</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
-      <Version>6.4.2026.102</Version>
+      <Version>6.4.2026.104</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
       <Version>3.6.2026.102</Version>
