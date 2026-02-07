@@ -82,7 +82,7 @@
       <Version>2.3.2026.201</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
-      <Version>4.4.2025.1001</Version>
+      <Version>4.4.2026.206</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
       <Version>6.4.2026.201</Version>
