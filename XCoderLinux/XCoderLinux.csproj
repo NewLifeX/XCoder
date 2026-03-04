@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -6,7 +6,7 @@
     <AssemblyName>XCoder</AssemblyName>
     <RootNamespace>XCoder</RootNamespace>
     <AssemblyTitle>新生命码神工具</AssemblyTitle>
-    <Description>众多开发者工具</Description>
+    <Description>码神工具跨平台版。代码生成、网络工具、API工具、串口工具、正则工具、图标工具、加解密工具、地图接口</Description>
     <Company>新生命开发团队</Company>
     <Copyright>©2002-2026 NewLife</Copyright>
     <VersionPrefix>8.0</VersionPrefix>
