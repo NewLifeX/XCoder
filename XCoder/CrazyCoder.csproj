@@ -79,16 +79,16 @@
       <Version>11.13.2026.301</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
-      <Version>2.3.2026.201</Version>
+      <Version>3.0.2026.305</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
       <Version>4.4.2026.206</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
-      <Version>6.4.2026.201</Version>
+      <Version>6.5.2026.303</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>3.7.2026.201</Version>
+      <Version>3.7.2026.303</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
       <Version>11.25.2026.302</Version>
