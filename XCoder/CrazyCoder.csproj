@@ -76,7 +76,7 @@
     <PackageReference Include="System.Speech" Version="10.0.3" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>11.13.2026.301</Version>
+      <Version>11.13.2026.308</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
       <Version>3.0.2026.305</Version>
@@ -88,7 +88,7 @@
       <Version>6.5.2026.303</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>3.7.2026.303</Version>
+      <Version>3.7.2026.307</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
       <Version>11.25.2026.302</Version>
