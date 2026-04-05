@@ -68,36 +68,36 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
-    <PackageReference Include="NAudio" Version="2.2.1" />
+    <PackageReference Include="NAudio" Version="2.3.0" />
     <PackageReference Include="NewLife.Map" Version="2.6.2026.102" />
     <PackageReference Include="NewLife.ModbusRTU" Version="2.0.2025.701" />
-    <PackageReference Include="NewLife.Remoting" Version="3.7.2026.302" />
-    <PackageReference Include="NewLife.Security" Version="11.11.2026.301" />
-    <PackageReference Include="System.Speech" Version="10.0.3" />
+    <PackageReference Include="NewLife.Remoting" Version="3.7.2026.402" />
+    <PackageReference Include="NewLife.Security" Version="11.11.2026.402" />
+    <PackageReference Include="System.Speech" Version="10.0.5" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="NewLife.Core">
-      <Version>11.13.2026.308</Version>
+      <Version>11.14.2026.402</Version>
     </PackageReference>
     <PackageReference Include="NewLife.MQTT">
-      <Version>3.0.2026.305</Version>
+      <Version>3.0.2026.403</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Net">
       <Version>4.4.2026.206</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Redis">
-      <Version>6.5.2026.303</Version>
+      <Version>6.5.2026.403</Version>
     </PackageReference>
     <PackageReference Include="NewLife.Stardust">
-      <Version>3.7.2026.307</Version>
+      <Version>3.7.2026.403</Version>
     </PackageReference>
     <PackageReference Include="NewLife.XCode">
-      <Version>11.25.2026.302</Version>
+      <Version>11.25.2026.403</Version>
     </PackageReference>
     <PackageReference Include="SSH.NET">
       <Version>2025.1.0</Version>
     </PackageReference>
-    <PackageReference Include="System.IO.Ports" Version="10.0.3" />
-    <PackageReference Include="System.Management" Version="10.0.3" />
+    <PackageReference Include="System.IO.Ports" Version="10.0.5" />
+    <PackageReference Include="System.Management" Version="10.0.5" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Star\" />
