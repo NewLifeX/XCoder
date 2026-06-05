@@ -49,6 +49,10 @@ namespace XCoder
         /// <summary>本设备是HUB时有效，无效为-1</summary>
         public int HubId { get; set; } = -1;
 
+        /// <summary>注册表ParentIdPrefix字段</summary>
+        public String ParentIdPrefix = "";
+
+
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -106,9 +110,6 @@ namespace XCoder
                     var hub = strs[1].TrimStart(hhead).ToInt();
                     var cid = GetContainerId(pnpId);
                     var (vid, pid) = GetVidPid(pnpId);
-                    var hubid = GetHubid(pnpId);
-                    if (hubid != -1) name += $"  {hubid}";
-
                     var dev = new UsbDevice
                     {
                         Port = port,
@@ -117,10 +118,12 @@ namespace XCoder
                         VID = vid,
                         PID = pid,
                         PNPDeviceID = pnpId,
-                        HubId = hubid,
                         // CurrentIdPrefix = pnpId.Split('\\').LastOrDefault(),
                         // ParentIdPrefix = GetParentIdPrefix(pnpId),
                     };
+
+                    var pre = GetParentIdPrefix(pnpId);
+                    if(!pre.IsNullOrEmpty())dev.ParentIdPrefix = pre;
 
                     if (roots.ContainsKey(hub)) { roots[hub].Add(dev); }
                     else { roots[hub] = new List<UsbDevice> { dev }; }
@@ -183,8 +186,40 @@ namespace XCoder
                 }
             }
 
+            // UpdateHubInfo(roots);
+
             return roots;
         }
+
+        /* 方法不对，获取的id不对，屏蔽之
+        /// <summary>更新HUB之间的关系</summary>
+        /// <param name="dic"></param>
+        public static void UpdateHubInfo(Dictionary<int, List<UsbDevice>> roots)
+        {
+            foreach (var item in roots)
+            {
+                var id = item.Key;                
+                var pre = GetParentIdPrefix(item.Value[0].PNPDeviceID);
+                if (pre.IsNullOrEmpty()) continue;
+
+                foreach (var item2 in roots)
+                {
+                    foreach (var dev in item2.Value)
+                    {
+                        if (!IsHub(dev.PNPDeviceID)) continue;
+
+                        if (dev.PNPDeviceID.IndexOf(pre) != -1)
+                        {
+                            dev.HubId = id;
+                            dev.Name += $"  {id}";
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        */
 
         /// <summary>获取集线集下的所有设备</summary>
         /// <param name="hubid">集线集编号</param>
@@ -245,80 +280,37 @@ namespace XCoder
             }
         }
 
-        public static int GetHubid(string devInstPath)
+        /// <summary>父关系前缀</summary>
+        /// <param name="devInstPath"></param>
+        /// <returns></returns>
+        public static string GetParentIdPrefix(string devInstPath)
         {
-            if (string.IsNullOrEmpty(devInstPath)) return -1;
+            if (string.IsNullOrEmpty(devInstPath)) return null;
 
-            bool isHub = false;
+            using (var key = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Enum\" + devInstPath))
+            {
+                return key?.GetValue("ParentIdPrefix") as string;
+            }
+        }
+
+        /// <summary>判断是不是hub</summary>
+        /// <param name="devInstPath"></param>
+        /// <returns></returns>
+        public static bool IsHub(string devInstPath)
+        {
+            if (string.IsNullOrEmpty(devInstPath)) return false;
+
             using (var key = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Enum\" + devInstPath))
             {
                 var val = key?.GetValue("CompatibleIDs") as string[];
-                if (val == null) return -1;
+                if (val == null) return false;
                 foreach (var id in val)
                 {
-                    if (id.IndexOf("USB20_HUB") >= 0 || id.IndexOf("USB30_HUB") >= 0)
-                    { isHub = true; break; }
-                }
-            }
-            if (!isHub) return -1;
-
-            // Hub自己的HubId，需要从其子设备的LocationInformation反推
-            // 通过WMI查询Parent指向该Hub的子设备，从子设备的LocationInformation提取Hub_#X
-            return GetHubIdFromChildDevices(devInstPath);
-        }
-
-        /// <summary>从Hub设备的子设备反推Hub自己的HubId</summary>
-        /// <remarks>
-        /// 通过注册表ParentIdPrefix匹配子设备，从子设备的LocationInformation（Port_#N.Hub_#X）中提取HubId。
-        /// Hub设备注册表中有ParentIdPrefix，其子设备的PNPDeviceID实例部分以该前缀开头。
-        /// </remarks>
-        static int GetHubIdFromChildDevices(string hubPnpId)
-        {
-            // 读取Hub的ParentIdPrefix
-            string parentIdPrefix;
-            using (var hubKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Enum\" + hubPnpId))
-            {
-                parentIdPrefix = hubKey?.GetValue("ParentIdPrefix") as string;
-            }
-            if (string.IsNullOrEmpty(parentIdPrefix)) return -1;
-
-            // 遍历注册表中USB设备，找实例ID以ParentIdPrefix开头的子设备
-            using (var enumKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Enum\USB"))
-            {
-                if (enumKey == null) return -1;
-
-                foreach (var vidSub in enumKey.GetSubKeyNames())
-                {
-                    using (var vidKey = enumKey.OpenSubKey(vidSub))
-                    {
-                        if (vidKey == null) continue;
-                        foreach (var instSub in vidKey.GetSubKeyNames())
-                        {
-                            // 子设备实例部分以ParentIdPrefix开头，说明是该Hub的子设备
-                            if (!instSub.StartsWith(parentIdPrefix)) continue;
-                            // 跳过Hub自身
-                            var childPnpId = $@"USB\{vidSub}\{instSub}";
-                            if (childPnpId.Equals(hubPnpId, StringComparison.OrdinalIgnoreCase)) continue;
-
-                            // 从子设备的LocationInformation中提取HubId
-                            var location = GetLocationInformation(childPnpId);
-                            if (string.IsNullOrEmpty(location)) continue;
-
-                            var hhead = "Hub_#";
-                            var idx = location.IndexOf(hhead);
-                            if (idx >= 0)
-                            {
-                                var sub = location.Substring(idx + hhead.Length);
-                                var numStr = new string(sub.TakeWhile(char.IsDigit).ToArray());
-                                if (int.TryParse(numStr, out var hubId))
-                                    return hubId;
-                            }
-                        }
-                    }
+                    if (id.IndexOf("USB20_HUB") >= 0 || id.IndexOf("USB30_HUB") >= 0) return true;
                 }
             }
 
-            return -1;
+            return false;
         }
 
         /// <summary>提取VID PID</summary>
