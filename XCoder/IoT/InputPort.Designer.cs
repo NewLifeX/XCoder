@@ -79,7 +79,6 @@
             // 
             // Relay
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Dpi;
             Controls.Add(label1);
             Controls.Add(checkBox1);

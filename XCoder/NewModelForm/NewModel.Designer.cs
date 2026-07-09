@@ -132,7 +132,6 @@
             // 
             // NewModel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.dgvTables);
             this.Controls.Add(this.toolStrip1);

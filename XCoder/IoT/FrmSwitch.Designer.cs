@@ -265,7 +265,6 @@
             // 
             // FrmSwitch
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(515, 250);
             Controls.Add(groupBox2);

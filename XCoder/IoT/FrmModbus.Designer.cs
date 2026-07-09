@@ -242,7 +242,6 @@
             // 
             // FrmModbus
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(805, 556);
             Controls.Add(btnConnect2);

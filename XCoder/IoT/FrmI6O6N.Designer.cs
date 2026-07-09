@@ -315,7 +315,6 @@
             // 
             // FrmI6O6N
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(921, 584);
             Controls.Add(groupBox3);

@@ -102,7 +102,6 @@
             // 
             // MelForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(652, 404);
             Controls.Add(label2);

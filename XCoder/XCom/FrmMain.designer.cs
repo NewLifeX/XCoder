@@ -202,6 +202,7 @@
             // 
             // btnConnect
             // 
+            this.btnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnConnect.Location = new System.Drawing.Point(739, 14);
             this.btnConnect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnConnect.Name = "btnConnect";
@@ -221,6 +222,7 @@
             // 
             this.spList.BytesOfReceived = 0;
             this.spList.BytesOfSent = 0;
+            this.spList.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.spList.Location = new System.Drawing.Point(18, 13);
             this.spList.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.spList.Name = "spList";

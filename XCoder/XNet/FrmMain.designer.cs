@@ -215,6 +215,7 @@
             // 
             // btnConnect
             // 
+            btnConnect.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnConnect.Location = new Point(880, 13);
             btnConnect.Margin = new Padding(4, 5, 4, 5);
             btnConnect.Name = "btnConnect";
@@ -293,6 +294,7 @@
             pnlSetting.Controls.Add(label1);
             pnlSetting.Controls.Add(lbLocal);
             pnlSetting.Controls.Add(cbMode);
+            pnlSetting.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlSetting.Location = new Point(13, 11);
             pnlSetting.Margin = new Padding(4, 5, 4, 5);
             pnlSetting.Name = "pnlSetting";
