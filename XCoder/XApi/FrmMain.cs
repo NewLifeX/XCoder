@@ -28,9 +28,6 @@ public partial class FrmMain : Form, IXForm
     {
         InitializeComponent();
 
-        // 动态调节宽度高度，兼容高DPI
-        this.FixDpi();
-
         //Font = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
         //Icon = IcoHelper.GetIcon("Api");
     }

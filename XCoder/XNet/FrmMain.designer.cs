@@ -431,7 +431,7 @@
             // 
             // FrmMain
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(1000, 632);
             Controls.Add(gbSend);
             Controls.Add(pnlSetting);

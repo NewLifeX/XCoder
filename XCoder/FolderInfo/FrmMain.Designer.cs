@@ -86,7 +86,7 @@
             // 
             // FrmMain
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(894, 549);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.treeView1);

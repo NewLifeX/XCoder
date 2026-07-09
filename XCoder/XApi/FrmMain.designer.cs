@@ -461,7 +461,7 @@
             // 
             // FrmMain
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1000, 611);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cbAction);

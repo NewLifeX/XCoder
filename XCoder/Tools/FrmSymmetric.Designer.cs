@@ -495,7 +495,7 @@
             // 
             // FrmSymmetric
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(1304, 1049);
             Controls.Add(gbPass);
             Controls.Add(gbResult);

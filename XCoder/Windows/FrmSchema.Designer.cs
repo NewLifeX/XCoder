@@ -111,7 +111,7 @@
             // 
             // FrmSchema
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1176, 722);
             this.Controls.Add(this.gv);
             this.Controls.Add(this.groupBox1);

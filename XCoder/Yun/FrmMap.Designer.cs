@@ -268,7 +268,7 @@
             // 
             // FrmMap
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1005, 813);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtLocation2);

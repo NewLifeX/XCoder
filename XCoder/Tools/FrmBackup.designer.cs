@@ -303,7 +303,7 @@
             // 
             // FrmBackup
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1000, 631);
             this.Controls.Add(this.pnlSetting);
             this.Controls.Add(this.cbAllowDelete);

@@ -464,7 +464,7 @@
             // FrmMain
             // 
             this.AllowDrop = true;
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(816, 690);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);

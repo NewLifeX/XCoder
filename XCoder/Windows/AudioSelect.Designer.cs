@@ -112,7 +112,7 @@
             // AudioSelect
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(545, 311);
             Controls.Add(lb_Volume);
             Controls.Add(tb_Volume);

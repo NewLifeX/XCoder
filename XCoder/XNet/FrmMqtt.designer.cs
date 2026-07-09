@@ -482,7 +482,7 @@
             // 
             // FrmMqtt
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1111, 864);
             this.Controls.Add(this.gbSubscribe);
             this.Controls.Add(this.gbSetting);

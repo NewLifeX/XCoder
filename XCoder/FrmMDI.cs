@@ -20,10 +20,10 @@ public partial class FrmMDI : Form
 
         InitializeComponent();
 
-        // 动态调节宽度高度，兼容高DPI
-        this.FixDpi();
-
         //Icon = Source.GetIcon();
+
+        // 显式设置字体，确保 AutoScaleMode.Dpi 缩放基准正确（FixDpi 核心逻辑）
+        Font = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
     }
 
     private void FrmMDI_Shown(Object sender, EventArgs e)
@@ -136,6 +136,9 @@ public partial class FrmMDI : Form
             cfg.Save();
         }
 
+        // 显式设置字体，确保 AutoScaleMode.Dpi 缩放基准正确（FixDpi 核心逻辑）
+        frm.Font = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
+
         frm.MdiParent = this;
         frm.WindowState = FormWindowState.Maximized;
         frm.Show();
@@ -229,4 +232,5 @@ public partial class FrmMDI : Form
         }
     }
     #endregion
+
 }

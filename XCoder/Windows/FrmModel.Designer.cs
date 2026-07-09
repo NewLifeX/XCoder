@@ -238,7 +238,7 @@
             // 
             // FrmModel
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1530, 780);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dgvIndex);

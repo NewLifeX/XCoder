@@ -505,7 +505,7 @@
             // 
             // FrmMD5
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1304, 1049);
             this.Controls.Add(this.gbPass);
             this.Controls.Add(this.gbResult);

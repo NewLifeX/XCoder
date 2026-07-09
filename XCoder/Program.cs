@@ -25,11 +25,9 @@ static class Program
 
         if (set.IsNew) "学无先后达者为师，欢迎使用新生命码神工具！".SpeechTip();
 
+        Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-#if NET5_0_OR_GREATER
-        Application.SetHighDpiMode(HighDpiMode.SystemAware);
-#endif
         Application.Run(new FrmMDI());
     }
 

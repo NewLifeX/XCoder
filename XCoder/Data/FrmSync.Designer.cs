@@ -261,7 +261,7 @@
             // 
             // FrmSync
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1104, 695);
             this.Controls.Add(this.gbSetting);
             this.Controls.Add(this.dataGridView1);

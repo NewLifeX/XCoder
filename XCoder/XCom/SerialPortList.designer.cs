@@ -207,7 +207,7 @@
             // 
             // SerialPortList
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.cbBaudrate);
             this.Controls.Add(this.label2);

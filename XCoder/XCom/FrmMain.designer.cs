@@ -232,7 +232,7 @@
             // 
             // FrmMain
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(848, 643);
             this.Controls.Add(this.spList);
             this.Controls.Add(this.gbSend);

@@ -581,7 +581,7 @@
             // 
             // FrmMain
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(1176, 936);
             Controls.Add(splitContainer1);
             Controls.Add(statusStrip1);

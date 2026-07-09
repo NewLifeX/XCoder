@@ -107,7 +107,7 @@
             // 
             // FrmRedis
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1033, 581);
             this.Controls.Add(this.gbContent);
             this.Controls.Add(this.gbFunc);

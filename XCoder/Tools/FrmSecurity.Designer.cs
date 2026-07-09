@@ -607,7 +607,7 @@
             // 
             // FrmSecurity
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(1304, 879);
             Controls.Add(gbPass);
             Controls.Add(gbResult);

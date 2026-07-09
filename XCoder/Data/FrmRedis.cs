@@ -17,9 +17,6 @@ public partial class FrmRedis : Form, IXForm
     public FrmRedis()
     {
         InitializeComponent();
-
-        // 动态调节宽度高度，兼容高DPI
-        this.FixDpi();
     }
 
     private void FrmRedis_Load(Object sender, EventArgs e)

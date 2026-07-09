@@ -39,7 +39,7 @@
             // 
             // FrmText
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(986, 675);
             this.Controls.Add(this.richTextBox1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);

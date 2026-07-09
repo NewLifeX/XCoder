@@ -97,7 +97,7 @@
             // UsbHubSelect
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(913, 382);
             Controls.Add(bt_flash);
             Controls.Add(label1);

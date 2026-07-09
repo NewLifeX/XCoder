@@ -23,9 +23,6 @@ public partial class FrmApiDiscover : Form, IXForm
     public FrmApiDiscover()
     {
         InitializeComponent();
-
-        // 动态调节宽度高度，兼容高DPI
-        this.FixDpi();
     }
 
     private void FrmMain_Load(Object sender, EventArgs e)
