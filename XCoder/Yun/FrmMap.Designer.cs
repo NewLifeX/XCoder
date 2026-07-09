@@ -168,14 +168,11 @@
             // 
             // pgResult
             // 
-            this.pgResult.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pgResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pgResult.LineColor = System.Drawing.SystemColors.ControlDark;
-            this.pgResult.Location = new System.Drawing.Point(579, 180);
             this.pgResult.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.pgResult.Name = "pgResult";
             this.pgResult.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-            this.pgResult.Size = new System.Drawing.Size(421, 625);
             this.pgResult.TabIndex = 25;
             // 
             // btnInvoke
@@ -192,6 +189,7 @@
             // txtReceive
             // 
             this.txtReceive.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtReceive.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(5, 25);
             this.txtReceive.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
@@ -211,15 +209,11 @@
             // 
             // gbReceive
             // 
-            this.gbReceive.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbReceive.Controls.Add(this.txtReceive);
-            this.gbReceive.Location = new System.Drawing.Point(3, 180);
+            this.gbReceive.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbReceive.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.gbReceive.Name = "gbReceive";
             this.gbReceive.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.gbReceive.Size = new System.Drawing.Size(571, 630);
             this.gbReceive.TabIndex = 24;
             this.gbReceive.TabStop = false;
             // 
@@ -266,8 +260,28 @@
             this.txtLocation2.Size = new System.Drawing.Size(315, 27);
             this.txtLocation2.TabIndex = 40;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 180);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(997, 630);
+            this.tableLayoutPanel1.TabIndex = 41;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 421F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.gbReceive, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pgResult, 1, 0);
+            // 
             // FrmMap
             // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1005, 813);
             this.Controls.Add(this.label7);
@@ -282,9 +296,8 @@
             this.Controls.Add(this.txtCity);
             this.Controls.Add(this.txtAddress);
             this.Controls.Add(this.cbMap);
-            this.Controls.Add(this.pgResult);
             this.Controls.Add(this.btnInvoke);
-            this.Controls.Add(this.gbReceive);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtLocation);
             this.Controls.Add(this.chkFormatAddress);
@@ -294,6 +307,7 @@
             this.Text = "地图接口";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.gbReceive.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -324,5 +338,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtLocation2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
