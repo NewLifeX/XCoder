@@ -35,9 +35,6 @@ namespace XNet
 
             //txtReceive.UseWinFormControl();
             txtReceive.Clear();
-            txtReceive.SetDefaultStyle(12);
-            txtSend.SetDefaultStyle(12);
-
             gbReceive.Tag = gbReceive.Text;
             gbSend.Tag = gbSend.Text;
         }

@@ -29,8 +29,6 @@ namespace XNet
         {
             _log = new TextControlLog { Control = txtReceive };
 
-            txtReceive.SetDefaultStyle(12);
-
             var dic = EnumHelper.GetDescriptions(typeof(FunctionCodes));
             cbFunctionCode.ValueMember = "key";
             cbFunctionCode.DisplayMember = "value";

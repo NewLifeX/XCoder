@@ -38,10 +38,6 @@ public partial class FrmMain : Form, IXForm
         BizLog = txtReceive.Combine(log);
         txtReceive.UseWinFormControl();
 
-        txtReceive.SetDefaultStyle(12);
-        txtSend.SetDefaultStyle(12);
-        numMutilSend.SetDefaultStyle(12);
-
         gbReceive.Tag = gbReceive.Text;
         gbSend.Tag = gbSend.Text;
 

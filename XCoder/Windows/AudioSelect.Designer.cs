@@ -82,6 +82,7 @@
             // rtb_Info
             // 
             rtb_Info.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            rtb_Info.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             rtb_Info.Location = new Point(57, 72);
             rtb_Info.Name = "rtb_Info";
             rtb_Info.ReadOnly = true;

@@ -96,6 +96,7 @@
             // 
             this.txtReceive.ContextMenuStrip = this.menuReceive;
             this.txtReceive.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtReceive.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(4, 23);
             this.txtReceive.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -299,6 +300,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSend.ContextMenuStrip = this.menuSend;
+            this.txtSend.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtSend.HideSelection = false;
             this.txtSend.Location = new System.Drawing.Point(4, 73);
             this.txtSend.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);

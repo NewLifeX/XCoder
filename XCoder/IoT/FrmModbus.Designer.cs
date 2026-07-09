@@ -222,6 +222,7 @@
             // richTextBox1
             // 
             richTextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            richTextBox1.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             richTextBox1.Location = new Point(11, 227);
             richTextBox1.Margin = new Padding(2);
             richTextBox1.Name = "richTextBox1";

@@ -26,7 +26,6 @@ namespace XCoder.Tools
         private void FrmMain_Load(Object sender, EventArgs e)
         {
             txtLog.UseWinFormControl();
-            txtLog.SetDefaultStyle(12);
 
             LoadConfig();
         }

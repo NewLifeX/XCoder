@@ -84,14 +84,12 @@ namespace XCoder
 
         public static UIConfig Apply(TextBoxBase txt)
         {
-            // 加载颜色
+            // 仅加载颜色（字体由 FrmMDI 统一管理，AutoScaleMode.Dpi 自动缩放）
             var ui = UIConfig.Load();
-            if (ui?.Font == null) ui = null;
             if (ui != null)
             {
                 try
                 {
-                    txt.Font = ui.Font;
                     txt.BackColor = ui.BackColor;
                     txt.ForeColor = ui.ForeColor;
                 }
@@ -100,24 +98,19 @@ namespace XCoder
             if (ui == null)
             {
                 ui = UIConfig.Current;
-                ui.Font = txt.Font;
                 ui.BackColor = txt.BackColor;
                 ui.ForeColor = txt.ForeColor;
                 ui.Save();
             }
 
-            // 菜单控制
+            // 菜单控制（仅保留颜色设置，字体由 FrmMDI 统一管理）
             var menu = txt.ContextMenuStrip;
             if (menu != null)
             {
-                var ti = Find(menu.Items, "字体", true);
+                var ti = Find(menu.Items, "前景色", true);
                 if (ti == null)
                 {
                     menu.Items.Insert(0, new ToolStripSeparator());
-
-                    ti = new ToolStripMenuItem("字体");
-                    menu.Items.Add(ti);
-                    ti.Click += mi字体_Click;
 
                     ti = new ToolStripMenuItem("前景色");
                     menu.Items.Add(ti);
@@ -155,22 +148,6 @@ namespace XCoder
             }
 
             return null;
-        }
-
-        static void mi字体_Click(Object sender, EventArgs e)
-        {
-            var ti = sender as ToolStripItem;
-            var txt = (ti.Owner as ContextMenuStrip).SourceControl as TextBoxBase;
-
-            var fd = new FontDialog();
-            fd.Font = txt.Font;
-            if (fd.ShowDialog() != DialogResult.OK) return;
-
-            txt.Font = fd.Font;
-
-            var ui = UIConfig.Current;
-            ui.Font = txt.Font;
-            ui.Save();
         }
 
         static void mi前景色_Click(Object sender, EventArgs e)

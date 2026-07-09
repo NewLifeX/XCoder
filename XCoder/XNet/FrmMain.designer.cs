@@ -97,6 +97,7 @@
             // 
             txtReceive.ContextMenuStrip = menuReceive;
             txtReceive.Dock = DockStyle.Fill;
+            txtReceive.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             txtReceive.HideSelection = false;
             txtReceive.Location = new Point(4, 21);
             txtReceive.Margin = new Padding(4, 5, 4, 5);
@@ -369,6 +370,7 @@
             // 
             txtSend.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtSend.ContextMenuStrip = menuSend;
+            txtSend.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             txtSend.HideSelection = false;
             txtSend.Location = new Point(4, 24);
             txtSend.Margin = new Padding(4, 5, 4, 5);

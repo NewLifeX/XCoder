@@ -32,8 +32,6 @@ public partial class FrmMap : Form, IXForm
         BizLog = txtReceive.Combine(XTrace.Log);
         txtReceive.UseWinFormControl();
 
-        txtReceive.SetDefaultStyle(12);
-
         // 加载保存的颜色
         UIConfig.Apply(txtReceive);
 

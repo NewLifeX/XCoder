@@ -77,6 +77,7 @@
             // 
             this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtLog.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtLog.Location = new System.Drawing.Point(14, 307);
             this.txtLog.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.txtLog.Name = "txtLog";

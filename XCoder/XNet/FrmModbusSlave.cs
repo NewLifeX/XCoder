@@ -38,8 +38,6 @@ namespace XNet
 
             if (cbMode.SelectedIndex < 0) cbMode.SelectedIndex = 0;
 
-            txtReceive.SetDefaultStyle(12);
-
             // 加载保存的颜色
             UIConfig.Apply(txtReceive);
 

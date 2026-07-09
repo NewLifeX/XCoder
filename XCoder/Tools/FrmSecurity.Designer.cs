@@ -457,7 +457,7 @@
             // rtSource
             // 
             rtSource.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            rtSource.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            rtSource.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             rtSource.Location = new Point(4, 72);
             rtSource.Margin = new Padding(4);
             rtSource.Name = "rtSource";
@@ -524,7 +524,7 @@
             // rtResult
             // 
             rtResult.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            rtResult.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            rtResult.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             rtResult.Location = new Point(4, 63);
             rtResult.Margin = new Padding(4);
             rtResult.Name = "rtResult";
@@ -586,7 +586,7 @@
             // rtPass
             // 
             rtPass.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            rtPass.Font = new Font("宋体", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            rtPass.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             rtPass.Location = new Point(4, 71);
             rtPass.Margin = new Padding(4);
             rtPass.Name = "rtPass";

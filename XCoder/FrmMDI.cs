@@ -136,7 +136,8 @@ public partial class FrmMDI : Form
             cfg.Save();
         }
 
-        // 显式设置字体，确保 AutoScaleMode.Dpi 缩放基准正确（FixDpi 核心逻辑）
+        // 设置父窗体基准字体，子控件继承后由 AutoScaleMode.Dpi 统一缩放
+        // 警告：子窗体 Designer 或运行时不得再设置显式 Font，否则会破坏 DPI 缩放链
         frm.Font = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
 
         frm.MdiParent = this;

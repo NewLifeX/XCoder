@@ -48,7 +48,7 @@
             // rtb_Show
             // 
             rtb_Show.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            rtb_Show.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            rtb_Show.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             rtb_Show.Location = new Point(12, 43);
             rtb_Show.Name = "rtb_Show";
             rtb_Show.Size = new Size(889, 327);
