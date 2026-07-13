@@ -1,0 +1,99 @@
+<Window x:Class="CrazyCoder.Views.MelSpectrumWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="音频梅尔频谱" Height="700" Width="900" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="GroupBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="4,3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="16,0"/>
+        </Style>
+        <Style x:Key="LogTextBox" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 文件选择 -->
+        <Border Grid.Row="0" Style="{StaticResource GroupBorder}">
+            <StackPanel>
+                <TextBlock Text="音频文件" Style="{StaticResource SectionTitle}"/>
+                <Grid Margin="4,0,4,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding FilePath, UpdateSourceTrigger=PropertyChanged}"
+                             IsReadOnly="True" Margin="2" Height="28" VerticalContentAlignment="Center"/>
+                    <Button Grid.Column="1" Content="打开..." Command="{Binding OpenFileCommand}"
+                            Style="{StaticResource ActionButton}" Width="80" Margin="4,2"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- 声道选择 -->
+        <Border Grid.Row="1" Style="{StaticResource GroupBorder}">
+            <StackPanel>
+                <TextBlock Text="声道选择" Style="{StaticResource SectionTitle}"/>
+                <ComboBox ItemsSource="{Binding ChannelList}" SelectedIndex="{Binding SelectedChannelIndex}"
+                          Margin="4,0,4,4" Height="30"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 频谱图 -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Style="{StaticResource GroupBorder}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="梅尔频谱图" Style="{StaticResource SectionTitle}"/>
+                    <Image Grid.Row="1" Source="{Binding MelImagePath}" Stretch="Uniform" Margin="2"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Style="{StaticResource GroupBorder}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="音量曲线" Style="{StaticResource SectionTitle}"/>
+                    <Image Grid.Row="1" Source="{Binding VolumeImagePath}" Stretch="Uniform" Margin="2"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

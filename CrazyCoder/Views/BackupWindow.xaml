@@ -1,0 +1,115 @@
+<Window x:Class="CrazyCoder.Views.BackupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="手机备份" Height="650" Width="800" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="GroupBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="4,3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style x:Key="ConfigLabel" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="4,2"/>
+        </Style>
+        <Style x:Key="ConfigTextBox" TargetType="TextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="16,0"/>
+        </Style>
+        <Style x:Key="LogTextBox" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="OptionCheckBox" TargetType="CheckBox">
+            <Setter Property="Margin" Value="4,2"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 配置 -->
+        <Border Grid.Row="0" Style="{StaticResource GroupBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="目标目录" Style="{StaticResource ConfigLabel}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding DestDir, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ConfigTextBox}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="源目录1" Style="{StaticResource ConfigLabel}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SrcDir1, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ConfigTextBox}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="源目录2" Style="{StaticResource ConfigLabel}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SrcDir2, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ConfigTextBox}"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="源目录3" Style="{StaticResource ConfigLabel}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SrcDir3, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ConfigTextBox}"/>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="源目录4" Style="{StaticResource ConfigLabel}"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SrcDir4, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ConfigTextBox}"/>
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="源目录5" Style="{StaticResource ConfigLabel}"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SrcDir5, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ConfigTextBox}"/>
+
+                <CheckBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="允许移动删除文件" IsChecked="{Binding AllowDelete}" Style="{StaticResource OptionCheckBox}"/>
+
+                <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="4,4">
+                    <Button Content="开始备份" Command="{Binding StartBackupCommand}"
+                            Style="{StaticResource ActionButton}" Width="120"
+                            Background="#4CAF50" Foreground="White" FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 日志 -->
+        <Border Grid.Row="1" Style="{StaticResource GroupBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="备份日志" Style="{StaticResource SectionTitle}"/>
+                <TextBox Grid.Row="1" Text="{Binding Log, Mode=OneWay}" Style="{StaticResource LogTextBox}" Margin="2"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
