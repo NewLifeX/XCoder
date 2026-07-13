@@ -1,27 +1,67 @@
-﻿using System;
+﻿using System.Text;
 using Avalonia;
-using Avalonia.Logging.Serilog;
+using NewLife;
+using NewLife.Log;
+using Stardust;
 
-namespace XCoderAv
+namespace XCoderAv;
+
+class Program
 {
-    class Program
+    public static void Main(String[] args)
     {
-        // Initialization code. Don't use any Avalonia, third-party APIs or any
-        // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-        // yet and stuff might break.
-        public static void Main(string[] args) => BuildAvaloniaApp().Start(AppMain, args);
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        MachineInfo.RegisterAsync();
 
-        // Avalonia configuration, don't remove; also used by visual designer.
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
-                .UsePlatformDetect()
-                .LogToDebug();
+        StartClient();
 
-        // Your application's entry point. Here you can initialize your MVVM framework, DI
-        // container, etc.
-        private static void AppMain(Application app, string[] args)
+        var set = XConfig.Current;
+        StringHelper.EnableSpeechTip = set.SpeechTip;
+
+        if (set.IsNew)
         {
-            app.Run(new MainWindow());
+            try { "学无先后达者为师，欢迎使用新生命码神工具！".SpeechTip(); } catch { }
         }
+
+        BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+    }
+
+    public static AppBuilder BuildAvaloniaApp()
+        => AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .WithInterFont()
+            .LogToTrace();
+
+    static StarClient? _Client;
+    private static void StartClient()
+    {
+        var set = XConfig.Current;
+        var server = set.Server;
+        if (server.IsNullOrEmpty()) return;
+
+        XTrace.WriteLine("初始化服务端地址：{0}", server);
+
+        var client = new StarClient(server)
+        {
+            Code = set.Code,
+            Secret = set.Secret,
+            Log = XTrace.Log,
+        };
+
+        client.OnLogined += (s, e) =>
+        {
+            if (client.Logined && !client.Code.IsNullOrEmpty())
+            {
+                set.Code = client.Code;
+                set.Secret = client.Secret;
+                set.Save();
+            }
+        };
+
+        client.Open();
+
+        NewLife.Model.Host.RegisterExit(() => client.Logout("ApplicationExit"));
+
+        _Client = client;
     }
 }

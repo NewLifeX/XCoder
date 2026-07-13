@@ -1,0 +1,180 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="750"
+        x:Class="XCoderAv.Views.MqttWindow"
+        Title="MQTT 客户端" Width="1100" Height="750"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+        <Style Selector="TextBlock.SectionTitle">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="4,3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="8,0"/>
+        </Style>
+        <Style Selector="Button.SendButton">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ============ 左侧：配置面板 ============ -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,4,0">
+            <StackPanel>
+                <!-- 连接配置 -->
+                <Border Classes="GroupBorder">
+                    <StackPanel>
+                        <TextBlock Text="连接配置" Classes="SectionTitle"/>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="地址" VerticalAlignment="Center" Margin="4,2"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Server}" Classes="ConfigTextBox"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="标识" VerticalAlignment="Center" Margin="4,2"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ClientId}" Classes="ConfigTextBox"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="用户" VerticalAlignment="Center" Margin="4,2"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UserName}" Classes="ConfigTextBox"/>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="密码" VerticalAlignment="Center" Margin="4,2"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Password}" Classes="ConfigTextBox"/>
+
+                            <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                                    Content="{Binding ConnectButtonText}" Command="{Binding ToggleConnectCommand}"
+                                    Classes="ActionButton" Margin="4,4"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- 订阅配置 -->
+                <Border Classes="GroupBorder">
+                    <StackPanel>
+                        <TextBlock Text="订阅配置" Classes="SectionTitle"/>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="主题" VerticalAlignment="Center" Margin="4,2"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SubscribeTopic}" Classes="ConfigTextBox"/>
+                            <ComboBox Grid.Row="0" Grid.Column="2" ItemsSource="{Binding QosOptions}"
+                                      SelectedIndex="{Binding SubscribeQos}" Width="60" Margin="2"/>
+
+                            <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                                    Content="订阅" Command="{Binding SubscribeCommand}"
+                                    Classes="ActionButton" Margin="4,4"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ============ 右侧：发布 + 日志 ============ -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- 发布区 -->
+            <Border Grid.Row="0" Classes="GroupBorder">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="主题" VerticalAlignment="Center" Margin="4,2"/>
+                        <TextBox Grid.Column="1" Text="{Binding PublishTopic}" Classes="ConfigTextBox"/>
+                        <ComboBox Grid.Column="2" ItemsSource="{Binding QosOptions}"
+                                  SelectedIndex="{Binding PublishQos}" Width="60" Margin="2"/>
+                        <CheckBox Grid.Column="3" Content="保留" IsChecked="{Binding Retain}" VerticalAlignment="Center" Margin="4,0"/>
+                    </Grid>
+
+                    <TextBox Grid.Row="1" Text="{Binding PublishText}" AcceptsReturn="True"
+                             MinHeight="80" FontFamily="Consolas" Margin="2"/>
+
+                    <Button Grid.Row="2" Content="发布" Command="{Binding PublishCommand}"
+                            Classes="SendButton" Height="40" Margin="4,4"/>
+                </Grid>
+            </Border>
+
+            <!-- 日志区 -->
+            <Border Grid.Row="1" Classes="GroupBorder">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="日志" FontWeight="Bold" Margin="4,2"/>
+                        <Button Grid.Column="1" Content="清空" Command="{Binding ClearLogCommand}"
+                                Height="26" Margin="2" Padding="8,0"/>
+                    </Grid>
+                    <TextBox Grid.Row="1" x:Name="txtLog" IsReadOnly="True"
+                             AcceptsReturn="True"
+                             FontFamily="Consolas" FontSize="12" Background="#1E1E1E" Foreground="#D4D4D4"
+                             Margin="2"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,164 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="750"
+        x:Class="XCoderAv.Views.SecurityWindow"
+        Title="加密解密" Width="1100" Height="750"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="Button.FuncButton">
+            <Setter Property="Width" Value="110"/>
+            <Setter Property="Height" Value="46"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style Selector="TextBox.CodeTextBox">
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="AcceptsReturn" Value="True"/>
+            <Setter Property="AcceptsTab" Value="True"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 左侧：功能按钮区 -->
+        <Border Grid.Column="0" BorderBrush="#D0D0D0" BorderThickness="1" Margin="0,0,4,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <WrapPanel Orientation="Horizontal" Margin="4">
+                    <Button Content="HEX编码" Classes="FuncButton" Command="{Binding HexEncodeCommand}"/>
+                    <Button Content="HEX解码" Classes="FuncButton" Command="{Binding HexDecodeCommand}"/>
+                    <Button Content="Base64编码" Classes="FuncButton" Command="{Binding Base64EncodeCommand}"/>
+                    <Button Content="Base64解码" Classes="FuncButton" Command="{Binding Base64DecodeCommand}"/>
+                    <Button Content="MD5_32" Classes="FuncButton" Command="{Binding MD5_32Command}"/>
+                    <Button Content="MD5_16" Classes="FuncButton" Command="{Binding MD5_16Command}"/>
+                    <Button Content="SHA1" Classes="FuncButton" Command="{Binding SHA1Command}"/>
+                    <Button Content="SHA256" Classes="FuncButton" Command="{Binding SHA256Command}"/>
+                    <Button Content="SHA384" Classes="FuncButton" Command="{Binding SHA384Command}"/>
+                    <Button Content="SHA512" Classes="FuncButton" Command="{Binding SHA512Command}"/>
+                    <Button Content="CRC_32" Classes="FuncButton" Command="{Binding CRC_32Command}"/>
+                    <Button Content="CRC_16" Classes="FuncButton" Command="{Binding CRC_16Command}"/>
+                    <Button Content="RSA加密" Classes="FuncButton" Command="{Binding RSAEncryptCommand}"/>
+                    <Button Content="RSA解密" Classes="FuncButton" Command="{Binding RSADecryptCommand}"/>
+                    <Button Content="DSA签名" Classes="FuncButton" Command="{Binding DSASignCommand}"/>
+                    <Button Content="DSA验证" Classes="FuncButton" Command="{Binding DSAVerifyCommand}"/>
+                    <Button Content="Url编码" Classes="FuncButton" Command="{Binding UrlEncodeCommand}"/>
+                    <Button Content="Url解码" Classes="FuncButton" Command="{Binding UrlDecodeCommand}"/>
+                    <Button Content="Html编码" Classes="FuncButton" Command="{Binding HtmlEncodeCommand}"/>
+                    <Button Content="Html解码" Classes="FuncButton" Command="{Binding HtmlDecodeCommand}"/>
+                    <Button Content="时间戳" Classes="FuncButton" Command="{Binding TimestampCommand}"/>
+                    <Button Content="机器信息" Classes="FuncButton" Command="{Binding ComputerInfoCommand}"/>
+                    <Button Content="雪花Id" Classes="FuncButton" Command="{Binding SnowflakeCommand}"/>
+                    <Button Content="JWT令牌" Classes="FuncButton" Command="{Binding JwtTokenCommand}"/>
+                    <Button Content="版本号" Classes="FuncButton" Command="{Binding VersionCommand}"/>
+                    <Button Content="TraceId" Classes="FuncButton" Command="{Binding TraceIdCommand}"/>
+                </WrapPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- 右侧：输入输出区 -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- 原文输入 -->
+            <Border Grid.Row="0" Classes="GroupBorder">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="原文" FontWeight="Bold" Margin="4,2"/>
+                        <RadioButton Grid.Column="1" Content="字符串" IsChecked="{Binding IsSourceString}" Margin="4,0"/>
+                        <RadioButton Grid.Column="2" Content="HEX" IsChecked="{Binding IsSourceHex}" Margin="4,0"
+                                     IsEnabled="{Binding SourceHexEnabled}"/>
+                        <RadioButton Grid.Column="3" Content="Base64" IsChecked="{Binding IsSourceBase64}" Margin="4,0"
+                                     IsEnabled="{Binding SourceBase64Enabled}"/>
+                    </Grid>
+                    <TextBox Grid.Row="2" Text="{Binding SourceText}" Classes="CodeTextBox" MinHeight="60"/>
+                </Grid>
+            </Border>
+
+            <!-- 密码输入 -->
+            <Border Grid.Row="1" Classes="GroupBorder">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="密码" FontWeight="Bold" Margin="4,2"/>
+                        <RadioButton Grid.Column="1" Content="字符串" IsChecked="{Binding IsPassString}" Margin="4,0"/>
+                        <RadioButton Grid.Column="2" Content="HEX" IsChecked="{Binding IsPassHex}" Margin="4,0"/>
+                        <RadioButton Grid.Column="3" Content="Base64" IsChecked="{Binding IsPassBase64}" Margin="4,0"/>
+                        <Button Grid.Column="4" Content="上下互换" Command="{Binding ExchangeCommand}"
+                                Height="26" Margin="2" Padding="8,0"/>
+                    </Grid>
+                    <TextBox Grid.Row="2" Text="{Binding PassText}" Classes="CodeTextBox" MinHeight="40"/>
+                </Grid>
+            </Border>
+
+            <!-- 输出格式 -->
+            <Border Grid.Row="2" Classes="GroupBorder" Padding="4">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="输出格式" FontWeight="Bold" VerticalAlignment="Center" Margin="4,0"/>
+                    <CheckBox Content="字符串" IsChecked="{Binding IsResultString}" Margin="8,0"/>
+                    <CheckBox Content="HEX" IsChecked="{Binding IsResultHex}" Margin="8,0"/>
+                    <CheckBox Content="Base64" IsChecked="{Binding IsResultBase64}" Margin="8,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- 结果输出 -->
+            <Border Grid.Row="3" Classes="GroupBorder">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="结果" FontWeight="Bold" Margin="4,2"/>
+                    <TextBox Grid.Row="1" Text="{Binding ResultText}" Classes="CodeTextBox"
+                             IsReadOnly="True" Background="#FFFFF0"/>
+                </Grid>
+            </Border>
+
+            <!-- 状态栏 -->
+            <Border Grid.Row="4" BorderBrush="#D0D0D0" BorderThickness="0,1,0,0" Padding="4,2">
+                <TextBlock Text="提示：RSA加密时可自动生成密钥对"/>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

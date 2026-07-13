@@ -1,0 +1,204 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:XCoderAv.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="750"
+        x:Class="XCoderAv.Views.NetworkWindow"
+        Title="网络调试工具" Width="1100" Height="750"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+        <Style Selector="TextBlock.SectionTitle">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="4,3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style Selector="Button.SendButton">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style Selector="TextBox.SmallNumeric">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ============ 左侧：配置面板 ============ -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,4,0">
+            <StackPanel>
+                <!-- 工作模式 -->
+                <Border Classes="GroupBorder">
+                    <StackPanel>
+                        <TextBlock Text="工作模式" Classes="SectionTitle"/>
+                        <ComboBox ItemsSource="{Binding Modes}" SelectedIndex="{Binding SelectedModeIndex}"
+                                  Margin="4,2" Height="30"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 连接配置 -->
+                <Border Classes="GroupBorder">
+                    <StackPanel>
+                        <TextBlock Text="连接配置" Classes="SectionTitle"/>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="本地" VerticalAlignment="Center" Margin="4,2"/>
+                            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding LocalAddresses}"
+                                      SelectedItem="{Binding LocalAddress}" Margin="2"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="远程" VerticalAlignment="Center" Margin="4,2"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RemoteAddress}" Classes="ConfigTextBox"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="端口" VerticalAlignment="Center" Margin="4,2"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Port}" Classes="ConfigTextBox"/>
+                        </Grid>
+
+                        <Button Content="{Binding ConnectButtonText}" Command="{Binding ToggleConnectCommand}"
+                                Classes="ActionButton" Margin="4,4"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 日志选项 -->
+                <Border Classes="GroupBorder">
+                    <StackPanel>
+                        <TextBlock Text="日志选项" Classes="SectionTitle"/>
+                        <CheckBox Content="业务日志" IsChecked="{Binding ShowLog}" Margin="4,2"/>
+                        <CheckBox Content="Socket日志" IsChecked="{Binding ShowSocketLog}" Margin="4,2"/>
+                        <CheckBox Content="显示发送" IsChecked="{Binding ShowSend}" Margin="4,2"/>
+                        <CheckBox Content="显示接收" IsChecked="{Binding ShowReceive}" Margin="4,2"/>
+                        <CheckBox Content="显示统计" IsChecked="{Binding ShowStat}" Margin="4,2"/>
+                        <CheckBox Content="接收字符串" IsChecked="{Binding ShowReceiveString}" Margin="4,2"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ============ 右侧：收发区 ============ -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- 状态栏 -->
+            <Border Grid.Row="0" BorderBrush="#D0D0D0" BorderThickness="0,0,0,1" Padding="4,2" Margin="0,0,0,4">
+                <TextBlock>
+                    <Run Text="状态:"/>
+                    <Run Text="{Binding ConnectButtonText}"/>
+                    <Run Text=" | 接收:"/>
+                    <Run Text="{Binding ReceivedBytes}"/>
+                    <Run Text=" | 发送:"/>
+                    <Run Text="{Binding SentBytes}"/>
+                    <Run Text=" | 会话:"/>
+                    <Run Text="{Binding SessionCount}"/>
+                </TextBlock>
+            </Border>
+
+            <!-- 发送区 -->
+            <Border Grid.Row="1" Classes="GroupBorder">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0" Text="{Binding SendText}" AcceptsReturn="True"
+                                 MinHeight="60" FontFamily="Consolas" Margin="2"/>
+                        <Button Grid.Column="1" Content="发送" Command="{Binding SendCommand}"
+                                Classes="SendButton" Width="100"/>
+                        <StackPanel Grid.Column="2" Margin="4,0">
+                            <CheckBox Content="HEX发送" IsChecked="{Binding HexSend}" Margin="2"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="次数" VerticalAlignment="Center" Margin="2,0"/>
+                                <TextBox Text="{Binding SendTimes}" Classes="SmallNumeric"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="间隔" VerticalAlignment="Center" Margin="2,0"/>
+                                <TextBox Text="{Binding SendSleep}" Classes="SmallNumeric"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="线程" VerticalAlignment="Center" Margin="2,0"/>
+                                <TextBox Text="{Binding SendThreads}" Classes="SmallNumeric"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- 日志区 -->
+            <Border Grid.Row="3" Classes="GroupBorder">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="日志" FontWeight="Bold" Margin="4,2"/>
+                        <Button Grid.Column="1" Content="清空" Command="{Binding ClearReceiveLogCommand}"
+                                Height="26" Margin="2" Padding="8,0"/>
+                    </Grid>
+                    <TextBox Grid.Row="2" x:Name="txtLog" IsReadOnly="True"
+                             AcceptsReturn="True"
+                             FontFamily="Consolas" FontSize="12" Background="#1E1E1E" Foreground="#D4D4D4"
+                             Margin="2"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

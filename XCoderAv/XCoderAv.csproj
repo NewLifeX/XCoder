@@ -1,41 +1,43 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>XCoder</RootNamespace>
-    <AssemblyName>XCoder</AssemblyName>
-    <AssemblyTitle>新生命码神工具</AssemblyTitle>
-    <Description>众多开发者工具</Description>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>XCoderAv</RootNamespace>
+    <AssemblyName>XCoderAv</AssemblyName>
+    <AssemblyTitle>新生命码神工具（跨平台）</AssemblyTitle>
+    <Description>码神工具。代码生成、网络工具、API工具、串口工具、正则工具、图标工具、加解密工具、地图接口</Description>
     <Company>新生命开发团队</Company>
     <Copyright>©2002-2026 新生命开发团队</Copyright>
-    <Version>8.0.2019.1007</Version>
-    <FileVersion>8.0.2019.1007</FileVersion>
-    <AssemblyVersion>8.0.*</AssemblyVersion>
+    <VersionPrefix>8.2</VersionPrefix>
+    <VersionSuffix>$([System.DateTime]::Now.ToString(`yyyy.MMdd`))</VersionSuffix>
+    <Version>$(VersionPrefix).$(VersionSuffix)</Version>
+    <FileVersion>$(Version)</FileVersion>
+    <AssemblyVersion>$(VersionPrefix).*</AssemblyVersion>
     <Deterministic>false</Deterministic>
-    <ApplicationIcon>..\XCoder\leaf.ico</ApplicationIcon>
-    <OutputPath>..\..\XCoder\</OutputPath>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;NC30;__CORE__</DefineConstants>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <OutputPath>..\Bin\XCoderAv</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-  </PropertyGroup>
   <ItemGroup>
-    <Compile Update="**\*.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <AvaloniaResource Include="**\*.xaml">
-      <SubType>Designer</SubType>
-    </AvaloniaResource>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.8.2" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.8.2" />
-    <PackageReference Include="NewLife.Core" Version="8.4.2019.1007" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="1.68.0" />
+    <PackageReference Include="Avalonia" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.3" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.3" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="NewLife.Core" Version="11.15.2026.501" />
+    <PackageReference Include="NewLife.Stardust" Version="3.7.2026.501" />
+    <PackageReference Include="NewLife.XCode" Version="11.26.2026.501" />
+    <PackageReference Include="NewLife.Net" Version="4.4.2026.206" />
+    <PackageReference Include="NewLife.Remoting" Version="3.7.2026.501" />
+    <PackageReference Include="NewLife.Security" Version="11.15.2026.501" />
+    <PackageReference Include="NewLife.MQTT" Version="3.0.2026.501" />
+    <PackageReference Include="NewLife.Redis" Version="6.5.2026.501" />
+    <PackageReference Include="NewLife.Map" Version="2.6.2026.102" />
+    <PackageReference Include="NewLife.ModbusRTU" Version="2.0.2025.701" />
+    <PackageReference Include="SSH.NET" Version="2025.1.0" />
+    <PackageReference Include="System.IO.Ports" Version="10.0.7" />
   </ItemGroup>
 </Project>

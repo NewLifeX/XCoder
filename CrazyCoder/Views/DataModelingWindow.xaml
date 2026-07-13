@@ -1,0 +1,172 @@
+<Window x:Class="CrazyCoder.Views.DataModelingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xcode="clr-namespace:XCode.DataAccessLayer;assembly=NewLife.XCode"
+        mc:Ignorable="d"
+        Title="数据建模" Height="700" Width="1100" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="GroupBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="LabelText" TargetType="TextBlock">
+            <Setter Property="Margin" Value="4,0,4,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="4,0"/>
+            <Setter Property="Padding" Value="12,0"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 第1行：连接区 -->
+        <Border Grid.Row="0" Style="{StaticResource GroupBorder}" Background="#FFF5E6" Padding="8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="连接：" Style="{StaticResource LabelText}" FontWeight="Bold"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Connections}" Text="{Binding ConnName, UpdateSourceTrigger=PropertyChanged}"
+                          Margin="4,0" Height="28" IsEditable="True"/>
+
+                <Button Grid.Column="2" Content="{Binding ConnectButtonText}" Command="{Binding ConnectCommand}"
+                        Style="{StaticResource ActionButton}" MinWidth="80"/>
+            </Grid>
+        </Border>
+
+        <!-- 第2行：表选择和生成按钮 -->
+        <Border Grid.Row="1" Style="{StaticResource GroupBorder}" Background="#E8FFE8" Padding="8"
+                IsEnabled="{Binding IsConnected}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="数据表：" Style="{StaticResource LabelText}" FontWeight="Bold"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Tables}" SelectedItem="{Binding SelectedTable}"
+                          Margin="4,0" Height="28" DisplayMemberPath="Name">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <CheckBox Grid.Column="2" Content="包含视图" IsChecked="{Binding IncludeView}" Margin="8,0" VerticalAlignment="Center"/>
+
+                <Button Grid.Column="3" Content="刷新" Command="{Binding RefreshTablesCommand}" Style="{StaticResource ActionButton}"/>
+                <Button Grid.Column="4" Content="生成选中" Command="{Binding GenerateTableCommand}" Style="{StaticResource ActionButton}"/>
+                <Button Grid.Column="5" Content="生成所有" Command="{Binding GenerateAllCommand}" Style="{StaticResource ActionButton}"/>
+            </Grid>
+        </Border>
+
+        <!-- 第3行：表列表 -->
+        <Border Grid.Row="2" Style="{StaticResource GroupBorder}" IsEnabled="{Binding IsConnected}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="表结构列表" FontWeight="Bold" Background="#F0F0F0" Padding="6,3"/>
+                <ListView Grid.Row="1" ItemsSource="{Binding Tables}" SelectedItem="{Binding SelectedTable}"
+                          BorderThickness="0">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="表名" Width="200" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="描述" Width="200" DisplayMemberBinding="{Binding Description}"/>
+                            <GridViewColumn Header="类型" Width="100" DisplayMemberBinding="{Binding DbType}"/>
+                            <GridViewColumn Header="行数" Width="80" DisplayMemberBinding="{Binding Rows}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Border>
+
+        <!-- 第4行：配置区 -->
+        <Border Grid.Row="3" Style="{StaticResource GroupBorder}" Padding="8"
+                IsEnabled="{Binding IsConnected}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="4,0">
+                    <TextBlock Text="命名空间" FontWeight="Bold"/>
+                    <TextBox Text="{Binding NameSpace, UpdateSourceTrigger=PropertyChanged}" Height="26" Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="4,0">
+                    <TextBlock Text="连接名" FontWeight="Bold"/>
+                    <TextBox Text="{Binding EntityConnName, UpdateSourceTrigger=PropertyChanged}" Height="26" Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="4,0">
+                    <TextBlock Text="基类" FontWeight="Bold"/>
+                    <TextBox Text="{Binding BaseClass, UpdateSourceTrigger=PropertyChanged}" Height="26" Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Margin="4,0">
+                    <TextBlock Text="输出路径" FontWeight="Bold"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding OutputPath, UpdateSourceTrigger=PropertyChanged}" Height="26" Margin="0,2,0,0"/>
+                        <Button Grid.Column="1" Content="..." Command="{Binding OpenOutputDirCommand}" Height="26" Width="30" Margin="2,2,0,0"/>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Grid.Column="4" Margin="8,0,0,0" VerticalAlignment="Center">
+                    <CheckBox Content="中文文件名" IsChecked="{Binding UseCNFileName}" Margin="0,2"/>
+                    <CheckBox Content="泛型实体" IsChecked="{Binding RenderGenEntity}" Margin="0,2"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 第5行：状态栏 -->
+        <StatusBar Grid.Row="4" Margin="0,2,0,0">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock Text="{Binding Status}"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

@@ -45,6 +45,8 @@
     <PackageReference Include="System.IO.Ports" Version="10.0.7" />
     <PackageReference Include="System.Speech" Version="10.0.7" />
     <PackageReference Include="System.Management" Version="10.0.7" />
+    <PackageReference Include="NewLife.IoT" Version="2.7.2026.501" />
+    <PackageReference Include="NewLife.Modbus" Version="2.0.2025.701" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>

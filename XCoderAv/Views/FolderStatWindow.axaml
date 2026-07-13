@@ -1,0 +1,46 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:XCoderAv.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
+        x:Class="XCoderAv.Views.FolderStatWindow"
+        Title="文件夹大小统计" Width="1000" Height="700"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="TreeViewItem">
+            <Setter Property="Foreground" Value="#D4D4D4"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+
+        <!-- 树形目录 -->
+        <TreeView Grid.Row="0" x:Name="treeView" BorderThickness="1" BorderBrush="#D0D0D0"
+                  Background="#1E1E1E">
+            <TreeView.ItemTemplate>
+                <TreeDataTemplate ItemsSource="{Binding Children}">
+                    <Border Background="{Binding BackgroundColor}" Padding="4 2">
+                        <TextBlock Text="{Binding DisplayName}" FontFamily="Consolas" FontSize="13"/>
+                    </Border>
+                </TreeDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+
+        <GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch" Background="#F0F0F0"/>
+
+        <!-- 日志输出 -->
+        <Border Grid.Row="2" BorderBrush="#D0D0D0" BorderThickness="1">
+            <TextBox x:Name="txtLog" IsReadOnly="True"
+                     FontFamily="Consolas" FontSize="12" Background="#1E1E1E" Foreground="#D4D4D4"
+                     Margin="2"/>
+        </Border>
+    </Grid>
+</Window>

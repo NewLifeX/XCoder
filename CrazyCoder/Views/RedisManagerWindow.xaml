@@ -1,0 +1,106 @@
+<Window x:Class="CrazyCoder.Views.RedisManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:CrazyCoder.ViewModels"
+        mc:Ignorable="d"
+        Title="Redis 管理器" Height="700" Width="1100" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="GroupBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,4,0"/>
+        </Style>
+
+        <HierarchicalDataTemplate DataType="{x:Type vm:RedisTreeNode}" ItemsSource="{Binding Children}">
+            <StackPanel Orientation="Horizontal" Margin="{Binding Indent}">
+                <TextBlock Text="{Binding Title}" Margin="4,2"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+    </Window.Resources>
+
+    <Grid Margin="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 左侧：树形节点 -->
+        <Border Grid.Column="0" Style="{StaticResource GroupBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Redis 服务器" FontWeight="Bold" Background="#F0F0F0" Padding="6,3"/>
+
+                <!-- 搜索框 -->
+                <Grid Grid.Row="1" Margin="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Text="{Binding SearchPattern, UpdateSourceTrigger=PropertyChanged}" Height="26"/>
+                    <Button Grid.Column="1" Content="搜索" Command="{Binding SearchKeysCommand}" Height="26" Width="50" Margin="4,0,0,0"/>
+                </Grid>
+
+                <!-- 树 -->
+                <TreeView x:Name="treeView" Grid.Row="2" ItemsSource="{Binding TreeNodes}" BorderThickness="0"
+                          SelectedItemChanged="OnTreeSelectedItemChanged"
+                          MouseDoubleClick="OnTreeMouseDoubleClick">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                            <TextBlock Text="{Binding Title}" Margin="4,2"/>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+
+                <!-- 底部操作按钮 -->
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,4">
+                    <Button Content="添加节点" Command="{Binding AddNodeCommand}" Width="80" Height="28" Margin="2"/>
+                    <Button Content="编辑节点" Command="{Binding EditNodeCommand}" Width="80" Height="28" Margin="2"/>
+                    <Button Content="删除节点" Command="{Binding DeleteNodeCommand}" Width="80" Height="28" Margin="2"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 右侧：Key 值显示 -->
+        <Border Grid.Column="1" BorderBrush="#D0D0D0" BorderThickness="1" Margin="4,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Key 值" FontWeight="Bold" Background="#F0F0F0" Padding="6,3"/>
+
+                <TextBox Grid.Row="1" Text="{Binding KeyValue, Mode=OneWay}"
+                         FontFamily="Consolas" FontSize="13"
+                         IsReadOnly="True"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto"
+                         BorderThickness="0"
+                         TextWrapping="Wrap"/>
+            </Grid>
+        </Border>
+
+        <!-- 状态栏 -->
+        <StatusBar Grid.ColumnSpan="2" VerticalAlignment="Bottom">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock Text="{Binding Status}"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

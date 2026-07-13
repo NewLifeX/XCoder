@@ -1,0 +1,150 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="750"
+        x:Class="XCoderAv.Views.IconToolWindow"
+        Title="图标水印处理工具" Width="1100" Height="750"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+        <Style Selector="TextBlock.SectionTitle">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="4,3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="TextBox.SmallNumeric">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="8,0"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ============ 左侧：配置面板 ============ -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,4,0">
+            <StackPanel>
+                <!-- 图片加载 -->
+                <Border Classes="GroupBorder">
+                    <StackPanel>
+                        <TextBlock Text="图片加载" Classes="SectionTitle"/>
+                        <Button Content="选择图片" Command="{Binding LoadImageCommand}"
+                                Classes="ActionButton" Margin="4,2"/>
+                        <TextBlock Text="提示：支持拖放图片到右侧预览区" Margin="4,0,4,4"
+                                   Foreground="Gray" FontSize="11"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 水印设置 -->
+                <Border Classes="GroupBorder">
+                    <StackPanel>
+                        <TextBlock Text="水印设置" Classes="SectionTitle"/>
+
+                        <TextBlock Text="文字内容" Margin="4,2,4,0"/>
+                        <TextBox Text="{Binding WatermarkText}" Classes="ConfigTextBox"/>
+
+                        <Grid Margin="4,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="字体" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding FontNames}"
+                                      SelectedItem="{Binding FontName}" Height="28"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="大小" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FontSize}" Classes="SmallNumeric"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="X位置" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WatermarkX}" Classes="SmallNumeric"/>
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Y位置" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding WatermarkY}" Classes="SmallNumeric"/>
+                        </Grid>
+
+                        <Button Content="应用水印" Command="{Binding MakeWaterCommand}"
+                                Classes="ActionButton" Margin="4,2"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ICO 设置 -->
+                <Border Classes="GroupBorder">
+                    <StackPanel>
+                        <TextBlock Text="ICO 图标" Classes="SectionTitle"/>
+                        <ItemsControl ItemsSource="{Binding IconSizes}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" Margin="4,2"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Button Content="生成 ICO" Command="{Binding MakeIcoCommand}"
+                                Classes="ActionButton" Margin="4,2"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 保存 -->
+                <Border Classes="GroupBorder">
+                    <StackPanel>
+                        <TextBlock Text="保存" Classes="SectionTitle"/>
+                        <Button Content="保存图片" Command="{Binding SaveImageCommand}"
+                                Classes="ActionButton" Margin="4,2"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ============ 右侧：预览区 ============ -->
+        <Border Grid.Column="1" BorderBrush="#D0D0D0" BorderThickness="1" Padding="4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="预览" FontWeight="Bold" Margin="4,2"/>
+
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <Image Source="{Binding PreviewImage}" MaxWidth="800" MaxHeight="500" Stretch="Uniform"/>
+                </ScrollViewer>
+
+                <Border Grid.Row="2" BorderBrush="#D0D0D0" BorderThickness="0,1,0,0" Padding="4,2">
+                    <TextBlock Text="{Binding Status}"/>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

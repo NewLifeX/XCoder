@@ -1,0 +1,220 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:XCoderAv.ViewModels"
+        xmlns:models="clr-namespace:XCoderAv.Models"
+        mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="700"
+        x:Class="XCoderAv.Views.RegexWindow"
+        Title="正则表达式" Width="1100" Height="700"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="TextBox.CodeTextBox">
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="AcceptsReturn" Value="True"/>
+            <Setter Property="AcceptsTab" Value="True"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="ListBox.ResultListView">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 第1行：正则表达式输入 -->
+        <Border Grid.Row="0" BorderBrush="#D0D0D0" BorderThickness="1" Background="#FFF5E6" Margin="0,0,0,4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="正则表达式" FontWeight="Bold" Margin="4,2"/>
+                <TextBox Grid.Row="1" Text="{Binding Pattern}"
+                         Classes="CodeTextBox" Background="#FFF5E6" MinHeight="60"/>
+            </Grid>
+        </Border>
+
+        <!-- 第2行：选项 + 模式切换 + 执行按钮 -->
+        <Grid Grid.Row="1" Margin="0,0,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <CheckBox Grid.Column="0" Content="忽略大小写" IsChecked="{Binding IgnoreCase}" Margin="4,0,8,0"/>
+            <CheckBox Grid.Column="1" Content="多行模式" IsChecked="{Binding Multiline}" Margin="0,0,8,0"/>
+            <CheckBox Grid.Column="2" Content="单行模式" IsChecked="{Binding Singleline}" Margin="0,0,8,0"/>
+            <CheckBox Grid.Column="3" Content="忽略空白" IsChecked="{Binding IgnorePatternWhitespace}" Margin="0,0,8,0"/>
+
+            <RadioButton Grid.Column="4" Content="匹配" IsChecked="{Binding IsMatchMode}" Margin="8,0,4,0" VerticalAlignment="Center"/>
+            <RadioButton Grid.Column="5" Content="替换" IsChecked="{Binding IsReplaceMode}" Margin="4,0,8,0" VerticalAlignment="Center"/>
+
+            <Button Grid.Column="6" Content="{Binding ExecuteButtonText}" Command="{Binding ExecuteCommand}"
+                    MinWidth="100" Height="28" HorizontalAlignment="Right" Margin="0,0,4,0"/>
+        </Grid>
+
+        <!-- 第3行：替换输入（替换模式可见） -->
+        <Border Grid.Row="2" BorderBrush="#D0D0D0" BorderThickness="1" Background="#E8FFE8" Margin="0,0,0,4"
+                IsVisible="{Binding IsReplaceMode}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="替换为" FontWeight="Bold" Margin="4,2"/>
+                <TextBox Grid.Row="1" Text="{Binding Replacement}"
+                         Classes="CodeTextBox" Background="#E8FFE8" MinHeight="40"/>
+            </Grid>
+        </Border>
+
+        <!-- 第4行：数据源输入 -->
+        <Border Grid.Row="3" BorderBrush="#D0D0D0" BorderThickness="1" Background="#FFFFF0" Margin="0,0,0,4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="数据源" FontWeight="Bold" Margin="4,2"/>
+                <TextBox Grid.Row="1" Text="{Binding SourceText}"
+                         Classes="CodeTextBox" Background="#FFFFF0"/>
+            </Grid>
+        </Border>
+
+        <!-- 第5行：匹配结果 -->
+        <Grid Grid.Row="4" Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 匹配列表 -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="匹配结果" FontWeight="Bold" Margin="4,2"/>
+                <ListBox Grid.Row="1" ItemsSource="{Binding Matches}"
+                         SelectedItem="{Binding SelectedMatch}" Classes="ResultListView">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Index}" Width="30" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Value}" FontFamily="Consolas"/>
+                                <TextBlock Grid.Column="2" Text="{Binding Location}" Foreground="Gray"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <!-- 分组 + 捕获 -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="分组" FontWeight="Bold" Margin="4,2"/>
+                    <ListBox Grid.Row="1" ItemsSource="{Binding Groups}"
+                             SelectedItem="{Binding SelectedGroup}" Classes="ResultListView">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Name}" Width="40" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Value}" FontFamily="Consolas"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Location}" Foreground="Gray"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="捕获" FontWeight="Bold" Margin="4,2"/>
+                    <ListBox Grid.Row="1" ItemsSource="{Binding Captures}"
+                             SelectedItem="{Binding SelectedCapture}" Classes="ResultListView">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Index}" Width="30" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Value}" FontFamily="Consolas"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Location}" Foreground="Gray"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <!-- 第6行：状态栏 -->
+        <Border Grid.Row="5" BorderBrush="#D0D0D0" BorderThickness="0,1,0,0" Padding="4,2" Margin="0,4,0,0">
+            <TextBlock Text="{Binding Status}"/>
+        </Border>
+
+        <!-- 第7行：批量替换面板 -->
+        <Border Grid.Row="6" BorderBrush="#D0D0D0" BorderThickness="1" Background="#E8E8FF" Margin="0,4,0,0"
+                IsVisible="{Binding IsReplaceMode}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="目录：" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Column="1" Text="{Binding DirectoryPath}" Margin="2" Height="26"/>
+                <TextBox Grid.Column="2" Text="{Binding FileFilter}" Width="80" Margin="2" Height="26"/>
+                <Button Grid.Column="3" Content="批量替换" Command="{Binding BatchReplaceCommand}"
+                        Height="26" Margin="2" Padding="8,0"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

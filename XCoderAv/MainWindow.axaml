@@ -1,0 +1,60 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:XCoderAv.ViewModels"
+        xmlns:views="clr-namespace:XCoderAv.Views"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
+        x:Class="XCoderAv.MainWindow"
+        Title="新生命码神工具（跨平台）" Width="1000" Height="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="4"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 左侧导航 -->
+        <Border Grid.Column="0" Background="#F5F5F5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- 标题 -->
+                <Border Grid.Row="0" Margin="20 0" BorderBrush="#E0E0E0" BorderThickness="0 0 0 1">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="新生命码神工具" FontSize="18" FontWeight="Light" HorizontalAlignment="Center"/>
+                        <TextBlock Text="跨平台版" FontSize="11" Foreground="#888" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 菜单列表 -->
+                <ListBox Grid.Row="1" ItemsSource="{Binding Menus}" SelectedItem="{Binding SelectedMenu}"
+                         BorderThickness="0" Background="Transparent"
+                         Margin="0 10 0 0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="15 10" Margin="5 2" CornerRadius="4">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock Text="{Binding IconFont}" FontSize="18" Foreground="{Binding BackColor}"/>
+                                    <TextBlock Text="{Binding Title}" FontSize="14" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Border>
+
+        <!-- 分隔线 -->
+        <GridSplitter Grid.Column="1" Width="4" Background="#E0E0E0" HorizontalAlignment="Stretch"/>
+
+        <!-- 右侧内容区 -->
+        <Border Grid.Column="2" Padding="20">
+            <ContentControl Content="{Binding CurrentView}" />
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,152 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
+        x:Class="XCoderAv.Views.GpsWindow"
+        Title="GPS 辅助工具" Width="600" Height="450"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+        <Style Selector="TextBlock.SectionTitle">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="4,3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="12,0"/>
+        </Style>
+        <Style Selector="TextBox.ResultText">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="Background" Value="#FFFFF0"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 合并输入 -->
+        <Border Grid.Row="0" Classes="GroupBorder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="HEX 合并输入（16位）" Classes="SectionTitle"/>
+                <Grid Grid.Row="1" Margin="4,0,4,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding HexCombined}" Classes="ConfigTextBox"/>
+                    <Button Grid.Column="1" Content="转换" Command="{Binding ConvertCombinedCommand}"
+                            Classes="ActionButton" Margin="4,2" Width="80"/>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- 分离输入 -->
+        <Border Grid.Row="1" Classes="GroupBorder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="HEX 分离输入（各8位）" Classes="SectionTitle"/>
+                <Grid Grid.Row="1" Margin="4,0,4,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="纬度" VerticalAlignment="Center" Margin="4,0"/>
+                    <TextBox Grid.Column="1" Text="{Binding HexLat}" Classes="ConfigTextBox"/>
+                    <TextBlock Grid.Column="2" Text="经度" VerticalAlignment="Center" Margin="4,0"/>
+                    <TextBox Grid.Column="3" Text="{Binding HexLong}" Classes="ConfigTextBox"/>
+                    <Button Grid.Column="4" Content="转换" Command="{Binding ConvertCommand}"
+                            Classes="ActionButton" Margin="4,2" Width="80"/>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- 结果 -->
+        <Border Grid.Row="2" Classes="GroupBorder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="转换结果" Classes="SectionTitle"/>
+
+                <Grid Grid.Row="1" Margin="4,0,4,2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="纬度" VerticalAlignment="Center" Width="50"/>
+                    <TextBox Grid.Column="1" Text="{Binding Latitude}" Classes="ResultText"/>
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="4,0,4,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="经度" VerticalAlignment="Center" Width="50"/>
+                    <TextBox Grid.Column="1" Text="{Binding Longitude}" Classes="ResultText"/>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- 合并坐标 -->
+        <Border Grid.Row="3" Classes="GroupBorder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="合并坐标" Classes="SectionTitle"/>
+
+                <TextBox Grid.Row="1" Text="{Binding LatLong}" Classes="ResultText" Margin="4,0,4,2"/>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom" Margin="4">
+                    <Button Content="清空" Command="{Binding ClearCommand}" Classes="ActionButton" Width="80"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
