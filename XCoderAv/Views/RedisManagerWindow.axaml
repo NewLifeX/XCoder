@@ -1,0 +1,87 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="750"
+        x:Class="XCoderAv.Views.RedisManagerWindow"
+        Title="Redis 管理器" Width="1000" Height="750"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 左侧树 -->
+        <Border Grid.Column="0" BorderBrush="#D0D0D0" BorderThickness="1" Margin="0,0,4,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Margin="4">
+                    <Button Content="添加" Command="{Binding AddNodeCommand}" Classes="ActionButton" Width="60"/>
+                    <Button Content="删除" Command="{Binding DeleteNodeCommand}" Classes="ActionButton" Width="60"/>
+                </StackPanel>
+                <ListBox Grid.Row="1" ItemsSource="{Binding TreeNodes}" Margin="4">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}" Margin="4,2"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Border>
+
+        <!-- 右侧内容 -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border Classes="GroupBorder" Padding="4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Key 搜索" VerticalAlignment="Center" Margin="4,0"/>
+                    <TextBox Grid.Column="1" Text="{Binding SearchPattern}" Classes="ConfigTextBox"/>
+                    <Button Grid.Column="2" Content="搜索" Command="{Binding SearchKeysCommand}" Classes="ActionButton" Width="60"/>
+                </Grid>
+            </Border>
+
+            <TextBox Grid.Row="1" Text="{Binding KeyValue}" AcceptsReturn="True" AcceptsTab="True"
+                     FontFamily="Consolas" FontSize="12" Margin="0,4"
+                     BorderThickness="1" BorderBrush="#D0D0D0"/>
+
+            <Border Grid.Row="2" BorderBrush="#D0D0D0" BorderThickness="0,1,0,0" Padding="4,2">
+                <TextBlock Text="{Binding Status}"/>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

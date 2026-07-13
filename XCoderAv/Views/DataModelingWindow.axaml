@@ -1,0 +1,94 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="750"
+        x:Class="XCoderAv.Views.DataModelingWindow"
+        Title="代码生成器" Width="1000" Height="750"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 配置 -->
+        <Border Grid.Row="0" Classes="GroupBorder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="数据库" VerticalAlignment="Center" Margin="4,2"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Connections}" SelectedItem="{Binding ConnName}" Margin="2" Height="28"/>
+                <Button Grid.Column="2" Content="{Binding ConnectButtonText}" Command="{Binding ConnectCommand}" Classes="ActionButton" Width="80"/>
+                <Button Grid.Column="3" Content="刷新" Command="{Binding RefreshTablesCommand}" Classes="ActionButton" Width="80"/>
+
+                <TextBlock Grid.Row="1" Text="命名空间" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NameSpace}" Classes="ConfigTextBox"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="连接名" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding EntityConnName}" Classes="ConfigTextBox"/>
+
+                <TextBlock Grid.Row="2" Text="输出目录" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding OutputPath}" Classes="ConfigTextBox"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="基类" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding BaseClass}" Classes="ConfigTextBox"/>
+            </Grid>
+        </Border>
+
+        <!-- 表列表 -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="数据表" FontWeight="Bold" Margin="4,2" VerticalAlignment="Center"/>
+                <Button Content="生成选中" Command="{Binding GenerateTableCommand}" Classes="ActionButton" Margin="4,0"/>
+                <Button Content="生成全部" Command="{Binding GenerateAllCommand}" Classes="ActionButton"/>
+                <Button Content="打开目录" Command="{Binding OpenOutputDirCommand}" Classes="ActionButton"/>
+            </StackPanel>
+            <ListBox Grid.Row="1" ItemsSource="{Binding Tables}" SelectedItem="{Binding SelectedTable}"
+                     Margin="0,4" BorderThickness="1" BorderBrush="#D0D0D0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <!-- 状态 -->
+        <Border Grid.Row="2" BorderBrush="#D0D0D0" BorderThickness="0,1,0,0" Padding="4,2">
+            <TextBlock Text="{Binding Status}"/>
+        </Border>
+    </Grid>
+</Window>

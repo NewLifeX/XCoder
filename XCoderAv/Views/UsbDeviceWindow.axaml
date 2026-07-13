@@ -1,0 +1,60 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="XCoderAv.Views.UsbDeviceWindow"
+        Title="USB 设备检测" Width="800" Height="600"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 选择 Hub -->
+        <Border Grid.Row="0" Classes="GroupBorder">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="USB Hub" VerticalAlignment="Center" Margin="4,2"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding HubList}" SelectedIndex="{Binding SelectedHubIndex}" Height="28" Margin="2"/>
+                <Button Grid.Column="2" Content="刷新" Command="{Binding RefreshDevicesCommand}" Classes="ActionButton" Width="60"/>
+            </Grid>
+        </Border>
+
+        <!-- 设备信息 -->
+        <TextBox Grid.Row="1" Text="{Binding DeviceInfo}" AcceptsReturn="True" AcceptsTab="True"
+                 FontFamily="Consolas" FontSize="12" Margin="0,4"
+                 BorderThickness="1" BorderBrush="#D0D0D0"/>
+
+        <!-- 日志 -->
+        <TextBox Grid.Row="2" Text="{Binding Log}" AcceptsReturn="True" AcceptsTab="True"
+                 FontFamily="Consolas" FontSize="12" MinHeight="80" Margin="0,4"
+                 BorderThickness="1" BorderBrush="#D0D0D0"/>
+    </Grid>
+</Window>

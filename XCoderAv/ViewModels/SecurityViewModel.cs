@@ -713,6 +713,264 @@ public partial class SecurityViewModel : ObservableObject
     }
     #endregion
 
+    #region MD5破解
+    /// <summary>MD5 长度</summary>
+    [ObservableProperty]
+    private Int32 _md5Length = 4;
+
+    /// <summary>包含数字</summary>
+    [ObservableProperty]
+    private Boolean _md5UseNumber = true;
+
+    /// <summary>包含小写字母</summary>
+    [ObservableProperty]
+    private Boolean _md5UseLower = true;
+
+    /// <summary>包含大写字母</summary>
+    [ObservableProperty]
+    private Boolean _md5UseUpper;
+
+    /// <summary>MD5 破解最大尝试数</summary>
+    [ObservableProperty]
+    private Int32 _md5MaxAttempts = 1000000;
+
+    /// <summary>MD5 破解</summary>
+    [RelayCommand]
+    private async void Md5Crack()
+    {
+        var targetHash = SourceText.Trim().ToUpper();
+        if (targetHash.Length != 32 && targetHash.Length != 16)
+        {
+            ResultText = "请输入有效的 MD5 哈希（16 或 32 位 HEX）";
+            return;
+        }
+
+        var chars = new StringBuilder();
+        if (Md5UseNumber) chars.Append("0123456789");
+        if (Md5UseLower) chars.Append("abcdefghijklmnopqrstuvwxyz");
+        if (Md5UseUpper) chars.Append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+        if (chars.Length == 0)
+        {
+            ResultText = "请至少选择一种字符集";
+            return;
+        }
+
+        var charSet = chars.ToString();
+        var length = Md5Length;
+        var maxAttempts = Md5MaxAttempts;
+        var found = "";
+        var attempted = 0;
+
+        SourceText = $"开始 MD5 破解: 长度={length}, 字符集大小={charSet.Length}, 最大尝试={maxAttempts}";
+
+        await Task.Run(() =>
+        {
+            var indices = new Int32[length];
+            var total = (Int32)Math.Pow(charSet.Length, length);
+            var maxCheck = Math.Min(total, maxAttempts);
+
+            for (var i = 0; i < maxCheck; i++)
+            {
+                var sb = Pool.StringBuilder.Get();
+                for (var j = 0; j < length; j++)
+                {
+                    sb.Append(charSet[indices[j]]);
+                }
+                var guess = sb.Return(true);
+
+                var hash = guess.GetBytes().MD5().ToHex().ToUpper();
+                if (targetHash.Length == 16)
+                    hash = hash[..16];
+
+                if (hash == targetHash)
+                {
+                    found = guess;
+                    return;
+                }
+
+                attempted = i + 1;
+
+                for (var j = length - 1; j >= 0; j--)
+                {
+                    indices[j]++;
+                    if (indices[j] < charSet.Length) break;
+                    indices[j] = 0;
+                }
+            }
+        });
+
+        if (!found.IsNullOrEmpty())
+            SetResult($"破解成功！原文: {found}", $"尝试次数: {attempted}");
+        else
+            SetResult($"破解失败，已尝试 {attempted} 次", $"MD5: {targetHash}");
+    }
+    #endregion
+
+    #region 对称加密
+    /// <summary>AES 加密</summary>
+    [RelayCommand]
+    private void AesEncrypt()
+    {
+        var buf = GetSource();
+        var pass = PassText;
+
+        if (pass.IsNullOrEmpty())
+        {
+            SetResult("密码不能为空");
+            return;
+        }
+
+        try
+        {
+            var key = pass.GetBytes();
+            using var aes = Aes.Create();
+            aes.Key = AdjustKey(key, aes.KeySize / 8);
+            aes.Mode = CipherMode.CBC;
+            aes.Padding = PaddingMode.PKCS7;
+            aes.GenerateIV();
+
+            using var encryptor = aes.CreateEncryptor();
+            var result = encryptor.TransformFinalBlock(buf, 0, buf.Length);
+            var iv = aes.IV;
+
+            var output = new Byte[iv.Length + result.Length];
+            Buffer.BlockCopy(iv, 0, output, 0, iv.Length);
+            Buffer.BlockCopy(result, 0, output, iv.Length, result.Length);
+
+            SetResult(output);
+        }
+        catch (Exception ex)
+        {
+            SetResult($"加密失败: {ex.Message}");
+        }
+    }
+
+    /// <summary>AES 解密</summary>
+    [RelayCommand]
+    private void AesDecrypt()
+    {
+        var buf = GetSource();
+        var pass = PassText;
+
+        if (pass.IsNullOrEmpty())
+        {
+            SetResult("密码不能为空");
+            return;
+        }
+
+        try
+        {
+            var key = pass.GetBytes();
+            using var aes = Aes.Create();
+            aes.Key = AdjustKey(key, aes.KeySize / 8);
+
+            var iv = buf[..16];
+            var cipher = buf[16..];
+
+            aes.IV = iv;
+            aes.Mode = CipherMode.CBC;
+            aes.Padding = PaddingMode.PKCS7;
+
+            using var decryptor = aes.CreateDecryptor();
+            var result = decryptor.TransformFinalBlock(cipher, 0, cipher.Length);
+
+            SetResult(result);
+        }
+        catch (Exception ex)
+        {
+            SetResult($"解密失败: {ex.Message}");
+        }
+    }
+
+    /// <summary>DES 加密</summary>
+    [RelayCommand]
+    private void DesEncrypt()
+    {
+        var buf = GetSource();
+        var pass = PassText;
+
+        if (pass.IsNullOrEmpty())
+        {
+            SetResult("密码不能为空");
+            return;
+        }
+
+        try
+        {
+            var key = pass.GetBytes();
+            using var des = DES.Create();
+            des.Key = AdjustKey(key, des.KeySize / 8);
+            des.Mode = CipherMode.CBC;
+            des.Padding = PaddingMode.PKCS7;
+            des.GenerateIV();
+
+            using var encryptor = des.CreateEncryptor();
+            var result = encryptor.TransformFinalBlock(buf, 0, buf.Length);
+            var iv = des.IV;
+
+            var output = new Byte[iv.Length + result.Length];
+            Buffer.BlockCopy(iv, 0, output, 0, iv.Length);
+            Buffer.BlockCopy(result, 0, output, iv.Length, result.Length);
+
+            SetResult(output);
+        }
+        catch (Exception ex)
+        {
+            SetResult($"加密失败: {ex.Message}");
+        }
+    }
+
+    /// <summary>DES 解密</summary>
+    [RelayCommand]
+    private void DesDecrypt()
+    {
+        var buf = GetSource();
+        var pass = PassText;
+
+        if (pass.IsNullOrEmpty())
+        {
+            SetResult("密码不能为空");
+            return;
+        }
+
+        try
+        {
+            var key = pass.GetBytes();
+            using var des = DES.Create();
+            des.Key = AdjustKey(key, des.KeySize / 8);
+
+            var iv = buf[..8];
+            var cipher = buf[8..];
+
+            des.IV = iv;
+            des.Mode = CipherMode.CBC;
+            des.Padding = PaddingMode.PKCS7;
+
+            using var decryptor = des.CreateDecryptor();
+            var result = decryptor.TransformFinalBlock(cipher, 0, cipher.Length);
+
+            SetResult(result);
+        }
+        catch (Exception ex)
+        {
+            SetResult($"解密失败: {ex.Message}");
+        }
+    }
+
+    private static Byte[] AdjustKey(Byte[] key, Int32 targetSize)
+    {
+        if (key.Length == targetSize) return key;
+
+        var result = new Byte[targetSize];
+        if (key.Length > targetSize)
+            Buffer.BlockCopy(key, 0, result, 0, targetSize);
+        else
+            Buffer.BlockCopy(key, 0, result, 0, key.Length);
+        return result;
+    }
+    #endregion
+
     #region Modbus_CRC
     private static readonly UInt16[] crc_ta = [0x0000, 0xCC01, 0xD801, 0x1400, 0xF001, 0x3C00, 0x2800, 0xE401, 0xA001, 0x6C00, 0x7800, 0xB401, 0x5000, 0x9C01, 0x8801, 0x4400];
 

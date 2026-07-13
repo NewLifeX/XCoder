@@ -1,0 +1,82 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="700"
+        x:Class="XCoderAv.Views.MapWindow"
+        Title="地图接口" Width="800" Height="700"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 配置 -->
+        <Border Grid.Row="0" Classes="GroupBorder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="地图类型" VerticalAlignment="Center" Margin="4,2"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding MapTypes}" SelectedItem="{Binding SelectedMap}" Height="28" Margin="2"/>
+                <TextBlock Grid.Column="2" Text="方法" VerticalAlignment="Center" Margin="4,2"/>
+                <ComboBox Grid.Column="3" ItemsSource="{Binding Methods}" SelectedItem="{Binding SelectedMethod}" Height="28" Margin="2"/>
+
+                <TextBlock Grid.Row="1" Text="地址" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Address}" Classes="ConfigTextBox"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="城市" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding City}" Classes="ConfigTextBox"/>
+
+                <TextBlock Grid.Row="2" Text="坐标" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Location}" Classes="ConfigTextBox"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="坐标2" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Location2}" Classes="ConfigTextBox"/>
+            </Grid>
+        </Border>
+
+        <!-- 操作 -->
+        <Border Grid.Row="1" Classes="GroupBorder" Padding="4">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox ItemsSource="{Binding CoordTypes}" SelectedItem="{Binding SelectedCoordType}" Width="100" Height="28" Margin="2"/>
+                <CheckBox Content="格式化地址" IsChecked="{Binding FormatAddress}" Margin="8,0" VerticalAlignment="Center"/>
+                <Button Content="调用" Command="{Binding InvokeCommand}" Classes="ActionButton" Width="80"/>
+                <Button Content="清空" Command="{Binding ClearLogCommand}" Classes="ActionButton" Width="60"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 结果 -->
+        <TextBox Grid.Row="2" Text="{Binding ResultLog}" AcceptsReturn="True" AcceptsTab="True"
+                 FontFamily="Consolas" FontSize="12" Margin="0,4"
+                 BorderThickness="1" BorderBrush="#D0D0D0"/>
+    </Grid>
+</Window>

@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="700"
+        x:Class="XCoderAv.Views.IpConfigWindow"
+        Title="IP 设置" Width="800" Height="700"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 配置 -->
+        <Border Grid.Row="0" Classes="GroupBorder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="适配器" VerticalAlignment="Center" Margin="4,2"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Adapters}" SelectedItem="{Binding SelectedAdapter}" Margin="2" Height="28"/>
+                <TextBlock Grid.Column="2" Text="描述" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Column="3" Text="{Binding AdapterDescription}" Classes="ConfigTextBox" IsReadOnly="True"/>
+
+                <TextBlock Grid.Row="1" Text="IP 地址" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding IpAddress}" Classes="ConfigTextBox"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="子网掩码" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding SubnetMask}" Classes="ConfigTextBox"/>
+
+                <TextBlock Grid.Row="2" Text="网关" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Gateway}" Classes="ConfigTextBox"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="DNS" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Dns}" Classes="ConfigTextBox"/>
+
+                <TextBlock Grid.Row="3" Text="辅助 IP" VerticalAlignment="Top" Margin="4,2"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding SecondaryIps}" AcceptsReturn="True" MinHeight="60"
+                         FontFamily="Consolas" FontSize="12" BorderThickness="1" BorderBrush="#D0D0D0"/>
+
+                <Button Grid.Row="4" Content="应用" Command="{Binding ApplyCommand}" Classes="ActionButton" Width="100" HorizontalAlignment="Left"/>
+                <Button Grid.Row="4" Grid.Column="1" Content="恢复 DHCP" Command="{Binding RestoreCommand}" Classes="ActionButton" Width="100"/>
+            </Grid>
+        </Border>
+
+        <!-- 日志 -->
+        <TextBox Grid.Row="1" Text="{Binding Log}" AcceptsReturn="True" AcceptsTab="True"
+                 FontFamily="Consolas" FontSize="12" Margin="0,4"
+                 BorderThickness="1" BorderBrush="#D0D0D0"/>
+    </Grid>
+</Window>

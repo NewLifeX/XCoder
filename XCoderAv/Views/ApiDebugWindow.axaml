@@ -1,0 +1,96 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="750"
+        x:Class="XCoderAv.Views.ApiDebugWindow"
+        Title="API 调试" Width="1000" Height="750"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 连接配置 -->
+        <Border Grid.Row="0" Classes="GroupBorder">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="模式" VerticalAlignment="Center" Margin="4,2"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Modes}" SelectedIndex="{Binding SelectedModeIndex}" Height="28" Margin="2"/>
+                <TextBlock Grid.Column="2" Text="端口" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Column="3" Text="{Binding Port}" Classes="ConfigTextBox"/>
+                <Button Grid.Column="4" Content="{Binding ConnectButtonText}" Command="{Binding ToggleConnectCommand}" Classes="ActionButton" Width="80"/>
+            </Grid>
+        </Border>
+
+        <!-- 选项 -->
+        <Border Grid.Row="1" Classes="GroupBorder" Padding="4">
+            <WrapPanel>
+                <CheckBox Content="日志" IsChecked="{Binding ShowLog}" Margin="4,0"/>
+                <CheckBox Content="编码" IsChecked="{Binding ShowEncoderLog}" Margin="4,0"/>
+                <CheckBox Content="发送" IsChecked="{Binding ShowSend}" Margin="4,0"/>
+                <CheckBox Content="接收" IsChecked="{Binding ShowReceive}" Margin="4,0"/>
+                <TextBlock Text="次数" VerticalAlignment="Center" Margin="8,0,2,0"/>
+                <TextBox Text="{Binding SendTimes}" Width="50" Classes="ConfigTextBox"/>
+                <TextBlock Text="间隔" VerticalAlignment="Center" Margin="8,0,2,0"/>
+                <TextBox Text="{Binding SendSleep}" Width="60" Classes="ConfigTextBox"/>
+                <TextBlock Text="并发" VerticalAlignment="Center" Margin="8,0,2,0"/>
+                <TextBox Text="{Binding SendThreads}" Width="50" Classes="ConfigTextBox"/>
+            </WrapPanel>
+        </Border>
+
+        <!-- 日志 -->
+        <TextBox Grid.Row="2" Text="{Binding ReceiveLog}" AcceptsReturn="True" AcceptsTab="True"
+                 FontFamily="Consolas" FontSize="12" Margin="0,4"
+                 BorderThickness="1" BorderBrush="#D0D0D0"/>
+
+        <!-- 发送 -->
+        <Border Grid.Row="3" Classes="GroupBorder">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Action" VerticalAlignment="Center" Margin="4,2"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding ApiActions}" SelectedItem="{Binding SelectedAction}" Height="28"/>
+                <TextBox Grid.Column="2" Text="{Binding SendText}" Classes="ConfigTextBox"/>
+                <Button Grid.Column="3" Content="发送" Command="{Binding SendCommand}" Classes="ActionButton" Width="80"/>
+                <Button Grid.Column="4" Content="清空" Command="{Binding ClearLogCommand}" Classes="ActionButton" Width="60"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

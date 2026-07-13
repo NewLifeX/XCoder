@@ -1,0 +1,110 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="700"
+        x:Class="XCoderAv.Views.IoControlWindow"
+        Title="I/O 控制面板" Width="900" Height="700"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="TextBlock.SectionTitle">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="4,3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 串口配置 -->
+        <Border Grid.Row="0" Classes="GroupBorder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="串口" VerticalAlignment="Center" Margin="4,2"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding PortNames}" SelectedItem="{Binding PortName}" Margin="2" Height="28"/>
+                <TextBlock Grid.Column="2" Text="波特率" VerticalAlignment="Center" Margin="4,2"/>
+                <ComboBox Grid.Column="3" ItemsSource="{Binding BaudRates}" SelectedItem="{Binding BaudRate}" Margin="2" Height="28"/>
+
+                <TextBlock Grid.Row="1" Text="从站" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SlaveAddress}" Classes="ConfigTextBox"/>
+                <Button Grid.Row="1" Grid.Column="3" Content="{Binding ConnectButtonText}" Command="{Binding ToggleConnectCommand}" Classes="ActionButton" Width="80"/>
+            </Grid>
+        </Border>
+
+        <!-- I/O 控制 -->
+        <Border Grid.Row="1" Classes="GroupBorder" Padding="4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="输出" FontWeight="Bold" Margin="4,2"/>
+                <Button Grid.Column="1" Content="OUT1" Command="{Binding TurnOnCommand}" CommandParameter="1" Classes="ActionButton" Width="70"/>
+                <Button Grid.Column="2" Content="OUT2" Command="{Binding TurnOnCommand}" CommandParameter="2" Classes="ActionButton" Width="70"/>
+                <Button Grid.Column="3" Content="OUT3" Command="{Binding TurnOnCommand}" CommandParameter="3" Classes="ActionButton" Width="70"/>
+                <Button Grid.Column="4" Content="OUT4" Command="{Binding TurnOnCommand}" CommandParameter="4" Classes="ActionButton" Width="70"/>
+
+                <Button Grid.Row="1" Content="OUT5" Command="{Binding TurnOnCommand}" CommandParameter="5" Classes="ActionButton" Width="70" Margin="50,2,2,2"/>
+                <Button Grid.Row="1" Grid.Column="2" Content="OUT6" Command="{Binding TurnOnCommand}" CommandParameter="6" Classes="ActionButton" Width="70"/>
+                <Button Grid.Row="1" Grid.Column="3" Content="OUT7" Command="{Binding TurnOnCommand}" CommandParameter="7" Classes="ActionButton" Width="70"/>
+                <Button Grid.Row="1" Grid.Column="4" Content="OUT8" Command="{Binding TurnOnCommand}" CommandParameter="8" Classes="ActionButton" Width="70"/>
+
+                <TextBlock Grid.Row="2" Text="操作" FontWeight="Bold" Margin="4,2"/>
+                <Button Grid.Row="2" Grid.Column="1" Content="全开" Command="{Binding TurnOnAllCommand}" Classes="ActionButton" Width="70"/>
+                <Button Grid.Row="2" Grid.Column="2" Content="全关" Command="{Binding TurnOffAllCommand}" Classes="ActionButton" Width="70"/>
+                <Button Grid.Row="2" Grid.Column="3" Content="读入" Command="{Binding ReadInputsCommand}" Classes="ActionButton" Width="70"/>
+                <Button Grid.Row="2" Grid.Column="4" Content="读出" Command="{Binding ReadOutputsCommand}" Classes="ActionButton" Width="70"/>
+
+                <TextBlock Grid.Row="3" Text="延迟" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Delay}" Classes="ConfigTextBox" Width="80"/>
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="ms" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- 日志 -->
+        <TextBox Grid.Row="2" Text="{Binding Log}" AcceptsReturn="True" AcceptsTab="True"
+                 FontFamily="Consolas" FontSize="12" Margin="0,4"
+                 BorderThickness="1" BorderBrush="#D0D0D0"/>
+    </Grid>
+</Window>

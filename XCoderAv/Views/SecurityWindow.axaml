@@ -65,6 +65,11 @@
                     <Button Content="JWT令牌" Classes="FuncButton" Command="{Binding JwtTokenCommand}"/>
                     <Button Content="版本号" Classes="FuncButton" Command="{Binding VersionCommand}"/>
                     <Button Content="TraceId" Classes="FuncButton" Command="{Binding TraceIdCommand}"/>
+                    <Button Content="MD5破解" Classes="FuncButton" Command="{Binding Md5CrackCommand}"/>
+                    <Button Content="AES加密" Classes="FuncButton" Command="{Binding AesEncryptCommand}"/>
+                    <Button Content="AES解密" Classes="FuncButton" Command="{Binding AesDecryptCommand}"/>
+                    <Button Content="DES加密" Classes="FuncButton" Command="{Binding DesEncryptCommand}"/>
+                    <Button Content="DES解密" Classes="FuncButton" Command="{Binding DesDecryptCommand}"/>
                 </WrapPanel>
             </ScrollViewer>
         </Border>

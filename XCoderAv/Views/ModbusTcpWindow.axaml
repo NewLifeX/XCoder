@@ -1,0 +1,113 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="750"
+        x:Class="XCoderAv.Views.ModbusTcpWindow"
+        Title="Modbus TCP 调试" Width="1000" Height="750"
+        WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="TextBlock.SectionTitle">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="4,3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid Margin="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 连接配置 -->
+        <Border Grid.Row="0" Classes="GroupBorder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="模式" VerticalAlignment="Center" Margin="4,2"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding ModeOptions}" SelectedIndex="{Binding SelectedMode}" Height="28" Margin="2"/>
+                <TextBlock Grid.Column="2" Text="地址" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Column="3" Text="{Binding ServerAddress}" Classes="ConfigTextBox"/>
+                <TextBlock Grid.Column="4" Text="端口" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Column="5" Text="{Binding Port}" Classes="ConfigTextBox" Width="80"/>
+
+                <TextBlock Grid.Row="1" Text="从站" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SlaveAddress}" Classes="ConfigTextBox"/>
+                <Button Grid.Row="1" Grid.Column="3" Content="{Binding ConnectButtonText}" Command="{Binding ToggleConnectCommand}" Classes="ActionButton" Width="80"/>
+            </Grid>
+        </Border>
+
+        <!-- 读写配置 -->
+        <Border Grid.Row="1" Classes="GroupBorder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="功能码" VerticalAlignment="Center" Margin="4,2"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding FuncCodeOptions}" SelectedIndex="{Binding FunctionCodeIndex}" Height="28"/>
+                <TextBlock Grid.Column="2" Text="起始地址" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Column="3" Text="{Binding StartAddress}" Classes="ConfigTextBox"/>
+                <TextBlock Grid.Column="4" Text="数量" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Column="5" Text="{Binding ReadCount}" Classes="ConfigTextBox"/>
+                <TextBlock Grid.Column="6" Text="写入值" VerticalAlignment="Center" Margin="4,2"/>
+                <TextBox Grid.Column="7" Text="{Binding WriteValue}" Classes="ConfigTextBox"/>
+
+                <Button Grid.Row="1" Content="执行" Command="{Binding ExecuteCommand}" Classes="ActionButton" Width="80"/>
+                <Button Grid.Row="1" Grid.Column="1" Content="清空" Command="{Binding ClearLogCommand}" Classes="ActionButton" Width="80"/>
+            </Grid>
+        </Border>
+
+        <!-- 结果 -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="读取结果 / 日志" Classes="SectionTitle"/>
+            <TextBox Grid.Row="1" Text="{Binding Log}" AcceptsReturn="True"
+                     FontFamily="Consolas" FontSize="12"
+                     BorderThickness="1" BorderBrush="#D0D0D0" Margin="0,4,0,0"/>
+        </Grid>
+    </Grid>
+</Window>
