@@ -1,0 +1,305 @@
+<Window x:Class="CrazyCoder.Views.NetworkWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="网络调试工具" Height="750" Width="1100" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="GroupBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="4,3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style x:Key="ConfigLabel" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="4,2"/>
+        </Style>
+
+        <Style x:Key="ConfigTextBox" TargetType="TextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+
+        <Style x:Key="OptionCheckBox" TargetType="CheckBox">
+            <Setter Property="Margin" Value="4,2"/>
+        </Style>
+
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <Style x:Key="SendButton" TargetType="Button">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="SmallNumeric" TargetType="TextBox">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ============ 左侧：配置面板 ============ -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,4,0">
+            <StackPanel>
+                <!-- 工作模式 -->
+                <Border Style="{StaticResource GroupBorder}">
+                    <StackPanel>
+                        <TextBlock Text="工作模式" Style="{StaticResource SectionTitle}"/>
+                        <ComboBox ItemsSource="{Binding Modes}" SelectedIndex="{Binding SelectedModeIndex}"
+                                  Margin="4,2" Height="30">
+                            <ComboBox.Style>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ComboBox.Style>
+                        </ComboBox>
+                    </StackPanel>
+                </Border>
+
+                <!-- 连接配置 -->
+                <Border Style="{StaticResource GroupBorder}">
+                    <StackPanel>
+                        <TextBlock Text="连接配置" Style="{StaticResource SectionTitle}"/>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="本地" Style="{StaticResource ConfigLabel}"/>
+                            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding LocalAddresses}"
+                                      Text="{Binding LocalAddress, UpdateSourceTrigger=PropertyChanged}"
+                                      Height="26" Margin="2" IsEditable="True">
+                                <ComboBox.Style>
+                                    <Style TargetType="ComboBox">
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ComboBox.Style>
+                            </ComboBox>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="远程" Style="{StaticResource ConfigLabel}"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding RemoteAddress, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox" BasedOn="{StaticResource ConfigTextBox}">
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="端口" Style="{StaticResource ConfigLabel}"/>
+                            <Grid Grid.Row="2" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox" BasedOn="{StaticResource ConfigTextBox}">
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                                <Button Grid.Column="1" Content="{Binding ConnectButtonText}"
+                                        Command="{Binding ToggleConnectCommand}"
+                                        Width="80" Style="{StaticResource ActionButton}"
+                                        FontWeight="Bold" Margin="4,2"/>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- 日志配置 -->
+                <Border Style="{StaticResource GroupBorder}">
+                    <StackPanel>
+                        <TextBlock Text="日志配置" Style="{StaticResource SectionTitle}"/>
+                        <CheckBox Content="显示应用日志" IsChecked="{Binding ShowLog}" Style="{StaticResource OptionCheckBox}"/>
+                        <CheckBox Content="显示网络日志" IsChecked="{Binding ShowSocketLog}" Style="{StaticResource OptionCheckBox}"/>
+                        <CheckBox Content="显示接收字符串" IsChecked="{Binding ShowReceiveString}" Style="{StaticResource OptionCheckBox}"/>
+                        <CheckBox Content="显示发送数据" IsChecked="{Binding ShowSend}" Style="{StaticResource OptionCheckBox}"/>
+                        <CheckBox Content="显示接收数据" IsChecked="{Binding ShowReceive}" Style="{StaticResource OptionCheckBox}"/>
+                        <CheckBox Content="显示统计信息" IsChecked="{Binding ShowStat}" Style="{StaticResource OptionCheckBox}"/>
+
+                        <Button Content="清空接收日志" Command="{Binding ClearReceiveLogCommand}"
+                                Style="{StaticResource ActionButton}" Margin="4,4"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 发送配置 -->
+                <Border Style="{StaticResource GroupBorder}">
+                    <StackPanel>
+                        <TextBlock Text="发送配置" Style="{StaticResource SectionTitle}"/>
+                        <CheckBox Content="Hex发送" IsChecked="{Binding HexSend}" Style="{StaticResource OptionCheckBox}"/>
+
+                        <Grid Margin="4,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="次数" Style="{StaticResource ConfigLabel}"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SendTimes, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource SmallNumeric}" Width="Auto"/>
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="次" Style="{StaticResource ConfigLabel}" Margin="2,2,4,2"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="间隔" Style="{StaticResource ConfigLabel}"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SendSleep, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource SmallNumeric}" Width="Auto"/>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="毫秒" Style="{StaticResource ConfigLabel}" Margin="2,2,4,2"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="并发" Style="{StaticResource ConfigLabel}"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SendThreads, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource SmallNumeric}" Width="Auto"/>
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="连接" Style="{StaticResource ConfigLabel}" Margin="2,2,4,2"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- 统计信息 -->
+                <Border Style="{StaticResource GroupBorder}">
+                    <StackPanel>
+                        <TextBlock Text="统计信息" Style="{StaticResource SectionTitle}"/>
+                        <Grid Margin="4,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="已接收" Style="{StaticResource ConfigLabel}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ReceivedBytes, StringFormat={}{0:N0} 字节}"
+                                       Style="{StaticResource ConfigLabel}" FontWeight="Bold"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="已发送" Style="{StaticResource ConfigLabel}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SentBytes, StringFormat={}{0:N0} 字节}"
+                                       Style="{StaticResource ConfigLabel}" FontWeight="Bold"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="连接数" Style="{StaticResource ConfigLabel}"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SessionCount, StringFormat={}{0} 个}"
+                                       Style="{StaticResource ConfigLabel}" FontWeight="Bold"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ============ 右侧：接收区 + 发送区 ============ -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="4"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <!-- 接收日志区 -->
+            <Border Grid.Row="0" Style="{StaticResource GroupBorder}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="接收日志" Style="{StaticResource SectionTitle}"/>
+                    <RichTextBox x:Name="txtReceive" Grid.Row="1"
+                                 IsReadOnly="True" VerticalScrollBarVisibility="Auto"
+                                 FontFamily="Consolas" FontSize="12"
+                                 Background="#1E1E1E" Foreground="#D4D4D4"
+                                 BorderThickness="0" Margin="2"/>
+                </Grid>
+            </Border>
+
+            <GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch" Background="#F0F0F0"/>
+
+            <!-- 发送区 -->
+            <Border Grid.Row="2" Style="{StaticResource GroupBorder}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="发送区" Style="{StaticResource SectionTitle}"/>
+
+                    <Grid Grid.Row="1" Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox Grid.Column="0"
+                                 Text="{Binding SendText, UpdateSourceTrigger=PropertyChanged}"
+                                 AcceptsReturn="True" AcceptsTab="True"
+                                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                 FontFamily="Consolas" FontSize="13"
+                                 BorderThickness="1" BorderBrush="#D0D0D0"
+                                 Margin="0,0,4,0"/>
+
+                        <Button Grid.Column="1" Content="发送"
+                                Command="{Binding SendCommand}"
+                                Style="{StaticResource SendButton}"
+                                VerticalAlignment="Bottom"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

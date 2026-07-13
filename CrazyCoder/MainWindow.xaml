@@ -131,7 +131,7 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <RadioButton Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type local:MainWindow}},
-                                Path=DataContext.SelectedCommand,Mode=TwoWay}" Style="{DynamicResource RadioButtonStyle}"
+                                Path=DataContext.SelectCommand,Mode=TwoWay}" Style="{DynamicResource RadioButtonStyle}"
                                          CommandParameter="{Binding}">
                                 <RadioButton.IsChecked>
                                     <Binding Path="IsSelected" RelativeSource="{RelativeSource AncestorType=ListBoxItem}" Mode="TwoWay"/>

@@ -20,10 +20,6 @@ namespace CrazyCoder
 
         protected override void OnStartup(StartupEventArgs e)
         {
-#if NET45
-            XTrace.UseWinForm();
-#endif
-
             StartClient();
 
             StringHelper.EnableSpeechTip = Setting.Current.SpeechTip;
@@ -60,11 +56,10 @@ namespace CrazyCoder
             // 登录后保存证书
             client.OnLogined += (s, e) =>
             {
-                var inf = client.Info;
-                if (inf != null && !inf.Code.IsNullOrEmpty())
+                if (client.Logined && !client.Code.IsNullOrEmpty())
                 {
-                    set.Code = inf.Code;
-                    set.Secret = inf.Secret;
+                    set.Code = client.Code;
+                    set.Secret = client.Secret;
                     set.Save();
                 }
             };

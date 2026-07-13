@@ -1,0 +1,42 @@
+<Window x:Class="CrazyCoder.Views.FolderStatWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="文件夹大小统计" Height="700" Width="1000" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ContextMenu x:Key="FolderContextMenu">
+            <MenuItem Header="打开目录" Click="OnOpenDirectory"/>
+            <MenuItem Header="删除" Click="OnDelete"/>
+        </ContextMenu>
+    </Window.Resources>
+
+    <Grid Margin="4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+
+        <!-- 树形目录 -->
+        <TreeView x:Name="treeView" BorderThickness="1" BorderBrush="#D0D0D0">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="ContextMenu" Value="{StaticResource FolderContextMenu}"/>
+                    <EventSetter Event="TreeViewItem.Expanded" Handler="OnItemExpanded"/>
+                    <EventSetter Event="TreeViewItem.Collapsed" Handler="OnItemCollapsed"/>
+                    <EventSetter Event="TreeViewItem.PreviewMouseRightButtonDown" Handler="OnItemPreviewMouseRightButtonDown"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+        </TreeView>
+
+        <GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch" Background="#F0F0F0"/>
+
+        <!-- 日志输出 -->
+        <Border Grid.Row="2" BorderBrush="#D0D0D0" BorderThickness="1">
+            <RichTextBox x:Name="txtLog" IsReadOnly="True" VerticalScrollBarVisibility="Auto"
+                         FontFamily="Consolas" FontSize="12" Background="#1E1E1E" Foreground="#D4D4D4"/>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,173 @@
+<Window x:Class="CrazyCoder.Views.IconToolWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="图标水印处理工具" Height="750" Width="1100" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="GroupBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+        </Style>
+
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="4,3"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style x:Key="ConfigLabel" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="4,2"/>
+        </Style>
+
+        <Style x:Key="ConfigTextBox" TargetType="TextBox">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+
+        <Style x:Key="SmallNumeric" TargetType="TextBox">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="8,0"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ============ 左侧：配置面板 ============ -->
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Margin="0,0,4,0">
+            <StackPanel>
+                <!-- 图片加载 -->
+                <Border Style="{StaticResource GroupBorder}">
+                    <StackPanel>
+                        <TextBlock Text="图片加载" Style="{StaticResource SectionTitle}"/>
+                        <Button Content="选择图片" Command="{Binding LoadImageCommand}"
+                                Style="{StaticResource ActionButton}" Margin="4,2"/>
+                        <TextBlock Text="提示：支持拖放图片到右侧预览区" Margin="4,0,4,4"
+                                   Foreground="Gray" FontSize="11"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 水印设置 -->
+                <Border Style="{StaticResource GroupBorder}">
+                    <StackPanel>
+                        <TextBlock Text="水印设置" Style="{StaticResource SectionTitle}"/>
+
+                        <TextBlock Text="文字内容" Style="{StaticResource ConfigLabel}"/>
+                        <TextBox Text="{Binding WatermarkText, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource ConfigTextBox}"/>
+
+                        <Grid Margin="4,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="字体" Style="{StaticResource ConfigLabel}" Width="40"/>
+                            <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding FontNames}"
+                                      Text="{Binding FontName, UpdateSourceTrigger=PropertyChanged}"
+                                      Height="26" Margin="2" IsEditable="True"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="字号" Style="{StaticResource ConfigLabel}" Width="40"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FontSize, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource SmallNumeric}"/>
+                        </Grid>
+
+                        <Grid Margin="4,2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="X" Style="{StaticResource ConfigLabel}" Width="20"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding WatermarkX, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource SmallNumeric}" Width="Auto"/>
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Y" Style="{StaticResource ConfigLabel}" Width="20" Margin="4,2,2,2"/>
+                            <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding WatermarkY, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource SmallNumeric}" Width="Auto"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="颜色" Style="{StaticResource ConfigLabel}" Width="40"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
+                                     Text="{Binding WatermarkColor, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource ConfigTextBox}"/>
+                        </Grid>
+
+                        <Button Content="应用水印" Command="{Binding MakeWaterCommand}"
+                                Style="{StaticResource ActionButton}" Margin="4,2"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ICO 图标生成 -->
+                <Border Style="{StaticResource GroupBorder}">
+                    <StackPanel>
+                        <TextBlock Text="ICO 图标生成" Style="{StaticResource SectionTitle}"/>
+
+                        <ItemsControl ItemsSource="{Binding IconSizes}" Margin="4,2">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" Margin="2"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Button Content="生成 ICO 图标" Command="{Binding MakeIcoCommand}"
+                                Style="{StaticResource ActionButton}" Margin="4,2" FontWeight="Bold"/>
+                        <Button Content="保存图片" Command="{Binding SaveImageCommand}"
+                                Style="{StaticResource ActionButton}" Margin="4,2"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ============ 右侧：图片预览 ============ -->
+        <Border Grid.Column="1" BorderBrush="#D0D0D0" BorderThickness="1" AllowDrop="True"
+                x:Name="previewBorder">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="图片预览" Style="{StaticResource SectionTitle}"/>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Image x:Name="previewImage" Source="{Binding PreviewImage}"
+                           Stretch="None" Margin="4"
+                           AllowDrop="True"
+                           Drop="OnImageDrop"
+                           DragOver="OnImageDragOver"/>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

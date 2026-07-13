@@ -3,10 +3,220 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CrazyCoder.Views"
+        xmlns:vm="clr-namespace:CrazyCoder.ViewModels"
+        xmlns:models="clr-namespace:CrazyCoder.Models"
         mc:Ignorable="d"
-        Title="正则表达式" Height="450" Width="800">
-    <Grid>
-        <TextBlock Text="正则表达式"/>
+        Title="正则表达式" Height="700" Width="1100" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="ResultListView" TargetType="ListView">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <Style x:Key="CodeTextBox" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="AcceptsReturn" Value="True"/>
+            <Setter Property="AcceptsTab" Value="True"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 第1行：正则表达式输入 -->
+        <Border Grid.Row="0" BorderBrush="#D0D0D0" BorderThickness="1" Background="#FFF5E6" Margin="0,0,0,4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="正则表达式" FontWeight="Bold" Margin="4,2"/>
+                <TextBox Grid.Row="1" Text="{Binding Pattern, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource CodeTextBox}" Background="#FFF5E6" MinHeight="60"/>
+            </Grid>
+        </Border>
+
+        <!-- 第2行：选项 + 模式切换 + 执行按钮 -->
+        <Grid Grid.Row="1" Margin="0,0,0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <CheckBox Grid.Column="0" Content="忽略大小写" IsChecked="{Binding IgnoreCase}" Margin="4,0,8,0" ToolTip="使用不区分大小写的匹配"/>
+            <CheckBox Grid.Column="1" Content="多行模式" IsChecked="{Binding Multiline}" Margin="0,0,8,0" ToolTip="^和$匹配每行的开头和末尾"/>
+            <CheckBox Grid.Column="2" Content="单行模式" IsChecked="{Binding Singleline}" Margin="0,0,8,0" ToolTip="句点(.)匹配每个字符"/>
+            <CheckBox Grid.Column="3" Content="忽略空白" IsChecked="{Binding IgnorePatternWhitespace}" Margin="0,0,8,0" ToolTip="排除模式中的空白并启用#注释"/>
+
+            <Separator Grid.Column="4" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="4,0"/>
+
+            <RadioButton Grid.Column="5" Content="匹配" IsChecked="{Binding IsMatchMode}" Margin="8,0,4,0" VerticalAlignment="Center"/>
+            <RadioButton Grid.Column="6" Content="替换" IsChecked="{Binding IsReplaceMode}" Margin="4,0,8,0" VerticalAlignment="Center"/>
+
+            <Button Grid.Column="7" Content="{Binding ExecuteButtonText}" Command="{Binding ExecuteCommand}"
+                    MinWidth="100" Height="28" HorizontalAlignment="Right" Margin="0,0,4,0"/>
+        </Grid>
+
+        <!-- 第3行：替换输入（替换模式可见） -->
+        <Border Grid.Row="2" BorderBrush="#D0D0D0" BorderThickness="1" Background="#E8FFE8" Margin="0,0,0,4"
+                Visibility="{Binding ReplacePanelVisibility}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="替换为" FontWeight="Bold" Margin="4,2"/>
+                <TextBox Grid.Row="1" Text="{Binding Replacement, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource CodeTextBox}" Background="#E8FFE8" MinHeight="40"/>
+            </Grid>
+        </Border>
+
+        <!-- 第4行：数据源输入 -->
+        <Border Grid.Row="3" BorderBrush="#D0D0D0" BorderThickness="1" Background="#FFFFF0" Margin="0,0,0,4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="数据源" FontWeight="Bold" Margin="4,2"/>
+                <TextBox Grid.Row="1" x:Name="txtSource" Text="{Binding SourceText, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource CodeTextBox}" Background="#FFFFF0"/>
+            </Grid>
+        </Border>
+
+        <!-- 第5行：结果区域 -->
+        <Grid Grid.Row="4" Visibility="{Binding ResultPanelVisibility}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Match -->
+            <Border Grid.Column="0" BorderBrush="#D0D0D0" BorderThickness="1" Margin="0,0,2,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="匹配结果 (Match)" FontWeight="Bold" Background="#FFD0FF" Padding="4,2"/>
+                    <ListView Grid.Row="1" x:Name="lvMatch" ItemsSource="{Binding Matches}" SelectedItem="{Binding SelectedMatch}"
+                              Background="#FFD0FF" BorderThickness="0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="序号" Width="40" DisplayMemberBinding="{Binding Index}"/>
+                                <GridViewColumn Header="匹配项" Width="150" DisplayMemberBinding="{Binding Value}"/>
+                                <GridViewColumn Header="位置" Width="120" DisplayMemberBinding="{Binding Location}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </Border>
+
+            <!-- Group -->
+            <Border Grid.Column="1" BorderBrush="#D0D0D0" BorderThickness="1" Margin="1,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="分组 (Group)" FontWeight="Bold" Background="#D0FFD0" Padding="4,2"/>
+                    <ListView Grid.Row="1" x:Name="lvGroup" ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}"
+                              Background="#D0FFD0" BorderThickness="0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="序号" Width="40" DisplayMemberBinding="{Binding Index}"/>
+                                <GridViewColumn Header="名称" Width="60" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="值" Width="130" DisplayMemberBinding="{Binding Value}"/>
+                                <GridViewColumn Header="位置" Width="100" DisplayMemberBinding="{Binding Location}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </Border>
+
+            <!-- Capture -->
+            <Border Grid.Column="2" BorderBrush="#D0D0D0" BorderThickness="1" Margin="2,0,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="捕获 (Capture)" FontWeight="Bold" Background="#D0D0FF" Padding="4,2"/>
+                    <ListView Grid.Row="1" x:Name="lvCapture" ItemsSource="{Binding Captures}" SelectedItem="{Binding SelectedCapture}"
+                              Background="#D0D0FF" BorderThickness="0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="序号" Width="40" DisplayMemberBinding="{Binding Index}"/>
+                                <GridViewColumn Header="值" Width="150" DisplayMemberBinding="{Binding Value}"/>
+                                <GridViewColumn Header="位置" Width="100" DisplayMemberBinding="{Binding Location}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- 第6行：批量替换 -->
+        <Grid Grid.Row="5" Margin="0,4" Visibility="{Binding BatchPanelVisibility}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="打开目录" Command="{Binding BrowseDirectoryCommand}" MinWidth="80" Height="26" Margin="0,0,4,0"/>
+            <TextBox Grid.Column="1" Text="{Binding DirectoryPath, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
+                     Background="#F0F0F0" VerticalAlignment="Center" Height="26" Margin="0,0,4,0"/>
+            <TextBlock Grid.Column="2" Text="过滤:" VerticalAlignment="Center" Margin="0,0,4,0"/>
+            <TextBox Grid.Column="3" Text="{Binding FileFilter, UpdateSourceTrigger=PropertyChanged}" Width="80" VerticalAlignment="Center" Height="26" Margin="0,0,4,0"/>
+            <Button Grid.Column="4" Content="全部替换" Command="{Binding BatchReplaceCommand}" MinWidth="80" Height="26"/>
+        </Grid>
+
+        <!-- 第7行：状态栏 -->
+        <StatusBar Grid.Row="6" Margin="0,2,0,0">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock Text="选项:" FontWeight="Bold"/>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="1">
+                <TextBlock Text="{Binding OptionText}" Margin="4,0,0,0"/>
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="2">
+                <TextBlock Text="{Binding Status}" Margin="4,0,0,0"/>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>
