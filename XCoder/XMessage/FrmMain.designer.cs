@@ -91,6 +91,7 @@
             // 
             this.txtReceive.ContextMenuStrip = this.menuReceive;
             this.txtReceive.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtReceive.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(3, 17);
             this.txtReceive.Name = "txtReceive";
@@ -342,6 +343,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSend.ContextMenuStrip = this.menuSend;
+            this.txtSend.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtSend.HideSelection = false;
             this.txtSend.Location = new System.Drawing.Point(0, 19);
             this.txtSend.Name = "txtSend";
@@ -413,8 +415,7 @@
             // 
             // FrmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(667, 379);
             this.Controls.Add(this.gbSend);
             this.Controls.Add(this.pnlSetting);

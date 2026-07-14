@@ -17,9 +17,6 @@ public partial class FrmSymmetric : Form, IXForm
     public FrmSymmetric()
     {
         InitializeComponent();
-
-        // 动态调节宽度高度，兼容高DPI
-        this.FixDpi();
     }
 
     private void FrmSecurity_Load(Object sender, EventArgs e)

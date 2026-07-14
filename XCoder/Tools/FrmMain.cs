@@ -12,9 +12,6 @@ namespace XCoder.Tools
         public FrmMain()
         {
             InitializeComponent();
-
-            // 动态调节宽度高度，兼容高DPI
-            this.FixDpi();
         }
 
         private void FrmMain_Load(Object sender, EventArgs e)
@@ -36,7 +33,7 @@ namespace XCoder.Tools
         {
             frm.TopLevel = false;
             frm.Dock = DockStyle.Fill;
-            frm.FormBorderStyle = FormBorderStyle.None;
+            //frm.FormBorderStyle = FormBorderStyle.None;
 
             frm.Parent = this;
 

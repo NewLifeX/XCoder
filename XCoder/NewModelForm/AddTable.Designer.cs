@@ -219,8 +219,7 @@
             // 
             // AddTable
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.gbTable);
             this.Controls.Add(this.dgvColumns);
             this.Controls.Add(this.toolStrip1);

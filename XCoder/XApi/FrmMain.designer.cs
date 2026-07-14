@@ -94,6 +94,7 @@
             // 
             this.txtReceive.ContextMenuStrip = this.menuReceive;
             this.txtReceive.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtReceive.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(4, 24);
             this.txtReceive.Margin = new System.Windows.Forms.Padding(4);
@@ -382,6 +383,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSend.ContextMenuStrip = this.menuSend;
+            this.txtSend.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtSend.HideSelection = false;
             this.txtSend.Location = new System.Drawing.Point(4, 22);
             this.txtSend.Margin = new System.Windows.Forms.Padding(4);
@@ -461,7 +463,7 @@
             // 
             // FrmMain
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1000, 611);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cbAction);

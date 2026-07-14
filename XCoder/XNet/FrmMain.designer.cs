@@ -97,6 +97,7 @@
             // 
             txtReceive.ContextMenuStrip = menuReceive;
             txtReceive.Dock = DockStyle.Fill;
+            txtReceive.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             txtReceive.HideSelection = false;
             txtReceive.Location = new Point(4, 21);
             txtReceive.Margin = new Padding(4, 5, 4, 5);
@@ -215,6 +216,7 @@
             // 
             // btnConnect
             // 
+            btnConnect.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnConnect.Location = new Point(880, 13);
             btnConnect.Margin = new Padding(4, 5, 4, 5);
             btnConnect.Name = "btnConnect";
@@ -293,6 +295,7 @@
             pnlSetting.Controls.Add(label1);
             pnlSetting.Controls.Add(lbLocal);
             pnlSetting.Controls.Add(cbMode);
+            pnlSetting.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlSetting.Location = new Point(13, 11);
             pnlSetting.Margin = new Padding(4, 5, 4, 5);
             pnlSetting.Name = "pnlSetting";
@@ -367,6 +370,7 @@
             // 
             txtSend.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             txtSend.ContextMenuStrip = menuSend;
+            txtSend.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             txtSend.HideSelection = false;
             txtSend.Location = new Point(4, 24);
             txtSend.Margin = new Padding(4, 5, 4, 5);
@@ -431,7 +435,7 @@
             // 
             // FrmMain
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(1000, 632);
             Controls.Add(gbSend);
             Controls.Add(pnlSetting);

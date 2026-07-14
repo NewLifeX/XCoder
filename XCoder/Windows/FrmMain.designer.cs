@@ -142,6 +142,8 @@
             this.gbTable.Controls.Add(this.btnRenderTable);
             this.gbTable.Controls.Add(this.cbTableList);
             this.gbTable.Controls.Add(this.label5);
+            this.gbTable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbTable.Enabled = false;
             this.gbTable.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.gbTable.ForeColor = System.Drawing.Color.ForestGreen;
@@ -204,8 +206,7 @@
             // 
             // cbTableList
             // 
-            this.cbTableList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbTableList.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.cbTableList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTableList.Font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.cbTableList.ForeColor = System.Drawing.Color.ForestGreen;
@@ -609,7 +610,7 @@
             // 
             // FrmMain
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1095, 393);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);

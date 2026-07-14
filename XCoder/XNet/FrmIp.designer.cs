@@ -232,7 +232,7 @@
             // 
             // FrmIp
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(880, 631);
             this.Controls.Add(this.pnlSetting);
             this.Controls.Add(this.gbInfo);

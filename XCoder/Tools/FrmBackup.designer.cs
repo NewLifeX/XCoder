@@ -73,6 +73,7 @@
             // txtLog
             // 
             this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLog.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtLog.HideSelection = false;
             this.txtLog.Location = new System.Drawing.Point(4, 24);
             this.txtLog.Margin = new System.Windows.Forms.Padding(4);
@@ -303,7 +304,7 @@
             // 
             // FrmBackup
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1000, 631);
             this.Controls.Add(this.pnlSetting);
             this.Controls.Add(this.cbAllowDelete);

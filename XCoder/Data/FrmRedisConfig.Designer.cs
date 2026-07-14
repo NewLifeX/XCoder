@@ -139,7 +139,7 @@ namespace XCoder.Data
             // 
             // FrmRedisConfig
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(585, 263);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.label5);

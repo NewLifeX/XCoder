@@ -278,6 +278,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtReceive.ContextMenuStrip = this.menuReceive;
+            this.txtReceive.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(401, 76);
             this.txtReceive.Margin = new System.Windows.Forms.Padding(5);
@@ -384,7 +385,7 @@
             // 
             // FrmModbusMaster
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1000, 632);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.dgv);

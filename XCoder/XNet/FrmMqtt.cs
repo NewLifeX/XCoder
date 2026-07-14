@@ -26,9 +26,6 @@ namespace XNet
         {
             InitializeComponent();
 
-            // 动态调节宽度高度，兼容高DPI
-            this.FixDpi();
-
             //Icon = IcoHelper.GetIcon("SSH");
         }
 
@@ -46,8 +43,6 @@ namespace XNet
 
             //txtReceive.UseWinFormControl();
             txtReceive.Clear();
-            txtReceive.SetDefaultStyle(12);
-            txtSend.SetDefaultStyle(12);
         }
         #endregion
 

@@ -25,9 +25,6 @@ namespace XCoder.Tools
         public FrmMD5()
         {
             InitializeComponent();
-
-            // 动态调节宽度高度，兼容高DPI
-            this.FixDpi();
         }
 
         private void FrmSecurity_Load(Object sender, EventArgs e)

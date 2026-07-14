@@ -96,6 +96,7 @@
             // 
             this.txtReceive.ContextMenuStrip = this.menuReceive;
             this.txtReceive.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtReceive.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtReceive.HideSelection = false;
             this.txtReceive.Location = new System.Drawing.Point(4, 23);
             this.txtReceive.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -150,6 +151,7 @@
             // 
             // btnConnect
             // 
+            this.btnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnConnect.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnConnect.Location = new System.Drawing.Point(978, 47);
             this.btnConnect.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -298,6 +300,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSend.ContextMenuStrip = this.menuSend;
+            this.txtSend.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txtSend.HideSelection = false;
             this.txtSend.Location = new System.Drawing.Point(4, 73);
             this.txtSend.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -397,6 +400,8 @@
             this.gbSubscribe.Controls.Add(this.cbTopic);
             this.gbSubscribe.Controls.Add(this.label12);
             this.gbSubscribe.Enabled = false;
+            this.gbSubscribe.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbSubscribe.Location = new System.Drawing.Point(16, 136);
             this.gbSubscribe.Name = "gbSubscribe";
             this.gbSubscribe.Size = new System.Drawing.Size(924, 87);
@@ -473,6 +478,8 @@
             this.gbSetting.Controls.Add(this.txtPath);
             this.gbSetting.Controls.Add(this.label3);
             this.gbSetting.Controls.Add(this.label2);
+            this.gbSetting.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbSetting.Location = new System.Drawing.Point(14, 10);
             this.gbSetting.Name = "gbSetting";
             this.gbSetting.Size = new System.Drawing.Size(923, 117);
@@ -482,14 +489,14 @@
             // 
             // FrmMqtt
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1111, 864);
             this.Controls.Add(this.gbSubscribe);
             this.Controls.Add(this.gbSetting);
             this.Controls.Add(this.gbSend);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.gbReceive);
-            this.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "FrmMqtt";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -147,7 +147,7 @@
             // 
             // FrmSpeak
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(1021, 583);
             Controls.Add(btnSave);
             Controls.Add(groupBox1);

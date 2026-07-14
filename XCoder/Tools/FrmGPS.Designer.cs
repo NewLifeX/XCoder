@@ -156,8 +156,7 @@
             // 
             // FrmGPS
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(582, 172);
             this.Controls.Add(this.groupBox1);
             this.Name = "FrmGPS";

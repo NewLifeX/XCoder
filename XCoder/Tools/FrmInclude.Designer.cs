@@ -80,6 +80,7 @@
             this.rtb_msg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtb_msg.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.rtb_msg.Location = new System.Drawing.Point(12, 80);
             this.rtb_msg.Name = "rtb_msg";
             this.rtb_msg.Size = new System.Drawing.Size(404, 167);
@@ -115,8 +116,7 @@
             // 
             // FrmInclude
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(424, 250);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);

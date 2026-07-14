@@ -23,9 +23,6 @@ public partial class FrmMap : Form, IXForm
     {
         InitializeComponent();
 
-        // 动态调节宽度高度，兼容高DPI
-        this.FixDpi();
-
         //Icon = IcoHelper.GetIcon("地图");
     }
 
@@ -34,8 +31,6 @@ public partial class FrmMap : Form, IXForm
         //var log = TextFileLog.Create(null, "Map_{0:yyyy_MM_dd}.log");
         BizLog = txtReceive.Combine(XTrace.Log);
         txtReceive.UseWinFormControl();
-
-        txtReceive.SetDefaultStyle(12);
 
         // 加载保存的颜色
         UIConfig.Apply(txtReceive);

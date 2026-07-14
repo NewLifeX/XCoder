@@ -222,6 +222,7 @@
             // richTextBox1
             // 
             richTextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            richTextBox1.Font = new Font("Microsoft YaHei UI", 10.5F, FontStyle.Regular, GraphicsUnit.Point);
             richTextBox1.Location = new Point(11, 227);
             richTextBox1.Margin = new Padding(2);
             richTextBox1.Name = "richTextBox1";
@@ -242,8 +243,7 @@
             // 
             // FrmModbus
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(805, 556);
             Controls.Add(btnConnect2);
             Controls.Add(richTextBox1);

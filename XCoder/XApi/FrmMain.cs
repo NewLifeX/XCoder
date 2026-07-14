@@ -28,9 +28,6 @@ public partial class FrmMain : Form, IXForm
     {
         InitializeComponent();
 
-        // 动态调节宽度高度，兼容高DPI
-        this.FixDpi();
-
         //Font = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
         //Icon = IcoHelper.GetIcon("Api");
     }
@@ -40,10 +37,6 @@ public partial class FrmMain : Form, IXForm
         var log = TextFileLog.Create(null, "Api_{0:yyyy_MM_dd}.log");
         BizLog = txtReceive.Combine(log);
         txtReceive.UseWinFormControl();
-
-        txtReceive.SetDefaultStyle(12);
-        txtSend.SetDefaultStyle(12);
-        numMutilSend.SetDefaultStyle(12);
 
         gbReceive.Tag = gbReceive.Text;
         gbSend.Tag = gbSend.Text;

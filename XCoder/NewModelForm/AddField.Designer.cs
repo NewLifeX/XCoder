@@ -223,8 +223,7 @@
             // 
             // AddField
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.gbInfo);
             this.Name = "AddField";
             this.Size = new System.Drawing.Size(468, 267);

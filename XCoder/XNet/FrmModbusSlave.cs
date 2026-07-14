@@ -30,9 +30,6 @@ namespace XNet
         public FrmModbusSlave()
         {
             InitializeComponent();
-
-            // 动态调节宽度高度，兼容高DPI
-            this.FixDpi();
         }
 
         private void FrmMain_Load(Object sender, EventArgs e)
@@ -40,8 +37,6 @@ namespace XNet
             _log = new TextControlLog { Control = txtReceive };
 
             if (cbMode.SelectedIndex < 0) cbMode.SelectedIndex = 0;
-
-            txtReceive.SetDefaultStyle(12);
 
             // 加载保存的颜色
             UIConfig.Apply(txtReceive);

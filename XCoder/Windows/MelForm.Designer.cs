@@ -102,8 +102,7 @@
             // 
             // MelForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(652, 404);
             Controls.Add(label2);
             Controls.Add(label1);

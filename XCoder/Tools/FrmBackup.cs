@@ -19,9 +19,6 @@ namespace XCoder.Tools
         {
             InitializeComponent();
 
-            // 动态调节宽度高度，兼容高DPI
-            this.FixDpi();
-
             //Font = new Font("宋体", 9F, FontStyle.Regular, GraphicsUnit.Point, 134);
             //Icon = IcoHelper.GetIcon("Backup");
         }
@@ -29,7 +26,6 @@ namespace XCoder.Tools
         private void FrmMain_Load(Object sender, EventArgs e)
         {
             txtLog.UseWinFormControl();
-            txtLog.SetDefaultStyle(12);
 
             LoadConfig();
         }

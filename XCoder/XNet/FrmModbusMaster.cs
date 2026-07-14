@@ -23,16 +23,11 @@ namespace XNet
         public FrmModbusMaster()
         {
             InitializeComponent();
-
-            // 动态调节宽度高度，兼容高DPI
-            this.FixDpi();
         }
 
         private void FrmMain_Load(Object sender, EventArgs e)
         {
             _log = new TextControlLog { Control = txtReceive };
-
-            txtReceive.SetDefaultStyle(12);
 
             var dic = EnumHelper.GetDescriptions(typeof(FunctionCodes));
             cbFunctionCode.ValueMember = "key";
