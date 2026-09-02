@@ -6,8 +6,8 @@
 ## 基线巡检结果（2026-09-02 首轮）
 
 - 自动发现工具菜单 **27 个**，全部真实点击打开成功（MDI 子窗体正常加载）
-- 打开后内容异常 **2 个**（详见问题清单）
-- 另发现窗体标题冲突 **2 对**
+- 打开后内容异常：**P2-01**（SqlGuidCaster 插件扫描噪音，间歇性出现，见问题清单）
+- 窗体标题冲突 **2 对**：P3-01 / P3-02 —— **已修复并回归验证** ✅
 
 ### 运行方式
 
@@ -45,14 +45,14 @@ dotnet test --filter FullyQualifiedName~SmokeTourTests
 - **位置**：`XCoder/Tools/FrmSymmetric.cs`（菜单「对称加密」）与 `XCoder/Tools/FrmSecurity.cs`（菜单「加密解密」）
 - **现象**：两个不同工具窗体的 `Text` 都是「加密解密」，MDI 中无法区分、自动打开「上次工具」时也会开错
 - **建议**：`FrmSymmetric` 标题改为「对称加密」或「对称加密工具」
-- **状态**：⏳ 待修复
+- **状态**：✅ 已修复（2026-09-02）。`FrmSymmetric.Designer.cs` 的 `Text` 改为「对称加密」；E2E 回归确认子窗体标题为「对称加密」
 
 ### P3-02 IP设置 与 网络调试工具 窗口标题重名「网络调试」
 
-- **位置**：`XCoder/XNet/FrmIp.cs`（菜单「IP设置」）与 `XCoder/XNet/FrmMain.cs`（菜单「网络调试工具」）
+- **位置**：`XCoder/XNet/FrmIp.designer.cs`（菜单「IP设置」）与 `XCoder/XNet/FrmMain.cs`（菜单「网络调试工具」）
 - **现象**：两窗体 `Text` 都是「网络调试」
 - **建议**：`FrmIp` 标题改为「IP设置」
-- **状态**：⏳ 待修复
+- **状态**：✅ 已修复（2026-09-02）。`FrmIp.designer.cs` 的 `Text` 改为「IP设置」；E2E 回归确认子窗体标题为「IP设置」
 
 ---
 
@@ -67,5 +67,5 @@ dotnet test --filter FullyQualifiedName~SmokeTourTests
 
 ## 待办
 
-- [ ] 对纯本地工具补充功能级断言：MD5/加密解密/对称加密/正则表达式/坐标转换/图标水印等
-- [ ] 修复后回归：重跑冒烟巡检直至 0 警告、0 异常
+- [x] 纯本地工具功能断言（2026-09-02）：MD5 计算、AES 对称加解密往返、正则匹配计数、GPS HEX 坐标转浮点 —— 4 项全部通过（`LocalToolTests`）
+- [ ] P2-01 处理方案确认后修复，重跑冒烟巡检直至 0 警告、0 异常

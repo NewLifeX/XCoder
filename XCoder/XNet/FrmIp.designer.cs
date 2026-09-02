@@ -239,7 +239,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmIp";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "网络调试";
+            this.Text = "IP设置";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.gbInfo.ResumeLayout(false);
             this.gbInfo.PerformLayout();

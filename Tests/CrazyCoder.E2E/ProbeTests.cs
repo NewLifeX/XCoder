@@ -77,4 +77,37 @@ public class ProbeTests
 
         _s.CloseAllChildren();
     }
+
+    [Fact]
+    public void 探测对称加密控件结构()
+    {
+        _s.Start();
+        var tools = _s.DiscoverTools();
+        var t = tools.FirstOrDefault(x => x.Name == "对称加密");
+        Assert.NotNull(t);
+        var child = _s.OpenTool(t!);
+        Assert.NotNull(child);
+        Thread.Sleep(1500);
+
+        _log.WriteLine($"子窗体: '{child!.Name}'");
+        var cts = new[]
+        {
+            ControlType.Button, ControlType.Edit, ControlType.RadioButton,
+            ControlType.CheckBox, ControlType.ComboBox, ControlType.Text,
+        };
+        foreach (var ct in cts)
+        {
+            _log.WriteLine($"===== {ct} =====");
+            var els = child.FindAllDescendants(cf => cf.ByControlType(ct));
+            foreach (var el in els.Take(80))
+            {
+                String? aid = null;
+                try { aid = el.Properties.AutomationId.ValueOrDefault; } catch { }
+                String? name = null;
+                try { name = el.Name; } catch { }
+                _log.WriteLine($"  aid='{aid}' name='{name}' cls='{el.ClassName}'");
+            }
+        }
+        _s.CloseAllChildren();
+    }
 }

@@ -503,7 +503,7 @@
             Controls.Add(gbFunc);
             Margin = new Padding(4);
             Name = "FrmSymmetric";
-            Text = "加密解密";
+            Text = "对称加密";
             Load += FrmSecurity_Load;
             gbFunc.ResumeLayout(false);
             gbFunc.PerformLayout();

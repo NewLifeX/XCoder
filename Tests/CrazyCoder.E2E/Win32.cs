@@ -21,6 +21,11 @@ public static class Win32
     [DllImport("user32.dll")] static extern Boolean PrintWindow(IntPtr hWnd, IntPtr hdcBlt, UInt32 nFlags);
     [DllImport("user32.dll")] static extern Int32 GetWindowText(IntPtr hWnd, System.Text.StringBuilder text, Int32 count);
     [DllImport("user32.dll")] static extern Int32 GetClassName(IntPtr hWnd, System.Text.StringBuilder text, Int32 count);
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)] static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, String lParam);
+    [DllImport("user32.dll")] static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
+
+    const UInt32 EM_SETSEL = 0x00B1;
+    const UInt32 EM_REPLACESEL = 0x00C2;
 
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT { public Int32 Left, Top, Right, Bottom; }
@@ -54,6 +59,16 @@ public static class Win32
     {
         if (hWnd == IntPtr.Zero || !IsWindow(hWnd)) return false;
         return PostMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+    }
+
+    /// <summary>用 EM_SETSEL + EM_REPLACESEL 替换 RichTextBox 全部内容（UIA 对 RichEdit 不支持写值）</summary>
+    public static void ReplaceText(IntPtr hWnd, String text)
+    {
+        if (hWnd == IntPtr.Zero || !IsWindow(hWnd)) return;
+        // 全选：wParam=起点0，lParam=终点-1
+        SendMessage(hWnd, EM_SETSEL, IntPtr.Zero, (IntPtr)(-1));
+        // 替换：wParam=是否可撤销(false)，lParam=文本
+        SendMessage(hWnd, EM_REPLACESEL, IntPtr.Zero, text);
     }
 
     delegate Boolean EnumProc(IntPtr hWnd, IntPtr lParam);
