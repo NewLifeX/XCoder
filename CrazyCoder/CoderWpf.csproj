@@ -52,6 +52,7 @@
   <ItemGroup>
     <Resource Include="Images\leaf.ico" />
     <Resource Include="Images\leaf.png" />
+    <Resource Include="Images\SqlServer\*.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />

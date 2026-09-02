@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:xcode="clr-namespace:XCode.DataAccessLayer;assembly=NewLife.XCode"
         mc:Ignorable="d"
-        Title="数据建模" Height="700" Width="1100" WindowStartupLocation="CenterScreen">
+        Title="数据建模" Height="780" Width="1100" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="GroupBorder" TargetType="Border">
             <Setter Property="BorderBrush" Value="#D0D0D0"/>
@@ -34,30 +33,56 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- 第1行：连接区 -->
+        <!-- 第1行：数据源选择与连接/导入区 -->
         <Border Grid.Row="0" Style="{StaticResource GroupBorder}" Background="#FFF5E6" Padding="8">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="数据库连接" IsChecked="{Binding IsDbSource}" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <RadioButton Content="XML 模型文件" IsChecked="{Binding IsXmlSource}" Margin="20,0,0,0" FontWeight="Bold" VerticalAlignment="Center"/>
+                </StackPanel>
 
-                <TextBlock Text="连接：" Style="{StaticResource LabelText}" FontWeight="Bold"/>
-                <ComboBox Grid.Column="1" ItemsSource="{Binding Connections}" Text="{Binding ConnName, UpdateSourceTrigger=PropertyChanged}"
-                          Margin="4,0" Height="28" IsEditable="True"/>
+                <!-- 数据库连接 -->
+                <Grid Visibility="{Binding DbVisibility}" Margin="0,6,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="2" Content="{Binding ConnectButtonText}" Command="{Binding ConnectCommand}"
-                        Style="{StaticResource ActionButton}" MinWidth="80"/>
-            </Grid>
+                    <Image Grid.Column="0" Source="{Binding DbIcon}" Width="24" Height="24" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="连接：" Style="{StaticResource LabelText}" FontWeight="Bold"/>
+                    <ComboBox Grid.Column="2" ItemsSource="{Binding Connections}" Text="{Binding ConnName, UpdateSourceTrigger=PropertyChanged}"
+                              Margin="4,0" Height="28" IsEditable="True" VerticalContentAlignment="Center"/>
+                    <Button Grid.Column="3" Content="{Binding ConnectButtonText}" Command="{Binding ConnectCommand}"
+                            Style="{StaticResource ActionButton}" MinWidth="80"/>
+                    <Button Grid.Column="4" Content="刷新" Command="{Binding RefreshTablesCommand}" Style="{StaticResource ActionButton}"
+                            IsEnabled="{Binding IsConnected}"/>
+                </Grid>
+
+                <!-- XML 模型文件 -->
+                <Grid Visibility="{Binding XmlVisibility}" Margin="0,6,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="模型文件：" Style="{StaticResource LabelText}" FontWeight="Bold"/>
+                    <TextBox Grid.Column="1" Text="{Binding ModelFile, Mode=OneWay}" IsReadOnly="True" Height="28" Margin="4,0"
+                             VerticalContentAlignment="Center" ToolTip="{Binding ModelFile}"/>
+                    <Button Grid.Column="2" Content="浏览..." Command="{Binding SelectModelFileCommand}" Style="{StaticResource ActionButton}"/>
+                </Grid>
+            </StackPanel>
         </Border>
 
-        <!-- 第2行：表选择和生成按钮 -->
+        <!-- 第2行：过滤与生成按钮 -->
         <Border Grid.Row="1" Style="{StaticResource GroupBorder}" Background="#E8FFE8" Padding="8"
-                IsEnabled="{Binding IsConnected}">
+                IsEnabled="{Binding HasTables}">
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
@@ -66,49 +91,48 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="数据表：" Style="{StaticResource LabelText}" FontWeight="Bold"/>
-                <ComboBox Grid.Column="1" ItemsSource="{Binding Tables}" SelectedItem="{Binding SelectedTable}"
-                          Margin="4,0" Height="28" DisplayMemberPath="Name">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                <CheckBox Grid.Column="0" Content="包含视图" IsChecked="{Binding IncludeView}" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Text="{Binding Keyword, UpdateSourceTrigger=PropertyChanged}" Width="180" Height="28"
+                         Margin="12,0,0,0" VerticalContentAlignment="Center" ToolTip="按表名/描述过滤"/>
+                <TextBlock Grid.Column="2"/>
 
-                <CheckBox Grid.Column="2" Content="包含视图" IsChecked="{Binding IncludeView}" Margin="8,0" VerticalAlignment="Center"/>
-
-                <Button Grid.Column="3" Content="刷新" Command="{Binding RefreshTablesCommand}" Style="{StaticResource ActionButton}"/>
-                <Button Grid.Column="4" Content="生成选中" Command="{Binding GenerateTableCommand}" Style="{StaticResource ActionButton}"/>
-                <Button Grid.Column="5" Content="生成所有" Command="{Binding GenerateAllCommand}" Style="{StaticResource ActionButton}"/>
+                <Button Grid.Column="3" Content="全选" Command="{Binding CheckAllCommand}" Style="{StaticResource ActionButton}"/>
+                <Button Grid.Column="4" Content="反选" Command="{Binding InverseCheckCommand}" Style="{StaticResource ActionButton}"/>
+                <Button Grid.Column="5" Content="生成选中" Command="{Binding GenerateCheckedCommand}" Style="{StaticResource ActionButton}" FontWeight="Bold"/>
+                <Button Grid.Column="6" Content="生成所有" Command="{Binding GenerateAllCommand}" Style="{StaticResource ActionButton}"/>
             </Grid>
         </Border>
 
         <!-- 第3行：表列表 -->
-        <Border Grid.Row="2" Style="{StaticResource GroupBorder}" IsEnabled="{Binding IsConnected}">
+        <Border Grid.Row="2" Style="{StaticResource GroupBorder}" IsEnabled="{Binding HasTables}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="表结构列表" FontWeight="Bold" Background="#F0F0F0" Padding="6,3"/>
-                <ListView Grid.Row="1" ItemsSource="{Binding Tables}" SelectedItem="{Binding SelectedTable}"
-                          BorderThickness="0">
+                <TextBlock Text="数据表列表（勾选需要生成实体的表/视图）" FontWeight="Bold" Background="#F0F0F0" Padding="6,3"/>
+                <ListView Grid.Row="1" ItemsSource="{Binding Tables}" BorderThickness="0" Margin="0,4,0,0">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="表名" Width="200" DisplayMemberBinding="{Binding Name}"/>
-                            <GridViewColumn Header="描述" Width="200" DisplayMemberBinding="{Binding Description}"/>
-                            <GridViewColumn Header="类型" Width="100" DisplayMemberBinding="{Binding DbType}"/>
-                            <GridViewColumn Header="行数" Width="80" DisplayMemberBinding="{Binding Rows}"/>
+                            <GridViewColumn Header="选择" Width="50">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsChecked}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="表名" Width="220" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="描述" Width="360" DisplayMemberBinding="{Binding Description}"/>
+                            <GridViewColumn Header="类型" Width="70" DisplayMemberBinding="{Binding Kind}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </Grid>
         </Border>
 
-        <!-- 第4行：配置区 -->
+        <!-- 第4行：生成配置区 -->
         <Border Grid.Row="3" Style="{StaticResource GroupBorder}" Padding="8"
-                IsEnabled="{Binding IsConnected}">
+                IsEnabled="{Binding HasTables}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -125,7 +149,8 @@
 
                 <StackPanel Grid.Column="1" Margin="4,0">
                     <TextBlock Text="连接名" FontWeight="Bold"/>
-                    <TextBox Text="{Binding EntityConnName, UpdateSourceTrigger=PropertyChanged}" Height="26" Margin="0,2,0,0"/>
+                    <TextBox Text="{Binding EntityConnName, UpdateSourceTrigger=PropertyChanged}" Height="26" Margin="0,2,0,0"
+                             ToolTip="生成实体的连接名；XML 模型文件数据源时按需填写"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Margin="4,0">
@@ -146,8 +171,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="4" Margin="8,0,0,0" VerticalAlignment="Center">
-                    <CheckBox Content="中文文件名" IsChecked="{Binding UseCNFileName}" Margin="0,2"/>
-                    <CheckBox Content="泛型实体" IsChecked="{Binding RenderGenEntity}" Margin="0,2"/>
+                    <CheckBox Content="中文文件名" IsChecked="{Binding UseCNFileName}" Margin="0,2" ToolTip="生成实体类文件名使用中文描述"/>
                 </StackPanel>
             </Grid>
         </Border>
