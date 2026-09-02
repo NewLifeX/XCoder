@@ -2,8 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:XCoderAv.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
         x:Class="XCoderAv.Views.AudioDeviceWindow"
+        x:DataType="vm:AudioDeviceViewModel"
         Title="声卡选择器" Width="800" Height="600"
         WindowStartupLocation="CenterOwner">
     <Window.Styles>

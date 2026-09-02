@@ -5,6 +5,7 @@
         xmlns:vm="clr-namespace:XCoderAv.ViewModels"
         mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="750"
         x:Class="XCoderAv.Views.NetworkWindow"
+        x:DataType="vm:NetworkViewModel"
         Title="网络调试工具" Width="1100" Height="750"
         WindowStartupLocation="CenterOwner">
     <Window.Styles>

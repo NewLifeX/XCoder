@@ -2,8 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:XCoderAv.ViewModels"
         mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="750"
         x:Class="XCoderAv.Views.IconToolWindow"
+        x:DataType="vm:IconToolViewModel"
         Title="图标水印处理工具" Width="1100" Height="750"
         WindowStartupLocation="CenterOwner">
     <Window.Styles>

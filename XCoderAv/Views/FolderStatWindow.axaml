@@ -5,6 +5,7 @@
         xmlns:vm="clr-namespace:XCoderAv.ViewModels"
         mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
         x:Class="XCoderAv.Views.FolderStatWindow"
+        x:DataType="vm:FolderStatViewModel"
         Title="文件夹大小统计" Width="1000" Height="700"
         WindowStartupLocation="CenterOwner">
     <Window.Styles>
@@ -26,7 +27,7 @@
         <TreeView Grid.Row="0" x:Name="treeView" BorderThickness="1" BorderBrush="#D0D0D0"
                   Background="#1E1E1E">
             <TreeView.ItemTemplate>
-                <TreeDataTemplate ItemsSource="{Binding Children}">
+                <TreeDataTemplate x:DataType="vm:FolderItem" ItemsSource="{Binding Children}">
                     <Border Background="{Binding BackgroundColor}" Padding="4 2">
                         <TextBlock Text="{Binding DisplayName}" FontFamily="Consolas" FontSize="13"/>
                     </Border>

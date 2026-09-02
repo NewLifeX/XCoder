@@ -6,6 +6,7 @@
         xmlns:models="clr-namespace:XCoderAv.Models"
         mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="700"
         x:Class="XCoderAv.Views.RegexWindow"
+        x:DataType="vm:RegexViewModel"
         Title="正则表达式" Width="1100" Height="700"
         WindowStartupLocation="CenterOwner">
     <Window.Styles>

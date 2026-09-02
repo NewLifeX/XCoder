@@ -4,8 +4,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:XCoderAv.ViewModels"
         xmlns:views="clr-namespace:XCoderAv.Views"
+        xmlns:models="clr-namespace:XCoderAv.Models"
         mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
         x:Class="XCoderAv.MainWindow"
+        x:DataType="vm:MainViewModel"
         Title="新生命码神工具（跨平台）" Width="1000" Height="600"
         WindowStartupLocation="CenterScreen">
     <Grid>
@@ -36,7 +38,7 @@
                          BorderThickness="0" Background="Transparent"
                          Margin="0 10 0 0">
                     <ListBox.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:MenuModel">
                             <Border Padding="15 10" Margin="5 2" CornerRadius="4">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
                                     <TextBlock Text="{Binding IconFont}" FontSize="18" Foreground="{Binding BackColor}"/>
@@ -52,9 +54,9 @@
         <!-- 分隔线 -->
         <GridSplitter Grid.Column="1" Width="4" Background="#E0E0E0" HorizontalAlignment="Stretch"/>
 
-        <!-- 右侧内容区 -->
+        <!-- 右侧内容区（预留；点击左侧菜单实际是打开独立工具窗口） -->
         <Border Grid.Column="2" Padding="20">
-            <ContentControl Content="{Binding CurrentView}" />
+            <ContentControl />
         </Border>
     </Grid>
 </Window>

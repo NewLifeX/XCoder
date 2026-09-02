@@ -9,6 +9,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NewLife;
@@ -99,21 +100,20 @@ public partial class IconToolViewModel : ObservableObject
         var window = GetParentWindow();
         if (window == null) return;
 
-        var dialog = new OpenFileDialog
+        var files = await window.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Filters =
-            [
-                new FileDialogFilter { Name = "图片文件", Extensions = ["png", "jpg", "jpeg", "bmp", "gif", "ico"] },
-                new FileDialogFilter { Name = "所有文件", Extensions = ["*"] }
-            ],
             Title = "选择图片",
-            AllowMultiple = false
-        };
+            AllowMultiple = false,
+            FileTypeFilter =
+            [
+                new FilePickerFileType("图片文件") { Patterns = ["*.png", "*.jpg", "*.jpeg", "*.bmp", "*.gif", "*.ico"] },
+                new FilePickerFileType("所有文件") { Patterns = ["*"] }
+            ]
+        });
+        if (files.Count == 0) return;
 
-        var result = await dialog.ShowAsync(window);
-        if (result == null || result.Length == 0) return;
-
-        LoadFromFile(result[0]);
+        var file = files[0].TryGetLocalPath();
+        if (file != null) LoadFromFile(file);
     }
 
     /// <summary>从文件加载图片</summary>
@@ -152,19 +152,21 @@ public partial class IconToolViewModel : ObservableObject
         var window = GetParentWindow();
         if (window == null) return;
 
-        var dialog = new SaveFileDialog
+        var file = await window.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Filters =
-            [
-                new FileDialogFilter { Name = "PNG 图片", Extensions = ["png"] },
-                new FileDialogFilter { Name = "JPEG 图片", Extensions = ["jpg"] },
-                new FileDialogFilter { Name = "BMP 图片", Extensions = ["bmp"] }
-            ],
             Title = "保存图片",
-            DefaultExtension = "png"
-        };
+            SuggestedFileName = "watermark",
+            DefaultExtension = "png",
+            FileTypeChoices =
+            [
+                new FilePickerFileType("PNG 图片") { Patterns = ["*.png"] },
+                new FilePickerFileType("JPEG 图片") { Patterns = ["*.jpg"] },
+                new FilePickerFileType("BMP 图片") { Patterns = ["*.bmp"] }
+            ]
+        });
+        if (file == null) return;
 
-        var result = await dialog.ShowAsync(window);
+        var result = file.TryGetLocalPath();
         if (result == null) return;
 
         var bmp = MakeWatermarkImage();
@@ -194,17 +196,19 @@ public partial class IconToolViewModel : ObservableObject
         var window = GetParentWindow();
         if (window == null) return;
 
-        var dialog = new SaveFileDialog
+        var file = await window.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Filters =
-            [
-                new FileDialogFilter { Name = "ICO 图标", Extensions = ["ico"] }
-            ],
             Title = "保存图标",
-            DefaultExtension = "ico"
-        };
+            SuggestedFileName = "icon",
+            DefaultExtension = "ico",
+            FileTypeChoices =
+            [
+                new FilePickerFileType("ICO 图标") { Patterns = ["*.ico"] }
+            ]
+        });
+        if (file == null) return;
 
-        var result = await dialog.ShowAsync(window);
+        var result = file.TryGetLocalPath();
         if (result == null) return;
 
         var bmp = MakeWatermarkImage();
