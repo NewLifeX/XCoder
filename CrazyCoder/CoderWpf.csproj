@@ -40,9 +40,9 @@
     <PackageReference Include="NewLife.Redis" Version="6.5.2026.501" />
     <PackageReference Include="NewLife.Map" Version="2.6.2026.102" />
     <PackageReference Include="NewLife.ModbusRTU" Version="2.0.2025.701" />
-    <PackageReference Include="NAudio" Version="2.3.0" />
+    <PackageReference Include="NAudio" Version="2.4.0" />
     <PackageReference Include="SSH.NET" Version="2025.1.0" />
-    <PackageReference Include="System.IO.Ports" Version="10.0.7" />
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
     <PackageReference Include="System.Speech" Version="10.0.7" />
     <PackageReference Include="System.Management" Version="10.0.7" />
     <PackageReference Include="NewLife.IoT" Version="2.7.2026.501" />

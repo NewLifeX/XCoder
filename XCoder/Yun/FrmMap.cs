@@ -4,6 +4,7 @@ using NewLife;
 using NewLife.Data;
 using NewLife.Log;
 using NewLife.Map;
+using NewLife.Map.Models;
 using NewLife.Model;
 using NewLife.Reflection;
 using NewLife.Serialization;
@@ -126,8 +127,8 @@ public partial class FrmMap : Form, IXForm
         // 准备参数
         var addr = txtAddress.Text;
         var city = txtCity.Text;
-        var point = new GeoPoint(txtLocation.Text);
-        var point2 = new GeoPoint(txtLocation2.Text);
+        var point = GeoPoint.Parse(txtLocation.Text);
+        var point2 = GeoPoint.Parse(txtLocation2.Text);
 
         var mps = method.GetParameters();
 
