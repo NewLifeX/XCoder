@@ -6,7 +6,7 @@
 ## 基线巡检结果（2026-09-02 首轮）
 
 - 自动发现工具菜单 **27 个**，全部真实点击打开成功（MDI 子窗体正常加载）
-- 打开后内容异常：**P2-01**（SqlGuidCaster 插件扫描噪音，间歇性出现，见问题清单）
+- 打开后内容异常：**P2-01**（SqlGuidCaster 插件扫描噪音）—— **已修复并回归验证** ✅
 - 窗体标题冲突 **2 对**：P3-01 / P3-02 —— **已修复并回归验证** ✅
 
 ### 运行方式
@@ -32,13 +32,11 @@ dotnet test --filter FullyQualifiedName~SmokeTourTests
 - **位置**：`XCoder/XNet/FrmMain.cs:576`（`typeof(NetServer).GetAllSubclasses()`）、`XCoder/Yun/FrmMap.cs:46`（`typeof(IMap).GetAllSubclasses()`）
 - **现象**：两个工具打开后，接收/日志区打印一段红色异常堆栈：
   `ReflectionTypeLoadException: Could not load type 'SqlGuidCaster' from assembly 'System.Data.SqlClient, Version=4.6.1.3...' ... at NewLife.Reflection.AssemblyX.FindPlugins`
-- **根因分析**：依赖链中某程序集（疑似 XCode 的 netstandard2.0 资产）引入了 `System.Data.SqlClient 4.6.1.3`（netstandard 版，强命名）。该程序集内部类型 `SqlGuidCaster` 的 `[StructLayout]` 混排对象字段，在 .NET 8 运行时枚举类型（`Assembly.GetTypes()`）时抛 `TypeLoadException`。`NewLife.Core` 的 `AssemblyX.FindPlugins` 捕获后写入 XTrace 日志（被工具接收区显示），扫描本身继续、工具功能不受影响（插件列表仍成功返回）。
+- **根因分析**：`GetAllSubclasses` → `DefaultReflect.GetAllSubclasses` 遍历**所有已加载程序集**并对每个调用 `AssemblyX.FindPlugins`；后者 `GetTypes()` 遇 `ReflectionTypeLoadException` 时**无条件** `XTrace.WriteException`。依赖链中某程序集（疑似 XCode netstandard 资产）引入了 `System.Data.SqlClient 4.6.1.3`，其内部类型 `SqlGuidCaster` 的 `[StructLayout]` 混排对象字段在 .NET 8 下 `GetTypes()` 必抛 `TypeLoadException` → 日志噪音。扫描本身继续、工具功能不受影响（插件列表仍成功返回）。
 - **严重度**：低（仅日志噪音，功能正常），但用户看到异常堆栈容易误判为故障。
-- **修复方向**：
-  1. 首选：NewLife.Core `AssemblyX` 扫描跳过/降级日志该类型加载失败（跨仓库，需发版）
-  2. 或：清理依赖链中 `System.Data.SqlClient 4.6.1.3`（如 XCode 引用升级到 `Microsoft.Data.SqlClient`）
-  3. 或在 XCoder 侧对这两处扫描前先移除/替换出错程序集（不优雅，备选）
-- **状态**：⏳ 待修复
+- **修复方案（已实施，XCoder 侧自愈）**：新增 `XCoder/ReflectHelper.cs` 静默扫描（容忍 `ReflectionTypeLoadException`、取 `ex.Types` 继续、不打日志），替换 3 处 `GetAllSubclasses`：`FrmMDI`（IXForm 菜单扫描）、`XNet/FrmMain.cs`（NetServer）、`Yun/FrmMap.cs`（IMap）。结果集与原来完全一致。
+- **长期根治（可选，未做）**：NewLife.Core `AssemblyX.FindPlugins` 对类型加载失败降级日志；或清理 `System.Data.SqlClient 4.6.1.3` 依赖链
+- **状态**：✅ 已修复（2026-09-02）。E2E 回归：27 工具全部通过、0 内容异常警告
 
 ### P3-01 对称加密 与 加密解密 窗口标题重名「加密解密」
 
@@ -67,5 +65,6 @@ dotnet test --filter FullyQualifiedName~SmokeTourTests
 
 ## 待办
 
-- [x] 纯本地工具功能断言（2026-09-02）：MD5 计算、AES 对称加解密往返、正则匹配计数、GPS HEX 坐标转浮点 —— 4 项全部通过（`LocalToolTests`）
-- [ ] P2-01 处理方案确认后修复，重跑冒烟巡检直至 0 警告、0 异常
+- [x] 纯本地工具功能断言（2026-09-02，`LocalToolTests` 7 项全部通过）：MD5_32 / MD5_16 / Base64 编解码往返 / AES 对称加解密往返 / 正则匹配 / 正则替换 / GPS HEX 坐标转浮点
+- [x] 冒烟巡检 0 警告 0 异常回归（2026-09-02）
+- [ ] 可选长期项：NewLife.Core 插件扫描日志降噪 / 清理 System.Data.SqlClient 依赖链（已由 XCoder 侧静默扫描自愈，暂无需处理）

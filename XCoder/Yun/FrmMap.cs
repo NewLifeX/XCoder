@@ -43,7 +43,7 @@ public partial class FrmMap : Form, IXForm
         var cb = cbMap;
         cb.Items.Clear();
         cb.DisplayMember = "Name";
-        foreach (var item in typeof(IMap).GetAllSubclasses())
+        foreach (var item in ReflectHelper.GetSubclasses(typeof(IMap)))
         {
             //var name = item.GetDisplayName() ?? item.Name;
             //Maps[name] = item;

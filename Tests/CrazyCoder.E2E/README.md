@@ -16,6 +16,11 @@
 4. **共享会话**：`[CollectionDefinition("CrazyCoder")]` + `ICollectionFixture<CrazyCoderSession>`，全测试串行共用一个 app 实例；进程崩溃自动重启
 5. **不要给本测试项目加 NewLife.* 依赖**（String.IsNullOrEmpty 等用 BCL 静态方法）
 
+## 覆盖
+
+- **冒烟巡检**：27 个工具逐个点击打开 → 截图 → 扫描内容异常堆栈 → 生成 `巡检报告.md`
+- **功能断言**（`LocalToolTests`，7 项）：MD5_32 / MD5_16 / Base64 编解码往返 / AES 对称加解密往返 / 正则匹配 / 正则替换 / GPS HEX 坐标转浮点
+
 ## 文件结构
 
 | 文件 | 说明 |

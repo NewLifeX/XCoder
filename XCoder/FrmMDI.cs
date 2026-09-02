@@ -16,7 +16,7 @@ public partial class FrmMDI : Form
 
     public FrmMDI()
     {
-        _load = Task<Type[]>.Factory.StartNew(() => typeof(IXForm).GetAllSubclasses().ToArray());
+        _load = Task<Type[]>.Factory.StartNew(() => ReflectHelper.GetSubclasses(typeof(IXForm)).ToArray());
 
         InitializeComponent();
 

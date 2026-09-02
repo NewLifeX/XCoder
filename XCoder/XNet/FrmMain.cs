@@ -573,7 +573,7 @@ public partial class FrmMain : Form, IXForm
             if (_ns != null) return _ns;
 
             var dic = new Dictionary<String, Type>();
-            foreach (var item in typeof(NetServer).GetAllSubclasses())
+            foreach (var item in ReflectHelper.GetSubclasses(typeof(NetServer)))
             {
                 try
                 {

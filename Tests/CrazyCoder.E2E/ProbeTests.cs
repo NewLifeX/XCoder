@@ -56,14 +56,14 @@ public class ProbeTests
 
         var child = _s.OpenTool(t);
         Thread.Sleep(3000);
-        _log.WriteLine($"OpenTool 返回子窗体: {(child == null ? "null" : $"'{child.Name}' class='{child.ClassName}'")}");
+        _log.WriteLine($"OpenTool 返回子窗体: {(child == null ? "null" : $"'{child.Name}' class='{Cls(child)}'")}");
         _log.WriteLine($"主窗口标题: '{_s.MainWindow?.Name}'");
         _log.WriteLine($"ChildForms(): {_s.ChildForms().Length} 个");
 
         // dump 主窗口下所有 Window/Pane 后代
         _log.WriteLine("===== 主窗口 Window/Pane 后代 =====");
         foreach (var w in _s.ChildForms())
-            _log.WriteLine($"  [{w.ControlType}] name='{w.Name}' class='{w.ClassName}' offscreen={w.IsOffscreen}");
+            _log.WriteLine($"  [{w.ControlType}] name='{w.Name}' class='{Cls(w)}' offscreen={w.IsOffscreen}");
 
         _log.WriteLine("===== 主窗口所有后代前 50 =====");
         var all = _s.MainWindow!.FindAllDescendants();
@@ -105,9 +105,15 @@ public class ProbeTests
                 try { aid = el.Properties.AutomationId.ValueOrDefault; } catch { }
                 String? name = null;
                 try { name = el.Name; } catch { }
-                _log.WriteLine($"  aid='{aid}' name='{name}' cls='{el.ClassName}'");
+                _log.WriteLine($"  aid='{aid}' name='{name}' cls='{Cls(el)}'");
             }
         }
         _s.CloseAllChildren();
+    }
+
+    /// <summary>安全读取 ClassName（部分控件不支持该属性）</summary>
+    static String Cls(FlaUI.Core.AutomationElements.AutomationElement el)
+    {
+        try { return el.ClassName ?? ""; } catch { return ""; }
     }
 }

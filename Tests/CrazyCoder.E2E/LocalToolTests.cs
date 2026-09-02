@@ -173,4 +173,101 @@ public class LocalToolTests
         }
         finally { _s.CloseAllChildren(); }
     }
+
+    [Fact]
+    public void 加密解密工具_Base64编解码往返一致()
+    {
+        var child = Open("安全工具", "加密解密");
+        var ops = new UiOps(_s);
+        try
+        {
+            const String plain = "Hello XCoder 2026!";
+            var expectedB64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(plain));
+
+            // 编码：原文=字符串 → Base64编码
+            ops.SelectRadio(child, "rbString");
+            ops.SetText(child, "rtSource", plain);
+            Thread.Sleep(200);
+            ops.Click(child, "btnB64");
+            Thread.Sleep(400);
+            var encB64 = FirstLine(ops.Read(child, "rtResult"));
+            Assert.Equal(expectedB64, encB64);
+            _log.WriteLine($"Base64 编码: {encB64}");
+
+            // 解码：结果只要字符串
+            ops.SetText(child, "rtSource", expectedB64);
+            ops.SetCheck(child, "cbString", true);
+            ops.SetCheck(child, "cbHex", false);
+            ops.SetCheck(child, "cbBase64", false);
+            Thread.Sleep(200);
+            ops.Click(child, "btnB642");
+            Thread.Sleep(400);
+            var dec = FirstLine(ops.Read(child, "rtResult"));
+            Assert.Equal(plain, dec);
+            _log.WriteLine($"Base64 解码: {dec}");
+        }
+        catch
+        {
+            Shot(child, "失败-加密解密-Base64");
+            throw;
+        }
+        finally { _s.CloseAllChildren(); }
+    }
+
+    [Fact]
+    public void 加密解密工具_MD5_16计算正确()
+    {
+        var child = Open("安全工具", "加密解密");
+        var ops = new UiOps(_s);
+        try
+        {
+            ops.SelectRadio(child, "rbString");
+            ops.SetCheck(child, "cbString", false);
+            ops.SetCheck(child, "cbBase64", false);
+            ops.SetCheck(child, "cbHex", true);
+            ops.SetText(child, "rtSource", "123456");
+            Thread.Sleep(200);
+            ops.Click(child, "btnMD52");                 // MD5_16
+            Thread.Sleep(400);
+
+            var result = ops.Read(child, "rtResult");
+            var first = FirstLine(result);
+            var full = Convert.ToHexString(MD5.HashData(Encoding.UTF8.GetBytes("123456")));
+            Assert.Equal(full[..16], first);
+            _log.WriteLine($"MD5_16(123456)={first}");
+        }
+        catch
+        {
+            Shot(child, "失败-加密解密-MD5_16");
+            throw;
+        }
+        finally { _s.CloseAllChildren(); }
+    }
+
+    [Fact]
+    public void 正则表达式工具_替换功能正确()
+    {
+        var child = Open("工具(T)", "正则表达式工具");
+        var ops = new UiOps(_s);
+        try
+        {
+            ops.SelectRadio(child, "radioButton2");      // 切到「替换」模式
+            ops.SetText(child, "txtPattern", @"\d+");
+            ops.SetText(child, "txtContent", "a1b22c333");
+            ops.SetText(child, "rtReplace", "X");
+            Thread.Sleep(300);
+            ops.Click(child, "button2");                 // 正则替换
+            Thread.Sleep(1200);
+
+            var content = ops.Read(child, "txtContent");
+            _log.WriteLine($"替换结果: {content}");
+            Assert.Equal("aXbXcX", content?.Trim());
+        }
+        catch
+        {
+            Shot(child, "失败-正则表达式-替换");
+            throw;
+        }
+        finally { _s.CloseAllChildren(); }
+    }
 }
