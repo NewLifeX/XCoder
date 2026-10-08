@@ -1,4 +1,4 @@
-using ALib.WinForm;
+﻿using ALib.WinForm;
 using NewLife.Log;
 using System;
 using System.Collections.Generic;
@@ -20,6 +20,7 @@ namespace ALib.CAN
         #region 属性
 
         private ICanPort _Port = null;
+        private System.Windows.Forms.Timer _timer = null;
 
         /// <summary>当前打开或外部注入的 CAN 口，未打开时为 null</summary>
         [Browsable(false)]
@@ -51,6 +52,9 @@ namespace ALib.CAN
                 // 外部注入的端口由外部负责关闭，不由本控件释放
                 _needClose = false;
                 _opened = true;
+
+                // 已注入端口，停止定时枚举，避免干扰正在运行的接收线程
+                _timer?.Stop();
 
                 if (cbCan != null) cbCan.Text = value.Name;
                 if (cbBaudrate != null) cbBaudrate.Text = value.Baudrate.ToString();
@@ -148,7 +152,7 @@ namespace ALib.CAN
             if (_Port == null)
             {
                 InitBaudrate();
-                InitCanPort();
+                AutoRefreshDevices();
             }
             else
             {
@@ -167,20 +171,52 @@ namespace ALib.CAN
             if (FindForm() is Form frm) frm.FormClosed += Form_FormClosed;
         }
 
+        /// <summary>
+        /// 定时枚举 CAN 设备。已打开端口或外部注入端口时不枚举，
+        /// 避免驱动在设备已打开的情况下再次枚举而干扰正在运行的接收线程。
+        /// </summary>
+        private void AutoRefreshDevices()
+        {
+            _timer = new System.Windows.Forms.Timer { Interval = 2000 };
+            _timer.Tick += (s, e) =>
+            {
+                // 已打开或已注入端口，无需再枚举
+                if (_opened || _Port != null) return;
+                if (!AllowSelect) return;
+                // 用户正在展开下拉框时不要刷新，避免打断选择
+                if (cbCan.DroppedDown) return;
+
+                InitCanPort();
+            };
+            _timer.Start();
+        }
+
         private void Form_FormClosed(object sender, FormClosedEventArgs e) => ClosePort();
 
-        /// <summary>枚举 CAN 设备，填充设备下拉框</summary>
+        /// <summary>枚举 CAN 设备，填充设备下拉框。设备拔掉后同步移除列表项</summary>
         private void InitCanPort()
         {
             var devices = ICanPort.EnumDevices();
-            if (devices.Count == 0)
+
+            var keys = devices.Keys.ToList();
+            var last = cbCan.Text;
+
+            // 每次重新绑定前先断开，避免 DataSource 复用旧集合导致条目残留
+            cbCan.DataSource = null;
+            cbCan.Items.Clear();
+
+            cbCan.Tag = devices;
+            cbCan.DataSource = keys;
+
+            if (keys.Count == 0)
             {
                 WriteLog("未发现 CAN 设备");
                 return;
             }
 
-            cbCan.DataSource = devices.Keys.ToList();
-            cbCan.Tag = devices;
+            // 保持用户原先选中的设备；已拔掉则回退到首项
+            var idx = keys.IndexOf(last);
+            cbCan.SelectedIndex = idx >= 0 ? idx : 0;
         }
 
         /// <summary>初始化波特率下拉框，默认 250K</summary>
@@ -262,6 +298,9 @@ namespace ALib.CAN
                 _opened = true;
             }
 
+            // 已打开，停止定时枚举
+            _timer?.Stop();
+
             if (btCanOpen != null) btCanOpen.Text = "关闭";
             if (LockOnOpen)
             {
@@ -296,6 +335,9 @@ namespace ALib.CAN
             }
             if (cbBaudrate != null) cbBaudrate.Enabled = AllowSelect;
             if (cbCan != null) cbCan.Enabled = AllowSelect;
+
+            // 关闭后恢复定时枚举
+            if (_Port == null && AllowSelect) _timer?.Start();
 
             PortClosed?.Invoke(this, EventArgs.Empty);
         }

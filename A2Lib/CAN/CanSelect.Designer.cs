@@ -18,6 +18,14 @@ namespace ALib.CAN
                 // 先关硬件再走基类（UserControl 销毁不一定触发 FormClosed）
                 ClosePort();
 
+                // 停止并释放定时枚举
+                if (_timer != null)
+                {
+                    _timer.Stop();
+                    _timer.Dispose();
+                    _timer = null;
+                }
+
                 if (components != null) components.Dispose();
             }
             base.Dispose(disposing);
