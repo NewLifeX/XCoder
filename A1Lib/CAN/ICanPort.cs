@@ -11,17 +11,20 @@ using System.Threading.Tasks;
 
 namespace ALib.CAN
 {
+    /// <summary>
+    /// CAN 帧处理器。
+    /// 注册后会收到端口上的**所有**帧（不再做 CAN ID 匹配），
+    /// 由各实现自行判断是否关心该帧。
+    /// </summary>
     public abstract class ICanRx
     {
-        /// <summary>数据包CAN ID 通过掩码之后的值，如果匹配则代表处理器正确</summary>
-        public int CanId = 0;
-
-        /// <summary>CAN ID 掩码</summary>
-        public int CanIdMask = 0;
-
-        /// <summary>数据处理</summary>
-        /// <param name="bs">can 帧</param>
-        /// <returns></returns>
+        /// <summary>
+        /// 数据处理。会收到端口上的所有帧，需自行过滤。
+        /// 返回 true 表示已消费该帧（端口据此抑制「未识别帧」日志）。
+        /// </summary>
+        /// <param name="msg">can 帧</param>
+        /// <param name="port">所属端口</param>
+        /// <returns>是否已处理</returns>
         public virtual bool Process(CanMsg msg, ICanPort port)
         {
             // XTrace.WriteLine(MsgToString(msg));
@@ -147,21 +150,109 @@ namespace ALib.CAN
         /// <summary>消息处理器</summary>
         protected readonly List<ICanRx> _RxProcess = new List<ICanRx>();
 
+        #region 端口级附加对象（每端口单例的挂载点）
+
+        /// <summary>
+        /// 端口级附加对象字典。
+        /// 用于挂载「每个端口一份」的协议处理器（如 J1939 TP 收发器），
+        /// 避免做成进程级单例：一个进程可同时打开多个 CAN 端口，
+        /// 每个端口各自持有独立实例，互不干扰。
+        /// </summary>
+        readonly Dictionary<String, Object> _Items = new Dictionary<String, Object>();
+
+        /// <summary>
+        /// 端口级附加对象索引器。
+        /// 读取时若不存在返回 null；写入 null 表示移除该项。
+        /// <code>
+        /// var tp = port["J1939Tp"] as J1939Tp;
+        /// if (tp == null) port["J1939Tp"] = tp = new J1939Tp(port);
+        /// </code>
+        /// </summary>
+        /// <param name="key">对象键，建议使用协议名/类型名</param>
+        /// <returns>对象实例，不存在时为 null</returns>
+        public Object this[String key]
+        {
+            get
+            {
+                if (key == null) return null;
+
+                lock (_Items)
+                {
+                    return _Items.TryGetValue(key, out var value) ? value : null;
+                }
+            }
+            set
+            {
+                if (key == null) return;
+
+                lock (_Items)
+                {
+                    if (value == null) _Items.Remove(key);
+                    else _Items[key] = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取端口级附加对象，不存在时用 factory 创建并挂载。
+        /// 同一 key 只会创建一次，多线程并发安全。
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="key">对象键</param>
+        /// <param name="factory">首次访问时的创建委托</param>
+        public T GetOrAdd<T>(String key, Func<T> factory) where T : class
+        {
+            if (key == null || factory == null) return null;
+
+            lock (_Items)
+            {
+                if (_Items.TryGetValue(key, out var value) && value is T t) return t;
+
+                var obj = factory();
+                if (obj != null) _Items[key] = obj;
+                return obj;
+            }
+        }
+
+        /// <summary>已挂载的附加对象键集合（快照）</summary>
+        public String[] ItemKeys
+        {
+            get
+            {
+                lock (_Items) return _Items.Keys.ToArray();
+            }
+        }
+
+        /// <summary>移除端口级附加对象</summary>
+        /// <param name="key">对象键</param>
+        /// <returns>是否移除成功</returns>
+        public bool RemoveItem(String key)
+        {
+            if (key == null) return false;
+
+            lock (_Items) return _Items.Remove(key);
+        }
+
+        /// <summary>清空所有端口级附加对象</summary>
+        public void ClearItems()
+        {
+            lock (_Items) _Items.Clear();
+        }
+
+        #endregion
+
+
         /// <summary>注册数据处理器</summary>
         /// <param name="proc"></param>
         /// <returns></returns>
         public virtual bool Register(ICanRx proc)
         {
+            if (proc == null) return false;
+
             lock (_RxProcess)
             {
-                // 排除重复
-                foreach (var item in _RxProcess)
-                {
-                    if ((item.CanIdMask == proc.CanIdMask) && (item.CanId == proc.CanId))
-                    {
-                        return false;
-                    }
-                }
+                // 排除重复：同一实例只注册一次
+                if (_RxProcess.Contains(proc)) return false;
 
                 _RxProcess.Add(proc);
                 return true;
@@ -192,12 +283,8 @@ namespace ALib.CAN
             {
                 foreach (var item in _RxProcess)
                 {
-                    // 用于匹配处理器的 CAN ID
-                    var id = pkt.ID;
-                    if ((id & (UInt32)item.CanIdMask) == (UInt32)item.CanId)
-                    {
-                        if (item.Process(pkt, this)) res = true;
-                    }
+                    // 不做 CAN ID 匹配，全量回调；处理器自行过滤
+                    if (item.Process(pkt, this)) res = true;
                 }
             }
 

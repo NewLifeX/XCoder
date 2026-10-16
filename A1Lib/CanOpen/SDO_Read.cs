@@ -212,9 +212,6 @@ namespace ALib.CanOpen
         {
             _Port = port;
             Node_Id = nodId;
-
-            CanIdMask = -1;
-            CanId = 0x580 + nodId;
         }
 
         /// <summary>收数据流</summary>
@@ -336,7 +333,7 @@ namespace ALib.CanOpen
         /// <summary>写日志</summary>
         /// <param name="format"></param>
         /// <param name="args"></param>
-        public void WriteLog(String format, params Object[] args) => Log?.Info($"Upgrade {format}", args);
+        public void WriteLog(String format, params Object[] args) => Log?.Info($"SDO_Read {format}", args);
 
         #endregion
     }

@@ -185,9 +185,6 @@ namespace ALib.CanOpen
         {
             _Port = port;
             Node_Id = nodId;
-
-            CanIdMask = -1;
-            CanId = 0x580 + nodId;
         }
 
         public enum State_e
@@ -282,7 +279,7 @@ namespace ALib.CanOpen
         /// <summary>写日志</summary>
         /// <param name="format"></param>
         /// <param name="args"></param>
-        public void WriteLog(String format, params Object[] args) => Log?.Info($"Upgrade {format}", args);
+        public void WriteLog(String format, params Object[] args) => Log?.Info($"SDO_Write {format}", args);
 
         #endregion
     }

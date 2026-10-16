@@ -1,4 +1,4 @@
-﻿namespace ALib.Audio
+namespace ALib.Audio
 {
     partial class AudioRecordForm
     {
@@ -51,6 +51,7 @@
             // 
             // rtbInfo
             // 
+            rtbInfo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             rtbInfo.Location = new Point(12, 12);
             rtbInfo.Name = "rtbInfo";
             rtbInfo.ReadOnly = true;
@@ -83,7 +84,6 @@
             // 
             // pbMelR
             // 
-            pbMelR.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pbMelR.Location = new Point(295, 62);
             pbMelR.Name = "pbMelR";
             pbMelR.Size = new Size(250, 140);
@@ -99,7 +99,6 @@
             // 
             // progressRight
             // 
-            progressRight.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             progressRight.Location = new Point(295, 39);
             progressRight.Name = "progressRight";
             progressRight.Size = new Size(250, 17);
@@ -116,7 +115,6 @@
             // 
             // lbRight
             // 
-            lbRight.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lbRight.AutoSize = true;
             lbRight.Location = new Point(295, 19);
             lbRight.Name = "lbRight";
@@ -192,7 +190,7 @@
             // 
             // rtbLog
             // 
-            rtbLog.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            rtbLog.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             rtbLog.Location = new Point(12, 454);
             rtbLog.Name = "rtbLog";
             rtbLog.Size = new Size(560, 168);
