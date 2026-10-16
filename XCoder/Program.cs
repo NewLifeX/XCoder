@@ -18,7 +18,7 @@ static class Program
         XTrace.UseWinForm();
         MachineInfo.RegisterAsync();
 
-        // StartClient();
+        StartClient();
 
         var set = XConfig.Current;
         StringHelper.EnableSpeechTip = set.SpeechTip;
