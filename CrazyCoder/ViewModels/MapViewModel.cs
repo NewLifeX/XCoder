@@ -136,8 +136,11 @@ public partial class MapViewModel : ObservableObject
             var im = map as IMap;
             var addr = Address;
             var city = City;
-            var point = new GeoPoint(Location);
-            var point2 = new GeoPoint(Location2);
+            if (!GeoPoint.TryParse(Location, out var point) || !GeoPoint.TryParse(Location2, out var point2))
+            {
+                ResultLog = "经纬度格式非法，应为 \"经度,纬度\"，如：116.4,39.9";
+                return;
+            }
 
             Object result = null;
 

@@ -390,7 +390,7 @@ public partial class FrmMain : Form, IXForm
         // 处理换行
         str = str.Replace("\n", "\r\n");
         var buf = cfg.HexSend ? str.ToHex() : str.GetBytes();
-        var pk = new Packet(buf);
+        var pk = new ArrayPacket(buf);
 
         if (_Client != null)
         {

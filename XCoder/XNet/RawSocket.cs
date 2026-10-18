@@ -42,7 +42,7 @@ namespace XCoder.XNet
                 var buffer = new Byte[1500];
 
                 var count = _socket.Receive(buffer, SocketFlags.None);
-                var pk = new Packet(buffer, 0, count);
+                var pk = new ArrayPacket(buffer, 0, count);
 
                 OnReceive?.Invoke(buffer, count);
 

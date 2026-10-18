@@ -27,16 +27,16 @@
     <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="NewLife.Core" Version="11.19.2026.901" />
-    <PackageReference Include="NewLife.Stardust" Version="3.10.2026.901" />
-    <PackageReference Include="NewLife.XCode" Version="12.2.2026.901" />
-    <PackageReference Include="NewLife.Net" Version="4.4.2026.206" />
-    <PackageReference Include="NewLife.Remoting" Version="3.9.2026.901" />
-    <PackageReference Include="NewLife.Security" Version="11.19.2026.901" />
-    <PackageReference Include="NewLife.MQTT" Version="3.2.2026.801" />
-    <PackageReference Include="NewLife.Redis" Version="6.6.2026.901" />
-    <PackageReference Include="NewLife.Map" Version="2.7.2026.804" />
-    <PackageReference Include="NewLife.ModbusRTU" Version="2.1.2026.901" />
+    <PackageReference Include="NewLife.Core" Version="12.0.2026.1017-beta1103" />
+    <PackageReference Include="NewLife.Stardust" Version="3.10.2026.1017-beta1056" />
+    <PackageReference Include="NewLife.XCode" Version="12.2.2026.1017-beta1246" />
+    <PackageReference Include="NewLife.Net" Version="4.4.2026.305-beta0011" />
+    <PackageReference Include="NewLife.Remoting" Version="3.9.2026.1017-beta1444" />
+    <PackageReference Include="NewLife.Security" Version="11.19.2026.926" />
+    <PackageReference Include="NewLife.MQTT" Version="3.2.2026.1017-beta1416" />
+    <PackageReference Include="NewLife.Redis" Version="6.6.2026.1017-beta1441" />
+    <PackageReference Include="NewLife.Map" Version="2.7.2026.1017-beta1410" />
+    <PackageReference Include="NewLife.ModbusRTU" Version="2.1.2026.902-beta1359" />
     <PackageReference Include="SSH.NET" Version="2026.0.0" />
     <PackageReference Include="System.IO.Ports" Version="10.0.11" />
   </ItemGroup>

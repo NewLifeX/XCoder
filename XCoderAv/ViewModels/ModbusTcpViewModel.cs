@@ -5,8 +5,8 @@ using NewLife;
 using NewLife.Data;
 using NewLife.IoT.Protocols;
 using NewLife.Log;
+using NewLife.Messaging;
 using NewLife.Net;
-using NewLife.Net.Handlers;
 using NewLife.Security;
 using NewLife.Threading;
 
@@ -203,7 +203,7 @@ public partial class ModbusTcpViewModel : ObservableObject, IDisposable
             Log = new ModbusTcpLog(this),
             SessionLog = new ModbusTcpLog(this),
         };
-        svr.Add(new LengthFieldCodec { Offset = 4, Size = -2 });
+        svr.Protocol = new LengthFieldCodec { Offset = 4, Size = -2 };
         svr.Received += OnSlaveReceived;
         svr.Start();
 

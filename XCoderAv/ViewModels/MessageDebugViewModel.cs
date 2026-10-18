@@ -189,7 +189,7 @@ public partial class MessageDebugViewModel : ObservableObject
         if (str.IsNullOrEmpty()) return;
 
         var buf = HexSend ? str.ToHex() : str.GetBytes();
-        var pk = new Packet(buf);
+        var pk = new ArrayPacket(buf);
 
         if (_client != null)
         {

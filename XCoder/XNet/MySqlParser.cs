@@ -15,7 +15,7 @@ namespace XCoder.XNet
         public IPEndPoint LastSrcEP { get; set; }
         public IPEndPoint LastDstEP { get; set; }
 
-        public abstract void Parse(Packet pk);
+        public abstract void Parse(IPacket pk);
 
         //The Packet Header
         //Bytes                 Name
@@ -62,16 +62,16 @@ namespace XCoder.XNet
             _packet = new MySqlQueryPacket();
         }
 
-        public override void Parse(Packet pk)
+        public override void Parse(IPacket pk)
         {
             TryParse(pk);
         }
 
-        private void TryParse(Packet pk)
+        private void TryParse(IPacket pk)
         {
             if (_state == ParsingState.Head)
             {
-                if (pk.Count >= 4)
+                if (pk.Length >= 4)
                 {
                     var head = pk.ReadBytes(4);
                     ReadPacketHeader(head, out _packet.Length, out _packet.Num);
@@ -83,7 +83,7 @@ namespace XCoder.XNet
 
             if (_state == ParsingState.Body)
             {
-                if (pk.Count >= _packet.Length)
+                if (pk.Length >= _packet.Length)
                 {
                     var body = _packet.Body = pk.ReadBytes(_packet.Length);
                     _packet.Command = (DBCmd)body[0];

@@ -339,9 +339,9 @@ public partial class FrmMain : Form, IXForm
 
         // 构造消息，二进制优先
         Object args = null;
-        if (ps.Length == 1 && ps[0].StartsWith("Packet "))
+        if (ps.Length == 1 && ps[0].StartsWith("IPacket "))
         {
-            args = new Packet(str.GetBytes());
+            args = new ArrayPacket(str.GetBytes());
         }
         else
         {

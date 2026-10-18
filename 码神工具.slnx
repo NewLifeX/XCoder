@@ -1,0 +1,22 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM" />
+    <Platform Name="iPhone" />
+    <Platform Name="iPhoneSimulator" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Others/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="Readme.MD" />
+  </Folder>
+  <Project Path="A1Lib/A1Lib.csproj" />
+  <Project Path="A2Lib/A2Lib.csproj" />
+  <Project Path="CrazyCoder/CoderWpf.csproj" />
+  <Project Path="XCoder/CrazyCoder.csproj" />
+  <Project Path="XCoderAv/XCoderAv.csproj" />
+  <Project Path="XCoderLinux/XCoderLinux.csproj" />
+  <Project Path="xDesktopInfo/xDesktopInfo.csproj" />
+</Solution>

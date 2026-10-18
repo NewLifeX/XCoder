@@ -5,8 +5,8 @@ using NewLife.Buffers;
 using NewLife.Data;
 using NewLife.IoT.Protocols;
 using NewLife.Log;
+using NewLife.Messaging;
 using NewLife.Net;
-using NewLife.Net.Handlers;
 using NewLife.Security;
 using NewLife.Threading;
 using XCoder;
@@ -100,7 +100,7 @@ namespace XNet
                 if (set.ShowReceive) svr.LogReceive = true;
 
                 // 加入定长编码器，处理Tcp粘包
-                svr.Add(new LengthFieldCodec { Offset = 4, Size = -2 });
+                svr.Protocol = new LengthFieldCodec { Offset = 4, Size = -2 };
                 svr.Received += OnReceived;
                 svr.Start();
 
@@ -263,10 +263,7 @@ namespace XNet
             var session = sender as NetSession;
             if (session == null) return;
 
-            var pk = e.Packet as Packet;
-            if (pk == null) pk = new Packet(e.Packet.ReadBytes());
-            var spanReader = pk.AsSpan();
-            var msg = ModbusIpMessage.Read(spanReader);
+            var msg = ModbusIpMessage.Read(e.Packet.ReadBytes());
             if (msg == null) return;
 
             session.Log?.Info("<= {0}", msg);
@@ -304,7 +301,7 @@ namespace XNet
                                 bits[1 + i] = (Byte)b;
                             }
 
-                            rs.Payload =new Packet( bits);
+                            rs.Payload = new ArrayPacket(bits);
                         }
                     }
                     break;
@@ -318,7 +315,7 @@ namespace XNet
                         if (addr >= 0 && addr + regCount <= _regs.Count)
                         {
                             var buf = _regs.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray();
-                            rs.Payload = new Packet(new Byte[] { (Byte)buf.Length }.Concat(buf).ToArray());
+                            rs.Payload = new ArrayPacket(new Byte[] { (Byte)buf.Length }.Concat(buf).ToArray());
                            // rs.Payload.Append(new Packet(buf));
                         }
                     }
@@ -344,7 +341,7 @@ namespace XNet
                         Invoke(() => { dgv.Refresh(); });
                         {
                             var addr = addrMsg - _regs[0].Address;
-                            rs.Payload = new Packet(_regs.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray());
+                            rs.Payload = new ArrayPacket(_regs.Skip(addr).Take(regCount).SelectMany(e => e.GetData()).ToArray());
                         }
                     }
                     break;

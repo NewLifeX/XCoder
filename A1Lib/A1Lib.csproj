@@ -20,10 +20,10 @@
     <PackageReference Include="LomontWin" Version="0.6.6" />
     <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
     <PackageReference Include="NAudio" Version="2.3.0" />
-    <PackageReference Include="NewLife.Core" Version="11.17.2026.701" />
+    <PackageReference Include="NewLife.Core" Version="12.0.2026.1017-beta1103" />
     <PackageReference Include="System.IO.Ports" Version="10.0.9" />
-    <PackageReference Include="System.Management" Version="10.0.9" />
-    <PackageReference Include="NewLife.ModbusRTU" Version="2.0.2026.610" />
+    <PackageReference Include="System.Management" Version="10.0.12" />
+    <PackageReference Include="NewLife.ModbusRTU" Version="2.1.2026.902-beta1359" />
   </ItemGroup>
   <!-- 原生库嵌入方式：zip 压缩优先，裸文件兜底。
        原生 DLL 多为未压缩 PE，zip 压缩率可达 3~8 倍。
