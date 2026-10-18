@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using NewLife;
 
 namespace ALib.PEAK_CAN
 {
@@ -29,8 +30,8 @@ namespace ALib.PEAK_CAN
             bool success = DllResourceManager.EnsureDllAvailable("ALib.PCAN", DllFileName);
             if (!success)
             {
-                XTrace.WriteLine($"PCANBasic.dll 加载失败");
-                throw new InvalidOperationException("PCANBasic.dll 加载失败");
+                XTrace.WriteLine(L.T("Failed to load PCANBasic.dll."));
+                throw new InvalidOperationException(L.T("Failed to load PCANBasic.dll."));
             }
         }
 

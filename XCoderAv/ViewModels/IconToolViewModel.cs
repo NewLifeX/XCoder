@@ -225,7 +225,7 @@ public partial class IconToolViewModel : ObservableObject
     #region 辅助
     private Bitmap MakeWatermarkImage()
     {
-        if (_originalBitmap == null) throw new InvalidOperationException("没有加载图片");
+        if (_originalBitmap == null) throw new InvalidOperationException(L.T("No image is loaded."));
 
         var size = _originalBitmap.PixelSize;
         var dpi = _originalBitmap.Dpi;

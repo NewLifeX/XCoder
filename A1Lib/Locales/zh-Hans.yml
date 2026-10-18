@@ -1,0 +1,7 @@
+# 简体中文译文。键为英文源文，缺失时运行期回退英文。
+"The recording device's RecordingDevice cannot be null.": "录音设备的 RecordingDevice 不能为 null"
+"The recording device has an invalid channel count.": "录音设备声道数无效"
+"No camera device was found.": "未找到任何摄像头设备"
+"Failed to load ControlCAN.dll.": "ControlCAN.dll 加载失败"
+"Failed to load PCANBasic.dll.": "PCANBasic.dll 加载失败"
+"This port has already registered a J1939 TP handler.": "该端口已注册 J1939 TP 处理器"

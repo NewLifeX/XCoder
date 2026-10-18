@@ -3,6 +3,7 @@ using ALib.WinForm;
 using NAudio.Wave;
 using NewLife.Log;
 using System.Drawing;
+using NewLife;
 
 namespace ALib.Audio
 {
@@ -101,7 +102,7 @@ namespace ALib.Audio
                 // 开始录音（-1 表示一直录，直到手动停止）
                 if (!_recorder.Start(-1))
                 {
-                    throw new Exception("启动录音失败");
+                    throw new Exception(L.T("Failed to start recording."));
                 }
 
                 // 更新UI

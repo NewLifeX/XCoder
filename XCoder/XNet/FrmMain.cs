@@ -185,7 +185,7 @@ public partial class FrmMain : Form, IXForm
                 if (mode > 0)
                 {
                     var ns = GetServer(cbMode.Text);
-                    if (ns == null) throw new XException("未识别服务[{0}]", mode);
+                    if (ns == null) throw new XException(L.T("Unrecognized service [{0}]."), mode);
 
                     _Server = ns.GetType().CreateInstance() as NetServer;
                 }

@@ -963,7 +963,7 @@ namespace ALib.Can_SAEJ1939
 
             // 端口不再做 CAN ID 匹配，本处理器会收到该端口所有帧，
             // 由 Process 内部按 PGN 过滤 TP.CM / TP.DT。
-            if (!port.Register(this)) throw new InvalidOperationException("该端口已注册 J1939 TP 处理器");
+            if (!port.Register(this)) throw new InvalidOperationException(L.T("This port has already registered a J1939 TP handler."));
         }
 
         /// <summary>收到完整 TP 多包报文（重组完成）</summary>

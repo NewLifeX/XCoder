@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NewLife;
 
 namespace ALib.Audio
 {
@@ -66,9 +67,9 @@ namespace ALib.Audio
         public AudioRecord(AudioDevice dev)
         {
             if (dev == null) throw new ArgumentNullException(nameof(dev));
-            if (dev.RecordingDevice == null) throw new ArgumentException("录音设备的 RecordingDevice 不能为 null", nameof(dev));
+            if (dev.RecordingDevice == null) throw new ArgumentException(L.T("The recording device's RecordingDevice cannot be null."), nameof(dev));
             if (dev.RecordingDevice.AudioClient.MixFormat.Channels < 1)
-                throw new ArgumentException("录音设备声道数无效", nameof(dev));
+                throw new ArgumentException(L.T("The recording device has an invalid channel count."), nameof(dev));
 
             // 使用 WasapiCapture 直接通过 MMDevice 录音
             _waveIn = new WasapiCapture(dev.RecordingDevice) { ShareMode = AudioClientShareMode.Shared };

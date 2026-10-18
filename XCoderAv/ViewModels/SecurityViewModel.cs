@@ -594,7 +594,7 @@ public partial class SecurityViewModel : ObservableObject
             if (baseTime.Year > 1000) snow.StartTimestamp = baseTime;
         }
 
-        if (!snow.TryParse(v, out var time, out var workerId, out var sequence)) throw new Exception("解码失败！");
+        if (!snow.TryParse(v, out var time, out var workerId, out var sequence)) throw new Exception(L.T("Decoding failed."));
 
         // 初始化一次，用于获取本机workerId
         snow.NewId();

@@ -1,4 +1,4 @@
-﻿using ALib;
+using ALib;
 using NewLife.Collections;
 using NewLife.Log;
 using System;
@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using static ALib.CX_CAN.CxControlCAN;
 using ALib.Can;
 using ALib.CAN;
+using NewLife;
 
 namespace ALib.CX_CAN
 {
@@ -34,8 +35,8 @@ namespace ALib.CX_CAN
             bool success = DllResourceManager.EnsureDllAvailable("ALib.CX_CAN", DllFileName);
             if (!success)
             {
-                XTrace.WriteLine($"ControlCAN.dll 加载失败");
-                throw new InvalidOperationException("ControlCAN.dll 加载失败");
+                XTrace.WriteLine(L.T("Failed to load ControlCAN.dll."));
+                throw new InvalidOperationException(L.T("Failed to load ControlCAN.dll."));
             }
         }
 

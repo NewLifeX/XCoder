@@ -46,7 +46,7 @@ namespace ALib.Camera
             if (_Devices == null)
                 _Devices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             if (_Devices.Count == 0)
-                throw new Exception("未找到任何摄像头设备");
+                throw new Exception(L.T("No camera device was found."));
 
             // 优先按 PnPId 精确匹配 DirectShow 设备，避免 PnP 枚举序与 DSHOW 枚举序不一致选错相机
             _Source = null;
