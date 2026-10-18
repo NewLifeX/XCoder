@@ -1,0 +1,6 @@
+bin/
+obj/
+dist/
+.DS_Store
+*.user
+Docs/Assets/*.iconset/

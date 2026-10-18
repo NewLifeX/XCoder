@@ -1,0 +1,76 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:CompileBindings="False"
+        x:Class="XCoderMac.Views.MacLegacyToolWindow"
+        Width="1100" Height="790" MinWidth="760" MinHeight="550"
+        WindowStartupLocation="CenterOwner"
+        Background="#F7F9FC">
+    <Window.Styles>
+        <Style Selector="Border.GroupBorder">
+            <Setter Property="BorderBrush" Value="#E2EAF3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="12"/>
+        </Style>
+        <Style Selector="TextBlock.SectionTitle">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#2C486B"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style Selector="TextBox.ConfigTextBox">
+            <Setter Property="BorderBrush" Value="#DCE6F2"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#FAFCFF"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="7,5"/>
+        </Style>
+        <Style Selector="TextBox.SmallNumeric">
+            <Setter Property="CornerRadius" Value="7"/>
+            <Setter Property="Background" Value="#FAFCFF"/>
+        </Style>
+        <Style Selector="Button.ActionButton">
+            <Setter Property="Background" Value="#E8F0FC"/>
+            <Setter Property="Foreground" Value="#2D5993"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="13,7"/>
+        </Style>
+        <Style Selector="Button.SendButton">
+            <Setter Property="Background" Value="#286BC7"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="CornerRadius" Value="8"/>
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="CornerRadius" Value="8"/>
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="CornerRadius" Value="8"/>
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="CornerRadius" Value="8"/>
+        </Style>
+    </Window.Styles>
+    <Grid RowDefinitions="90,*,40" Margin="22,0,22,8">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <StackPanel VerticalAlignment="Center" Spacing="5">
+                <TextBlock x:Name="ToolTitle" Text="开发工具" FontSize="24" FontWeight="SemiBold"
+                           Foreground="#213956"/>
+                <TextBlock x:Name="ToolDescription" Text="NewLife 通用工具" FontSize="12" Foreground="#8D9CAF"/>
+            </StackPanel>
+            <Border Grid.Column="1" Background="#E8F1FE" Padding="13,8" CornerRadius="17"
+                    VerticalAlignment="Center">
+                <TextBlock Text="NEWLIFE TOOL" FontSize="10" FontWeight="SemiBold" Foreground="#426CA6"/>
+            </Border>
+        </Grid>
+        <Border Grid.Row="1" Background="White" CornerRadius="16"
+                BorderBrush="#E2E9F3" BorderThickness="1" Padding="14">
+            <ContentControl x:Name="HostedContent" HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"/>
+        </Border>
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
+            <TextBlock Text="复用原 NewLife 工具逻辑 · macOS 适配界面" FontSize="11" Foreground="#8F9DB0"
+                       VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Text="XCoder" FontSize="11" Foreground="#9DACBE"
+                       VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>

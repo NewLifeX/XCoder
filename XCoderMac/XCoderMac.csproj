@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>XCoderMac</AssemblyName>
+    <RootNamespace>XCoderMac</RootNamespace>
+    <Product>Newlife.XCoder</Product>
+    <AssemblyTitle>XCoder</AssemblyTitle>
+    <Company>NewLife</Company>
+  </PropertyGroup>
+
+  <!-- App 图标资源只保留在本项目 Docs/Assets 内。 -->
+  <ItemGroup>
+    <AvaloniaResource Include="Docs/Assets/XCoderMac-1024.png" />
+  </ItemGroup>
+
+  <!-- 复用现有 Avalonia 工具实现，不复制或修改 XCoderAv 源码。 -->
+  <ItemGroup>
+    <ProjectReference Include="../XCoderAv/XCoderAv.csproj" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.1" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,144 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:CompileBindings="False"
+        x:Class="XCoderMac.Views.MacRedisWindow"
+        Title="Redis 管理 · XCoder" Width="1210" Height="850"
+        MinWidth="980" MinHeight="690" WindowStartupLocation="CenterOwner"
+        Background="#F7F9FC">
+    <Window.Styles>
+        <Style Selector="Border.panel">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E2E9F3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="18"/>
+        </Style>
+        <Style Selector="TextBox.field">
+            <Setter Property="Background" Value="#F9FBFE"/>
+            <Setter Property="BorderBrush" Value="#E1E8F2"/>
+            <Setter Property="CornerRadius" Value="9"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style Selector="Button.node">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,10"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="CornerRadius" Value="8"/>
+        </Style>
+        <Style Selector="Button.node:pointerover">
+            <Setter Property="Background" Value="#ECF3FE"/>
+        </Style>
+    </Window.Styles>
+    <Grid RowDefinitions="83,*,44" Margin="25,0,25,12">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="4" VerticalAlignment="Center">
+                <TextBlock Text="Redis 管理" FontSize="24" FontWeight="SemiBold" Foreground="#263D5D"/>
+                <TextBlock Text="NewLife.Redis · 连接节点、数据库与 Key 浏览" FontSize="12" Foreground="#8C9BAE"/>
+            </StackPanel>
+            <Border Grid.Column="1" Background="#EAF2FE" CornerRadius="18" Padding="14,8" VerticalAlignment="Center">
+                <TextBlock Text="REDIS WORKSPACE" Foreground="#4069A2" FontWeight="SemiBold" FontSize="11"/>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="1" ColumnDefinitions="300,14,*">
+            <Border Grid.Column="0" Classes="panel">
+                <Grid RowDefinitions="Auto,Auto,*,Auto">
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,14">
+                        <TextBlock Text="连接与数据库" FontSize="15" FontWeight="SemiBold" Foreground="#2C476A"/>
+                        <Button Grid.Column="1" Content="+ 新增" Click="Add_Click"
+                                Background="#EAF2FD" Foreground="#3968A4" CornerRadius="8" Padding="12,6"/>
+                    </Grid>
+                    <TextBlock Grid.Row="1" Text="点击节点展开服务器、数据库和 Key" FontSize="11"
+                               Foreground="#94A4B6" Margin="0,0,0,10"/>
+                    <ScrollViewer Grid.Row="2">
+                        <ItemsControl ItemsSource="{Binding VisibleNodes}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Classes="node" Click="Node_Click" Tag="{Binding}"
+                                            Margin="{Binding Indent}">
+                                        <Grid ColumnDefinitions="24,*">
+                                            <TextBlock Text="{Binding Icon}" FontSize="14" Foreground="#4272B0"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Title}" Foreground="#344E6B"
+                                                       FontSize="12.5" VerticalAlignment="Center"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </Grid>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Border Grid.Row="3" BorderBrush="#ECF0F6" BorderThickness="0,1,0,0" Margin="0,12,0,0" Padding="0,12,0,0">
+                        <TextBlock Text="密码仅保留在当前会话，不会写入本地配置。" TextWrapping="Wrap"
+                                   FontSize="11" Foreground="#A2ADBC"/>
+                    </Border>
+                </Grid>
+            </Border>
+            <Grid Grid.Column="2" RowDefinitions="Auto,14,*,14,Auto">
+                <Border Grid.Row="0" Classes="panel">
+                    <StackPanel Spacing="12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="Key 搜索" FontSize="15" FontWeight="SemiBold" Foreground="#2B4768"/>
+                            <TextBlock Grid.Column="1" Text="先展开并选中数据库" FontSize="11" Foreground="#A0ADBC"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="*,12,104">
+                            <TextBox Classes="field" Text="{Binding Vm.SearchPattern}" Height="39"
+                                     Watermark="Key 模式，如 user:*" VerticalContentAlignment="Center"/>
+                            <Button Grid.Column="2" Content="搜索 Key" Click="Search_Click" Height="39"
+                                    Background="#286BC7" Foreground="White" CornerRadius="9"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Classes="panel">
+                    <Grid RowDefinitions="Auto,Auto,*">
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+                            <TextBlock Text="键值详情" FontSize="15" FontWeight="SemiBold" Foreground="#2B4768"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Vm.SelectedKey}" Foreground="#7890AC" FontSize="11"
+                                       TextTrimming="CharacterEllipsis" MaxWidth="240"/>
+                        </Grid>
+                        <TextBlock Grid.Row="1" Text="当前为只读预览。展开数据库后点击 Key 查看内容。"
+                                   FontSize="11" Foreground="#9DAABB" Margin="0,0,0,12"/>
+                        <TextBox Grid.Row="2" Classes="field" Text="{Binding Vm.KeyValue, Mode=OneWay}" IsReadOnly="True"
+                                 AcceptsReturn="True" TextWrapping="Wrap" FontFamily="Menlo,Consolas,monospace"
+                                 Padding="12" Background="#F9FBFE" Foreground="#274363"/>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="4" Classes="panel">
+                    <StackPanel Spacing="11">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="服务器配置" FontSize="15" FontWeight="SemiBold" Foreground="#2B4768"/>
+                            <Button Grid.Column="1" Content="删除节点" Click="Delete_Click" Padding="10,6"
+                                    Background="#FFF0F0" Foreground="#B85E5E" CornerRadius="8"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="1.3*,12,2*,12,105" RowDefinitions="Auto,Auto">
+                            <TextBlock Text="显示名称" FontSize="11" Foreground="#8091A6"/>
+                            <TextBlock Grid.Column="2" Text="主机 / IP" FontSize="11" Foreground="#8091A6"/>
+                            <TextBlock Grid.Column="4" Text="端口" FontSize="11" Foreground="#8091A6"/>
+                            <TextBox x:Name="NameBox" Grid.Row="1" Classes="field" Height="38"/>
+                            <TextBox x:Name="HostBox" Grid.Row="1" Grid.Column="2" Classes="field" Height="38"/>
+                            <TextBox x:Name="PortBox" Grid.Row="1" Grid.Column="4" Classes="field" Height="38"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="*,12,*" RowDefinitions="Auto,Auto">
+                            <TextBlock Text="用户名（可选）" FontSize="11" Foreground="#8091A6"/>
+                            <TextBlock Grid.Column="2" Text="密码（可选）" FontSize="11" Foreground="#8091A6"/>
+                            <TextBox x:Name="UserBox" Grid.Row="1" Classes="field" Height="38"/>
+                            <TextBox x:Name="PasswordBox" Grid.Row="1" Grid.Column="2" Classes="field"
+                                     PasswordChar="●" Height="38"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="连接配置保存到用户 Library/Application Support" Foreground="#A4B0BF"
+                                       FontSize="11" VerticalAlignment="Center"/>
+                            <Button Grid.Column="1" Content="保存节点配置" Click="Save_Click" Padding="15,9"
+                                    Background="#286BC7" Foreground="White" CornerRadius="9" FontWeight="SemiBold"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto" Margin="0,11,0,0">
+            <TextBlock Text="{Binding Vm.Status}" Foreground="#6E849E" FontSize="12" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Text="XCoder · NewLife.Redis" Foreground="#A4B3C2"
+                       FontSize="11" VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>

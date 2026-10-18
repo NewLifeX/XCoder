@@ -18,5 +18,6 @@
   <Project Path="XCoder/CrazyCoder.csproj" />
   <Project Path="XCoderAv/XCoderAv.csproj" />
   <Project Path="XCoderLinux/XCoderLinux.csproj" />
+  <Project Path="XCoderMac/XCoderMac.csproj" />
   <Project Path="xDesktopInfo/xDesktopInfo.csproj" />
 </Solution>

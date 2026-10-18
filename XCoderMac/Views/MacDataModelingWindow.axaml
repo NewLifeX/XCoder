@@ -1,0 +1,231 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:CompileBindings="False"
+        x:Class="XCoderMac.Views.MacDataModelingWindow"
+        Title="数据建模 · XCoder"
+        Width="1220" Height="855" MinWidth="760" MinHeight="570"
+        Background="#F7F9FC" WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="Border.panel">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E3EAF3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="18"/>
+        </Style>
+        <Style Selector="TextBlock.field-label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#74859B"/>
+        </Style>
+        <Style Selector="TextBox.input">
+            <Setter Property="Height" Value="39"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="BorderBrush" Value="#E0E7F1"/>
+            <Setter Property="Background" Value="#F9FBFD"/>
+            <Setter Property="CornerRadius" Value="8"/>
+        </Style>
+    </Window.Styles>
+
+    <!-- 该 ScrollViewer 会随主窗口工具标签区域伸缩，内容超过窗口高度时可滚动。 -->
+    <ScrollViewer x:Name="PageViewport" HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto" SizeChanged="PageViewport_SizeChanged">
+        <StackPanel Margin="25,20,25,18" Spacing="16">
+            <!-- 标题区域右侧保留原来的“打开输出目录”快捷入口。 -->
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,0,0,3">
+                <StackPanel Grid.Column="0" Spacing="5" VerticalAlignment="Center">
+                    <TextBlock Text="数据建模与代码生成" FontWeight="SemiBold"
+                               FontSize="24" Foreground="#233B58"/>
+                    <TextBlock Text="NewLife.XCode · 复用原实体生成引擎"
+                               Foreground="#91A0B2" FontSize="12"/>
+                </StackPanel>
+                <Button x:Name="OpenOutputButton" Grid.Column="1" Content="打开输出目录  ↗"
+                        Click="OpenOutput_Click" Padding="15,10"
+                        Background="#E6EDF8" Foreground="#3F638F"
+                        CornerRadius="9" VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- 上部：左侧数据库连接，右侧代码生成设置；窄窗口自动上下排列。 -->
+            <Grid x:Name="ConfigurationGrid" ColumnDefinitions="0.85*,16,1.5*"
+                  RowDefinitions="Auto">
+                <Border x:Name="ConnectionPanel" Grid.Row="0" Grid.Column="0"
+                        Classes="panel" HorizontalAlignment="Stretch">
+                    <StackPanel Spacing="13">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <TextBlock Text="数据库连接" FontSize="16" FontWeight="SemiBold"
+                                       Foreground="#29405C" VerticalAlignment="Center"/>
+                            <Button Grid.Column="1" Content="连接配置  ⚙"
+                                    Click="ConnectionSettings_Click"
+                                    Background="#EAF0F9" Foreground="#355E96" CornerRadius="8"
+                                    Padding="11,7" FontSize="11" VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBlock Text="连接可在“连接配置”中维护，也可直接编辑 Newlife.XCoder 的 connections.json"
+                                   TextWrapping="Wrap" Foreground="#9AA7B9" FontSize="11"/>
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="数据库连接名称" Classes="field-label"/>
+                            <ComboBox ItemsSource="{Binding Connections}" SelectedItem="{Binding ConnName}"
+                                      Height="39" Background="#F9FBFD" BorderBrush="#DDE6F2"
+                                      CornerRadius="8" HorizontalAlignment="Stretch"/>
+                        </StackPanel>
+                        <Grid ColumnDefinitions="*,10,*">
+                            <Button Classes="primary" x:Name="ConnectDatabaseButton" Grid.Column="0"
+                                    Content="{Binding ConnectButtonText}"
+                                    Command="{Binding ConnectCommand}"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    Background="#2869C5" Foreground="White"
+                                    CornerRadius="9" Padding="12,10"/>
+                            <Button Classes="secondary" x:Name="RefreshTablesButton" Grid.Column="2"
+                                    Content="刷新数据表"
+                                    Command="{Binding RefreshTablesCommand}"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    Background="#EEF3FA" Foreground="#47688F"
+                                    CornerRadius="9" Padding="12,10"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border x:Name="GenerationPanel" Grid.Row="0" Grid.Column="2"
+                        Classes="panel" HorizontalAlignment="Stretch">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="代码生成设置" FontSize="16" FontWeight="SemiBold"
+                                   Foreground="#29405C"/>
+                        <Grid ColumnDefinitions="*,12,*,12,*">
+                            <StackPanel Grid.Column="0" Spacing="6">
+                                <TextBlock Text="命名空间" Classes="field-label"/>
+                                <TextBox Classes="input" Text="{Binding NameSpace}"
+                                         Watermark="MyProject.Entities"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Spacing="6">
+                                <TextBlock Text="实体连接名" Classes="field-label"/>
+                                <TextBox Classes="input" Text="{Binding EntityConnName}"
+                                         Watermark="连接配置名"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="4" Spacing="6">
+                                <TextBlock Text="实体基类" Classes="field-label"/>
+                                <TextBox Classes="input" Text="{Binding BaseClass}"/>
+                            </StackPanel>
+                        </Grid>
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="代码输出目录" Classes="field-label"/>
+                            <!-- 手动输入与原生 macOS 目录选择并存，选择后回写原 OutputPath。 -->
+                            <Grid ColumnDefinitions="*,10,Auto">
+                                <TextBox x:Name="CodeOutputDirectoryInput" Grid.Column="0"
+                                         Classes="input" Text="{Binding OutputPath}"
+                                         HorizontalAlignment="Stretch"
+                                         Watermark="生成的实体代码将保存到此目录"/>
+                                <Button x:Name="BrowseOutputDirectoryButton" Grid.Column="2"
+                                        Classes="secondary" Content="选择目录  …"
+                                        Click="BrowseOutputDirectory_Click"
+                                        Height="39" MinWidth="108" Padding="12,0"
+                                        HorizontalContentAlignment="Center"
+                                        VerticalContentAlignment="Center"
+                                        CornerRadius="8"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                    Spacing="10" Margin="0,3,0,0">
+                            <Button Content="生成选中表"
+                                    Command="{Binding GenerateTableCommand}"
+                                    Background="#EAF0F9" Foreground="#355E96"
+                                    CornerRadius="9" Padding="16,10"/>
+                            <Button Classes="primary" Content="生成全部表  ↗" Click="GenerateAll_Click"
+                                    Background="#2869C5" Foreground="White"
+                                    CornerRadius="9" Padding="16,10"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- 下部：数据表与字段结构并列；窄窗口自动上下排列，列表各自滚动。 -->
+            <Grid x:Name="StructureGrid" ColumnDefinitions="1*,16,1.3*"
+                  RowDefinitions="Auto">
+                <Border x:Name="TablesPanel" Grid.Row="0" Grid.Column="0"
+                        Classes="panel" Height="480" HorizontalAlignment="Stretch">
+                    <Grid RowDefinitions="Auto,Auto,*">
+                        <TextBlock Text="数据表" FontWeight="SemiBold" FontSize="16"
+                                   Foreground="#29405C"/>
+                        <TextBlock Grid.Row="1" Text="选择表以查看字段结构"
+                                   FontSize="12" Foreground="#9AA7B5" Margin="0,5,0,13"/>
+                        <ListBox Grid.Row="2" ItemsSource="{Binding Tables}"
+                                 SelectedItem="{Binding SelectedTable}"
+                                 Background="Transparent" BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Padding="9,8" CornerRadius="8">
+                                        <StackPanel Spacing="3">
+                                            <TextBlock Text="{Binding Name}" Foreground="#2B496D"
+                                                       FontSize="13" FontWeight="SemiBold"/>
+                                            <TextBlock Text="{Binding Description}"
+                                                       Foreground="#A2AEBB" FontSize="11"
+                                                       TextTrimming="CharacterEllipsis" MaxLines="1"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="FieldsPanel" Grid.Row="0" Grid.Column="2"
+                        Classes="panel" Height="480" HorizontalAlignment="Stretch">
+                    <Grid RowDefinitions="Auto,Auto,Auto,*">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Text="字段结构" FontWeight="SemiBold"
+                                       FontSize="16" Foreground="#29405C"/>
+                            <TextBlock Grid.Column="1" Text="TABLE SCHEMA"
+                                       FontSize="10" Foreground="#A2B0C1"/>
+                        </Grid>
+                        <TextBlock Grid.Row="1"
+                                   Text="{Binding SelectedTable.Name, TargetNullValue='尚未选择数据表'}"
+                                   FontSize="13" Foreground="#4E6A91" Margin="0,11,0,5"/>
+                        <TextBlock Grid.Row="2"
+                                   Text="{Binding SelectedTable.Description, TargetNullValue='连接数据库后，选择数据表查看字段。'}"
+                                   FontSize="11" Foreground="#9AA9BA" Margin="0,0,0,13"/>
+                        <Grid Grid.Row="3" RowDefinitions="Auto,*">
+                            <Border Background="#F3F6FA" CornerRadius="8" Padding="13,10">
+                                <Grid ColumnDefinitions="2*,1.2*,2*">
+                                    <TextBlock Text="字段名称" FontSize="11" FontWeight="SemiBold"
+                                               Foreground="#6C809A"/>
+                                    <TextBlock Grid.Column="1" Text="数据类型" FontSize="11"
+                                               FontWeight="SemiBold" Foreground="#6C809A"/>
+                                    <TextBlock Grid.Column="2" Text="说明" FontSize="11"
+                                               FontWeight="SemiBold" Foreground="#6C809A"/>
+                                </Grid>
+                            </Border>
+                            <ListBox Grid.Row="1" ItemsSource="{Binding SelectedTable.Columns}"
+                                     Background="Transparent" BorderThickness="0">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnDefinitions="2*,1.2*,2*" Margin="11,9">
+                                            <TextBlock Text="{Binding Name}" FontSize="12"
+                                                       Foreground="#284A73" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding DataType}"
+                                                       FontSize="11" Foreground="#7488A1"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Description}"
+                                                       FontSize="11" Foreground="#98A6B8"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Border BorderBrush="#E5EAF2" BorderThickness="0,1,0,0"
+                    Padding="0,11,0,0">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Text="{Binding Status}" Foreground="#6D829D"
+                               FontSize="12" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="XCoder · NewLife.XCode"
+                               Foreground="#A7B3C1" FontSize="11" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

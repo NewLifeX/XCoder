@@ -1,0 +1,115 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:CompileBindings="False"
+        x:Class="XCoderMac.Views.MacNetworkWindow"
+        Title="网络调试 · XCoder" Width="1200" Height="860"
+        MinWidth="960" MinHeight="690" WindowStartupLocation="CenterOwner"
+        Background="#F7F9FC">
+    <Window.Styles>
+        <Style Selector="Border.panel">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E2EAF5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="18"/>
+        </Style>
+        <Style Selector="TextBox.field">
+            <Setter Property="Background" Value="#F9FBFE"/>
+            <Setter Property="BorderBrush" Value="#DFE7F1"/>
+            <Setter Property="CornerRadius" Value="9"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+    </Window.Styles>
+    <Grid RowDefinitions="83,Auto,*,42" Margin="25,0,25,12">
+        <Grid ColumnDefinitions="*,Auto">
+            <StackPanel VerticalAlignment="Center" Spacing="4">
+                <TextBlock Text="网络调试" FontSize="24" FontWeight="SemiBold" Foreground="#233D5B"/>
+                <TextBlock Text="NewLife.Net · TCP / UDP 客户端与服务端" Foreground="#8F9CAF" FontSize="12"/>
+            </StackPanel>
+            <Border Grid.Column="1" Background="#E8F1FD" CornerRadius="18" Padding="14,8" VerticalAlignment="Center">
+                <TextBlock Text="{Binding ConnectButtonText}" Foreground="#365F99" FontSize="12"/>
+            </Border>
+        </Grid>
+        <Border Grid.Row="1" Classes="panel" Margin="0,0,0,14">
+            <StackPanel Spacing="14">
+                <TextBlock Text="连接配置" Foreground="#2B466A" FontSize="15" FontWeight="SemiBold"/>
+                <Grid ColumnDefinitions="178,12,*,12,160,12,110" RowDefinitions="Auto,Auto">
+                    <TextBlock Text="工作模式" FontSize="12" Foreground="#7C8FA4"/>
+                    <TextBlock Grid.Column="2" Text="本机绑定地址" FontSize="12" Foreground="#7C8FA4"/>
+                    <TextBlock Grid.Column="4" Text="目标端口" FontSize="12" Foreground="#7C8FA4"/>
+                    <ComboBox Grid.Row="1" ItemsSource="{Binding Modes}" SelectedIndex="{Binding SelectedModeIndex}"
+                              Height="41" Background="#F9FBFE" BorderBrush="#DFE7F1"/>
+                    <ComboBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding LocalAddresses}"
+                              SelectedItem="{Binding LocalAddress}" Height="41"
+                              Background="#F9FBFE" BorderBrush="#DFE7F1"/>
+                    <TextBox Grid.Row="1" Grid.Column="4" Classes="field" Text="{Binding Port}"
+                             Height="41" VerticalContentAlignment="Center"/>
+                    <Button Grid.Row="1" Grid.Column="6" Content="{Binding ConnectButtonText}" Command="{Binding ToggleConnectCommand}"
+                            Background="#286BC7" Foreground="White" Height="41" CornerRadius="9" FontWeight="SemiBold"/>
+                </Grid>
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBox Classes="field" Text="{Binding RemoteAddress}" Height="41"
+                             Watermark="远程服务器 IP / 主机名（客户端模式必填）"
+                             VerticalContentAlignment="Center"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="14" Margin="15,0,0,0" VerticalAlignment="Center">
+                        <CheckBox Content="业务日志" IsChecked="{Binding ShowLog}"/>
+                        <CheckBox Content="Socket 日志" IsChecked="{Binding ShowSocketLog}"/>
+                        <CheckBox Content="发送" IsChecked="{Binding ShowSend}"/>
+                        <CheckBox Content="接收" IsChecked="{Binding ShowReceive}"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="2" ColumnDefinitions="410,14,*">
+            <Border Grid.Column="0" Classes="panel">
+                <Grid RowDefinitions="Auto,Auto,*,Auto,Auto">
+                    <TextBlock Text="发送数据" Foreground="#2D4868" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,15"/>
+                    <CheckBox Grid.Row="1" Content="十六进制 HEX 发送" IsChecked="{Binding HexSend}" Margin="0,0,0,12"/>
+                    <TextBox Grid.Row="2" Classes="field" Text="{Binding SendText}"
+                             AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
+                             FontFamily="Menlo,Consolas,monospace" Padding="13"/>
+                    <Grid Grid.Row="3" ColumnDefinitions="*,12,*,12,*" Margin="0,14,0,0">
+                        <StackPanel Grid.Column="0" Spacing="5">
+                            <TextBlock Text="发送次数" FontSize="11" Foreground="#8494A9"/>
+                            <TextBox Classes="field" Text="{Binding SendTimes}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Spacing="5">
+                            <TextBlock Text="间隔毫秒" FontSize="11" Foreground="#8494A9"/>
+                            <TextBox Classes="field" Text="{Binding SendSleep}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4" Spacing="5">
+                            <TextBlock Text="并发线程" FontSize="11" Foreground="#8494A9"/>
+                            <TextBox Classes="field" Text="{Binding SendThreads}"/>
+                        </StackPanel>
+                    </Grid>
+                    <Button Grid.Row="4" Content="发送数据  ↗" Command="{Binding SendCommand}" Height="43" Margin="0,16,0,0"
+                            Background="#286BC7" Foreground="White" FontWeight="SemiBold" CornerRadius="9"/>
+                </Grid>
+            </Border>
+            <Border Grid.Column="2" Classes="panel">
+                <Grid RowDefinitions="Auto,Auto,*">
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+                        <TextBlock Text="通信日志" FontSize="16" FontWeight="SemiBold" Foreground="#2D4868"/>
+                        <Button Grid.Column="1" Content="清空" Command="{Binding ClearReceiveLogCommand}"
+                                Background="#EEF3FA" Foreground="#496B95" CornerRadius="9" Padding="15,6"/>
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="0,0,0,13">
+                        <TextBlock Text="{Binding ReceivedBytes, StringFormat='接收 {0} 字节'}" Foreground="#7D8FA7" FontSize="12"/>
+                        <TextBlock Grid.Column="1" Text="{Binding SentBytes, StringFormat='发送 {0} 字节'}" Foreground="#7D8FA7" FontSize="12"/>
+                        <TextBlock Grid.Column="2" Text="{Binding SessionCount, StringFormat='会话 {0}'}" Foreground="#7D8FA7" FontSize="12"/>
+                    </Grid>
+                    <TextBox Grid.Row="2" x:Name="txtLog" IsReadOnly="True" AcceptsReturn="True"
+                             FontFamily="Menlo,Consolas,monospace" FontSize="12" TextWrapping="Wrap"
+                             Background="#14233A" Foreground="#DEE9F6" BorderThickness="0"
+                             Padding="14" CornerRadius="9"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="3" ColumnDefinitions="*,Auto" Margin="0,13,0,0">
+            <TextBlock Text="请使用测试地址及端口；服务端模式会监听本机网络接口。" FontSize="11"
+                       Foreground="#879AAF" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Text="XCoder · NewLife.Net" FontSize="11"
+                       Foreground="#A8B4C4" VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>

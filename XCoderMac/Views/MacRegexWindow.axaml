@@ -1,0 +1,146 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:CompileBindings="False"
+        x:Class="XCoderMac.Views.MacRegexWindow"
+        Title="正则表达式 · XCoder"
+        Width="1190" Height="860" MinWidth="950" MinHeight="700"
+        Background="#F7F9FC" WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="TextBlock.section-label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#51647F"/>
+        </Style>
+        <Style Selector="TextBox.editor">
+            <Setter Property="FontFamily" Value="Menlo,Consolas,monospace"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Background" Value="#F9FBFE"/>
+            <Setter Property="BorderBrush" Value="#DFE7F2"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="9"/>
+            <Setter Property="Padding" Value="12,10"/>
+        </Style>
+        <Style Selector="Border.panel">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E3EAF3"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="20"/>
+        </Style>
+        <Style Selector="ListBox.result-list">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </Window.Styles>
+    <Grid RowDefinitions="84,Auto,*,Auto" Margin="26,0,26,18">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <StackPanel VerticalAlignment="Center" Spacing="4">
+                <TextBlock Text="正则表达式" FontSize="25" FontWeight="SemiBold" Foreground="#203753"/>
+                <TextBlock Text="Pattern matching · 基于 NewLife 工具业务逻辑" FontSize="12" Foreground="#8D9AAC"/>
+            </StackPanel>
+            <Button Grid.Column="1" Content="执行  ⌘↵" Command="{Binding ExecuteCommand}"
+                    Background="#2869C5" Foreground="White" CornerRadius="10"
+                    Padding="22,11" FontSize="13" FontWeight="SemiBold"
+                    VerticalAlignment="Center"/>
+        </Grid>
+        <Border Grid.Row="1" Classes="panel" Margin="0,0,0,15">
+            <StackPanel Spacing="12">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Classes="section-label" Text="表达式模式" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="{Binding OptionText}" Foreground="#92A1B5" FontSize="11" VerticalAlignment="Center"/>
+                </Grid>
+                <TextBox Classes="editor" Text="{Binding Pattern}" Watermark="例如：(?&lt;name&gt;\w+)@(?&lt;domain&gt;[\w.]+)" Height="45"
+                         VerticalContentAlignment="Center"/>
+                <WrapPanel Orientation="Horizontal">
+                    <CheckBox Content="匹配模式（取消选择为替换）" IsChecked="{Binding IsMatchMode}" Margin="0,3,24,3"/>
+                    <CheckBox Content="忽略大小写" IsChecked="{Binding IgnoreCase}" Margin="0,3,17,3"/>
+                    <CheckBox Content="多行" IsChecked="{Binding Multiline}" Margin="0,3,17,3"/>
+                    <CheckBox Content="单行" IsChecked="{Binding Singleline}" Margin="0,3,17,3"/>
+                    <CheckBox Content="忽略空白" IsChecked="{Binding IgnorePatternWhitespace}" Margin="0,3,0,3"/>
+                </WrapPanel>
+                <Grid ColumnDefinitions="Auto,*" IsVisible="{Binding IsReplaceMode}">
+                    <TextBlock Text="替换内容" Classes="section-label" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                    <TextBox Grid.Column="1" Classes="editor" Text="{Binding Replacement}" Watermark="输入替换文本" Height="41"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="2" ColumnDefinitions="*,14,*">
+            <Border Grid.Column="0" Classes="panel">
+                <Grid RowDefinitions="Auto,*,Auto">
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,13">
+                        <TextBlock Text="输入文本" FontWeight="SemiBold" FontSize="16" Foreground="#273D5A"/>
+                        <TextBlock Grid.Column="1" Text="SOURCE" FontSize="10" FontWeight="SemiBold" Foreground="#A2AFC0" VerticalAlignment="Center"/>
+                    </Grid>
+                    <TextBox Grid.Row="1" Text="{Binding SourceText}" Classes="editor"
+                             Watermark="在这里输入需要分析的文本…" AcceptsReturn="True" AcceptsTab="True"
+                             TextWrapping="Wrap"/>
+                    <TextBlock Grid.Row="2" Text="提示：⌘ + Enter 执行，匹配模式可查看分组和捕获。"
+                               Margin="0,12,0,0" FontSize="11" Foreground="#91A0B0"/>
+                </Grid>
+            </Border>
+            <Border Grid.Column="2" Classes="panel">
+                <Grid RowDefinitions="Auto,*,12,*,12,*">
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,11">
+                        <TextBlock Text="匹配结果" FontSize="16" FontWeight="SemiBold" Foreground="#273D5A"/>
+                        <TextBlock Grid.Column="1" Text="RESULT" FontSize="10" FontWeight="SemiBold" Foreground="#A2AFC0" VerticalAlignment="Center"/>
+                    </Grid>
+                    <ListBox Grid.Row="1" Classes="result-list"
+                             ItemsSource="{Binding Matches}" SelectedItem="{Binding SelectedMatch}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="38,*,Auto" Margin="6,7">
+                                    <TextBlock Text="{Binding Index}" Foreground="#8F9EB1" FontSize="12"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Value}" TextTrimming="CharacterEllipsis"
+                                               FontFamily="Menlo,Consolas,monospace" Foreground="#2A476B" FontSize="12"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Location}" FontSize="11" Foreground="#A6B2C0" Margin="8,0,0,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Border Grid.Row="2" BorderBrush="#E9EDF4" BorderThickness="0,1,0,0"/>
+                    <Grid Grid.Row="3" RowDefinitions="Auto,*" Margin="0,6,0,0">
+                        <TextBlock Text="捕获分组" FontSize="12" FontWeight="SemiBold" Foreground="#61758E" Margin="0,0,0,4"/>
+                        <ListBox Grid.Row="1" Classes="result-list" ItemsSource="{Binding Groups}"
+                                 SelectedItem="{Binding SelectedGroup}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="70,*" Margin="6,5">
+                                        <TextBlock Text="{Binding Name}" Foreground="#8194A9" FontSize="12"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Value}" Foreground="#2C4768"
+                                                   TextTrimming="CharacterEllipsis" FontSize="12"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                    <Border Grid.Row="4" BorderBrush="#E9EDF4" BorderThickness="0,1,0,0"/>
+                    <Grid Grid.Row="5" RowDefinitions="Auto,*" Margin="0,6,0,0">
+                        <TextBlock Text="捕获记录" FontSize="12" FontWeight="SemiBold" Foreground="#61758E" Margin="0,0,0,4"/>
+                        <ListBox Grid.Row="1" Classes="result-list" ItemsSource="{Binding Captures}"
+                                 SelectedItem="{Binding SelectedCapture}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="40,*,Auto" Margin="6,5">
+                                        <TextBlock Text="{Binding Index}" Foreground="#8194A9" FontSize="12"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Value}" Foreground="#2C4768"
+                                                   TextTrimming="CharacterEllipsis" FontSize="12"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Location}" Foreground="#A2B0BE" FontSize="11"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="3" ColumnDefinitions="*,Auto" Margin="0,13,0,0">
+            <TextBlock Text="{Binding Status}" Foreground="#657993" FontSize="12" VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="9" IsVisible="{Binding IsReplaceMode}">
+                <TextBox Width="225" Watermark="批量替换目录" Text="{Binding DirectoryPath}" FontSize="12"/>
+                <TextBox Width="80" Text="{Binding FileFilter}" FontSize="12"/>
+                <Button Content="批量替换文件" Click="BatchReplace_Click" Padding="13,8"
+                        Background="#EAF0FA" Foreground="#315B98" CornerRadius="9"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,106 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:CompileBindings="False"
+        x:Class="XCoderMac.Views.MacApiDebugWindow"
+        Title="RPC API 调试 · XCoder" Width="1180" Height="840"
+        MinWidth="960" MinHeight="680" WindowStartupLocation="CenterOwner"
+        Background="#F7F9FC">
+    <Window.Styles>
+        <Style Selector="Border.panel">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E2EAF5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="19"/>
+        </Style>
+        <Style Selector="TextBox.editor">
+            <Setter Property="FontFamily" Value="Menlo,Consolas,monospace"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Background" Value="#F9FBFE"/>
+            <Setter Property="BorderBrush" Value="#DFE6F1"/>
+            <Setter Property="CornerRadius" Value="9"/>
+        </Style>
+    </Window.Styles>
+    <Grid RowDefinitions="83,Auto,Auto,*,42" Margin="25,0,25,13">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="4" VerticalAlignment="Center">
+                <TextBlock Text="RPC API 调试" FontSize="24" FontWeight="SemiBold" Foreground="#223B5C"/>
+                <TextBlock Text="NewLife.Remoting · RPC 客户端 / 服务端（非 HTTP API）" FontSize="12" Foreground="#8D9AAF"/>
+            </StackPanel>
+            <Border Grid.Column="1" Background="#E9F1FE" CornerRadius="18" Padding="14,8" VerticalAlignment="Center">
+                <TextBlock Text="{Binding ConnectButtonText}" Foreground="#38649E" FontSize="12"/>
+            </Border>
+        </Grid>
+        <Border Grid.Row="1" Classes="panel" Margin="0,0,0,13">
+            <StackPanel Spacing="14">
+                <TextBlock Text="连接设置" FontSize="15" FontWeight="SemiBold" Foreground="#2B466A"/>
+                <Grid ColumnDefinitions="155,12,*,12,100,12,110" RowDefinitions="Auto,Auto">
+                    <TextBlock Text="工作模式" Foreground="#75869C" FontSize="12"/>
+                    <TextBlock Grid.Column="2" Text="客户端服务地址（示例 tcp://127.0.0.1:8080）" Foreground="#75869C" FontSize="12"/>
+                    <TextBlock Grid.Column="4" Text="监听端口" Foreground="#75869C" FontSize="12"/>
+                    <ComboBox Grid.Row="1" ItemsSource="{Binding Modes}" SelectedIndex="{Binding SelectedModeIndex}"
+                              Height="41" CornerRadius="9" Background="#F9FBFE" BorderBrush="#DFE6F1"/>
+                    <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Address}" Classes="editor" Height="41"
+                             VerticalContentAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="4" Text="{Binding Port}" Classes="editor" Height="41"
+                             VerticalContentAlignment="Center"/>
+                    <Button Grid.Row="1" Grid.Column="6" Content="{Binding ConnectButtonText}"
+                            Command="{Binding ToggleConnectCommand}"
+                            Background="#286BC7" Foreground="White" CornerRadius="9" FontWeight="SemiBold" Height="41"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="2" Classes="panel" Margin="0,0,0,13" Padding="17">
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Orientation="Horizontal" Spacing="19" VerticalAlignment="Center">
+                    <CheckBox Content="应用日志" IsChecked="{Binding ShowLog}"/>
+                    <CheckBox Content="编码日志" IsChecked="{Binding ShowEncoderLog}"/>
+                    <CheckBox Content="发送日志" IsChecked="{Binding ShowSend}"/>
+                    <CheckBox Content="接收日志" IsChecked="{Binding ShowReceive}"/>
+                </StackPanel>
+                <Button Grid.Column="1" Content="清空日志" Command="{Binding ClearLogCommand}" Padding="14,8"
+                        Background="#EEF3FA" Foreground="#4B698C" CornerRadius="9"/>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="3" ColumnDefinitions="410,14,*">
+            <Border Grid.Column="0" Classes="panel">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto">
+                    <TextBlock Text="发送 RPC 请求" FontSize="16" Foreground="#294360" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                    <TextBlock Grid.Row="1" Text="API Action" FontSize="12" Foreground="#778AA1" Margin="0,0,0,7"/>
+                    <ComboBox Grid.Row="2" ItemsSource="{Binding ApiActions}" SelectedItem="{Binding SelectedAction}"
+                              Height="41" Background="#F9FBFE" BorderBrush="#DFE6F1"
+                              Margin="0,0,0,17"/>
+                    <TextBox Grid.Row="3" Text="{Binding SelectedAction}" Classes="editor"
+                             Height="38" Margin="0,0,0,14" VerticalContentAlignment="Center"
+                             Watermark="也可手动输入 Action 名称"/>
+                    <Grid Grid.Row="4" RowDefinitions="Auto,*">
+                        <TextBlock Text="请求参数" Foreground="#778AA1" FontSize="12" Margin="0,0,0,7"/>
+                        <TextBox Grid.Row="1" Text="{Binding SendText}" Classes="editor" AcceptsReturn="True"
+                                 AcceptsTab="True" TextWrapping="Wrap" Padding="12" Watermark="输入 RPC Action 参数"/>
+                    </Grid>
+                    <Button Grid.Row="5" Content="发送请求  ↗" Command="{Binding SendCommand}" Height="43"
+                            Background="#286BC7" Foreground="White" CornerRadius="9"
+                            FontWeight="SemiBold" Margin="0,15,0,0"/>
+                </Grid>
+            </Border>
+            <Border Grid.Column="2" Classes="panel">
+                <Grid RowDefinitions="Auto,*">
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,15">
+                        <TextBlock Text="交互日志" FontSize="16" Foreground="#294360" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="1" Text="RPC CONSOLE" Foreground="#A1AFC0" FontSize="10"/>
+                    </Grid>
+                    <TextBox Grid.Row="1" Text="{Binding ReceiveLog, Mode=OneWay}" Classes="editor"
+                             IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap"
+                             Padding="15" Background="#15243A" Foreground="#E0EAF6"
+                             FontFamily="Menlo,Consolas,monospace" FontSize="12"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="4" ColumnDefinitions="*,Auto" Margin="0,12,0,0">
+            <TextBlock Text="客户端模式下打开连接后加载服务端 API 列表；服务端模式监听本地端口。"
+                       Foreground="#8799AF" FontSize="11" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Text="XCoder · NewLife.Remoting" FontSize="11"
+                       Foreground="#ABB8C6" VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>
