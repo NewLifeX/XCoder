@@ -41,3 +41,5 @@ bld/
 /NewLife.Core.pdb
 /NewLife.Core.dll
 /lib
+.DS_Store
+.vscode/settings.json
