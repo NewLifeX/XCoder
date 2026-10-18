@@ -1,0 +1,66 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:CompileBindings="False"
+        x:Class="XCoderMac.Views.MacSpeechWindow"
+        Title="语音助手 · XCoder Mac"
+        Width="1040" Height="740" MinWidth="800" MinHeight="600"
+        WindowStartupLocation="CenterOwner" Background="#F7F9FC">
+    <Window.Styles>
+        <Style Selector="Border.panel">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E3EAF4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="19"/>
+        </Style>
+    </Window.Styles>
+    <Grid RowDefinitions="88,Auto,*,Auto,44" Margin="26,0,26,12">
+        <StackPanel VerticalAlignment="Center" Spacing="5">
+            <TextBlock Text="语音助手" FontSize="25" FontWeight="SemiBold" Foreground="#273D5C"/>
+            <TextBlock Text="macOS say · 系统原生语音朗读与 AIFF 导出" FontSize="12" Foreground="#8D9EB2"/>
+        </StackPanel>
+        <Border Grid.Row="1" Classes="panel" Margin="0,0,0,15">
+            <Grid ColumnDefinitions="*,15,200" RowDefinitions="Auto,Auto,Auto">
+                <TextBlock Text="系统语音" FontWeight="SemiBold" FontSize="13" Foreground="#536A88"/>
+                <TextBlock Grid.Column="2" Text="语速（词/分钟）" FontWeight="SemiBold" FontSize="13" Foreground="#536A88"/>
+                <ComboBox x:Name="VoiceBox" Grid.Row="1" ItemsSource="{Binding Voices}"
+                          SelectedItem="{Binding SelectedVoice}" Height="40" Margin="0,8,0,0"/>
+                <TextBox x:Name="RateBox" Grid.Row="1" Grid.Column="2" Text="190" Height="40"
+                         Margin="0,8,0,0" VerticalContentAlignment="Center"/>
+                <TextBlock Grid.Row="2" Grid.ColumnSpan="3"
+                           Text="语音列表来自当前 Mac，支持系统已安装的中文及其他语言声音。"
+                           Margin="0,10,0,0" FontSize="11" Foreground="#9AABBC"/>
+            </Grid>
+        </Border>
+        <Border Grid.Row="2" Classes="panel">
+            <Grid RowDefinitions="Auto,*,Auto">
+                <TextBlock Text="朗读内容" FontWeight="SemiBold" FontSize="16" Foreground="#304765"
+                           Margin="0,0,0,14"/>
+                <TextBox Grid.Row="1" x:Name="TextToSpeak"
+                         Text="学无先后达者为师。" AcceptsReturn="True"
+                         TextWrapping="Wrap" Padding="14" FontSize="15"
+                         Background="#FAFCFE" BorderBrush="#DEE6F0" CornerRadius="10"/>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12" Margin="0,15,0,0">
+                    <Button x:Name="SpeakButton" Content="开始朗读  ▶" Click="Speak_Click"
+                            Background="#286BC7" Foreground="White" CornerRadius="9"
+                            Padding="21,11"/>
+                    <Button Content="停止  ■" Click="Stop_Click" Background="#EEF3FA"
+                            Foreground="#44638B" CornerRadius="9" Padding="21,11"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="3" Classes="panel" Margin="0,15,0,0">
+            <Grid ColumnDefinitions="*,12,Auto" RowDefinitions="Auto,Auto">
+                <TextBlock Text="语音文件导出" FontSize="14" FontWeight="SemiBold" Foreground="#304765"/>
+                <TextBox x:Name="ExportPath" Grid.Row="1" Text="{Binding ExportFilePath}"
+                         Background="#FAFCFE" BorderBrush="#DFE6F0" CornerRadius="9"
+                         Height="39" Margin="0,10,0,0" VerticalContentAlignment="Center"/>
+                <Button Grid.Row="1" Grid.Column="2" Content="导出 AIFF 文件" Click="Export_Click"
+                        Background="#286BC7" Foreground="White" CornerRadius="9"
+                        Padding="16,10" Margin="0,10,0,0"/>
+            </Grid>
+        </Border>
+        <TextBlock Grid.Row="4" Text="{Binding StatusText}" FontSize="12"
+                   Foreground="#6C819F" VerticalAlignment="Center"/>
+    </Grid>
+</Window>
