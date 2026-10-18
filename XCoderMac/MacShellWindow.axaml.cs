@@ -6,6 +6,10 @@ using Avalonia.Controls;
 using XCoderAv.ViewModels;
 using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.VisualTree;
+using Avalonia.Controls.Primitives;
+using Avalonia.Media.Imaging;
+using System.IO;
 
 namespace XCoderMac;
 
@@ -23,6 +27,39 @@ public partial class MacShellWindow : Window
 
     private string? _selectedCategory;
     private bool _quickOnly;
+    private Button? _activeNavigationButton;
+
+    // 与 ToolCards 实际宽度绑定的响应式列数，使用 Avalonia 属性通知 UI 自动重排。
+    public static readonly StyledProperty<int> ToolColumnsProperty =
+        AvaloniaProperty.Register<MacShellWindow, int>(nameof(ToolColumns), 4);
+
+    public int ToolColumns
+    {
+        get => GetValue(ToolColumnsProperty);
+        private set => SetValue(ToolColumnsProperty, value);
+    }
+
+    private static int GetToolColumnCount(double availableWidth) =>
+        availableWidth >= 940 ? 4 :
+        availableWidth >= 690 ? 3 :
+        availableWidth >= 460 ? 2 : 1;
+
+    private void ToolCards_SizeChanged(object? sender, SizeChangedEventArgs e) =>
+        UpdateToolColumns(e.NewSize.Width);
+
+    private void UpdateToolColumns(double availableWidth)
+    {
+        if (availableWidth <= 0 || double.IsInfinity(availableWidth)) return;
+        ToolColumns = GetToolColumnCount(availableWidth);
+    }
+
+    private void SelectNavigation(Button? button)
+    {
+        if (button == null) return;
+        _activeNavigationButton?.Classes.Remove("selected");
+        button.Classes.Add("selected");
+        _activeNavigationButton = button;
+    }
 
     public ObservableCollection<MacTool> VisibleTools { get; } = new();
     public ObservableCollection<MacToolTab> OpenTabs { get; } = new();
@@ -33,6 +70,8 @@ public partial class MacShellWindow : Window
     {
         InitializeComponent();
         DataContext = this;
+        _activeNavigationButton = AllToolsNavButton;
+        // ToolCards.SizeChanged 会在首次布局和后续缩放时计算列数，无需持续监听每一帧布局。
         // 即使焦点处于搜索文本框，也能响应 ⌘F。
         AddHandler(InputElement.KeyDownEvent, Window_KeyDown, RoutingStrategies.Tunnel, handledEventsToo: true);
         RefreshTools();
@@ -71,6 +110,7 @@ public partial class MacShellWindow : Window
     {
         _selectedCategory = null;
         _quickOnly = false;
+        SelectNavigation(AllToolsNavButton);
         RefreshTools();
         ShowHome();
     }
@@ -79,6 +119,7 @@ public partial class MacShellWindow : Window
     {
         _selectedCategory = null;
         _quickOnly = true;
+        SelectNavigation(QuickToolsNavButton);
         RefreshTools();
         ShowHome();
     }
@@ -88,6 +129,7 @@ public partial class MacShellWindow : Window
         if (sender is not Button { Tag: MacCategory category }) return;
         _selectedCategory = category.Name;
         _quickOnly = false;
+        SelectNavigation(sender as Button);
         RefreshTools();
         ShowHome();
     }
@@ -303,6 +345,60 @@ public partial class MacShellWindow : Window
             ShowHome();
 
         UpdateWorkspaceButton();
+    }
+
+    /// <summary>开发测试：验证窗口改变宽度时的布局与导航选中项实际尺寸。</summary>
+    public async System.Threading.Tasks.Task<int> SmokeTestHomeLayoutAsync(string screenshotDirectory)
+    {
+        Directory.CreateDirectory(screenshotDirectory);
+        var errors = 0;
+        foreach (var (width, expected) in new[] { (1320, 4), (1000, 3), (1540, 4) })
+        {
+            try
+            {
+                Width = width;
+                Height = 980;
+                WindowState = WindowState.Normal;
+                ShowHome();
+                await System.Threading.Tasks.Task.Delay(180);
+                UpdateLayout();
+
+                var grid = ToolCards.GetVisualDescendants().OfType<UniformGrid>().FirstOrDefault();
+                var navWidth = AllToolsNavButton.Bounds.Width;
+                var cardsWidth = ToolCards.Bounds.Width;
+                var firstCard = ToolCards.GetVisualDescendants().OfType<Button>()
+                    .FirstOrDefault(b => b.Classes.Contains("tool-card"));
+                Console.WriteLine($"HOME LAYOUT: window={width}, cards={cardsWidth:F1}, cols={ToolColumns}, actualGrid={grid?.Columns}, nav={navWidth:F1}, firstCard={firstCard?.Bounds.Width:F1}");
+
+                if (ToolColumns != expected || grid?.Columns != expected)
+                    throw new InvalidOperationException($"工具卡片应为 {expected} 列");
+                if (navWidth < 175 || navWidth > 205)
+                    throw new InvalidOperationException($"导航按钮没有铺满左栏内部：{navWidth}");
+                if (firstCard == null || firstCard.Bounds.Width < 175)
+                    throw new InvalidOperationException("工具卡片未正常伸展");
+                if (cardsWidth <= 0 || cardsWidth > width - 180)
+                    throw new InvalidOperationException($"工具区宽度不正常：{cardsWidth}");
+
+                if (width == 1540)
+                {
+                    // 保持与其他 26 张工具截图一致的 3080px 原始宽度。
+                    var screenshot = Path.Combine(screenshotDirectory, "00-首页.png");
+                    var pixels = new PixelSize((int)Math.Ceiling(Bounds.Width * 2),
+                                               (int)Math.Ceiling(Bounds.Height * 2));
+                    using var bitmap = new RenderTargetBitmap(pixels, new Vector(192, 192));
+                    bitmap.Render(this);
+                    bitmap.Save(screenshot);
+                    Console.WriteLine($"HOME SCREENSHOT: {screenshot} ({pixels.Width}x{pixels.Height})");
+                }
+            }
+            catch (Exception ex)
+            {
+                errors++;
+                Console.Error.WriteLine($"HOME LAYOUT FAILED ({width}): {ex}");
+            }
+        }
+        Console.WriteLine($"HOME LAYOUT SUMMARY: 3 sizes, ERRORS={errors}");
+        return errors;
     }
 
     // 仅测试工具窗口的初始化、标签复用、导航与关闭，不执行外部业务命令。

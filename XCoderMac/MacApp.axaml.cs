@@ -15,8 +15,28 @@ public sealed class MacApp : Application
         {
             desktop.MainWindow = new MacShellWindow();
 #if DEBUG
+            // 测试主页真实布局：响应式卡片列数、左侧选中项宽度，以及首页截图。
+            if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-home-layout"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(async () =>
+                {
+                    try
+                    {
+                        var shell = (MacShellWindow)desktop.MainWindow!;
+                        var output = System.IO.Path.Combine(System.Environment.CurrentDirectory,
+                            "XCoderMac", "Docs", "软件界面");
+                        var errors = await shell.SmokeTestHomeLayoutAsync(output);
+                        desktop.Shutdown(errors == 0 ? 0 : 1);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Console.Error.WriteLine("HOME LAYOUT CRASH: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                });
+            }
             // 26 工具单主窗口标签页回归：测试打开、复用、切换、关闭和横向导航。
-            if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-tabs"))
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-tabs"))
             {
                 Avalonia.Threading.Dispatcher.UIThread.Post(() =>
                 {

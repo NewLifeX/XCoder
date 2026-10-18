@@ -4,6 +4,9 @@
 > 工程目录：`/Users/yanjinlong/Code/newlife/XCoder/XCoderMac`
 > 项目约束：保留 `master`，不修改上游 `XCoderAv`；仅新增/维护本目录代码，根目录 `码神工具.sln` 只添加项目。
 
+
+- **主界面自适应（2026-10-18）**：左侧导航栏缩为 216px，整行选中高亮；工具卡片根据宽度自动排布 4/3/2/1 列，解决右下方大块留白。具体见 `Docs/主界面布局优化说明.md`，可运行 `--smoke-home-layout` 检验与更新首页截图。
+
 ## 最新上游兼容与单窗口多标签（2026-10-18）
 
 - 已将项目添加到新版根目录 `码神工具.slnx`；`XCoderMac.csproj` 的 Avalonia.Desktop、Avalonia.Themes.Fluent、Avalonia.Fonts.Inter 已与上游 `XCoderAv` 对齐为 **12.1.1**。

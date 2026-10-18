@@ -1,5 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:primitives="clr-namespace:Avalonia.Controls.Primitives;assembly=Avalonia.Controls"
         x:CompileBindings="False"
         x:Class="XCoderMac.MacShellWindow"
         Title="XCoder Mac · 新生命码神工具"
@@ -14,6 +15,14 @@
             <Setter Property="CornerRadius" Value="11"/>
             <Setter Property="Padding" Value="15,12"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="MinHeight" Value="46"/>
+        </Style>
+        <Style Selector="Button.sidebar-item.selected">
+            <Setter Property="Background" Value="#DEE8FA"/>
+        </Style>
+        <Style Selector="Button.sidebar-item.selected:pointerover">
+            <Setter Property="Background" Value="#D7E5FA"/>
         </Style>
         <Style Selector="Button.sidebar-item:pointerover">
             <Setter Property="Background" Value="#E6ECF5"/>
@@ -30,44 +39,52 @@
         </Style>
     </Window.Styles>
 
-    <Grid ColumnDefinitions="254,*">
+    <Grid ColumnDefinitions="216,*">
         <!-- macOS 工具侧边栏 -->
         <Border Grid.Column="0" Background="#F0F3F8" BorderBrush="#E3E8F0" BorderThickness="0,0,1,0">
-            <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="18,25,14,18">
-                <StackPanel Grid.Row="0" Margin="6,0,0,31" Spacing="15">
-                    <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
-                        <Border Width="44" Height="44" Background="#2463C5" CornerRadius="13">
-                            <TextBlock Text="X" FontSize="25" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="14,25,10,18">
+                <StackPanel Grid.Row="0" Margin="2,0,0,31" Spacing="15">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <Border Width="40" Height="40" Background="#2463C5" CornerRadius="12">
+                            <TextBlock Text="X" FontSize="23" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Spacing="1" VerticalAlignment="Center">
-                            <TextBlock Text="XCoder Mac" FontSize="18" FontWeight="SemiBold" Foreground="#172942"/>
-                            <TextBlock Text="NEWLIFE · DEVELOPER TOOLS" FontSize="9" FontWeight="SemiBold" Foreground="#74839A"/>
+                            <TextBlock Text="XCoder Mac" FontSize="16" FontWeight="SemiBold" Foreground="#172942"/>
+                            <TextBlock Text="NEWLIFE · DEVELOPER TOOLS" FontSize="8" FontWeight="SemiBold" Foreground="#74839A"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel Grid.Row="1" Spacing="5">
-                    <TextBlock Text="工作台" FontSize="11" FontWeight="SemiBold" Foreground="#94A0B0" Margin="13,0,0,10"/>
-                    <Button Classes="sidebar-item" Click="AllTools_Click" Background="#DEE8FA">
+                <!-- Grid 约束菜单项占满导航栏内部宽度，不再显示内容宽度的胶囊按钮。 -->
+                <Grid Grid.Row="1" RowDefinitions="Auto,46,46" RowSpacing="5">
+                    <TextBlock Grid.Row="0" Text="工作台" FontSize="11" FontWeight="SemiBold"
+                               Foreground="#94A0B0" Margin="13,0,0,10"/>
+                    <Button x:Name="AllToolsNavButton" Grid.Row="1"
+                            Classes="sidebar-item selected" Click="AllTools_Click"
+                            HorizontalAlignment="Stretch">
                         <Grid ColumnDefinitions="26,*">
                             <TextBlock Text="▦" FontSize="20" Foreground="#3368BD" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="所有工具" FontSize="14" FontWeight="SemiBold" Foreground="#233F69" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="所有工具" FontSize="14"
+                                       FontWeight="SemiBold" Foreground="#233F69" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
-                    <Button Classes="sidebar-item" Click="QuickTools_Click">
+                    <Button x:Name="QuickToolsNavButton" Grid.Row="2"
+                            Classes="sidebar-item" Click="QuickTools_Click"
+                            HorizontalAlignment="Stretch">
                         <Grid ColumnDefinitions="26,*">
                             <TextBlock Text="✦" FontSize="19" Foreground="#687A90" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" Text="快捷工具" FontSize="14" Foreground="#465974" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
-                </StackPanel>
+                </Grid>
 
                 <StackPanel Grid.Row="2" Margin="0,31,0,0" Spacing="8">
                     <TextBlock Text="工具分类" FontSize="11" FontWeight="SemiBold" Foreground="#94A0B0" Margin="13,0,0,6"/>
                     <ItemsControl ItemsSource="{Binding Categories}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Classes="sidebar-item" Click="Category_Click" Tag="{Binding}" Margin="0,0,0,5">
+                                <Button Classes="sidebar-item" Click="Category_Click" Tag="{Binding}"
+                                        HorizontalAlignment="Stretch" Margin="0,0,0,5">
                                     <Grid ColumnDefinitions="26,*">
                                         <TextBlock Text="{Binding Icon}" FontSize="18" Foreground="#627995" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="1" Text="{Binding Name}" FontSize="14" Foreground="#435771" VerticalAlignment="Center"/>
@@ -164,16 +181,19 @@
                         </Border>
                     </Grid>
 
-                    <ItemsControl ItemsSource="{Binding VisibleTools}">
+                    <!-- 均分可用宽度，列数随工具区实际宽度变化；消除右侧剩余大块空白。 -->
+                    <ItemsControl x:Name="ToolCards" ItemsSource="{Binding VisibleTools}"
+                                  HorizontalAlignment="Stretch" SizeChanged="ToolCards_SizeChanged">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal"/>
+                                <primitives:UniformGrid Columns="{Binding ToolColumns}"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Button Classes="tool-card" Tag="{Binding}" Click="ToolCard_Click"
-                                        Width="252" Height="149" Margin="0,0,13,13" Padding="18"
+                                        MinWidth="0" Height="154" Margin="0,0,13,13" Padding="18"
+                                        HorizontalAlignment="Stretch"
                                         HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                                     <Grid RowDefinitions="Auto,Auto,Auto">
                                         <Grid ColumnDefinitions="Auto,*" Margin="0,0,0,11">
