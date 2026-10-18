@@ -15,15 +15,99 @@ public sealed class MacApp : Application
         {
             desktop.MainWindow = new MacShellWindow();
 #if DEBUG
-            // 测试主页真实布局：响应式卡片列数、左侧选中项宽度，以及首页截图。
-            if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-home-layout"))
+            // 验证数据同步源/目标连接分组、下拉框尺寸和布尔按钮问题。
+            if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-sync-layout"))
             {
                 Avalonia.Threading.Dispatcher.UIThread.Post(async () =>
                 {
                     try
                     {
                         var shell = (MacShellWindow)desktop.MainWindow!;
-                        var output = System.IO.Path.Combine(System.Environment.CurrentDirectory,
+                        var output = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                            "XCoderMac", "Docs", "软件界面");
+                        var errors = await shell.SmokeTestDataSyncLayoutAsync(output);
+                        desktop.Shutdown(errors == 0 ? 0 : 1);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Console.Error.WriteLine("SYNC LAYOUT CRASH: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                });
+            }
+            // 真实初始化连接设置弹窗，并检查是否可显示和关闭，无网络连接行为。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-connection-ui"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+                {
+                    try
+                    {
+                        var window = new Views.MacConnectionManagerWindow();
+                        window.Show();
+                        window.UpdateLayout();
+                        var valid = window.Bounds.Width >= 730 && window.Content is Avalonia.Controls.Grid;
+                        if (valid) window.SmokeTestFieldSynchronization();
+                        if (valid) window.SmokeTestLightPalette();
+                        if (valid)
+                        {
+                            var folder = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                                "XCoderMac", "Docs", "软件界面");
+                            System.IO.Directory.CreateDirectory(folder);
+                            using var image = new Avalonia.Media.Imaging.RenderTargetBitmap(
+                                new Avalonia.PixelSize(1780, 1260), new Avalonia.Vector(192, 192));
+                            image.Render(window);
+                            image.Save(System.IO.Path.Combine(folder, "01-数据库连接配置.png"));
+
+                            window.PrepareSampleForScreenshot();
+                            window.Width = 980;
+                            window.Height = 790;
+                            window.UpdateLayout();
+                            using var example = new Avalonia.Media.Imaging.RenderTargetBitmap(
+                                new Avalonia.PixelSize(1960, 1580), new Avalonia.Vector(192, 192));
+                            example.Render(window);
+                            example.Save(System.IO.Path.Combine(folder,
+                                "01-数据库连接配置-连接串双向同步.png"));
+                        }
+                        window.Close();
+                        Console.WriteLine(valid ? "CONNECTION UI OK: initialized, rendered, closed" : "CONNECTION UI FAILED: missing controls");
+                        desktop.Shutdown(valid ? 0 : 1);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Error.WriteLine("CONNECTION UI FAILED: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                });
+            }
+            // 在单窗口工具标签中验证数据建模响应式页面，不执行连接和代码生成。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-modeling-layout"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(async () =>
+                {
+                    try
+                    {
+                        var shell = (MacShellWindow)desktop.MainWindow!;
+                        var output = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                            "XCoderMac", "Docs", "软件界面");
+                        var errors = await shell.SmokeTestModelingLayoutAsync(output);
+                        desktop.Shutdown(errors == 0 ? 0 : 1);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Console.Error.WriteLine("MODEL LAYOUT CRASH: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                });
+            }
+            // 测试主页真实布局：响应式卡片列数、左侧选中项宽度，以及首页截图。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-home-layout"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(async () =>
+                {
+                    try
+                    {
+                        var shell = (MacShellWindow)desktop.MainWindow!;
+                        var output = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
                             "XCoderMac", "Docs", "软件界面");
                         var errors = await shell.SmokeTestHomeLayoutAsync(output);
                         desktop.Shutdown(errors == 0 ? 0 : 1);

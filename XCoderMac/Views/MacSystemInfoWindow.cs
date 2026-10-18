@@ -26,7 +26,7 @@ public abstract class MacSystemInfoWindow : Window
     protected MacSystemInfoWindow(string title, string subtitle, string dataType)
     {
         _dataType = dataType;
-        Title = $"{title} · XCoder Mac";
+        Title = $"{title} · XCoder";
         Width = 1110;
         Height = 760;
         MinWidth = 830;

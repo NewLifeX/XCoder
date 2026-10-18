@@ -3,7 +3,7 @@
         xmlns:primitives="clr-namespace:Avalonia.Controls.Primitives;assembly=Avalonia.Controls"
         x:CompileBindings="False"
         x:Class="XCoderMac.MacShellWindow"
-        Title="XCoder Mac · 新生命码神工具"
+        Title="XCoder · 新生命码神工具"
         Width="1320" Height="850" MinWidth="1000" MinHeight="690"
         WindowStartupLocation="CenterScreen"
         Icon="avares://XCoderMac/Docs/Assets/XCoderMac-1024.png"
@@ -49,8 +49,8 @@
                             <TextBlock Text="X" FontSize="23" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel Spacing="1" VerticalAlignment="Center">
-                            <TextBlock Text="XCoder Mac" FontSize="16" FontWeight="SemiBold" Foreground="#172942"/>
-                            <TextBlock Text="NEWLIFE · DEVELOPER TOOLS" FontSize="8" FontWeight="SemiBold" Foreground="#74839A"/>
+                            <TextBlock Text="XCoder" FontSize="16" FontWeight="SemiBold" Foreground="#172942"/>
+                            <TextBlock Text="NEWLIFE.XCODER · DEVELOPER TOOLS" FontSize="8" FontWeight="SemiBold" Foreground="#74839A"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
@@ -97,7 +97,7 @@
 
                 <Border Grid.Row="3" CornerRadius="14" Background="#E5EAF3" Padding="15,13">
                     <StackPanel Spacing="6">
-                        <TextBlock Text="XCoder Mac · 预览版" FontSize="12" FontWeight="SemiBold" Foreground="#2B466D"/>
+                        <TextBlock Text="XCoder · 预览版" FontSize="12" FontWeight="SemiBold" Foreground="#2B466D"/>
                         <TextBlock Text="基于 Avalonia 与 NewLife" FontSize="11" Foreground="#66788E"/>
                         <TextBlock Text="工具持续适配中" FontSize="11" Foreground="#8A99A9"/>
                     </StackPanel>
@@ -218,7 +218,7 @@
 
                     <Border BorderBrush="#E6ECF4" BorderThickness="0,1,0,0" Padding="2,16,0,0">
                         <Grid ColumnDefinitions="*,Auto">
-                            <TextBlock Text="XCoder Mac · Powered by NewLife" FontSize="11" Foreground="#A6B0BE"/>
+                            <TextBlock Text="XCoder · Powered by NewLife" FontSize="11" Foreground="#A6B0BE"/>
                             <TextBlock Grid.Column="1" Text="⌘ F 搜索工具" FontSize="11" Foreground="#A6B0BE"/>
                         </Grid>
                     </Border>

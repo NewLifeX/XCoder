@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:CompileBindings="False"
         x:Class="XCoderMac.Views.MacNetworkWindow"
-        Title="网络调试 · XCoder Mac" Width="1200" Height="860"
+        Title="网络调试 · XCoder" Width="1200" Height="860"
         MinWidth="960" MinHeight="690" WindowStartupLocation="CenterOwner"
         Background="#F7F9FC">
     <Window.Styles>
@@ -108,7 +108,7 @@
         <Grid Grid.Row="3" ColumnDefinitions="*,Auto" Margin="0,13,0,0">
             <TextBlock Text="请使用测试地址及端口；服务端模式会监听本机网络接口。" FontSize="11"
                        Foreground="#879AAF" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="1" Text="XCoder Mac · NewLife.Net" FontSize="11"
+            <TextBlock Grid.Column="1" Text="XCoder · NewLife.Net" FontSize="11"
                        Foreground="#A8B4C4" VerticalAlignment="Center"/>
         </Grid>
     </Grid>

@@ -1,0 +1,138 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:CompileBindings="False"
+        x:Class="XCoderMac.Views.MacConnectionManagerWindow"
+        Title="数据库连接配置 · Newlife.XCoder"
+        Width="890" Height="630" MinWidth="730" MinHeight="570"
+        WindowStartupLocation="CenterOwner"
+        Background="#F7F9FC">
+    <Grid RowDefinitions="Auto,*,Auto" Margin="22" RowSpacing="14">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="5">
+                <TextBlock Text="数据库连接配置" FontSize="23" FontWeight="SemiBold" Foreground="#213A59"/>
+                <TextBlock Text="界面保存与手动修改共用 Config/connections.json；数据库密码默认保存在 macOS 钥匙串"
+                           FontSize="12" Foreground="#70849E"/>
+            </StackPanel>
+            <Button Classes="secondary" Grid.Column="1" Content="在 Finder 中打开配置文件" Click="OpenFolder_Click"
+                    Background="#E8F0FA" Foreground="#305C91" CornerRadius="9"
+                    Padding="15,9" VerticalAlignment="Center"/>
+        </Grid>
+        <Grid Grid.Row="1" ColumnDefinitions="205,14,*">
+            <Border Grid.Column="0" Background="White" BorderBrush="#E1E8F2"
+                    BorderThickness="1" CornerRadius="13" Padding="12">
+                <DockPanel LastChildFill="True">
+                    <StackPanel DockPanel.Dock="Top" Spacing="9" Margin="0,0,0,12">
+                        <TextBlock Text="已保存连接" FontSize="14" FontWeight="SemiBold" Foreground="#29405C"/>
+                        <Button Classes="secondary" Content="+ 新增连接" Click="New_Click" Padding="12,9"
+                                Background="#EAF0FB" Foreground="#23589A" CornerRadius="8"/>
+                    </StackPanel>
+                    <ListBox x:Name="ConnectionList" SelectionChanged="SelectionChanged"
+                             Background="Transparent" BorderThickness="0"/>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="2" Background="White" BorderBrush="#E1E8F2"
+                    BorderThickness="1" CornerRadius="13" Padding="18">
+                <Grid RowDefinitions="*,Auto" RowSpacing="9">
+                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="11">
+                        <TextBlock Text="连接信息" FontSize="16" FontWeight="SemiBold" Foreground="#29405C"/>
+                        <Grid ColumnDefinitions="*,14,*">
+                            <StackPanel Grid.Column="0" Spacing="5">
+                                <TextBlock Text="连接名称" FontSize="12" Foreground="#617791"/>
+                                <TextBox x:Name="NameInput" Height="38" Watermark="例如：生产数据库"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Spacing="5">
+                                <TextBlock Text="数据库类型 / Provider" FontSize="12" Foreground="#617791"/>
+                                <ComboBox x:Name="ProviderInput" Height="38" IsEditable="True" HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding Providers}"/>
+                            </StackPanel>
+                        </Grid>
+                        <!-- 日常使用填写结构化字段，完整连接串供专家手动调参。 -->
+                        <StackPanel x:Name="NetworkFields" Spacing="10">
+                            <Grid ColumnDefinitions="2*,14,1*">
+                                <StackPanel Grid.Column="0" Spacing="5">
+                                    <TextBlock Text="服务器 IP / 主机名" FontSize="12" Foreground="#617791"/>
+                                    <TextBox x:Name="HostInput" Height="38"
+                                             Watermark="例如：127.0.0.1 或 db.example.com"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Spacing="5">
+                                    <TextBlock Text="端口" FontSize="12" Foreground="#617791"/>
+                                    <TextBox x:Name="PortInput" Height="38"
+                                             Watermark="例如：3306"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid ColumnDefinitions="*,14,*">
+                                <StackPanel Grid.Column="0" Spacing="5">
+                                    <TextBlock Text="数据库名称" FontSize="12" Foreground="#617791"/>
+                                    <TextBox x:Name="DatabaseInput" Height="38"
+                                             Watermark="例如：MyDatabase"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Spacing="5">
+                                    <TextBlock Text="用户名" FontSize="12" Foreground="#617791"/>
+                                    <TextBox x:Name="UsernameInput" Height="38"
+                                             Watermark="例如：root"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel x:Name="FileFields" Spacing="5" IsVisible="False">
+                            <TextBlock Text="数据库文件路径" FontSize="12" Foreground="#617791"/>
+                            <TextBox x:Name="DatabaseFileInput" Height="38"
+                                     Watermark="例如：~/Documents/data.db"/>
+                        </StackPanel>
+                        <CheckBox x:Name="AdvancedToggle"
+                                  Content="高级：显示 / 手动编辑连接字符串"
+                                  FontSize="12" Foreground="#466895"/>
+                        <StackPanel x:Name="AdvancedFields" IsVisible="False" Spacing="5">
+                            <TextBlock Text="完整连接字符串（不含密码）" FontSize="12" Foreground="#617791"/>
+                            <TextBox x:Name="ConnectionStringInput" Height="94" AcceptsReturn="True"
+
+                                     TextWrapping="Wrap" Watermark="Server=127.0.0.1;Database=Test;User Id=root"/>
+                            <TextBlock Text="在此输入连接串，IP、端口、数据库和用户名会自动填入上面的文本框；修改文本框也会更新这里。其他参数保留。"
+                                       TextWrapping="Wrap" FontSize="11" Foreground="#8499AE"/>
+                        </StackPanel>
+                        <TextBlock Text="密码保存方式" FontSize="12" Foreground="#617791"/>
+                        <ComboBox x:Name="PasswordModeInput" Height="38"
+                                  SelectionChanged="PasswordMode_Changed">
+                            <ComboBoxItem Content="macOS 钥匙串（推荐）" Tag="keychain"/>
+                            <ComboBoxItem Content="无密码" Tag="none"/>
+                            <ComboBoxItem Content="JSON 明文（不推荐）" Tag="plaintext"/>
+                        </ComboBox>
+                        <TextBlock Text="数据库密码（留空则保留已保存密码）" FontSize="12" Foreground="#617791"/>
+                        <TextBox x:Name="PasswordInput" Height="38" PasswordChar="●"
+                                 Watermark="密码不会显示在连接清单中"/>
+                        <TextBlock x:Name="PasswordHint"
+                                   Text="默认只把密码存入钥匙串，配置文件不会包含明文密码。"
+                                   TextWrapping="Wrap" FontSize="11" Foreground="#8A99AB"/>
+
+                    </StackPanel>
+                </ScrollViewer>
+                <!-- 操作行始终可见，不会随着右侧表单滚动而被遮挡。 -->
+                <Border Grid.Row="1" Padding="0,10,0,0" BorderBrush="#E3EAF3"
+                        BorderThickness="0,1,0,0">
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto" Margin="0,8,0,0">
+                            <Button Classes="secondary" Grid.Column="0" Content="测试连接" Click="Test_Click"
+                                    Background="#EAF0F9" Foreground="#355E96"
+                                    CornerRadius="9" Padding="14,10" HorizontalAlignment="Left"/>
+                            <Button Classes="danger" Grid.Column="1" Content="删除" Click="Delete_Click" Padding="15,10"
+                                    Background="#F8EAE9" Foreground="#965254" CornerRadius="9"
+                                    Margin="0,0,9,0"/>
+                            <Button Classes="secondary" Grid.Column="2" Content="重新加载文件" Click="Reload_Click"
+                                    Padding="15,10" Background="#EEF2F7" Foreground="#526A86"
+                                    CornerRadius="9" Margin="0,0,9,0"/>
+                            <Button Classes="primary" Grid.Column="3" Content="保存连接" Click="Save_Click" Padding="17,10"
+                                    Background="#2869C5" Foreground="White" CornerRadius="9"/>
+                        </Grid>
+                </Border>
+                </Grid>
+            </Border>
+        </Grid>
+        <Border Grid.Row="2" BorderBrush="#E3EAF3" BorderThickness="0,1,0,0" Padding="0,12,0,0">
+            <Grid ColumnDefinitions="*,Auto">
+                <TextBlock x:Name="StatusLabel" Text="就绪。请先选择连接或新增。"
+                           FontSize="12" TextWrapping="Wrap" Foreground="#64809C"/>
+                <Button Classes="secondary" Grid.Column="1" Content="完成" Click="Close_Click" Padding="18,8"
+                        Background="#E8F0FA" Foreground="#3D5D87" CornerRadius="8"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

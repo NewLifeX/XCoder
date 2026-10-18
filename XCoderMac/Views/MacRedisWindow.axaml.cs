@@ -39,7 +39,9 @@ public partial class MacRedisWindow : Window
 
     // .app 内部文件不能作为可写配置，使用当前用户的 Application Support 目录。
     private static readonly string ConfigPath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.Personal),
+        Services.MacUserPaths.ConfigDirectory, "redis-nodes.json");
+    private static readonly string LegacyConfigPath = Path.Combine(
+        Services.MacUserPaths.UserHome,
         "Library", "Application Support", "XCoderMac", "RedisNodes.json");
 
     public MacRedisWindow()
@@ -52,6 +54,20 @@ public partial class MacRedisWindow : Window
 
     private void LoadMacNodes()
     {
+        // 首次启动迁移旧 Mac 预览版数据，不覆盖用户新目录的设置。
+        if (!File.Exists(ConfigPath) && File.Exists(LegacyConfigPath))
+        {
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(ConfigPath)!);
+                File.Copy(LegacyConfigPath, ConfigPath);
+                File.SetUnixFileMode(ConfigPath, UnixFileMode.UserRead | UnixFileMode.UserWrite);
+            }
+            catch (Exception ex)
+            {
+                Vm.Status = $"迁移旧版 Redis 配置失败：{ex.Message}";
+            }
+        }
         if (!File.Exists(ConfigPath)) return;
         try
         {

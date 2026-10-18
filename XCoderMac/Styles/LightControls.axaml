@@ -1,0 +1,158 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Newlife.XCoder 统一使用亮色主题，不跟随 macOS 的深色系统主题。
+         全局设定仅覆盖基本控件；业务上明确设定的主按钮/危险按钮颜色仍优先。 -->
+    <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="#294563"/>
+    </Style>
+
+    <Style Selector="Button">
+        <Setter Property="Background" Value="#EAF1FA"/>
+        <Setter Property="Foreground" Value="#285686"/>
+        <Setter Property="BorderBrush" Value="#D7E4F2"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+    <Style Selector="Button:pointerover">
+        <Setter Property="Background" Value="#DDECFB"/>
+        <Setter Property="Foreground" Value="#1D4B7F"/>
+        <Setter Property="BorderBrush" Value="#B9D2ED"/>
+    </Style>
+    <Style Selector="Button:pressed">
+        <Setter Property="Background" Value="#CFE2F7"/>
+        <Setter Property="Foreground" Value="#1A406A"/>
+    </Style>
+    <Style Selector="Button:disabled">
+        <Setter Property="Background" Value="#F1F4F8"/>
+        <Setter Property="Foreground" Value="#8798AB"/>
+        <Setter Property="BorderBrush" Value="#E2E8F0"/>
+    </Style>
+
+    <!-- 在颜色需要保持强烈语义的操作中使用指定类别。 -->
+    <Style Selector="Button.primary">
+        <Setter Property="Background" Value="#0875CF"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="BorderBrush" Value="#0875CF"/>
+    </Style>
+    <Style Selector="Button.primary:pointerover">
+        <Setter Property="Background" Value="#0564B5"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="BorderBrush" Value="#0564B5"/>
+    </Style>
+    <Style Selector="Button.primary:pressed">
+        <Setter Property="Background" Value="#064E93"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+
+    <Style Selector="Button.secondary">
+        <Setter Property="Background" Value="#EAF1FA"/>
+        <Setter Property="Foreground" Value="#285686"/>
+        <Setter Property="BorderBrush" Value="#D7E4F2"/>
+    </Style>
+    <Style Selector="Button.secondary:pointerover">
+        <Setter Property="Background" Value="#D7E7F9"/>
+        <Setter Property="Foreground" Value="#1E4C7A"/>
+    </Style>
+
+    <Style Selector="Button.danger">
+        <Setter Property="Background" Value="#FAECEC"/>
+        <Setter Property="Foreground" Value="#98454D"/>
+        <Setter Property="BorderBrush" Value="#F0D8DC"/>
+    </Style>
+    <Style Selector="Button.danger:pointerover">
+        <Setter Property="Background" Value="#F3D9DD"/>
+        <Setter Property="Foreground" Value="#832F3B"/>
+    </Style>
+
+    <Style Selector="TextBox">
+        <Setter Property="Foreground" Value="#294563"/>
+        <Setter Property="Background" Value="#F8FAFE"/>
+        <Setter Property="BorderBrush" Value="#D5E2F2"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+    <Style Selector="TextBox:pointerover">
+        <Setter Property="Background" Value="#F5F9FF"/>
+        <Setter Property="BorderBrush" Value="#AAC6E5"/>
+    </Style>
+    <Style Selector="TextBox:focus">
+        <Setter Property="Background" Value="#FFFFFF"/>
+        <Setter Property="BorderBrush" Value="#1684DB"/>
+    </Style>
+
+    <Style Selector="ComboBox">
+        <Setter Property="Foreground" Value="#294563"/>
+        <Setter Property="Background" Value="#F8FAFE"/>
+        <Setter Property="BorderBrush" Value="#D5E2F2"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+    <Style Selector="ComboBox:pointerover">
+        <Setter Property="Foreground" Value="#24496F"/>
+        <Setter Property="Background" Value="#EEF6FE"/>
+        <Setter Property="BorderBrush" Value="#AECBEA"/>
+    </Style>
+    <Style Selector="ComboBox:focus">
+        <Setter Property="Foreground" Value="#24496F"/>
+        <Setter Property="Background" Value="#FFFFFF"/>
+        <Setter Property="BorderBrush" Value="#1684DB"/>
+    </Style>
+
+    <Style Selector="ComboBoxItem">
+        <Setter Property="Foreground" Value="#294563"/>
+        <Setter Property="Background" Value="#FFFFFF"/>
+    </Style>
+    <Style Selector="ComboBoxItem:pointerover">
+        <Setter Property="Foreground" Value="#164977"/>
+        <Setter Property="Background" Value="#ECF4FE"/>
+    </Style>
+    <Style Selector="ComboBoxItem:selected">
+        <Setter Property="Foreground" Value="#123F70"/>
+        <Setter Property="Background" Value="#DCEAFE"/>
+    </Style>
+    <Style Selector="ComboBoxItem:selected:pointerover">
+        <Setter Property="Foreground" Value="#123F70"/>
+        <Setter Property="Background" Value="#D0E4FB"/>
+    </Style>
+
+    <Style Selector="ListBoxItem">
+        <Setter Property="Foreground" Value="#294563"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style Selector="ListBoxItem:pointerover">
+        <Setter Property="Foreground" Value="#1D4E81"/>
+        <Setter Property="Background" Value="#EDF5FE"/>
+    </Style>
+    <Style Selector="ListBoxItem:selected">
+        <Setter Property="Foreground" Value="#174C86"/>
+        <Setter Property="Background" Value="#DCEBFC"/>
+    </Style>
+    <Style Selector="ListBoxItem:selected:pointerover">
+        <Setter Property="Foreground" Value="#143F71"/>
+        <Setter Property="Background" Value="#CDE1FC"/>
+    </Style>
+
+    <Style Selector="TabItem">
+        <Setter Property="Foreground" Value="#395878"/>
+        <Setter Property="Background" Value="#F0F4F9"/>
+    </Style>
+    <Style Selector="TabItem:pointerover">
+        <Setter Property="Foreground" Value="#214B7D"/>
+        <Setter Property="Background" Value="#E7EFFA"/>
+    </Style>
+    <Style Selector="TabItem:selected">
+        <Setter Property="Foreground" Value="#1B518A"/>
+        <Setter Property="Background" Value="#DFECFC"/>
+    </Style>
+    <Style Selector="TabItem:selected:pointerover">
+        <Setter Property="Foreground" Value="#174575"/>
+        <Setter Property="Background" Value="#D5E5F9"/>
+    </Style>
+
+    <Style Selector="MenuItem">
+        <Setter Property="Foreground" Value="#294563"/>
+    </Style>
+    <Style Selector="MenuItem:pointerover">
+        <Setter Property="Foreground" Value="#194B7E"/>
+        <Setter Property="Background" Value="#E8F1FC"/>
+    </Style>
+</Styles>

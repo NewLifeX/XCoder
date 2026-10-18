@@ -34,7 +34,7 @@ public partial class MacLegacyToolWindow : Window
 
         ToolTitle.Text = tool.Title;
         ToolDescription.Text = tool.Description;
-        Title = $"{tool.Title} · XCoder Mac";
+        Title = $"{tool.Title} · XCoder";
 
         var content = _originalWindow.Content;
         if (content == null)

@@ -6,6 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>XCoderMac</AssemblyName>
     <RootNamespace>XCoderMac</RootNamespace>
+    <Product>Newlife.XCoder</Product>
+    <AssemblyTitle>XCoder</AssemblyTitle>
+    <Company>NewLife</Company>
   </PropertyGroup>
 
   <!-- App 图标资源只保留在本项目 Docs/Assets 内。 -->

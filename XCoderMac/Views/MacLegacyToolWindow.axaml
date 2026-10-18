@@ -69,7 +69,7 @@
         <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
             <TextBlock Text="复用原 NewLife 工具逻辑 · macOS 适配界面" FontSize="11" Foreground="#8F9DB0"
                        VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="1" Text="XCoder Mac" FontSize="11" Foreground="#9DACBE"
+            <TextBlock Grid.Column="1" Text="XCoder" FontSize="11" Foreground="#9DACBE"
                        VerticalAlignment="Center"/>
         </Grid>
     </Grid>

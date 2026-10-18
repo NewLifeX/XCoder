@@ -20,7 +20,7 @@ public partial class MacSpeechWindow : Window, INotifyPropertyChanged
     private string? _selectedVoice;
     private string _statusText = "就绪";
     private string _exportFilePath =
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "XCoderMacSpeech.aiff");
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "XCoderSpeech.aiff");
 
     public new event PropertyChangedEventHandler? PropertyChanged;
     public ObservableCollection<string> Voices { get; } = new();

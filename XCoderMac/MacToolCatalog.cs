@@ -21,7 +21,7 @@ public static class MacToolCatalog
     public static readonly MacTool[] Tools =
     [
         new("数据建模", "数据库模型设计与实体代码生成", "开发与数据", "▦", typeof(XCoderMac.Views.MacDataModelingWindow)),
-        new("数据同步", "跨数据库数据迁移与同步", "开发与数据", "⇄", typeof(XCoderAv.Views.DataSyncWindow)),
+        new("数据同步", "跨数据库数据迁移与同步", "开发与数据", "⇄", typeof(XCoderMac.Views.MacDataSyncWindow)),
         new("API 调试", "NewLife.Remoting RPC 连接与调用", "开发与数据", "⌘", typeof(XCoderMac.Views.MacApiDebugWindow)),
         new("API 发现", "服务接口扫描与发现", "开发与数据", "◎", typeof(XCoderAv.Views.ApiDiscoverWindow)),
         new("正则表达式", "匹配、替换及捕获组分析", "开发与数据", ".*", typeof(XCoderMac.Views.MacRegexWindow)),

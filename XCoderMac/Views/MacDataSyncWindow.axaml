@@ -1,0 +1,170 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:CompileBindings="False"
+        x:Class="XCoderMac.Views.MacDataSyncWindow"
+        Title="数据同步 · XCoder"
+        Width="1200" Height="845" MinWidth="740" MinHeight="530"
+        Background="#F7F9FC" WindowStartupLocation="CenterOwner">
+    <Window.Styles>
+        <Style Selector="Border.sync-panel">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E1E9F4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Padding" Value="18"/>
+        </Style>
+        <Style Selector="TextBlock.sync-title">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#294563"/>
+        </Style>
+        <Style Selector="TextBlock.sync-hint">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#8193A9"/>
+        </Style>
+    </Window.Styles>
+
+    <ScrollViewer x:Name="PageViewport" VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
+                  SizeChanged="PageViewport_SizeChanged">
+        <StackPanel Margin="25,21,25,20" Spacing="17">
+            <StackPanel Spacing="5">
+                <TextBlock Text="跨数据库数据同步" FontSize="24"
+                           FontWeight="SemiBold" Foreground="#203C5C"/>
+                <TextBlock Text="选择源数据库、目标数据库，然后勾选需要同步的数据表。"
+                           Foreground="#879CB5" FontSize="12"/>
+            </StackPanel>
+
+            <!-- 源与目标保持相互独立；窄窗口将两张卡片上下排列。 -->
+            <Grid x:Name="ConnectionGroups" ColumnDefinitions="*,16,*" RowDefinitions="Auto">
+                <Border x:Name="SourcePanel" Classes="sync-panel" Grid.Column="0" Grid.Row="0"
+                        HorizontalAlignment="Stretch">
+                    <StackPanel Spacing="12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Classes="sync-title" Text="源数据库" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="SOURCE" FontSize="10" Foreground="#9AAAC0"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBlock Classes="sync-hint" Text="读取源库的数据表与记录数量"/>
+                        <ComboBox x:Name="SourceDatabaseCombo" ItemsSource="{Binding Connections}"
+                                  SelectedItem="{Binding SourceConn}" Height="41"
+                                  MinWidth="240" HorizontalAlignment="Stretch"
+                                  Background="#F9FBFE" BorderBrush="#D8E6F3"
+                                  CornerRadius="9"/>
+                        <Grid ColumnDefinitions="*,10,*">
+                            <Button x:Name="ConnectSourceButton" Grid.Column="0" Classes="primary" Content="连接源数据库"
+                                    Command="{Binding ConnectSourceCommand}"
+                                    Height="40" CornerRadius="9"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                            <Button x:Name="DisconnectSourceButton" Grid.Column="2" Classes="secondary" Content="断开源数据库"
+                                    Command="{Binding DisconnectSourceCommand}"
+                                    Height="40" CornerRadius="9"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border x:Name="TargetPanel" Classes="sync-panel" Grid.Column="2" Grid.Row="0"
+                        HorizontalAlignment="Stretch">
+                    <StackPanel Spacing="12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Classes="sync-title" Text="目标数据库" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="TARGET" FontSize="10" Foreground="#9AAAC0"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBlock Classes="sync-hint" Text="先连接源库，再选择目标连接（自动排除源库）"/>
+                        <ComboBox x:Name="TargetDatabaseCombo" ItemsSource="{Binding TargetConnections}"
+                                  SelectedItem="{Binding TargetConn}" Height="41"
+                                  MinWidth="240" HorizontalAlignment="Stretch"
+                                  Background="#F9FBFE" BorderBrush="#D8E6F3"
+                                  CornerRadius="9"/>
+                        <Grid ColumnDefinitions="*,10,*">
+                            <Button x:Name="ConnectTargetButton" Grid.Column="0" Classes="primary" Content="连接目标数据库"
+                                    Command="{Binding ConnectTargetCommand}"
+                                    Height="40" CornerRadius="9"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                            <Button x:Name="DisconnectTargetButton" Grid.Column="2" Classes="secondary" Content="断开目标数据库"
+                                    Command="{Binding DisconnectTargetCommand}"
+                                    Height="40" CornerRadius="9"
+                                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Classes="sync-panel" Padding="18">
+                <Grid RowDefinitions="Auto,12,Auto,10,*">
+                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                        <TextBlock Classes="sync-title" Text="数据表" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding ProgressText}"
+                                   Foreground="#507CA9" FontSize="12" VerticalAlignment="Center"/>
+                    </Grid>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="9">
+                        <Button Classes="secondary" Content="全选" Command="{Binding SelectAllCommand}"
+                                Padding="17,9" CornerRadius="8"/>
+                        <Button Classes="secondary" Content="反选" Command="{Binding InvertSelectionCommand}"
+                                Padding="17,9" CornerRadius="8"/>
+                        <Button Classes="secondary" Content="仅源表" Command="{Binding SelectDifferentCommand}"
+                                Padding="17,9" CornerRadius="8"/>
+                        <Button Classes="primary" Content="开始同步" Command="{Binding SyncDataCommand}"
+                                IsEnabled="{Binding IsTargetConnected}"
+                                Padding="19,9" CornerRadius="8" Margin="12,0,0,0"/>
+                    </StackPanel>
+                    <Grid Grid.Row="4" RowDefinitions="Auto,*" MinHeight="405">
+                        <Border Grid.Row="0" Background="#F2F6FB" CornerRadius="8"
+                                Padding="13,10" Margin="0,0,0,5">
+                            <Grid ColumnDefinitions="45,2*,90,90,90,2*">
+                                <TextBlock Text="同步" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="#6B819B"/>
+                                <TextBlock Grid.Column="1" Text="数据表名称" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="#6B819B"/>
+                                <TextBlock Grid.Column="2" Text="源记录数" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="#6B819B"/>
+                                <TextBlock Grid.Column="3" Text="目标记录数" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="#6B819B"/>
+                                <TextBlock Grid.Column="4" Text="已同步" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="#6B819B"/>
+                                <TextBlock Grid.Column="5" Text="结果说明" FontSize="11" FontWeight="SemiBold"
+                                           Foreground="#6B819B"/>
+                            </Grid>
+                        </Border>
+                        <ListBox Grid.Row="1" ItemsSource="{Binding Tables}"
+                                 Background="Transparent" BorderThickness="0"
+                                 MinHeight="345">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="45,2*,90,90,90,2*"
+                                          MinHeight="42" Margin="6,4">
+                                        <CheckBox IsChecked="{Binding EnableSync}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Name}"
+                                                   FontSize="13" FontWeight="SemiBold"
+                                                   Foreground="#2F5378" VerticalAlignment="Center"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding SourceCount}"
+                                                   Foreground="#617D99" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding TargetCount}"
+                                                   Foreground="#617D99" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="{Binding SyncCount}"
+                                                   Foreground="#617D99" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="5" Text="{Binding Description}"
+                                                   Foreground="#8294A8" VerticalAlignment="Center"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Border BorderBrush="#E1E8F1" BorderThickness="0,1,0,0" Padding="0,10,0,0">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Text="{Binding Status}" Foreground="#65809D" FontSize="12"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="XCoder · Newlife.XCoder"
+                               Foreground="#9EACBC" FontSize="11" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

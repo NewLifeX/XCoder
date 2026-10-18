@@ -347,6 +347,138 @@ public partial class MacShellWindow : Window
         UpdateWorkspaceButton();
     }
 
+    /// <summary>数据同步在主窗口标签页中的布局与命令绑定检查，不连接实际数据库。</summary>
+    public async System.Threading.Tasks.Task<int> SmokeTestDataSyncLayoutAsync(string screenshotDirectory)
+    {
+        Directory.CreateDirectory(screenshotDirectory);
+        var errors = 0;
+        var tool = MacToolCatalog.Tools.First(x => x.Title == "数据同步");
+
+        foreach (var (width, height, sideBySide) in new[]
+        {
+            (1540, 980, true),
+            (1320, 850, true),
+            (1000, 690, false)
+        })
+        {
+            try
+            {
+                Width = width;
+                Height = height;
+                WindowState = WindowState.Normal;
+                OpenTool(tool);
+                await System.Threading.Tasks.Task.Delay(170);
+                UpdateLayout();
+
+                var root = _activeTab?.Content as ScrollViewer
+                    ?? throw new InvalidOperationException("数据同步未在主窗口标签中打开");
+                var elements = root.GetVisualDescendants().OfType<Control>().ToArray();
+                T? Named<T>(string name) where T : Control =>
+                    elements.OfType<T>().FirstOrDefault(e => e.Name == name);
+
+                var groups = Named<Grid>("ConnectionGroups")
+                    ?? throw new InvalidOperationException("缺少数据库连接分组");
+                var source = Named<Border>("SourcePanel")
+                    ?? throw new InvalidOperationException("缺少源数据库卡片");
+                var target = Named<Border>("TargetPanel")
+                    ?? throw new InvalidOperationException("缺少目标数据库卡片");
+                var sourceCombo = Named<ComboBox>("SourceDatabaseCombo")
+                    ?? throw new InvalidOperationException("缺少源数据库下拉框");
+                var targetCombo = Named<ComboBox>("TargetDatabaseCombo")
+                    ?? throw new InvalidOperationException("缺少目标数据库下拉框");
+
+                var actualSideBySide = Grid.GetColumn(target) == 2 && Grid.GetRow(target) == 0;
+                if (actualSideBySide != sideBySide ||
+                    sourceCombo.Bounds.Width < 240 || targetCombo.Bounds.Width < 240 ||
+                    Math.Abs(sourceCombo.Bounds.Width - targetCombo.Bounds.Width) > 5)
+                    throw new InvalidOperationException(
+                        $"数据库分组或下拉框布局错误: side={actualSideBySide}, source={sourceCombo.Bounds.Width:F0}, target={targetCombo.Bounds.Width:F0}");
+
+                // 校验原来错误显示的布尔 True 已被明确操作文案替代。
+                var contents = elements.OfType<Button>().Select(x => x.Content?.ToString()).ToArray();
+                foreach (var expected in new[] { "连接源数据库", "断开源数据库", "连接目标数据库", "断开目标数据库" })
+                    if (!contents.Contains(expected))
+                        throw new InvalidOperationException($"缺少数据库操作按钮：{expected}");
+                if (contents.Contains("True") || contents.Contains("False"))
+                    throw new InvalidOperationException("布尔状态被当作按钮文字显示");
+
+                if (root.DataContext is not DataSyncViewModel vm)
+                    throw new InvalidOperationException("没有复用上游 DataSyncViewModel");
+                if (!ReferenceEquals(sourceCombo.ItemsSource, vm.Connections) ||
+                    !ReferenceEquals(targetCombo.ItemsSource, vm.TargetConnections))
+                    throw new InvalidOperationException("连接下拉框的原有数据绑定丢失");
+
+                // 不访问真实数据库，直接改变连接成功/断开状态，验证四个按钮是否即时切换。
+                var sourceConnect = Named<Button>("ConnectSourceButton")!;
+                var sourceDisconnect = Named<Button>("DisconnectSourceButton")!;
+                var targetConnect = Named<Button>("ConnectTargetButton")!;
+                var targetDisconnect = Named<Button>("DisconnectTargetButton")!;
+                if (sourceConnect == null || sourceDisconnect == null ||
+                    targetConnect == null || targetDisconnect == null)
+                    throw new InvalidOperationException("缺少连接/断开按钮的状态绑定");
+
+                void AssertActions(bool source, bool target,
+                    bool connectSource, bool disconnectSource,
+                    bool connectTarget, bool disconnectTarget)
+                {
+                    vm.IsSourceConnected = source;
+                    vm.IsTargetConnected = target;
+                    UpdateLayout();
+                    if (sourceConnect.IsEnabled != connectSource ||
+                        sourceDisconnect.IsEnabled != disconnectSource ||
+                        targetConnect.IsEnabled != connectTarget ||
+                        targetDisconnect.IsEnabled != disconnectTarget)
+                        throw new InvalidOperationException(
+                            $"连接按钮状态错误：源={source} 目标={target}; " +
+                            $"实际={sourceConnect.IsEnabled}/{sourceDisconnect.IsEnabled}/" +
+                            $"{targetConnect.IsEnabled}/{targetDisconnect.IsEnabled}");
+                }
+
+                AssertActions(false, false, true, false, false, false); // 初始状态
+                AssertActions(true, false, false, true, true, false);  // 源库成功
+                AssertActions(true, true, false, true, false, true);   // 目标库成功
+                AssertActions(true, false, false, true, true, false); // 目标断开
+                AssertActions(false, false, true, false, false, false); // 源库断开
+                Console.WriteLine("SYNC BUTTONS OK: initial, source connected, target connected, target disconnected, source disconnected");
+
+#if DEBUG
+                if (width == 1540)
+                {
+                    if (_activeTab?.SourceWindow is not Views.MacDataSyncWindow syncWindow)
+                        throw new InvalidOperationException("无法获取 Mac 数据同步窗口执行首项选中测试");
+                    await syncWindow.SmokeTestConnectionDefaultsAsync();
+                }
+#endif
+
+                Console.WriteLine($"SYNC LAYOUT OK: {width}x{height}, sideBySide={actualSideBySide}, " +
+                    $"sourceCombo={sourceCombo.Bounds.Width:F0}, targetCombo={targetCombo.Bounds.Width:F0}, " +
+                    $"rootViewport={root.Viewport.Width:F0}, groups={groups.Bounds.Width:F0}");
+
+                if (width is 1540 or 1000)
+                {
+                    var filename = width == 1540 ? "02-数据同步.png" : "02-数据同步-小窗口.png";
+                    using var bitmap = new RenderTargetBitmap(
+                        new PixelSize((int)Math.Ceiling(Bounds.Width * 2),
+                                      (int)Math.Ceiling(Bounds.Height * 2)),
+                        new Vector(192, 192));
+                    bitmap.Render(this);
+                    var screenshot = Path.Combine(screenshotDirectory, filename);
+                    bitmap.Save(screenshot);
+                    Console.WriteLine($"SYNC SCREENSHOT: {screenshot}");
+                }
+            }
+            catch (Exception ex)
+            {
+                errors++;
+                Console.Error.WriteLine($"SYNC LAYOUT FAILED ({width}): {ex}");
+            }
+        }
+
+        foreach (var tab in OpenTabs.ToArray()) CloseToolTab(tab);
+        Console.WriteLine($"SYNC LAYOUT SUMMARY: 3 sizes, ERRORS={errors}");
+        return errors;
+    }
+
     /// <summary>开发测试：验证窗口改变宽度时的布局与导航选中项实际尺寸。</summary>
     public async System.Threading.Tasks.Task<int> SmokeTestHomeLayoutAsync(string screenshotDirectory)
     {
@@ -398,6 +530,143 @@ public partial class MacShellWindow : Window
             }
         }
         Console.WriteLine($"HOME LAYOUT SUMMARY: 3 sizes, ERRORS={errors}");
+        return errors;
+    }
+
+    private void CaptureModelingScreenshot(string screenshotDirectory, string filename)
+    {
+        using var bitmap = new RenderTargetBitmap(
+            new PixelSize((int)Math.Ceiling(Bounds.Width * 2),
+                          (int)Math.Ceiling(Bounds.Height * 2)),
+            new Vector(192, 192));
+        bitmap.Render(this);
+        var path = Path.Combine(screenshotDirectory, filename);
+        bitmap.Save(path);
+        Console.WriteLine($"MODEL SCREENSHOT: {path}");
+    }
+
+    /// <summary>验证数据建模在主窗口标签页中的响应式布局，生成真实截图供审阅。</summary>
+    public async System.Threading.Tasks.Task<int> SmokeTestModelingLayoutAsync(string screenshotDirectory)
+    {
+        Directory.CreateDirectory(screenshotDirectory);
+        var errors = 0;
+        var tool = MacToolCatalog.Tools.First(t => t.Title == "数据建模");
+        foreach (var (windowWidth, windowHeight, expectedTop, expectedBottom) in new[]
+        {
+            (1540, 980, true, true),
+            (1320, 850, true, true),
+            (1000, 690, false, false)
+        })
+        {
+            try
+            {
+                Width = windowWidth;
+                Height = windowHeight;
+                WindowState = WindowState.Normal;
+                OpenTool(tool);
+                await System.Threading.Tasks.Task.Delay(170);
+                UpdateLayout();
+
+                if (_activeTab?.Tool != tool || ToolTabContent.Content == null)
+                    throw new InvalidOperationException("数据建模没有在主窗口中显示");
+
+                var root = _activeTab.Content;
+                var children = root.GetVisualDescendants().OfType<Control>().ToArray();
+                T? Named<T>(string name) where T : Control =>
+                    children.OfType<T>().FirstOrDefault(x => x.Name == name);
+
+                var topGrid = Named<Grid>("ConfigurationGrid") ??
+                    throw new InvalidOperationException("缺少上部配置区");
+                var bottomGrid = Named<Grid>("StructureGrid") ??
+                    throw new InvalidOperationException("缺少下部表结构区");
+                var connection = Named<Border>("ConnectionPanel")!;
+                var generation = Named<Border>("GenerationPanel")!;
+                var tables = Named<Border>("TablesPanel")!;
+                var fields = Named<Border>("FieldsPanel")!;
+                var scroll = root as ScrollViewer ??
+                    throw new InvalidOperationException("内容最外层缺少可滚动容器");
+                var outputInput = Named<TextBox>("CodeOutputDirectoryInput") ??
+                    throw new InvalidOperationException("代码输出目录文本框未找到");
+                var browseButton = Named<Button>("BrowseOutputDirectoryButton") ??
+                    throw new InvalidOperationException("选择目录按钮未找到");
+                if (browseButton.Content?.ToString()?.Contains("选择目录") != true ||
+                    Grid.GetColumn(browseButton) != 2 ||
+                    !ReferenceEquals(browseButton.Parent, outputInput.Parent) ||
+                    !ReferenceEquals(TopLevel.GetTopLevel(browseButton), this) ||
+                    browseButton.Bounds.Width < 100)
+                    throw new InvalidOperationException("选择目录按钮未靠在文本框右侧或未挂载主窗口");
+
+                // 改写 ViewModel 验证路径自动回填绑定；不触发真实代码生成。
+                if (root.DataContext is not DataModelingViewModel modelingVm)
+                    throw new InvalidOperationException("数据建模的 ViewModel 丢失");
+                var originalPath = modelingVm.OutputPath;
+                var testPath = "/tmp/Newlife.XCoder-output-binding-test";
+                try
+                {
+                    modelingVm.OutputPath = testPath;
+                    await System.Threading.Tasks.Task.Delay(35);
+                    UpdateLayout();
+                    if (outputInput.Text != testPath)
+                        throw new InvalidOperationException("输出目录选择后未反映到绑定文本框");
+                }
+                finally
+                {
+                    modelingVm.OutputPath = originalPath;
+                    UpdateLayout();
+                }
+
+                var actualTop = Grid.GetColumn(generation) > Grid.GetColumn(connection);
+                var actualBottom = Grid.GetColumn(fields) > Grid.GetColumn(tables);
+                if (actualTop != expectedTop || actualBottom != expectedBottom)
+                    throw new InvalidOperationException(
+                        $"期望上面并排={expectedTop}/下面并排={expectedBottom}，实际={actualTop}/{actualBottom}");
+                if (scroll.HorizontalScrollBarVisibility != ScrollBarVisibility.Disabled ||
+                    scroll.VerticalScrollBarVisibility != ScrollBarVisibility.Auto)
+                    throw new InvalidOperationException("窗口滚动策略不正确");
+                if (tables.Bounds.Height < 475 || fields.Bounds.Height < 475 ||
+                    Math.Abs(tables.Bounds.Height - fields.Bounds.Height) > 1 ||
+                    connection.Bounds.Width < 200 || generation.Bounds.Width < 200)
+                    throw new InvalidOperationException("面板尺寸过小或未完成布局");
+                if (windowHeight <= 690 && scroll.Extent.Height <= scroll.Viewport.Height)
+                    throw new InvalidOperationException("小窗口内容未启用垂直滚动");
+
+                Console.WriteLine($"MODEL LAYOUT OK: window={windowWidth}x{windowHeight}, " +
+                    $"topSideBySide={actualTop}, bottomSideBySide={actualBottom}, " +
+                    $"viewport={scroll.Viewport.Width:F0}x{scroll.Viewport.Height:F0}, " +
+                    $"extent={scroll.Extent.Height:F0}, panels={connection.Bounds.Width:F0}/{generation.Bounds.Width:F0}");
+
+                if (windowWidth is 1540 or 1000)
+                {
+                    CaptureModelingScreenshot(screenshotDirectory, windowWidth == 1540
+                        ? "01-数据建模.png"
+                        : "01-数据建模-小窗口.png");
+                }
+
+                if (windowWidth == 1000)
+                {
+                    // 模拟实际滚到底部，确保小窗口的字段结构和数据表仍然可用。
+                    var maxScrollY = Math.Max(0, scroll.Extent.Height - scroll.Viewport.Height);
+                    scroll.Offset = new Vector(0, maxScrollY);
+                    await System.Threading.Tasks.Task.Delay(80);
+                    UpdateLayout();
+                    if (scroll.Offset.Y < maxScrollY - 2)
+                        throw new InvalidOperationException("小窗口无法滚动到底部");
+                    if (tables.Bounds.Height < 475 || fields.Bounds.Height < 475)
+                        throw new InvalidOperationException("底部结构区域大小异常");
+                    CaptureModelingScreenshot(screenshotDirectory,
+                        "01-数据建模-小窗口-表结构.png");
+                    Console.WriteLine($"MODEL SCROLL OK: reached bottom at {scroll.Offset.Y:F0}");
+                }
+            }
+            catch (Exception ex)
+            {
+                errors++;
+                Console.Error.WriteLine($"MODEL LAYOUT FAILED ({windowWidth}): {ex}");
+            }
+        }
+
+        foreach (var tab in OpenTabs.ToArray()) CloseToolTab(tab);
+        Console.WriteLine($"MODEL LAYOUT SUMMARY: 3 sizes, ERRORS={errors}");
         return errors;
     }
 
