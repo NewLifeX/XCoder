@@ -20,7 +20,7 @@
     <PackageReference Include="LomontWin" Version="0.6.6" />
     <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
     <PackageReference Include="NAudio" Version="2.3.0" />
-    <PackageReference Include="NewLife.Core" Version="12.0.2026.1017-beta1103" />
+    <PackageReference Include="NewLife.Core" Version="12.0.2026.1018-beta1517" />
     <PackageReference Include="System.IO.Ports" Version="10.0.9" />
     <PackageReference Include="System.Management" Version="10.0.12" />
     <PackageReference Include="NewLife.ModbusRTU" Version="2.1.2026.902-beta1359" />
@@ -73,4 +73,8 @@
                       LogicalName="ALib.ZLG_CAN.kerneldlls.%(RecursiveDir)%(Filename)%(Extension)"
                       Exclude="CAN\ZLG_CAN\kerneldlls\**\*.tmp;CAN\ZLG_CAN\kerneldlls\**\*.zip" />
   </ItemGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
 </Project>

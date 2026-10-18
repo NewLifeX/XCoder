@@ -49,7 +49,7 @@
 
   <ItemGroup>
     <PackageReference Include="GtkSharp" Version="3.24.24.95" />
-    <PackageReference Include="NewLife.Core" Version="12.0.2026.1017-beta1103" />
+    <PackageReference Include="NewLife.Core" Version="12.0.2026.1018-beta1517" />
     <PackageReference Include="NewLife.Stardust" Version="3.10.2026.1017-beta1056" />
     <PackageReference Include="NewLife.XCode" Version="12.2.2026.1017-beta1246" />
     <PackageReference Include="System.IO.Ports" Version="8.0.0" />
@@ -75,5 +75,8 @@
       <DependentUpon>SerialPortList.cs</DependentUpon>
     </Compile>
   </ItemGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
 
 </Project>

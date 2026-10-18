@@ -27,7 +27,7 @@
     <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="NewLife.Core" Version="12.0.2026.1017-beta1103" />
+    <PackageReference Include="NewLife.Core" Version="12.0.2026.1018-beta1517" />
     <PackageReference Include="NewLife.Stardust" Version="3.10.2026.1017-beta1056" />
     <PackageReference Include="NewLife.XCode" Version="12.2.2026.1017-beta1246" />
     <PackageReference Include="NewLife.Net" Version="4.4.2026.305-beta0011" />
@@ -40,4 +40,8 @@
     <PackageReference Include="SSH.NET" Version="2026.0.0" />
     <PackageReference Include="System.IO.Ports" Version="10.0.11" />
   </ItemGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
 </Project>
