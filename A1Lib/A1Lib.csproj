@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>ALib</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputPath>..\Bin\A1Lib</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- 相机采集引擎（替换 OpenCV VideoCapture，DirectShow） -->
+    <PackageReference Include="AForge.NetCore" Version="1.0.0" />
+    <PackageReference Include="AForgeCore.Video.DirectShow" Version="1.0.0" />
+    <PackageReference Include="AForgeCore.Video" Version="1.0.0" />
+    <PackageReference Include="HidSharp" Version="2.6.4" />
+    <PackageReference Include="LomontSharp" Version="0.6.6" />
+    <PackageReference Include="LomontWin" Version="0.6.6" />
+    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+    <PackageReference Include="NAudio" Version="2.3.0" />
+    <PackageReference Include="NewLife.Core" Version="11.17.2026.701" />
+    <PackageReference Include="System.IO.Ports" Version="10.0.9" />
+    <PackageReference Include="System.Management" Version="10.0.9" />
+    <PackageReference Include="NewLife.ModbusRTU" Version="2.0.2026.610" />
+  </ItemGroup>
+  <!-- 原生库嵌入方式：zip 压缩优先，裸文件兜底。
+       原生 DLL 多为未压缩 PE，zip 压缩率可达 3~8 倍。
+       用 A1Lib\pack_native_res.ps1 生成 .zip 后，构建时优先嵌入 zip，
+       运行时由 ZipResourceExtractor 解压还原，可显著减小程序集体积。
+       若某个 zip 尚未生成（或想临时改用裸文件排查），会自动退回嵌入原文件，
+       两种形态的代码路径都保留，互不影响。
+       单文件约定资源名：{前缀}.{文件名去扩展名}.zip
+       目录  约定资源名：{前缀}.{目录名}.zip   -->
+
+  <!-- 1) 单文件：zip 优先 -->
+  <ItemGroup Condition="Exists('CAN\CX_CAN\ControlCAN.zip')">
+    <EmbeddedResource Include="CAN\CX_CAN\ControlCAN.zip" LogicalName="ALib.CX_CAN.ControlCAN.zip" />
+  </ItemGroup>
+  <ItemGroup Condition="!Exists('CAN\CX_CAN\ControlCAN.zip')">
+    <EmbeddedResource Include="CAN\CX_CAN\ControlCAN.dll" LogicalName="ALib.CX_CAN.ControlCAN.dll" />
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('CAN\ZLG_CAN\zlgcan.zip')">
+    <EmbeddedResource Include="CAN\ZLG_CAN\zlgcan.zip" LogicalName="ALib.ZLG_CAN.zlgcan.zip" />
+  </ItemGroup>
+  <ItemGroup Condition="!Exists('CAN\ZLG_CAN\zlgcan.zip')">
+    <EmbeddedResource Include="CAN\ZLG_CAN\zlgcan.dll" LogicalName="ALib.ZLG_CAN.zlgcan.dll" />
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('CAN\PCAN\PCANBasic.zip')">
+    <EmbeddedResource Include="CAN\PCAN\PCANBasic.zip" LogicalName="ALib.PCAN.PCANBasic.zip" />
+  </ItemGroup>
+  <ItemGroup Condition="!Exists('CAN\PCAN\PCANBasic.zip')">
+    <EmbeddedResource Include="CAN\PCAN\PCANBasic.dll" LogicalName="ALib.PCAN.PCANBasic.dll" />
+  </ItemGroup>
+
+  <!-- 2) kerneldlls 目录：zip 优先
+       zlgcan.dll 运行时按「自身同级目录\kerneldlls\」加载各设备内核驱动（USBCAN.dll 等）
+       并读取 kerneldlls\dll_cfg.ini 决定设备类型到驱动的映射；
+       缺少该目录时 ZCAN_OpenDevice 一律返回 0，表现为「枚举不到任何设备」。
+       运行时由 KernelDllExtractor 还原目录结构到程序目录，
+       因此发布时不依赖外部物理目录，引用 A1Lib 的项目也无需各自配置复制。
+       未打包时的裸文件资源名示例（%(RecursiveDir) 的反斜杠会被 MSBuild 原样保留）：
+         ALib.ZLG_CAN.kerneldlls.dll_cfg.ini
+         ALib.ZLG_CAN.kerneldlls.devices_property\default\usbcan2.xml -->
+  <ItemGroup Condition="Exists('CAN\ZLG_CAN\kerneldlls.zip')">
+    <EmbeddedResource Include="CAN\ZLG_CAN\kerneldlls.zip" LogicalName="ALib.ZLG_CAN.kerneldlls.zip" />
+  </ItemGroup>
+  <ItemGroup Condition="!Exists('CAN\ZLG_CAN\kerneldlls.zip')">
+    <EmbeddedResource Include="CAN\ZLG_CAN\kerneldlls\**\*.*"
+                      LogicalName="ALib.ZLG_CAN.kerneldlls.%(RecursiveDir)%(Filename)%(Extension)"
+                      Exclude="CAN\ZLG_CAN\kerneldlls\**\*.tmp;CAN\ZLG_CAN\kerneldlls\**\*.zip" />
+  </ItemGroup>
+</Project>
