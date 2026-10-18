@@ -27,3 +27,42 @@ jobs:
       run: dotnet build -c Release
     - name: Test
       run: dotnet test -c Release
+
+  localization:
+    name: localization checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Check locales
+      shell: pwsh
+      run: |
+        $failed = $false
+        Get-ChildItem -Path . -Recurse -Directory -Filter Locales | ForEach-Object {
+          if (Test-Path (Join-Path $_.FullName 'zh-Hans.yml')) {
+            $src = Split-Path $_.FullName -Parent
+            pwsh -File ./check-locales.ps1 -LocaleDir $_.FullName -Baseline zh-Hans.yml -SourceDir $src
+            if ($LASTEXITCODE -ne 0) { $failed = $true }
+          }
+        }
+        if ($failed) { exit 1 }
+    - name: Check README languages
+      shell: pwsh
+      run: pwsh -File ./sync-readme-languages.ps1 -Check
+
+  # Windows ARM64 编译兼容性（观察期）：WPF 目标仅能在 Windows 构建，用 ARM64 runner 验证托管兼容性
+  build-arm64:
+    name: build (win-arm64)
+    runs-on: windows-11-arm
+    timeout-minutes: 45
+    continue-on-error: true
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup dotNET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.x
+    - name: Build
+      run: dotnet build -c Release --nologo
