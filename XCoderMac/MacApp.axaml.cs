@@ -15,8 +15,127 @@ public sealed class MacApp : Application
         {
             desktop.MainWindow = new MacShellWindow();
 #if DEBUG
+            // 本次仅验证导航恢复、SQL TAB 字号及深色预览/结果的 hover / focus 状态。
+            if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-sql-ui"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(async () =>
+                {
+                    try
+                    {
+                        var output = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                            "XCoderMac", "Docs", "软件界面");
+                        var rc = await Services.MacSqlUiSmoke.RunAsync((MacShellWindow)desktop.MainWindow!, output);
+                        desktop.Shutdown(rc);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Console.Error.WriteLine("SQL UI TEST CRASH: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                });
+            }
+            // Windows 数据工具迁移回归：真实 XCode XML 导入/导出与 Mac 模型管理/架构窗口。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-data-tools"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(async () =>
+                {
+                    try
+                    {
+                        var shell = (MacShellWindow)desktop.MainWindow!;
+                        var output = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                            "XCoderMac", "Docs", "软件界面");
+                        var errors = await shell.SmokeTestDataToolsAsync(output);
+                        desktop.Shutdown(errors == 0 ? 0 : 1);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Console.Error.WriteLine("DATA TOOLS CRASH: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                });
+            }
+            // 检查 RPC 交互日志黑底/浅色字，悬停/聚焦不被全局亮色主题覆盖。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-api-console"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(async () =>
+                {
+                    try
+                    {
+                        var shell = (MacShellWindow)desktop.MainWindow!;
+                        var output = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                            "XCoderMac", "Docs", "软件界面");
+                        var errors = await shell.SmokeTestApiConsoleAsync(output);
+                        desktop.Shutdown(errors == 0 ? 0 : 1);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Console.Error.WriteLine("RPC CONSOLE CRASH: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                });
+            }
+            // 模拟安全工具按钮实际 OnClick：非法 HEX/Base64/密钥不能导致进程崩溃。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-security-buttons"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(async () =>
+                {
+                    try
+                    {
+                        var shell = (MacShellWindow)desktop.MainWindow!;
+                        var output = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                            "XCoderMac", "Docs", "软件界面");
+                        var errors = await shell.SmokeTestSecurityButtonsAsync(output);
+                        desktop.Shutdown(errors == 0 ? 0 : 1);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Console.Error.WriteLine("SECURITY BUTTONS CRASH: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                });
+            }
+            // 使用隔离的临时 JSON 验证快捷入口读写、排序与管理界面，绝不更改用户配置。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-quick-entries"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(async () =>
+                {
+                    try
+                    {
+                        var shell = (MacShellWindow)desktop.MainWindow!;
+                        var output = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                            "XCoderMac", "Docs", "软件界面");
+                        var errors = await shell.SmokeTestQuickEntriesAsync(output);
+                        desktop.Shutdown(errors == 0 ? 0 : 1);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Console.Error.WriteLine("QUICK ENTRIES CRASH: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                });
+            }
+            // 稳定渲染双标签工作台，检查侧栏已打开项和底部公共状态栏。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-workspace-layout"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(async () =>
+                {
+                    try
+                    {
+                        var shell = (MacShellWindow)desktop.MainWindow!;
+                        var output = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                            "XCoderMac", "Docs", "软件界面");
+                        var errors = await shell.SmokeTestWorkspaceLayoutAsync(output);
+                        desktop.Shutdown(errors == 0 ? 0 : 1);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Console.Error.WriteLine("WORKSPACE LAYOUT CRASH: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                });
+            }
             // 验证数据同步源/目标连接分组、下拉框尺寸和布尔按钮问题。
-            if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-sync-layout"))
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-sync-layout"))
             {
                 Avalonia.Threading.Dispatcher.UIThread.Post(async () =>
                 {

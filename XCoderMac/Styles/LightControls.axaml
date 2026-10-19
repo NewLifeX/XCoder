@@ -80,6 +80,34 @@
         <Setter Property="BorderBrush" Value="#1684DB"/>
     </Style>
 
+    <!-- 深色日志/SQL 预览控件专用外观。必须覆盖 hover / focus / focus-within，
+         并锁定 Fluent 的模板 Border；否则只设 TextBox.Background 仍会变白。 -->
+    <Style Selector="TextBox.dark-console">
+        <Setter Property="Background" Value="#0A0F16"/>
+        <Setter Property="Foreground" Value="#EDF5FF"/>
+        <Setter Property="BorderBrush" Value="#304459"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CaretBrush" Value="#EDF5FF"/>
+    </Style>
+    <Style Selector="TextBox.dark-console:pointerover">
+        <Setter Property="Background" Value="#0A0F16"/>
+        <Setter Property="Foreground" Value="#EDF5FF"/>
+        <Setter Property="BorderBrush" Value="#416080"/>
+    </Style>
+    <Style Selector="TextBox.dark-console:focus">
+        <Setter Property="Background" Value="#0A0F16"/>
+        <Setter Property="Foreground" Value="#EDF5FF"/>
+        <Setter Property="BorderBrush" Value="#4B83B8"/>
+    </Style>
+    <Style Selector="TextBox.dark-console:focus-within">
+        <Setter Property="Background" Value="#0A0F16"/>
+        <Setter Property="Foreground" Value="#EDF5FF"/>
+        <Setter Property="BorderBrush" Value="#4B83B8"/>
+    </Style>
+    <Style Selector="TextBox.dark-console /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="#0A0F16"/>
+    </Style>
+
     <Style Selector="ComboBox">
         <Setter Property="Foreground" Value="#294563"/>
         <Setter Property="Background" Value="#F8FAFE"/>

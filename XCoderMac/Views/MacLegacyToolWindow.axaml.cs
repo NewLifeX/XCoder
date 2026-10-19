@@ -2,6 +2,8 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
+using XCoderAv.ViewModels;
+using XCoderMac.Services;
 
 namespace XCoderMac.Views;
 
@@ -44,6 +46,21 @@ public partial class MacLegacyToolWindow : Window
         _originalWindow.Content = null;
         HostedContent.Content = content;
         HostedContent.DataContext = _originalWindow.DataContext;
+
+        // 加密解密旧版命令会对非法 HEX/Base64/密钥输入直接抛异常。
+        // 在用户能够点击之前隔离所有命令，避免未处理异常终止 Mac 主程序。
+        if (tool.Title == "加密解密" && HostedContent.DataContext is SecurityViewModel securityVm &&
+            content is Control securityRoot)
+        {
+            var guarded = MacSecurityCommandGuard.Attach(securityRoot, securityVm);
+            System.Diagnostics.Debug.WriteLine($"Security command guarded at construction: {guarded}");
+            // 绑定值在实际加入主窗口时可能再次更新，附着后补检查一次。
+            securityRoot.AttachedToVisualTree += (_, _) =>
+            {
+                var count = MacSecurityCommandGuard.Attach(securityRoot, securityVm);
+                System.Diagnostics.Debug.WriteLine($"Security command guarded on attach: {count}");
+            };
+        }
 
         var sourceWidth = _originalWindow.Width;
         var sourceHeight = _originalWindow.Height;

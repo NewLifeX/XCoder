@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
@@ -13,13 +14,25 @@ using Avalonia.Interactivity;
 namespace XCoderMac.Views;
 
 /// <summary>通过 macOS system_profiler 获取真实硬件枚举信息，不使用 Windows WMI/NAudio。</summary>
-public abstract class MacSystemInfoWindow : Window
+public abstract class MacSystemInfoWindow : Window, INotifyPropertyChanged
 {
     private readonly string _dataType;
     private readonly ListBox _devices;
     private readonly TextBox _details;
     private readonly TextBlock _status;
     private readonly Button _refresh;
+
+    public new event PropertyChangedEventHandler? PropertyChanged;
+    public string StatusText
+    {
+        get => _status.Text ?? "";
+        set
+        {
+            if (_status.Text == value) return;
+            _status.Text = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StatusText)));
+        }
+    }
 
     private readonly ObservableCollection<MacHardwareItem> _items = new();
 
@@ -171,11 +184,11 @@ public abstract class MacSystemInfoWindow : Window
             foreach (var item in results) _items.Add(item);
             _details.Text = _items.Count > 0 ? _items[0].Detail : "未检测到相关设备，或 macOS 未提供此类设备的详细信息。";
             if (_items.Count > 0) _devices.SelectedIndex = 0;
-            _status.Text = $"读取完成：{_items.Count} 项设备记录";
+            StatusText = $"读取完成：{_items.Count} 项设备记录";
         }
         catch (Exception ex)
         {
-            _status.Text = $"读取失败：{ex.Message}";
+            StatusText = $"读取失败：{ex.Message}";
         }
         finally
         {

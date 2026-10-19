@@ -20,17 +20,40 @@
             <Setter Property="BorderBrush" Value="#DFE6F1"/>
             <Setter Property="CornerRadius" Value="9"/>
         </Style>
+        <!-- 交互日志是控制台，不应继承普通 editor/全局 TextBox 浅色样式。 -->
+        <Style Selector="TextBox.rpc-console">
+            <Setter Property="Background" Value="#0A0F16"/>
+            <Setter Property="Foreground" Value="#EDF5FF"/>
+            <Setter Property="BorderBrush" Value="#26394D"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="9"/>
+        </Style>
+        <Style Selector="TextBox.rpc-console:pointerover">
+            <Setter Property="Background" Value="#0A0F16"/>
+            <Setter Property="Foreground" Value="#EDF5FF"/>
+            <Setter Property="BorderBrush" Value="#344D68"/>
+        </Style>
+        <Style Selector="TextBox.rpc-console:focus">
+            <Setter Property="Background" Value="#0A0F16"/>
+            <Setter Property="Foreground" Value="#EDF5FF"/>
+            <Setter Property="BorderBrush" Value="#456F9C"/>
+        </Style>
+        <Style Selector="TextBox.rpc-console:focus-within">
+            <Setter Property="Background" Value="#0A0F16"/>
+            <Setter Property="Foreground" Value="#EDF5FF"/>
+            <Setter Property="BorderBrush" Value="#456F9C"/>
+        </Style>
+        <!-- 某些 FluentTheme 状态会单独覆盖模板内层边框，始终维持黑底。 -->
+        <Style Selector="TextBox.rpc-console /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="#0A0F16"/>
+        </Style>
     </Window.Styles>
     <Grid RowDefinitions="83,Auto,Auto,*,42" Margin="25,0,25,13">
-        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-            <StackPanel Spacing="4" VerticalAlignment="Center">
-                <TextBlock Text="RPC API 调试" FontSize="24" FontWeight="SemiBold" Foreground="#223B5C"/>
-                <TextBlock Text="NewLife.Remoting · RPC 客户端 / 服务端（非 HTTP API）" FontSize="12" Foreground="#8D9AAF"/>
-            </StackPanel>
-            <Border Grid.Column="1" Background="#E9F1FE" CornerRadius="18" Padding="14,8" VerticalAlignment="Center">
-                <TextBlock Text="{Binding ConnectButtonText}" Foreground="#38649E" FontSize="12"/>
-            </Border>
-        </Grid>
+        <!-- 顶部只保留工具名称；原右侧“打开”只是重复状态文字，不是操作按钮。 -->
+        <StackPanel Grid.Row="0" Spacing="4" VerticalAlignment="Center">
+            <TextBlock Text="RPC API 调试" FontSize="24" FontWeight="SemiBold" Foreground="#223B5C"/>
+            <TextBlock Text="NewLife.Remoting · RPC 客户端 / 服务端（非 HTTP API）" FontSize="12" Foreground="#8D9AAF"/>
+        </StackPanel>
         <Border Grid.Row="1" Classes="panel" Margin="0,0,0,13">
             <StackPanel Spacing="14">
                 <TextBlock Text="连接设置" FontSize="15" FontWeight="SemiBold" Foreground="#2B466A"/>
@@ -64,23 +87,40 @@
         </Border>
         <Grid Grid.Row="3" ColumnDefinitions="410,14,*">
             <Border Grid.Column="0" Classes="panel">
-                <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto">
-                    <TextBlock Text="发送 RPC 请求" FontSize="16" Foreground="#294360" FontWeight="SemiBold" Margin="0,0,0,15"/>
-                    <TextBlock Grid.Row="1" Text="API Action" FontSize="12" Foreground="#778AA1" Margin="0,0,0,7"/>
-                    <ComboBox Grid.Row="2" ItemsSource="{Binding ApiActions}" SelectedItem="{Binding SelectedAction}"
-                              Height="41" Background="#F9FBFE" BorderBrush="#DFE6F1"
-                              Margin="0,0,0,17"/>
-                    <TextBox Grid.Row="3" Text="{Binding SelectedAction}" Classes="editor"
-                             Height="38" Margin="0,0,0,14" VerticalContentAlignment="Center"
-                             Watermark="也可手动输入 Action 名称"/>
-                    <Grid Grid.Row="4" RowDefinitions="Auto,*">
-                        <TextBlock Text="请求参数" Foreground="#778AA1" FontSize="12" Margin="0,0,0,7"/>
-                        <TextBox Grid.Row="1" Text="{Binding SendText}" Classes="editor" AcceptsReturn="True"
-                                 AcceptsTab="True" TextWrapping="Wrap" Padding="12" Watermark="输入 RPC Action 参数"/>
+                <Grid RowDefinitions="Auto,Auto,Auto,*" RowSpacing="10">
+                    <TextBlock Text="发送 RPC 请求" FontSize="16" Foreground="#294360"
+                               FontWeight="SemiBold" Margin="0,0,0,4"/>
+                    <TextBlock Grid.Row="1" Text="API Action / 手动输入 / 发送"
+                               FontSize="12" Foreground="#778AA1"/>
+                    <!-- 同行保留原来的 SelectedAction、SendCommand 绑定。 -->
+                    <Grid Grid.Row="2" ColumnDefinitions="102,8,*,8,94">
+                        <ComboBox x:Name="RpcActionSelect" Grid.Column="0"
+                                  ItemsSource="{Binding ApiActions}"
+                                  SelectedItem="{Binding SelectedAction}"
+                                  Height="41" HorizontalAlignment="Stretch"
+                                  Background="#F9FBFE" BorderBrush="#DFE6F1"/>
+                        <TextBox x:Name="RpcActionManualInput" Grid.Column="2"
+                                 Text="{Binding SelectedAction}" Classes="editor"
+                                 Height="41" VerticalContentAlignment="Center"
+                                 Watermark="输入 Action 名称"/>
+                        <Button x:Name="RpcSendRequestButton" Grid.Column="4"
+                                Content="发送请求 ↗" Command="{Binding SendCommand}"
+                                Height="41" Background="#286BC7" Foreground="White"
+                                CornerRadius="9" FontWeight="SemiBold"
+                                Padding="7,0"/>
                     </Grid>
-                    <Button Grid.Row="5" Content="发送请求  ↗" Command="{Binding SendCommand}" Height="43"
-                            Background="#286BC7" Foreground="White" CornerRadius="9"
-                            FontWeight="SemiBold" Margin="0,15,0,0"/>
+                    <!-- 参数占用剩余高度；多行输入，不再被上面的三个控件压扁。 -->
+                    <Grid Grid.Row="3" RowDefinitions="Auto,*" RowSpacing="7"
+                          MinHeight="170">
+                        <TextBlock Text="请求参数" Foreground="#778AA1"
+                                   FontSize="12"/>
+                        <TextBox x:Name="RpcRequestParameterInput" Grid.Row="1"
+                                 Text="{Binding SendText}" Classes="editor"
+                                 AcceptsReturn="True" AcceptsTab="True"
+                                 TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 Padding="12" MinHeight="145"
+                                 Watermark="输入 RPC Action 参数"/>
+                    </Grid>
                 </Grid>
             </Border>
             <Border Grid.Column="2" Classes="panel">
@@ -89,9 +129,10 @@
                         <TextBlock Text="交互日志" FontSize="16" Foreground="#294360" FontWeight="SemiBold"/>
                         <TextBlock Grid.Column="1" Text="RPC CONSOLE" Foreground="#A1AFC0" FontSize="10"/>
                     </Grid>
-                    <TextBox Grid.Row="1" Text="{Binding ReceiveLog, Mode=OneWay}" Classes="editor"
+                    <TextBox x:Name="RpcInteractionLogBox" Grid.Row="1"
+                             Text="{Binding ReceiveLog, Mode=OneWay}" Classes="rpc-console"
                              IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap"
-                             Padding="15" Background="#15243A" Foreground="#E0EAF6"
+                             Padding="15" Background="#0A0F16" Foreground="#EDF5FF"
                              FontFamily="Menlo,Consolas,monospace" FontSize="12"/>
                 </Grid>
             </Border>

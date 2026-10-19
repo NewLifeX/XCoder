@@ -139,6 +139,41 @@
                 </Border>
             </Grid>
 
+            <!-- 模型与数据库工具放在数据库连接/代码生成设置之后，数据表/字段结构之前。 -->
+            <!-- Windows 数据工具对应的模型 XML / 管理 / DDL / SQL 功能，窄窗口自动换行。 -->
+            <Border x:Name="ModelToolsPanel" Classes="panel" Padding="18,14">
+                <StackPanel Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="模型与数据库工具" Foreground="#29405C"
+                                   FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="复用 Windows 版 XCode 核心引擎"
+                                   Foreground="#95A8BB" FontSize="11" VerticalAlignment="Center"/>
+                    </Grid>
+                    <!-- 不限制 ItemHeight：由按钮自身测量高度，避免 Avalonia 内部文本被裁切。 -->
+                    <WrapPanel x:Name="ModelToolsActions" Orientation="Horizontal">
+                        <Button x:Name="ImportModelButton" Classes="secondary" Content="导入 XML 模型"
+                                Click="ImportModel_Click" Padding="15,10" MinHeight="44" FontSize="12"
+                                VerticalContentAlignment="Center" Margin="0,0,10,8"/>
+                        <Button x:Name="ExportModelButton" Classes="secondary" Content="导出 XML 模型"
+                                Click="ExportModel_Click" Padding="15,10" MinHeight="44" FontSize="12"
+                                VerticalContentAlignment="Center" Margin="0,0,10,8"/>
+                        <Button x:Name="ManageModelButton" Classes="secondary" Content="模型管理"
+                                Click="ManageModel_Click" Padding="15,10" MinHeight="44" FontSize="12"
+                                VerticalContentAlignment="Center" Margin="0,0,10,8"/>
+                        <Button x:Name="PreviewDdlButton" Classes="secondary" Content="预览建表 SQL"
+                                Click="PreviewDdl_Click" Padding="15,10" MinHeight="44" FontSize="12"
+                                VerticalContentAlignment="Center" Margin="0,0,10,8"/>
+                        <Button x:Name="DatabaseWorkbenchButton" Classes="secondary" Content="架构管理 / SQL 查询"
+                                Click="DatabaseWorkbench_Click" Padding="15,10" MinHeight="44" FontSize="12"
+                                VerticalContentAlignment="Center" Margin="0,0,10,8"/>
+                        <Button x:Name="ApplyDatabaseSchemaButton" Classes="danger"
+                                Content="应用模型到数据库（慎用）"
+                                Click="ApplyDatabaseSchema_Click" Padding="15,10" MinHeight="44" FontSize="12"
+                                VerticalContentAlignment="Center" Margin="0,0,10,8"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
             <!-- 下部：数据表与字段结构并列；窄窗口自动上下排列，列表各自滚动。 -->
             <Grid x:Name="StructureGrid" ColumnDefinitions="1*,16,1.3*"
                   RowDefinitions="Auto">

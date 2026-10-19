@@ -98,9 +98,10 @@
                         <TextBlock Grid.Column="1" Text="{Binding SentBytes, StringFormat='发送 {0} 字节'}" Foreground="#7D8FA7" FontSize="12"/>
                         <TextBlock Grid.Column="2" Text="{Binding SessionCount, StringFormat='会话 {0}'}" Foreground="#7D8FA7" FontSize="12"/>
                     </Grid>
-                    <TextBox Grid.Row="2" x:Name="txtLog" IsReadOnly="True" AcceptsReturn="True"
+                    <TextBox Grid.Row="2" x:Name="txtLog" Classes="dark-console"
+                             IsReadOnly="True" AcceptsReturn="True"
                              FontFamily="Menlo,Consolas,monospace" FontSize="12" TextWrapping="Wrap"
-                             Background="#14233A" Foreground="#DEE9F6" BorderThickness="0"
+                             BorderThickness="0"
                              Padding="14" CornerRadius="9"/>
                 </Grid>
             </Border>

@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
+using XCode.DataAccessLayer;
 using Avalonia.Controls;
 using Avalonia;
 using Avalonia.Interactivity;
@@ -195,4 +197,167 @@ public partial class MacDataModelingWindow : Window
             ViewModel.Status = $"打开 Finder 失败：{ex.Message}";
         }
     }
+
+    private Window Owner(object? sender) =>
+        (TopLevel.GetTopLevel(sender as Control) as Window) ?? this;
+
+    private void ReplaceModel(IEnumerable<IDataTable> tables, string description)
+    {
+        var list = tables.ToList();
+        ViewModel.Tables.Clear();
+        foreach (var table in list.OrderBy(t => t.Name)) ViewModel.Tables.Add(table);
+        ViewModel.SelectedTable = ViewModel.Tables.FirstOrDefault();
+        ViewModel.Status = $"{description}，共 {list.Count} 张表";
+    }
+
+    private async void ImportModel_Click(object? sender, RoutedEventArgs e)
+    {
+        var owner = Owner(sender);
+        try
+        {
+            var storage = owner.StorageProvider;
+            var files = await storage.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                Title = "导入 XCode XML 数据模型",
+                AllowMultiple = false,
+                FileTypeFilter = [new FilePickerFileType("XCode XML 模型") { Patterns = ["*.xml"] }]
+            });
+            if (files.Count == 0) return;
+            await using var stream = await files[0].OpenReadAsync();
+            if (stream.CanSeek && stream.Length > 32 * 1024 * 1024)
+                throw new InvalidDataException("模型 XML 不能超过 32MB");
+            using var reader = new StreamReader(stream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true);
+            var xml = await reader.ReadToEndAsync();
+            if (xml.Length > 32 * 1024 * 1024)
+                throw new InvalidDataException("模型 XML 不能超过 32MB");
+            var loaded = MacDataToolsService.ImportXml(xml);
+            if (loaded.Count == 0) throw new InvalidDataException("模型 XML 中没有数据表");
+            if (ViewModel.Tables.Count > 0)
+            {
+                var agreed = await ConfirmDialog.ShowAsync(owner, "替换当前模型？",
+                    $"已加载 {loaded.Count} 张表。导入将替换界面当前的 {ViewModel.Tables.Count} 张表（不会改动数据库）。请先导出当前模型备份。", "确认导入");
+                if (!agreed) return;
+            }
+            ReplaceModel(loaded, "已导入 XML 模型");
+            ViewModel.IsConnected = false; // 当前列表来源于离线 XML，而非数据库连接。
+            // 本地文件模型也允许生成实体，即使没有连接数据库。
+            ViewModel.Status += "（离线模型，可直接生成实体）";
+        }
+        catch (Exception ex) { ViewModel.Status = $"导入模型失败：{ex.Message}"; }
+    }
+
+    private async void ExportModel_Click(object? sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var xml = MacDataToolsService.ExportXml(ViewModel.Tables);
+            var output = await Owner(sender).StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+            {
+                Title = "导出 XCode XML 模型",
+                SuggestedFileName = (string.IsNullOrWhiteSpace(ViewModel.ConnName) ? "Model" : ViewModel.ConnName) + ".xml",
+                DefaultExtension = "xml",
+                FileTypeChoices = [new FilePickerFileType("XCode XML 模型") { Patterns = ["*.xml"] }]
+            });
+            if (output == null) return;
+            await using var stream = await output.OpenWriteAsync();
+            await using var writer = new StreamWriter(stream, new UTF8Encoding(false));
+            await writer.WriteAsync(xml);
+            ViewModel.Status = $"已导出 {ViewModel.Tables.Count} 张表的 XML 模型";
+        }
+        catch (Exception ex) { ViewModel.Status = $"导出模型失败：{ex.Message}"; }
+    }
+
+    private async void ManageModel_Click(object? sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var editor = new MacModelManagerWindow(ViewModel.Tables);
+            if (await editor.ShowDialog<bool>(Owner(sender)))
+            {
+                ReplaceModel(editor.Tables, "模型编辑已应用");
+                ViewModel.Status += "（尚未修改数据库，可导出 XML 保存）";
+            }
+        }
+        catch (Exception ex) { ViewModel.Status = $"模型管理失败：{ex.Message}"; }
+    }
+
+    private async void PreviewDdl_Click(object? sender, RoutedEventArgs e)
+    {
+        if (ViewModel.Tables.Count == 0) { ViewModel.Status = "请先连接数据库或导入 XML 模型"; return; }
+        if (string.IsNullOrWhiteSpace(ViewModel.ConnName) ||
+            !DAL.ConnStrs.ContainsKey(ViewModel.ConnName))
+        {
+            ViewModel.Status = "生成数据库专用建表 SQL 需要选择有效连接（不需要执行写入）";
+            return;
+        }
+        try
+        {
+            var metadata = DAL.Create(ViewModel.ConnName).Db.CreateMetaData();
+            var sql = MacDataToolsService.CreateAllSql(metadata, ViewModel.Tables);
+            var preview = new MacSqlPreviewWindow($"建表 SQL 预览 · {ViewModel.ConnName}", sql);
+            await preview.ShowDialog(Owner(sender));
+            ViewModel.Status = $"已生成 {ViewModel.Tables.Count} 张表的建表 SQL 预览（未执行）";
+        }
+        catch (Exception ex) { ViewModel.Status = $"生成建表 SQL 失败：{ex.Message}"; }
+    }
+
+    private async void DatabaseWorkbench_Click(object? sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(ViewModel.ConnName) ||
+            !DAL.ConnStrs.ContainsKey(ViewModel.ConnName))
+        { ViewModel.Status = "请先选择有效数据库连接"; return; }
+        try
+        {
+            var window = new MacSqlWorkbenchWindow(ViewModel.ConnName);
+            await window.ShowDialog(Owner(sender));
+        }
+        catch (Exception ex) { ViewModel.Status = $"架构管理/SQL 查询失败：{ex.Message}"; }
+    }
+
+    private async void ApplyDatabaseSchema_Click(object? sender, RoutedEventArgs e)
+    {
+        var owner = Owner(sender);
+        if (ViewModel.Tables.Count == 0 || !DAL.ConnStrs.ContainsKey(ViewModel.ConnName))
+        { ViewModel.Status = "请先选择数据库连接并加载或导入数据模型"; return; }
+
+        // 高风险 DDL：不是预览。必须二次明确确认，并手工输入完整连接名。
+        var accepted = await ConfirmDialog.ShowAsync(owner, "高风险：修改数据库架构",
+            $"将使用 XCode Migration.Full 更新数据库“{ViewModel.ConnName}”的 {ViewModel.Tables.Count} 张表。此操作可能创建表、修改字段或索引，无法自动撤销。请先备份数据库。", "我已备份，继续");
+        if (!accepted) return;
+        var confirmation = new Window
+        {
+            Title = "最终确认数据库目标", Width = 480, Height = 225,
+            CanResize = false, WindowStartupLocation = WindowStartupLocation.CenterOwner,
+            Background = Avalonia.Media.Brushes.White
+        };
+        var nameInput = new TextBox { Watermark = "请输入完整数据库连接名称", Height = 39 };
+        var execute = new Button { Content = "执行架构变更", IsEnabled = false, Padding = new Avalonia.Thickness(16, 9) };
+        var cancel = new Button { Content = "取消", Padding = new Avalonia.Thickness(16, 9) };
+        nameInput.TextChanged += (_, _) =>
+            execute.IsEnabled = string.Equals(nameInput.Text, ViewModel.ConnName, StringComparison.Ordinal);
+        execute.Click += (_, _) => confirmation.Close(true);
+        cancel.Click += (_, _) => confirmation.Close(false);
+        confirmation.Content = new StackPanel { Margin = new Avalonia.Thickness(22), Spacing = 13,
+            Children =
+            {
+                new TextBlock { Text = $"输入“{ViewModel.ConnName}”确认操作目标", FontSize = 16 },
+                nameInput,
+                new StackPanel { Orientation = Avalonia.Layout.Orientation.Horizontal, Spacing = 12,
+                    HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right,
+                    Children = { cancel, execute } }
+            } };
+        if (!await confirmation.ShowDialog<bool>(owner)) return;
+        try
+        {
+            MacDataToolsService.ValidateModel(ViewModel.Tables);
+            var tables = ViewModel.Tables.ToArray();
+            var name = ViewModel.ConnName;
+            ViewModel.Status = "正在应用数据库架构变更，请勿关闭应用…";
+            await Task.Run(() =>
+                DAL.Create(name).Db.CreateMetaData().SetTables(Migration.Full, tables));
+            ViewModel.Status = $"架构变更完成，共处理 {tables.Length} 张表；建议重新读取表结构核对";
+        }
+        catch (Exception ex) { ViewModel.Status = $"应用架构失败：{ex.Message}"; }
+    }
+
 }
