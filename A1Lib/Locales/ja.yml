@@ -1,0 +1,7 @@
+# 日本語 词表（ja）。键为英文源文，与源码字符串逐字一致；缺少的键运行时回退英文。
+"The recording device's RecordingDevice cannot be null.": "録画デバイスの RecordingDevice を null にすることはできません。"
+"The recording device has an invalid channel count.": "録画デバイスのチャネル数が無効です。"
+"No camera device was found.": "カメラ デバイスが見つかりません。"
+"Failed to load ControlCAN.dll.": "ControlCAN.dll を読み込めませんでした。"
+"Failed to load PCANBasic.dll.": "PCANBasic.dll を読み込めませんでした。"
+"This port has already registered a J1939 TP handler.": "このポートには既に J1939 TP ハンドラーが登録されています。"

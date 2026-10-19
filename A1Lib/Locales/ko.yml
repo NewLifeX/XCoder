@@ -1,0 +1,7 @@
+# 한국어 词表（ko）。键为英文源文，与源码字符串逐字一致；缺少的键运行时回退英文。
+"The recording device's RecordingDevice cannot be null.": "녹화 장치의 RecordingDevice는 null일 수 없습니다."
+"The recording device has an invalid channel count.": "녹화 장치의 채널 수가 올바르지 않습니다."
+"No camera device was found.": "카메라 장치를 찾지 못했습니다."
+"Failed to load ControlCAN.dll.": "ControlCAN.dll을 로드하지 못했습니다."
+"Failed to load PCANBasic.dll.": "PCANBasic.dll을 로드하지 못했습니다."
+"This port has already registered a J1939 TP handler.": "이 포트에는 이미 J1939 TP 처리기가 등록되어 있습니다."

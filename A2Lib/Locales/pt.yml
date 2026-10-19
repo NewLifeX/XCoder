@@ -1,0 +1,2 @@
+# Português 词表（pt）。键为英文源文，与源码字符串逐字一致；缺少的键运行时回退英文。
+"Failed to start recording.": "Falha ao iniciar a gravação."

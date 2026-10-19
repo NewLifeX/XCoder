@@ -1,0 +1,7 @@
+# Español 词表（es）。键为英文源文，与源码字符串逐字一致；缺少的键运行时回退英文。
+"The recording device's RecordingDevice cannot be null.": "RecordingDevice del dispositivo de grabación no puede ser null."
+"The recording device has an invalid channel count.": "El dispositivo de grabación tiene un número de canales no válido."
+"No camera device was found.": "No se encontró ningún dispositivo de cámara."
+"Failed to load ControlCAN.dll.": "No se pudo cargar ControlCAN.dll."
+"Failed to load PCANBasic.dll.": "No se pudo cargar PCANBasic.dll."
+"This port has already registered a J1939 TP handler.": "Este puerto ya ha registrado un controlador J1939 TP."
