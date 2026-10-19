@@ -11,10 +11,10 @@
 [![contributors](https://img.shields.io/github/contributors/NewLifeX/NewLife.XCoder?logo=github)](https://github.com/NewLifeX/NewLife.XCoder/graphs/contributors)
 
 <!-- lang:start -->
-🌐 [中文](Readme.MD) | [English](README.en.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) | [Français](README.fr.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [한국어](README.ko.md) | [العربية](README.ar.md)
+🌐 [English](README.md) | [简体中文](README.zh-CN.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) | [Français](README.fr.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [한국어](README.ko.md) | [العربية](README.ar.md)
 <!-- lang:end -->
 
-> 本翻譯可能落後，以簡體中文版為準。
+> ⚠️ 本翻譯可能落後於[英文 README](README.md)，內容以英文版為準。
 
 NewLife.XCoder（碼神）整合程式碼產生、網路偵錯、API 測試、序列埠、正規表示式、圖示與加解密等常用開發工具，並支援工業協定與 DBC 檢視。
 

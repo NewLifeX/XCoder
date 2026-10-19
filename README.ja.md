@@ -11,10 +11,10 @@
 [![contributors](https://img.shields.io/github/contributors/NewLifeX/NewLife.XCoder?logo=github)](https://github.com/NewLifeX/NewLife.XCoder/graphs/contributors)
 
 <!-- lang:start -->
-🌐 [中文](Readme.MD) | [繁體中文](README.zh-TW.md) | [English](README.en.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [한국어](README.ko.md) | [العربية](README.ar.md)
+🌐 [English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [Français](README.fr.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [한국어](README.ko.md) | [العربية](README.ar.md)
 <!-- lang:end -->
 
-> この翻訳は中国語版より遅れている場合があります。
+> ⚠️ 本翻訳は更新が遅れる場合があります。正式な内容は[英語 README](README.md)を参照してください。
 
 NewLife.XCoder はコード生成、ネットワーク／API／シリアルデバッグ、正規表現、アイコン、暗号化などの開発ツールと、産業プロトコル／DBC ビューアを統合します。
 

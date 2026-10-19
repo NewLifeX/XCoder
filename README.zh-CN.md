@@ -1,3 +1,4 @@
+# NewLife.XCoder - 新生命码神工具
 
 ![GitHub License](https://img.shields.io/github/license/NewLifeX/NewLife.XCoder?logo=github)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/NewLife.XCoder?logo=nuget)
@@ -10,12 +11,14 @@
 [![contributors](https://img.shields.io/github/contributors/NewLifeX/NewLife.XCoder?logo=github)](https://github.com/NewLifeX/NewLife.XCoder/graphs/contributors)
 
 <!-- lang:start -->
-🌐 [繁體中文](README.zh-TW.md) | [English](README.en.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) | [Français](README.fr.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [한국어](README.ko.md) | [العربية](README.ar.md)
+🌐 [English](README.md) | [繁體中文](README.zh-TW.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) | [Français](README.fr.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [한국어](README.ko.md) | [العربية](README.ar.md)
 <!-- lang:end -->
 
 新生命码神工具，代码生成、网络工具、API工具、串口工具、正则工具、图标工具、加解密工具、地图接口。 
 
 文档：https://newlifex.com/core/coder
+
+> ℹ️ 本中文版与 [English README](README.md) 同批维护；若两者内容不一致，以英文版为对外口径。
 
 ## 新生命项目矩阵
 各项目默认支持net9.0/netstandard2.1/netstandard2.0/net4.62/net4.5，旧版（2024.0801）支持net4.0/net2.0  

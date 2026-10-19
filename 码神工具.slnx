@@ -10,7 +10,7 @@
   <Folder Name="/Others/">
     <File Path=".editorconfig" />
     <File Path=".gitignore" />
-    <File Path="Readme.MD" />
+    <File Path="README.md" />
   </Folder>
   <Project Path="A1Lib/A1Lib.csproj" />
   <Project Path="A2Lib/A2Lib.csproj" />

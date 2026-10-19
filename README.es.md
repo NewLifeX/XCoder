@@ -11,10 +11,10 @@
 [![contributors](https://img.shields.io/github/contributors/NewLifeX/NewLife.XCoder?logo=github)](https://github.com/NewLifeX/NewLife.XCoder/graphs/contributors)
 
 <!-- lang:start -->
-🌐 [中文](Readme.MD) | [繁體中文](README.zh-TW.md) | [English](README.en.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) | [Français](README.fr.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [한국어](README.ko.md) | [العربية](README.ar.md)
+🌐 [English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) | [Français](README.fr.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [한국어](README.ko.md) | [العربية](README.ar.md)
 <!-- lang:end -->
 
-> Esta traducción puede estar desactualizada; consulte la versión en chino.
+> ⚠️ Esta traducción puede quedar desactualizada; la versión autorizada es el [README en inglés](README.md).
 
 NewLife.XCoder reúne generación de código, depuración de red/API/serie, regex, iconos y criptografía, además de visores de protocolos industriales y DBC.
 

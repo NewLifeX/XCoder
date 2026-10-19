@@ -11,10 +11,10 @@
 [![contributors](https://img.shields.io/github/contributors/NewLifeX/NewLife.XCoder?logo=github)](https://github.com/NewLifeX/NewLife.XCoder/graphs/contributors)
 
 <!-- lang:start -->
-🌐 [中文](Readme.MD) | [繁體中文](README.zh-TW.md) | [English](README.en.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) | [Français](README.fr.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
+🌐 [English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [日本語](README.ja.md) | [Français](README.fr.md) | [Português](README.pt.md) | [Русский](README.ru.md) | [العربية](README.ar.md)
 <!-- lang:end -->
 
-> 이 번역은 중국어 버전보다 늦을 수 있습니다.
+> ⚠️ 이 번역은 업데이트가 늦어질 수 있습니다. 정식 내용은 [영어 README](README.md)를 기준으로 합니다.
 
 NewLife.XCoder는 코드 생성, 네트워크/API/시리얼 디버깅, 정규식, 아이콘, 암호화 도구와 산업 프로토콜/DBC 뷰어를 통합합니다.
 
