@@ -41,7 +41,7 @@
     <PackageReference Include="NewLife.Map" Version="2.7.2026.1017-beta1410" />
     <PackageReference Include="NewLife.ModbusRTU" Version="2.1.2026.902-beta1359" />
     <PackageReference Include="NAudio" Version="2.4.0" />
-    <PackageReference Include="SSH.NET" Version="2025.1.0" />
+    <PackageReference Include="SSH.NET" Version="2026.0.0" />
     <PackageReference Include="System.IO.Ports" Version="8.0.0" />
     <PackageReference Include="System.Speech" Version="10.0.7" />
     <PackageReference Include="System.Management" Version="10.0.12" />
