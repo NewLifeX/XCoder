@@ -14,22 +14,22 @@ namespace ALib.Can_SAEJ1939
     /// </summary>
     public class PGN
     {
-        /// <summary>扩展数据页，1bit（bit25）</summary>
+        /// <summary>EDP： 扩展数据页，1bit（bit25）</summary>
         public bool ExtendDataPage = false;
 
-        /// <summary>数据页，1bit（bit24）</summary>
+        /// <summary>DP： 数据页，1bit（bit24）</summary>
         public bool DataPage = false;
 
-        /// <summary>PDU 格式 PF（bit23..16）</summary>
+        /// <summary>PF： PDU 格式 PF（bit23..16）</summary>
         public byte PF = 0;
 
-        /// <summary>PDU 特定 PS（bit15..8）</summary>
+        /// <summary>PS:  PDU 特定 PS（bit15..8）</summary>
         public byte PS = 0;
 
         /// <summary>PDU 格式 &lt; 240 时为 PDU1（点对点），否则为 PDU2（广播）</summary>
         public bool IsPDU1 => PF < 240;
 
-        /// <summary>目标地址 DA，仅 PDU1 有效（即 PS）</summary>
+        /// <summary>DA:  目标地址 DA，仅 PDU1 有效（即 PS）</summary>
         public byte DA => PS;
 
         /// <summary>组扩展 GE，仅 PDU2 有效（即 PS）</summary>
@@ -51,6 +51,7 @@ namespace ALib.Can_SAEJ1939
             get
             {
                 UInt32 pgn = (UInt32)PF << 8;
+                // PGN 不含有 DA （目标地址）
                 if (!IsPDU1) pgn |= PS;
                 if (DataPage) pgn |= 0x10000;
                 if (ExtendDataPage) pgn |= 0x20000;
@@ -185,6 +186,23 @@ namespace ALib.Can_SAEJ1939
         {
             if (msg == null) return null;
             return new J1939Id((UInt32)msg.ID);
+        }
+
+        /// <summary>
+        /// 由 29bit 扩展 ID 直接计算出 18bit PGN（与 <see cref="PGNValue"/> 等价），无对象分配，
+        /// 适合在分发 / 过滤等热路径中做快速判定（如 <see cref="ICanRx.Match"/>）。
+        /// </summary>
+        /// <param name="id29">29bit 扩展帧 ID</param>
+        public static UInt32 GetPgn(UInt32 id29)
+        {
+            var pf = (id29 >> 16) & 0xFF;
+            var ps = (id29 >> 8) & 0xFF;
+            var dp = (id29 >> 24) & 0x01;
+            var edp = (id29 >> 25) & 0x01;
+            UInt32 pgn = (UInt32)(pf << 8);
+            if (pf >= 240) pgn |= ps;                            // PDU2：PS 为组扩展，计入 PGN
+            pgn |= (UInt32)(dp << 16) | (UInt32)(edp << 17);
+            return pgn;
         }
 
         /// <summary>复制当前值</summary>

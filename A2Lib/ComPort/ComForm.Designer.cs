@@ -36,28 +36,28 @@
             // 
             cbName.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cbName.FormattingEnabled = true;
-            cbName.Location = new Point(56, 12);
+            cbName.Location = new Point(45, 3);
             cbName.Name = "cbName";
-            cbName.Size = new Size(276, 25);
+            cbName.Size = new Size(203, 25);
             cbName.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(15, 15);
+            label1.Location = new Point(4, 6);
             label1.Name = "label1";
             label1.Size = new Size(35, 17);
             label1.TabIndex = 1;
             label1.Text = "串口:";
             // 
-            // ComFrom
+            // ComForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(label1);
             Controls.Add(cbName);
-            Name = "ComFrom";
-            Size = new Size(357, 49);
+            Name = "ComForm";
+            Size = new Size(251, 30);
             Load += ComFrom_Load;
             ResumeLayout(false);
             PerformLayout();

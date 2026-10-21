@@ -40,8 +40,8 @@
             comFrom.Name = "comFrom";
             comFrom.Parity = System.IO.Ports.Parity.None;
             comFrom.Port = null;
-            comFrom.SelectedPort = "COM13(VCP0)";
-            comFrom.Size = new Size(357, 49);
+            comFrom.SelectedPort = "";
+            comFrom.Size = new Size(259, 33);
             comFrom.StopBits = System.IO.Ports.StopBits.One;
             comFrom.TabIndex = 0;
             // 
@@ -49,7 +49,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(371, 74);
+            ClientSize = new Size(283, 57);
             Controls.Add(comFrom);
             Name = "ComSelect";
             Text = "ComSelect";

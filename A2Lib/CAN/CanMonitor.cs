@@ -1,4 +1,4 @@
-﻿using ALib.WinForm;
+﻿using ALib.FormComponent;
 using NewLife;
 using NewLife.Collections;
 using NewLife.Log;

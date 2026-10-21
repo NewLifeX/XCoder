@@ -30,6 +30,21 @@ namespace ALib.CAN
             // XTrace.WriteLine(MsgToString(msg));
             return false;
         }
+
+        /// <summary>
+        /// 快速预匹配。端口在分发前调用，用于过滤掉明显不相关的帧，
+        /// 避免每个处理器都对端口上**每一帧**做完整解析（多协议并存时的性能与双份解析问题）。
+        /// <list type="bullet">
+        /// <item>默认返回 true：保持旧行为，端口仍全量回调，是否认领由 <see cref="Process"/> 内部判定。</item>
+        /// <item>返回 false：本处理器确定不关心该帧，端口不会再把该帧投给它（仅 <see cref="Process"/> 不再被调用）。</item>
+        /// </list>
+        /// 注意：Match 仅做**预过滤 / 分发优化**，不替代 <see cref="Process"/> 的语义；
+        /// 即便 Match 返回 true，最终是否"认领"仍以 <see cref="Process"/> 的返回值为准
+        /// （对有状态 / 动态过滤的处理器，如 UDS 仅在发送中认领流控帧，尤为关键）。
+        /// </summary>
+        /// <param name="msg">can 帧</param>
+        /// <returns>是否可能关心该帧</returns>
+        public virtual bool Match(CanMsg msg) => true;
     }
 
     public abstract class ICanPort : DisposeBase
@@ -266,6 +281,16 @@ namespace ALib.CAN
             lock (_RxProcess) _RxProcess.Remove(proc);
         }
 
+        /// <summary>
+        /// 单归属分发开关。
+        /// 为 true 时，一旦某个处理器认领（<see cref="ICanRx.Process"/> 返回 true）本帧，
+        /// 后续处理器不再收到该帧。用于多协议并存（J1939 + UDS + CANopen 等）时，
+        /// 依靠各处理器的 <see cref="ICanRx.Match"/> 划定清晰的 ID/PGN 归属，
+        /// 避免同一帧被多个协议重复解析 / 互踩。
+        /// 默认 false：保持旧行为，所有处理器都收到全量帧（仅由各自 Process 过滤）。
+        /// </summary>
+        public bool SingleOwner { get; set; } = false;
+
         /// <summary>处理收到的 CAN 帧（分发到已注册的处理器，无处理器处理时写日志）</summary>
         /// <param name="pkt">已转换的 CAN 帧</param>
         /// <returns>是否至少有一个处理器处理了该帧</returns>
@@ -283,8 +308,15 @@ namespace ALib.CAN
             {
                 foreach (var item in _RxProcess)
                 {
-                    // 不做 CAN ID 匹配，全量回调；处理器自行过滤
-                    if (item.Process(pkt, this)) res = true;
+                    // 预过滤：处理器声明不关心的帧直接跳过，避免每个处理器都对每帧全量解析
+                    if (!item.Match(pkt)) continue;
+
+                    // 仍由 Process 内部做最终判定（兼容有状态 / 动态过滤）
+                    if (item.Process(pkt, this))
+                    {
+                        res = true;
+                        if (SingleOwner) break;   // 单归属：已被认领则不再分发后续处理器
+                    }
                 }
             }
 

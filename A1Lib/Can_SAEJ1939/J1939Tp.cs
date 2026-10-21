@@ -993,6 +993,22 @@ namespace ALib.Can_SAEJ1939
             return Reassembler.Process(msg);
         }
 
+        /// <summary>
+        /// 快速预匹配：仅当帧为 29bit 扩展帧且 PGN 为 TP.CM(0x00EC00) 或 TP.DT(0x00EB00) 时才认领，
+        /// 供端口层在分发前过滤掉与本机制无关的帧（如 UDS / CANopen / 普通 J1939 报文），
+        /// 避免 J1939Tp 对端口上每一帧都做 <see cref="J1939Id.FromCanMsg"/> 全量解析。
+        /// 最终是否消费仍以 <see cref="Process"/> 为准。
+        /// </summary>
+        public override bool Match(CanMsg msg)
+        {
+            if (msg == null || !msg.ExternFlag) return false;   // J1939 固定使用 29bit 扩展帧
+
+            // 直接由 29bit ID 计算 18bit PGN（与 J1939Id.PGNValue 等价），避免额外对象分配
+            var pgn = J1939Id.GetPgn((UInt32)msg.ID);
+
+            return pgn == J1939Pgn.TpCm || pgn == J1939Pgn.TpDt;
+        }
+
         /// <summary>发起一次 BAM 广播传输（阻塞）</summary>
         /// <param name="messagePgn">被传输报文的 PGN</param>
         /// <param name="data">完整数据</param>
