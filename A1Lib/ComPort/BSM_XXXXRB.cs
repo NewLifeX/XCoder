@@ -88,7 +88,7 @@ namespace ALib.ComPort
 
         /// <summary>一次写所有，从0开始</summary>
         /// <param name="oup">按照bit使用</param>
-        public async Task<int> WriteAllDO(byte[] oup)
+        public int WriteAllDO(byte[] oup)
         {
             if ((oup == null) || (oup.Length < 1)) return -1;
             // 长度限制
