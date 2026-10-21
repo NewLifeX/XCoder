@@ -26,19 +26,25 @@ namespace ALib.ComPort
         #region 串口
 
         /// <summary>端口</summary>
-        public String ComName => _Port.PortName;
+        public String ComName
+        {
+            get => _Port.PortName;
+            set => _Port.PortName = value;
+        }
 
         /// <summary>波特率</summary>
-        public Int32 Baudrate => _Port.Baudrate;
+        public Int32 Baudrate
+        {
+            get => _Port.Baudrate;
+            set => _Port.Baudrate = value;
+        }
+
+        /// <summary>打开</summary>
+        public void Open() => _Port.Open();
 
         #endregion
 
         #region 数据
-
-        /// <summary>最多32路输入</summary>
-        private bool[] _Input;
-        /// <summary>最多32路输出</summary>
-        private bool[] _Output;
 
         /// <summary>输入路数</summary>
         public Int32 DICnt;
@@ -78,24 +84,34 @@ namespace ALib.ComPort
             _Port.Baudrate = baudrate;
         }
 
-        /// <summary>一次写所有</summary>
-        /// <param name="oup"></param>
-        public async Task SetDo(byte[] oup)
+        #region 输出
+
+        /// <summary>一次写所有，从0开始</summary>
+        /// <param name="oup">按照bit使用</param>
+        public async Task<int> WriteAllDO(byte[] oup)
         {
-            if ((oup == null) || (oup.Length < 1)) return;
-
-            var regCnt = (DOCnt + 15) / 16;
-            var reg = new ushort[regCnt];
-
-            var ouplen = (oup.Length + 1) / 2;
-
-
-            // return await _Port.WriteRegisters(DevAddr, 0, oup);
-
+            if ((oup == null) || (oup.Length < 1)) return -1;
+            // 长度限制
+            int len = oup.Length * 8  > DOCnt ? DOCnt : oup.Length;
+            var coils = new ushort[len];
+            // 数值
+            for (int i = 0; i < coils.Length; i++)
+            {
+                int byteIdx = i / 8;
+                int bitIdx = i % 8;
+                int mask = 1 << bitIdx;
+                var coil = (oup[byteIdx] & mask) == 0 ? 0 : 0xffff;
+                coils[i] = (ushort)coil;
+            }
+            // 写
+            return _Port.WriteCoils(DevAddr, 0, coils);
         }
 
+        public int WriteCoil(ushort addr, ushort coil) => _Port.WriteCoil(DevAddr, addr, coil);
 
+        public int WriteCoils(ushort addr, ushort[] coils) => _Port.WriteCoils(DevAddr, addr, coils);
 
+        #endregion
     }
 
     public class BSM_0816RB : BSM_XXXXRB
