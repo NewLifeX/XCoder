@@ -154,7 +154,7 @@ namespace ALib.ComPort
                     if (len <= 0) break;
 
                     var bs = len == buf.Length ? buf : buf.ReadBytes(0, len);
-                    WriteLog(" RX " + bs.ToHex());
+                    // WriteLog(" RX " + bs.ToHex());
 
                     RxCache.WriteArray(bs, true);
                 }
@@ -211,7 +211,7 @@ namespace ALib.ComPort
             {
                 lock (_Port)
                 {
-                    if (!_Port.IsOpen) Open();
+                    if (!_Port.IsOpen) return false;
 
                     _Port.Write(msg, 0, msg.Length);
                     return true;

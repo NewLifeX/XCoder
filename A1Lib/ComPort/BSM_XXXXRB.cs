@@ -92,7 +92,7 @@ namespace ALib.ComPort
         {
             if ((oup == null) || (oup.Length < 1)) return -1;
             // 长度限制
-            int len = oup.Length * 8  > DOCnt ? DOCnt : oup.Length;
+            int len = oup.Length * 8  > DOCnt ? DOCnt : (oup.Length * 8);
             var coils = new ushort[len];
             // 数值
             for (int i = 0; i < coils.Length; i++)
