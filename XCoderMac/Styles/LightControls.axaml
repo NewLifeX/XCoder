@@ -65,11 +65,16 @@
         <Setter Property="Foreground" Value="#832F3B"/>
     </Style>
 
+    <!-- 单行输入框全局垂直居中；多行编辑器/日志仍从顶部开始显示内容。 -->
     <Style Selector="TextBox">
         <Setter Property="Foreground" Value="#294563"/>
         <Setter Property="Background" Value="#F8FAFE"/>
         <Setter Property="BorderBrush" Value="#D5E2F2"/>
         <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+    <Style Selector="TextBox[AcceptsReturn=true]">
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
     </Style>
     <Style Selector="TextBox:pointerover">
         <Setter Property="Background" Value="#F5F9FF"/>

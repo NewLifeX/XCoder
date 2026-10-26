@@ -256,6 +256,150 @@ public sealed class MacApp : Application
                     }
                 });
             }
+            // 全局旧窗口分组间距审计 + 加密解密 WrapPanel 按钮间距两尺寸验收。
+            // 纯 UI，不执行任何加密/网络/数据库命令。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-spacing-ui"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+                {
+                    var dir = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                        "XCoderMac", "Docs", "软件界面");
+                    desktop.Shutdown(Services.MacSpacingUiSmoke.Run(dir));
+                });
+            }
+            // API 发现按钮不重叠/悬停变字与服务 ListBox、日志 TextBox 圆角专项测试。
+            // 不做 UDP 扫描，也不发送网络请求。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-api-discover-ui"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+                {
+                    var folder = System.IO.Path.Combine(
+                        Services.MacUserPaths.InitialWorkingDirectory, "XCoderMac", "Docs", "软件界面");
+                    desktop.Shutdown(Services.MacApiDiscoverUiSmoke.Run(folder));
+                });
+            }
+            // MQTT 分组间距、按钮悬停变色、日志黑底与圆角专项测试（不连接 Broker）。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-mqtt-ui"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+                {
+                    var screenshotDirectory = System.IO.Path.Combine(
+                        Services.MacUserPaths.InitialWorkingDirectory, "XCoderMac", "Docs", "软件界面");
+                    var status = Services.MacMqttUiSmoke.Run(screenshotDirectory);
+                    desktop.Shutdown(status);
+                });
+            }
+            // 文件编码专用布局验收：按钮完整显示、后缀输入自适应、编码控件最右对齐。
+            // 不选择目录、不扫描，也不触发可能覆写文件的编码转换。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-file-encoding-layout"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+                {
+                    try
+                    {
+                        var tool = MacToolCatalog.Tools.First(t => t.Title == "文件编码");
+                        var window = new Views.MacLegacyToolWindow(tool);
+                        window.Show();
+                        window.Width = 1080;
+                        window.Height = 790;
+                        window.UpdateLayout();
+                        Services.MacFileEncodingLayout.AssertLayout(window.HostedToolContent!);
+
+                        var folder = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                            "XCoderMac", "Docs", "软件界面");
+                        System.IO.Directory.CreateDirectory(folder);
+                        using (var screenshot = new Avalonia.Media.Imaging.RenderTargetBitmap(
+                            new Avalonia.PixelSize(2160, 1580), new Avalonia.Vector(192, 192)))
+                        {
+                            screenshot.Render(window);
+                            screenshot.Save(System.IO.Path.Combine(folder, "07-文件编码-布局修复.png"));
+                        }
+                        window.Width = 880;
+                        window.UpdateLayout();
+                        Services.MacFileEncodingLayout.AssertLayout(window.HostedToolContent!);
+                        window.Close();
+                        Console.WriteLine("FILE ENCODING LAYOUT OK: 3 buttons spaced and untruncated, suffix stretched, encoding right aligned, 1080/880 layouts");
+                        desktop.Shutdown(0);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Console.Error.WriteLine("FILE ENCODING LAYOUT FAILED: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                });
+            }
+            // 仅验证 RPC Action 空状态说明、网络地址默认选中、消息调试地址栏自适应布局。
+            // 不创建任何监听连接，不发送请求，不写入用户配置。
+            else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-debug-input-layout"))
+            {
+                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+                {
+                    Views.MacApiDebugWindow? rpc = null;
+                    Views.MacNetworkWindow? net = null;
+                    Views.MacLegacyToolWindow? message = null;
+                    try
+                    {
+                        var folder = System.IO.Path.Combine(Services.MacUserPaths.InitialWorkingDirectory,
+                            "XCoderMac", "Docs", "软件界面");
+                        System.IO.Directory.CreateDirectory(folder);
+
+                        void Capture(Avalonia.Controls.Window window, string fileName)
+                        {
+                            using var picture = new Avalonia.Media.Imaging.RenderTargetBitmap(
+                                new Avalonia.PixelSize(2160, 1580), new Avalonia.Vector(192, 192));
+                            picture.Render(window);
+                            picture.Save(System.IO.Path.Combine(folder, fileName));
+                        }
+
+                        rpc = new Views.MacApiDebugWindow();
+                        rpc.Show();
+                        rpc.UpdateLayout();
+                        rpc.SmokeTestActionListInitialState();
+                        Capture(rpc, "03-RPC-Action空列表说明.png");
+                        rpc.Close();
+                        rpc = null;
+
+                        net = new Views.MacNetworkWindow();
+                        net.Show();
+                        net.UpdateLayout();
+                        net.SmokeTestInitialLocalAddress();
+                        Capture(net, "08-网络工具-默认绑定地址.png");
+                        net.Close();
+                        net = null;
+
+                        var tool = MacToolCatalog.Tools.First(t => t.Title == "消息调试");
+                        message = new Views.MacLegacyToolWindow(tool);
+                        message.Show();
+                        message.Width = 1050;
+                        message.UpdateLayout();
+                        Services.MacMessageDebugLayout.AssertLayout(message.HostedToolContent!);
+                        Capture(message, "09-消息调试-地址栏布局修复.png");
+                        message.Width = 900;
+                        message.UpdateLayout();
+                        Services.MacMessageDebugLayout.AssertLayout(message.HostedToolContent!);
+                        var vm = message.HostedViewModel as XCoderAv.ViewModels.MessageDebugViewModel
+                            ?? throw new System.InvalidOperationException("消息调试原 ViewModel 绑定丢失");
+                        if (string.IsNullOrWhiteSpace(vm.Address) || vm.ToggleConnectCommand == null)
+                            throw new System.InvalidOperationException("消息调试原地址或打开命令丢失");
+                        message.Close();
+                        message = null;
+
+                        Console.WriteLine("DEBUG INPUTS OK: RPC empty-list explanation; local-address default; message address stretched/open rightmost (1050/900)");
+                        desktop.Shutdown(0);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Console.Error.WriteLine("DEBUG INPUTS FAILED: " + ex);
+                        desktop.Shutdown(1);
+                    }
+                    finally
+                    {
+                        rpc?.Close();
+                        net?.Close();
+                        message?.Close();
+                    }
+                });
+            }
             // 验证上游工具内容装载至 Mac 宿主后的实际窗口显示及关闭。
             else if (System.Array.Exists(System.Environment.GetCommandLineArgs(), a => a == "--smoke-host-render"))
             {

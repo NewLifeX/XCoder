@@ -300,6 +300,14 @@ public partial class MacConnectionManagerWindow : Window
         if (!IsLight(NameInput.Background) || !IsDark(NameInput.Foreground))
             throw new InvalidOperationException("输入框前景色和背景色仍是深色主题");
 
+        // 全局单行输入垂直居中；多行连接字符串仍应从顶部开始。
+        if (NameInput.VerticalContentAlignment != Avalonia.Layout.VerticalAlignment.Center ||
+            PortInput.VerticalContentAlignment != Avalonia.Layout.VerticalAlignment.Center ||
+            PasswordInput.VerticalContentAlignment != Avalonia.Layout.VerticalAlignment.Center)
+            throw new InvalidOperationException("全局单行 TextBox 未统一垂直居中");
+        if (ConnectionStringInput.VerticalContentAlignment != Avalonia.Layout.VerticalAlignment.Top)
+            throw new InvalidOperationException("多行 TextBox 应保持顶部对齐");
+
         // 仅更换窗口内的演示数据源，不保存任何连接或修改用户配置。
         ConnectionList.ItemsSource = new[] { "未选中示例", "选中示例" };
         ConnectionList.SelectedIndex = 1;

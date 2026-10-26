@@ -39,7 +39,7 @@
                     <TextBlock Grid.Column="4" Text="目标端口" FontSize="12" Foreground="#7C8FA4"/>
                     <ComboBox Grid.Row="1" ItemsSource="{Binding Modes}" SelectedIndex="{Binding SelectedModeIndex}"
                               Height="41" Background="#F9FBFE" BorderBrush="#DFE7F1"/>
-                    <ComboBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding LocalAddresses}"
+                    <ComboBox x:Name="LocalBindingAddressSelect" Grid.Row="1" Grid.Column="2" ItemsSource="{Binding LocalAddresses}"
                               SelectedItem="{Binding LocalAddress}" Height="41"
                               Background="#F9FBFE" BorderBrush="#DFE7F1"/>
                     <TextBox Grid.Row="1" Grid.Column="4" Classes="field" Text="{Binding Port}"

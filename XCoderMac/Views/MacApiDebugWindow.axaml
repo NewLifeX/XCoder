@@ -90,7 +90,7 @@
                 <Grid RowDefinitions="Auto,Auto,Auto,*" RowSpacing="10">
                     <TextBlock Text="发送 RPC 请求" FontSize="16" Foreground="#294360"
                                FontWeight="SemiBold" Margin="0,0,0,4"/>
-                    <TextBlock Grid.Row="1" Text="API Action / 手动输入 / 发送"
+                    <TextBlock Grid.Row="1" Text="Action 列表：客户端连接后获取（服务端为空）"
                                FontSize="12" Foreground="#778AA1"/>
                     <!-- 同行保留原来的 SelectedAction、SendCommand 绑定。 -->
                     <Grid Grid.Row="2" ColumnDefinitions="102,8,*,8,94">
@@ -98,6 +98,7 @@
                                   ItemsSource="{Binding ApiActions}"
                                   SelectedItem="{Binding SelectedAction}"
                                   Height="41" HorizontalAlignment="Stretch"
+                                  ToolTip.Tip="服务端模式无远端 API；切换到客户端并连接后从 Api/All 获取"
                                   Background="#F9FBFE" BorderBrush="#DFE6F1"/>
                         <TextBox x:Name="RpcActionManualInput" Grid.Column="2"
                                  Text="{Binding SelectedAction}" Classes="editor"

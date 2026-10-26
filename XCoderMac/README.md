@@ -43,15 +43,32 @@ XCoderMac/
 
 ```bash
 dotnet build XCoderMac/XCoderMac.csproj -c Debug --no-restore
+# 2026-10-20 上游 XCoderAv 暂有 CS0103（L 未定义）时，临时复用已有上游编译产物：
+dotnet build XCoderMac/XCoderMac.csproj -c Debug --no-restore -p:BuildProjectReferences=false
 dotnet run --project XCoderMac/XCoderMac.csproj -c Debug --no-build
 # 只测刚修改的模块，例如：
 dotnet run --project XCoderMac/XCoderMac.csproj -c Debug --no-build -- --smoke-sql-ui
 dotnet run --project XCoderMac/XCoderMac.csproj -c Debug --no-build -- --smoke-modeling-layout
+# 文件编码窗口专项布局测试（不会进行扫描或文件转换）：
+dotnet run --project XCoderMac/XCoderMac.csproj -c Debug --no-build -- --smoke-file-encoding-layout
+# RPC Action 空状态 / 网络默认绑定地址 / 消息调试长地址与分组/控件间距（1050/900）：
+dotnet run --project XCoderMac/XCoderMac.csproj -c Debug --no-build -- --smoke-debug-input-layout
+# MQTT 顶部连接/发布/订阅三列、底部全宽加高日志、右下清空按钮、hover 黑底（无网络连接）：
+dotnet run --project XCoderMac/XCoderMac.csproj -c Debug --no-build -- --smoke-mqtt-ui
+# API 发现按钮不重叠、hover 变色、服务列表/日志圆角（无 UDP 广播）：
+dotnet run --project XCoderMac/XCoderMac.csproj -c Debug --no-build -- --smoke-api-discover-ui
+# 全项目分组留白及加密解密 WrapPanel 两列/按钮间距：
+dotnet run --project XCoderMac/XCoderMac.csproj -c Debug --no-build -- --smoke-spacing-ui
+# 全 26 工具初始化（仅窗口，不执行协议或文件写入）：
+dotnet run --project XCoderMac/XCoderMac.csproj -c Debug --no-build -- --smoke-all
 # 需要生成安装包时：
 ./XCoderMac/package-macos.sh
+# 上游 XCoderAv 无法重新编译的临时打包方式（需已有上游编译产物）：
+BuildProjectReferences=false ./XCoderMac/package-macos.sh
 ```
 
 - Mac 安装包：`XCoderMac/dist/XCoder.app`、`XCoderMac/dist/XCoder-arm64.dmg`，仅 ARM64，自签未公证。
 - 用户配置：`~/Library/Application Support/Newlife.XCoder/Config/`；日志：`~/Library/Logs/Newlife.XCoder/`。
 - Git：在 `master` 上工作；**未获明确要求不提交、不推送**。每次小界面改动只跑相关模块测试，不必重复全量回归。
+- **开发交接硬性规则：每次完成代码或样式修改，必须在同一次任务中更新对应专题文档和 `Docs/项目现状与任务总清单.md`，说明改动位置、原因、验证范围及未解决问题；后续开发先读文档。**
 - 历史评估保留作参考，不作为现行完成状态；本 README 不再滚动堆叠互相矛盾的逐版本说明。
