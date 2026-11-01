@@ -1,6 +1,5 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Net;
-using System.Runtime.Serialization;
 using NewLife;
 using NewLife.Data;
 using NewLife.Log;
@@ -149,12 +148,12 @@ public partial class FrmApiDiscover : Form, IXForm
         var client = sender as ApiClient;
         var enc = client.Encoder;
 
-        // 解码结果
+        // 解码结果。属性名与服务端字段保持一致，NewLife.JsonReader 反序列化时忽略大小写，兼容 PascalCase 与 camelCase
         var result = enc.DecodeResult(msg.Action, msg.Data, e.Message, typeof(ApiItem));
         //XTrace.WriteLine("Receive[{0}] {1}", udp.Client.LocalEndPoint, result.ToJson());
         var remote = (e.UserState as ReceivedEventArgs)?.Remote;
 
-        if (msg.Action == "Api/Info" && enc.Convert(result, typeof(ApiItem)) is ApiItem ai)
+        if (msg.Action == "Api/Info" && result is ApiItem ai)
         {
             ai.RemoteIP = remote.Address + "";
 
@@ -184,7 +183,7 @@ public partial class FrmApiDiscover : Form, IXForm
     {
         _data ??= new Dictionary<String, ApiItem>();
 
-        var key = $"{ai.Name}-{ai.IP}-{ai.Id}";
+        var key = $"{ai.Name}-{ai.LocalIP}-{ai.Id}";
 
         if (_data.TryGetValue(key, out var old))
         {
@@ -207,20 +206,15 @@ public partial class FrmApiDiscover : Form, IXForm
     {
         public Int32 Id { get; set; }
 
-        [DataMember(Name = "Server")]
         public String Name { get; set; }
 
-        [DataMember(Name = "LocalIP")]
-        public String IP { get; set; }
+        public String LocalIP { get; set; }
 
         public String MachineName { get; set; }
 
-        [DataMember(Name = "FileVersion")]
-        public String Version { get; set; }
+        public String FileVersion { get; set; }
 
         public String OS { get; set; }
-
-        //public String Server { get; set; }
 
         public String RemoteIP { get; set; }
 
