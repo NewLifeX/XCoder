@@ -1,5 +1,5 @@
 ﻿using ALib.Audio;
-using ALib.WinForm;
+using ALib.FormComponent;
 using NAudio.Wave;
 using NewLife.Log;
 using System.Drawing;
