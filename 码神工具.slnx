@@ -19,5 +19,6 @@
   <Project Path="XCoderAv/XCoderAv.csproj" />
   <Project Path="XCoderLinux/XCoderLinux.csproj" />
   <Project Path="XCoderMac/XCoderMac.csproj" />
+  <Project Path="Tests/XCoder.Tests/XCoder.Tests.csproj" />
   <Project Path="xDesktopInfo/xDesktopInfo.csproj" />
 </Solution>

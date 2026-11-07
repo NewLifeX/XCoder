@@ -40,6 +40,26 @@ public class XConfig : Config<XConfig>
     [Description("语音提示。默认true")]
     public Boolean SpeechTip { get; set; } = true;
 
+    /// <summary>网络语音播报端口。默认5502</summary>
+    [Description("网络语音播报端口。默认5502")]
+    public Int32 VoiceNotifyPort { get; set; } = 5502;
+
+    /// <summary>打开网络语音播报时自动监听。默认true</summary>
+    [Description("打开网络语音播报时自动监听。默认true")]
+    public Boolean VoiceNotifyAutoStart { get; set; } = true;
+
+    /// <summary>网络语音播报声音</summary>
+    [Description("网络语音播报声音")]
+    public String VoiceNotifyVoice { get; set; } = "";
+
+    /// <summary>网络语音播报音量。默认100</summary>
+    [Description("网络语音播报音量。默认100")]
+    public Int32 VoiceNotifyVolume { get; set; } = 100;
+
+    /// <summary>网络语音播报语速。默认0</summary>
+    [Description("网络语音播报语速。默认0")]
+    public Int32 VoiceNotifyRate { get; set; }
+
     /// <summary>证书</summary>
     [Description("证书")]
     public String Code { get; set; }
