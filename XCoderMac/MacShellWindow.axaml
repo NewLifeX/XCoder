@@ -27,6 +27,36 @@
         <Style Selector="Button.sidebar-item:pointerover">
             <Setter Property="Background" Value="#E6ECF5"/>
         </Style>
+        <!-- 左侧已打开工具的选中底色统一由外层 Border 控制。
+             内层激活按钮禁止 Fluent 默认 Hover 叠加另一条色块。 -->
+        <Style Selector="Button.sidebar-tool-tab">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="0"/>
+        </Style>
+        <Style Selector="Button.sidebar-tool-tab:pointerover">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="Button.sidebar-tool-tab:pressed">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="Button.sidebar-tool-tab:focus">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <!-- Fluent 默认 Button 模板的 PART_ContentPresenter 可能在 hover 时变成 Black。
+             这里强制其保持透明，由外层条目 Border 唯一绘制选中态。 -->
+        <Style Selector="Button.sidebar-tool-tab /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="Button.sidebar-tool-tab:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <Style Selector="Button.sidebar-tool-tab:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
         <Style Selector="Button.tool-card">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="#E5EAF3"/>
@@ -56,29 +86,68 @@
                 </StackPanel>
 
                 <!-- Grid 约束菜单项占满导航栏内部宽度，不再显示内容宽度的胶囊按钮。 -->
-                <Grid Grid.Row="1" RowDefinitions="Auto,46,46" RowSpacing="5">
-                    <TextBlock Grid.Row="0" Text="工作台" FontSize="11" FontWeight="SemiBold"
+                <!-- 工作台：工具首页 + 真实打开的窗口。侧栏条目和顶部标签复用同一份 OpenTabs。 -->
+                <StackPanel Grid.Row="1" Spacing="6">
+                    <TextBlock Text="工作台" FontSize="11" FontWeight="SemiBold"
                                Foreground="#94A0B0" Margin="13,0,0,10"/>
-                    <Button x:Name="AllToolsNavButton" Grid.Row="1"
-                            Classes="sidebar-item selected" Click="AllTools_Click"
-                            HorizontalAlignment="Stretch">
+                    <Button x:Name="AllToolsNavButton" Classes="sidebar-item selected"
+                            Click="AllTools_Click" HorizontalAlignment="Stretch">
                         <Grid ColumnDefinitions="26,*">
                             <TextBlock Text="▦" FontSize="20" Foreground="#3368BD" VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1" Text="所有工具" FontSize="14"
                                        FontWeight="SemiBold" Foreground="#233F69" VerticalAlignment="Center"/>
                         </Grid>
                     </Button>
-                    <Button x:Name="QuickToolsNavButton" Grid.Row="2"
-                            Classes="sidebar-item" Click="QuickTools_Click"
-                            HorizontalAlignment="Stretch">
-                        <Grid ColumnDefinitions="26,*">
-                            <TextBlock Text="✦" FontSize="19" Foreground="#687A90" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="快捷工具" FontSize="14" Foreground="#465974" VerticalAlignment="Center"/>
-                        </Grid>
-                    </Button>
-                </Grid>
+                    <StackPanel x:Name="SidebarOpenTabsSection" Margin="2,10,0,0"
+                                Spacing="5" IsVisible="False">
+                        <TextBlock x:Name="SidebarOpenTabsTitle" Text="已打开工具 (0)"
+                                   FontSize="11" FontWeight="SemiBold"
+                                   Foreground="#899AB0" Margin="11,0,0,5"/>
+                        <ScrollViewer MaxHeight="230" VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Disabled">
+                            <ItemsControl x:Name="SidebarOpenTabs" ItemsSource="{Binding OpenTabs}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="{Binding TabBackground}"
+                                                CornerRadius="9" Margin="0,0,5,5"
+                                                Height="38" BorderBrush="#DCE6F3" BorderThickness="1">
+                                            <Grid ColumnDefinitions="*,30">
+                                                <Button Grid.Column="0" Classes="sidebar-tool-tab"
+                                                        Tag="{Binding}" Click="SidebarTab_Click"
+                                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                                        Background="Transparent" BorderThickness="0"
+                                                        Padding="8,0,0,0"
+                                                        Cursor="Hand">
+                                                    <Grid ColumnDefinitions="22,*">
+                                                        <TextBlock Text="{Binding Icon}" FontSize="12"
+                                                                   Foreground="{Binding TabForeground}"
+                                                                   VerticalAlignment="Center" TextAlignment="Center"/>
+                                                        <TextBlock Grid.Column="1" Text="{Binding Title}"
+                                                                   Foreground="{Binding TabForeground}" FontSize="12"
+                                                                   FontWeight="SemiBold"
+                                                                   VerticalAlignment="Center"
+                                                                   TextTrimming="CharacterEllipsis"/>
+                                                    </Grid>
+                                                </Button>
+                                                <Button Grid.Column="1" Tag="{Binding}" Content="×"
+                                                        Click="SidebarCloseTab_Click"
+                                                        Foreground="#6782A0" Background="Transparent"
+                                                        BorderThickness="0" Padding="0" Width="25" Height="25"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                        ToolTip.Tip="关闭窗口"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </StackPanel>
+                </StackPanel>
 
-                <StackPanel Grid.Row="2" Margin="0,31,0,0" Spacing="8">
+                <ScrollViewer Grid.Row="2" Margin="0,25,0,0"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Spacing="8">
                     <TextBlock Text="工具分类" FontSize="11" FontWeight="SemiBold" Foreground="#94A0B0" Margin="13,0,0,6"/>
                     <ItemsControl ItemsSource="{Binding Categories}">
                         <ItemsControl.ItemTemplate>
@@ -93,7 +162,8 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
 
                 <Border Grid.Row="3" CornerRadius="14" Background="#E5EAF3" Padding="15,13">
                     <StackPanel Spacing="6">
@@ -106,30 +176,26 @@
         </Border>
 
         <!-- 工作区 -->
-        <Grid Grid.Column="1" RowDefinitions="82,*">
+        <Grid Grid.Column="1" RowDefinitions="82,*,32">
             <Border Grid.Row="0" Background="#FFFFFF" BorderBrush="#E7ECF3" BorderThickness="0,0,0,1" Padding="31,0">
                 <Grid ColumnDefinitions="*,Auto" VerticalAlignment="Center">
                     <StackPanel VerticalAlignment="Center" Spacing="3">
                         <TextBlock Text="开发者工具中心" FontSize="17" FontWeight="SemiBold" Foreground="#263A54"/>
                         <TextBlock Text="专注开发、连接与调试" FontSize="11" Foreground="#8A96A8"/>
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
-                        <Button x:Name="WorkspaceReturnButton" Content="▤  已打开的标签"
-                                IsVisible="False" Click="ShowWorkspace_Click"
-                                Background="#E8F0FC" Foreground="#2C5F9C"
-                                CornerRadius="10" Padding="15,11" FontWeight="SemiBold"/>
-                        <TextBox x:Name="SearchBox" TextChanged="SearchBox_TextChanged"
-                                 Width="307" Height="41" Padding="13,9"
-                                 Watermark="⌕   搜索工具名称、协议或用途..."
-                                 FontSize="13" Background="#F6F8FB" BorderBrush="#E5EAF2"
-                                 CornerRadius="11" VerticalContentAlignment="Center"/>
-                    </StackPanel>
+                    <!-- 顶部已打开的标签按钮与左侧已打开工具、顶部标签栏重复，因此移除。 -->
+                    <TextBox Grid.Column="1" x:Name="SearchBox" TextChanged="SearchBox_TextChanged"
+                             Width="307" Height="41" Padding="13,9"
+                             Watermark="⌕   搜索工具名称、协议或用途..."
+                             FontSize="13" Background="#F6F8FB" BorderBrush="#E5EAF2"
+                             CornerRadius="11" VerticalContentAlignment="Center"/>
                 </Grid>
             </Border>
 
             <ScrollViewer x:Name="HomeView" Grid.Row="1" VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="31,29,26,24" Spacing="24">
-                    <Border CornerRadius="20" Background="#1D3B6B" Padding="28,25" ClipToBounds="True">
+                    <Border x:Name="HomeHeroSection" CornerRadius="20"
+                            Background="#1D3B6B" Padding="28,25" ClipToBounds="True">
                         <Grid ColumnDefinitions="*,Auto" MinHeight="147">
                             <StackPanel Spacing="10" VerticalAlignment="Center">
                                 <TextBlock Text="YOUR PRODUCTIVITY WORKSPACE" Foreground="#9EBEEA" FontSize="10" FontWeight="SemiBold" LetterSpacing="1.2"/>
@@ -148,7 +214,7 @@
                         </Grid>
                     </Border>
 
-                    <Grid ColumnDefinitions="*,*,*">
+                    <Grid x:Name="HomeStatsSection" ColumnDefinitions="*,*,*">
                         <Border Grid.Column="0" Margin="0,0,13,0" Background="White" BorderBrush="#E8EDF4" BorderThickness="1" CornerRadius="14" Padding="18,15">
                             <StackPanel Spacing="4">
                                 <TextBlock Text="26" FontSize="24" FontWeight="SemiBold" Foreground="#254B84"/>
@@ -157,7 +223,8 @@
                         </Border>
                         <Border Grid.Column="1" Margin="0,0,13,0" Background="White" BorderBrush="#E8EDF4" BorderThickness="1" CornerRadius="14" Padding="18,15">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="4" FontSize="24" FontWeight="SemiBold" Foreground="#254B84"/>
+                                <TextBlock Text="{Binding CategoryCount}" FontSize="24"
+                                           FontWeight="SemiBold" Foreground="#254B84"/>
                                 <TextBlock Text="工具分类" FontSize="12" Foreground="#8391A5"/>
                             </StackPanel>
                         </Border>
@@ -168,6 +235,61 @@
                             </StackPanel>
                         </Border>
                     </Grid>
+
+                    <!-- 用户可自定义“快捷入口”，放在探索全部工具上方。 -->
+                    <StackPanel x:Name="QuickToolsSection" Spacing="12">
+                        <Grid ColumnDefinitions="*,Auto" Margin="2,0,0,0">
+                            <StackPanel Spacing="5">
+                                <TextBlock Text="快捷入口" FontSize="21" FontWeight="SemiBold"
+                                           Foreground="#1D304B"/>
+                                <TextBlock Text="常用工具一键直达 · 支持自定义、排序"
+                                           FontSize="12" Foreground="#8A98AA"/>
+                            </StackPanel>
+                            <Button x:Name="ManageQuickEntriesButton" Grid.Column="1"
+                                    Classes="secondary" Content="⚙  管理快捷入口"
+                                    Click="ManageQuickEntries_Click"
+                                    CornerRadius="9" Padding="15,9"
+                                    VerticalAlignment="Center"/>
+                        </Grid>
+                        <ItemsControl x:Name="QuickToolCards" ItemsSource="{Binding QuickTools}"
+                                      HorizontalAlignment="Stretch">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <primitives:UniformGrid Columns="{Binding ToolColumns}"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Classes="tool-card" Click="ToolCard_Click" Tag="{Binding}"
+                                            Margin="0,0,13,13" Padding="15,13" Height="112"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch"
+                                            VerticalContentAlignment="Stretch">
+                                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="37,*">
+                                            <Border Width="33" Height="33" Background="#EAF1FE"
+                                                    CornerRadius="9" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Icon}" Foreground="#3469B7"
+                                                           FontSize="16" FontWeight="Bold"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <TextBlock Grid.Column="1" Text="{Binding Title}" FontSize="14"
+                                                       FontWeight="SemiBold" Foreground="#273B58"
+                                                       VerticalAlignment="Center" Margin="8,0,0,0"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
+                                                       Text="{Binding Description}" FontSize="11"
+                                                       Foreground="#8294A8" TextTrimming="CharacterEllipsis"
+                                                       Margin="1,9,0,0"/>
+                                        </Grid>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock x:Name="QuickEntryEmptyMessage"
+                                   Text="还没有快捷入口，点击右上角「管理快捷入口」添加常用工具。"
+                                   IsVisible="False" FontSize="13" Foreground="#8196AC"
+                                   Margin="6,5,0,13"/>
+                    </StackPanel>
 
                     <Grid ColumnDefinitions="*,Auto" Margin="2,5,0,0">
                         <StackPanel Spacing="6">
@@ -304,6 +426,22 @@
                                     VerticalContentAlignment="Stretch"/>
                 </Border>
             </Grid>
+
+            <!-- 所有工具共用状态栏；当前工具的 Status/StatusText 自动投射到这里。 -->
+            <Border Grid.Row="2" Background="#FFFFFF" BorderBrush="#E2E9F2"
+                    BorderThickness="0,1,0,0" Padding="18,0,20,0">
+                <Grid ColumnDefinitions="Auto,12,*">
+                    <TextBlock x:Name="WorkspaceStatusTitle" Text="工作台"
+                               FontSize="11" FontWeight="SemiBold" Foreground="#59718E"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2" x:Name="WorkspaceStatusText"
+                               Text="就绪 · 请选择一个工具" FontSize="11"
+                               Foreground="#59718E" VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"
+                               TextAlignment="Right" HorizontalAlignment="Right"
+                               ToolTip.Tip="{Binding #WorkspaceStatusText.Text}"/>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Window>

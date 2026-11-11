@@ -7,7 +7,7 @@ PUBLISH="$ROOT/obj/publish/osx-arm64"
 APP="$DIST/XCoder.app"
 CONTENTS="$APP/Contents"
 STAGE="$DIST/dmg-stage"
-VERSION="0.2.7"
+VERSION="0.3.3"
 
 if [[ "$(uname -m)" != "arm64" ]]; then
     echo "错误：请在 Apple Silicon Mac 上执行。" >&2
@@ -45,8 +45,8 @@ cat > "$CONTENTS/Info.plist" <<'PLIST'
     <key>CFBundleIconFile</key><string>XCoder.icns</string>
     <key>CFBundleIconName</key><string>XCoder</string>
     <key>CFBundlePackageType</key><string>APPL</string>
-    <key>CFBundleShortVersionString</key><string>0.2.7</string>
-    <key>CFBundleVersion</key><string>16</string>
+    <key>CFBundleShortVersionString</key><string>0.3.3</string>
+    <key>CFBundleVersion</key><string>27</string>
     <key>LSMinimumSystemVersion</key><string>13.0</string>
     <key>NSHighResolutionCapable</key><true/>
 </dict>

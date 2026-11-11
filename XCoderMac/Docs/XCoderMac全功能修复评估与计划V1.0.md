@@ -1,5 +1,7 @@
 # XCoderMac 全功能修复与 macOS 兼容性评估（V1.0）
 
+> **历史评估资料（2026-10-18），非当前进度！** 本文在 XCoder 0.3.3 之前编写，部分功能状态、修复估算与根解决方案名称已经过时。**请以 [项目现状与任务总清单](项目现状与任务总清单.md) 为准**。保留本文仅用于追溯早期风险、估时和技术思路，不能当成已完成或待完成的实时清单。
+
 - 审查日期：2026-10-18
 - 源仓库：<https://git.newlifex.com/NewLife/XCoder>
 - 本地目录：`/Users/yanjinlong/Code/newlife/XCoder/`
@@ -11,7 +13,7 @@
 
 1. **所有新源代码与修复都只能放在 `XCoderMac/` 目录之下。** 原有 `XCoderAv/`、`XCoder/`、`XCoder-CLI/`、`CrazyCoder/` 等一律不修改。
 2. 不创建额外 Git 分支，继续沿用现有 `master`；但开发期间可对 `XCoderMac` 做本地提交和备份。
-3. `码神工具.sln` **已经注册** `XCoderMac`，后续不再改解决方案；工程内新增 .cs/.axaml 会按 SDK 默认规则自动纳入。若增加独立单元测试工程，将其放 `XCoderMac/Tests/`，用独立命令运行，不必修改根解决方案。
+3. `码神工具.slnx` **已经注册** `XCoderMac`，后续不再改解决方案；工程内新增 .cs/.axaml 会按 SDK 默认规则自动纳入。若增加独立单元测试工程，将其放 `XCoderMac/Tests/`，用独立命令运行，不必修改根解决方案。
 4. 上游仅通过 `ProjectReference` 复用，并优先直接使用 NewLife.XCode、NewLife.Core、NewLife.Net、NewLife.Redis、MQTT/Modbus 等组件；macOS 专用 API 实现放 `XCoderMac/Adapters/`。
 5. 如上游 ViewModel 的私有方法、Windows 系统调用无法覆写，则在 `XCoderMac/ViewModels/` 中建立独立 Mac ViewModel；**不能为了复用而修改上游**。可以复用协议服务、实体和工具方法，不盲目整份复制。
 6. 平台服务建议使用 `XCoderMac/Services/`，Mac 页面 `XCoderMac/Views/`，测试 `XCoderMac/Tests/`，说明和清单 `XCoderMac/Docs/`。适配代码要有必要的单元测试和最小日志。

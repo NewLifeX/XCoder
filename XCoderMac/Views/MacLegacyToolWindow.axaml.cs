@@ -2,6 +2,8 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
+using XCoderAv.ViewModels;
+using XCoderMac.Services;
 
 namespace XCoderMac.Views;
 
@@ -15,6 +17,7 @@ public partial class MacLegacyToolWindow : Window
 
     public Type OriginalToolType { get; private set; } = typeof(Window);
     public object? HostedViewModel => _originalWindow?.DataContext;
+    public Control? HostedToolContent => HostedContent.Content as Control;
 
     public MacLegacyToolWindow()
     {
@@ -40,10 +43,43 @@ public partial class MacLegacyToolWindow : Window
         if (content == null)
             throw new InvalidOperationException($"工具“{tool.Title}”没有可展示的界面内容。");
 
+        // 只在 Mac 宿主修复文件编码布局：按钮间距/宽度和弹性后缀过滤列。
+        // 沿用原来的控件、绑定与业务命令，不改 XCoderAv。
+        if (tool.Title == "文件编码" && content is Control fileEncodingRoot)
+            MacFileEncodingLayout.Apply(fileEncodingRoot);
+        if (tool.Title == "消息调试" && content is Control messageRoot)
+            MacMessageDebugLayout.Apply(messageRoot);
+        if (tool.Title == "MQTT 客户端" && content is Control mqttRoot)
+            MacMqttLayout.Apply(mqttRoot);
+        if (tool.Title == "API 发现" && content is Control apiDiscoverRoot)
+            MacApiDiscoverLayout.Apply(apiDiscoverRoot);
+        if (tool.Title == "加密解密" && content is Control securityLayoutRoot)
+            MacSecuritySpacing.Apply(securityLayoutRoot);
+
+        // 其它复用上游的页面：统一未明确规定的分组/纵向控件留白。
+        // 精调过的窗口跳过，避免覆盖文件编码、消息、MQTT、API 发现、加密解密的专用布局。
+        if (content is Control spacingRoot)
+            MacLegacySpacing.Apply(spacingRoot, tool.Title);
+
         // ContentControl.Content setter 会移除旧的逻辑父级。
         _originalWindow.Content = null;
         HostedContent.Content = content;
         HostedContent.DataContext = _originalWindow.DataContext;
+
+        // 加密解密旧版命令会对非法 HEX/Base64/密钥输入直接抛异常。
+        // 在用户能够点击之前隔离所有命令，避免未处理异常终止 Mac 主程序。
+        if (tool.Title == "加密解密" && HostedContent.DataContext is SecurityViewModel securityVm &&
+            content is Control securityRoot)
+        {
+            var guarded = MacSecurityCommandGuard.Attach(securityRoot, securityVm);
+            System.Diagnostics.Debug.WriteLine($"Security command guarded at construction: {guarded}");
+            // 绑定值在实际加入主窗口时可能再次更新，附着后补检查一次。
+            securityRoot.AttachedToVisualTree += (_, _) =>
+            {
+                var count = MacSecurityCommandGuard.Attach(securityRoot, securityVm);
+                System.Diagnostics.Debug.WriteLine($"Security command guarded on attach: {count}");
+            };
+        }
 
         var sourceWidth = _originalWindow.Width;
         var sourceHeight = _originalWindow.Height;

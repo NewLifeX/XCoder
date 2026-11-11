@@ -1,0 +1,99 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="XCoderMac.Views.MacQuickEntrySettingsWindow"
+        x:CompileBindings="False"
+        Title="管理快捷入口 · XCoder"
+        Width="820" Height="690" MinWidth="670" MinHeight="510"
+        Background="#F7F9FC" WindowStartupLocation="CenterOwner">
+    <Grid RowDefinitions="Auto,*,Auto" Margin="25,22">
+        <StackPanel Spacing="6">
+            <TextBlock Text="管理快捷入口" FontSize="25" FontWeight="SemiBold"
+                       Foreground="#203F61"/>
+            <TextBlock Text="从全部工具中勾选常用入口；右侧可调整显示顺序，保存后立即生效。"
+                       FontSize="12" Foreground="#7C90A8"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,18,*" Margin="0,20,0,16">
+            <Border Grid.Column="0" Background="White" CornerRadius="15"
+                    BorderBrush="#DDE7F3" BorderThickness="1" Padding="17">
+                <Grid RowDefinitions="Auto,9,*">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="全部工具" FontSize="17" FontWeight="SemiBold" Foreground="#254869"/>
+                        <TextBlock Grid.Column="1" Text="勾选添加 / 取消移除" FontSize="11"
+                                   Foreground="#91A2B5" VerticalAlignment="Center"/>
+                    </Grid>
+                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="AllEntryOptions" ItemsSource="{Binding Options}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#EEF1F6" BorderThickness="0,0,0,1"
+                                            Padding="1,10">
+                                        <Grid ColumnDefinitions="Auto,*,Auto">
+                                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                                      VerticalAlignment="Center" Margin="0,0,11,0"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Title}"
+                                                       FontSize="13" Foreground="#294B70"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Category}"
+                                                       FontSize="10" Foreground="#A1AEC0"
+                                                       VerticalAlignment="Center" Margin="8,0,0,0"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="2" Background="White" CornerRadius="15"
+                    BorderBrush="#DDE7F3" BorderThickness="1" Padding="17">
+                <Grid RowDefinitions="Auto,9,*,12,Auto">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="已选快捷入口" FontSize="17" FontWeight="SemiBold"
+                                   Foreground="#254869"/>
+                        <TextBlock Grid.Column="1" x:Name="SelectedCountText"
+                                   Text="0 个" FontSize="11" Foreground="#728AA6"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+                    <ListBox Grid.Row="2" x:Name="SelectedEntriesList"
+                             ItemsSource="{Binding SelectedEntries}"
+                             BorderThickness="0" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="10,10" Margin="0,0,0,5"
+                                        CornerRadius="8" Background="#F1F6FC">
+                                    <Grid ColumnDefinitions="25,*">
+                                        <TextBlock Text="☷" Foreground="#7996B9" FontSize="13"
+                                                   VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Title}"
+                                                   Foreground="#31577E" FontSize="13"
+                                                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Grid Grid.Row="4" ColumnDefinitions="*,8,*">
+                        <Button Content="↑  上移" Classes="secondary" Click="MoveUp_Click"
+                                HorizontalAlignment="Stretch" Grid.Column="0"
+                                CornerRadius="8" Padding="14,9"/>
+                        <Button Content="↓  下移" Classes="secondary" Click="MoveDown_Click"
+                                HorizontalAlignment="Stretch" Grid.Column="2"
+                                CornerRadius="8" Padding="14,9"/>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,Auto,10,Auto" Margin="0,0,0,2">
+            <Button Grid.Column="0" Content="恢复默认入口" Classes="secondary"
+                    Click="ResetDefaults_Click" HorizontalAlignment="Left"
+                    CornerRadius="9" Padding="16,10"/>
+            <Button Grid.Column="1" Content="取消" Classes="secondary"
+                    Click="Cancel_Click" Padding="22,10" CornerRadius="9"/>
+            <Button Grid.Column="3" Content="保存设置" Classes="primary"
+                    Click="Save_Click" Padding="24,10" CornerRadius="9"/>
+        </Grid>
+    </Grid>
+</Window>
